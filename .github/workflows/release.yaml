@@ -46,9 +46,10 @@ jobs:
           GPG_KEYRING_BASE64: "${{ secrets.GPG_KEYRING_BASE64 }}"
           GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
 
-      - name: Add dependency chart repos
-        run: |
-          helm repo add caraml https://caraml-dev.github.io/helm-charts/
+      # Uncomment this after at least one successful chart release. This will fail because there is no index file in gh-pages branch of the repo yet.
+      # - name: Add dependency chart repos
+      #   run: |
+      #     helm repo add caraml https://caraml-dev.github.io/helm-charts/
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
