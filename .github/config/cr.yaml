@@ -1,0 +1,6 @@
+# Set this to true for GPG signing
+sign: false
+# When `sign` is set to true, Add UID here and Add a step in release workflow to prepare and sign the GPG key.
+# Ref https://colinwilson.uk/2022/01/27/how-to-sign-helm-charts-using-chart-releaser-action/ 
+# UID of the GPG key to use
+# key: Chart Releaser Test Key
