@@ -10,12 +10,12 @@ tags:
 # -- Values corresponding to component-a
 component-a:
   # -- Make value true for enabling component-a
-  enabled: false 
+  enabled: false
 
 # -- Values corresponding to component-b
 component-b:
   # -- Make value true for enabling component-b
-  enabled: false 
-  
+  enabled: false
+
 postgresql:
   enabled: true
