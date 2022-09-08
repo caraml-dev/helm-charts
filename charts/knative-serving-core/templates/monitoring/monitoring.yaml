@@ -1,0 +1,22 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: knative-serving-core-monitor
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "knative-serving-core.labels" . | nindent 4 }}
+  annotations:
+    {{- include "knative-serving-core.annotations" . | nindent 4 }}
+spec:
+{{- if .Values.monitoring.podMonitor.selector }}
+  selector:
+{{ tpl (toYaml .Values.monitoring.podMonitor.selector | indent 4) . }}
+{{- end }}
+  podMetricsEndpoints:
+    - port: {{ .Values.monitoring.podMonitor.userMetricPortName }}
+{{- if .Values.monitoring.podMonitor.metricRelabelings }}
+      metricRelabelings:
+{{ tpl (toYaml .Values.monitoring.podMonitor.metricRelabelings | indent 6) . }}
+{{- end }}
+{{- end }}  

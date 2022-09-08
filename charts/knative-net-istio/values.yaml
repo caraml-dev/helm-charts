@@ -1,0 +1,81 @@
+global:
+  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+  extraPodLabels: {}
+  # -- Define which Nodes the Pods are scheduled on.
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+  # -- If specified, the pod's tolerations.
+  # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+  # -- Assign custom affinity rules to the prometheus operator
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+# -- Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml
+config:
+  istio:
+    gateway.knative-serving.knative-ingress-gateway: "istio-ingressgateway.istio-system.svc.cluster.local"
+    local-gateway.knative-serving.knative-local-gateway: "cluster-local-gateway.istio-system.svc.cluster.local"
+    local-gateway.mesh: "mesh"
+    enable-virtualservice-status: "false"
+
+clusterLocalGatewayIstioSelector: cluster-local-gateway
+
+controller:
+  autoscaling:
+    # -- Enables autoscaling for net-istio-controller deployment.
+    enabled: true
+    # -- Minimum number of replicas for net-istio-controller.
+    minReplicas: 1
+    # -- Maximum number of replicas for net-istio-controller.
+    maxReplicas: 20
+    # -- Target CPU utlisation before it scales up/down.
+    targetCPUUtilizationPercentage: 100
+  image:
+    # -- Repository of the controller image
+    repository: "gcr.io/knative-releases/knative.dev/net-istio/cmd/controller"
+    # -- Tag of the controller image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the controller image, either provide tag or SHA (SHA will be given priority)
+    sha: "1ef74af101cc89d86a2e6b37b9a74545bfd9892d48b1b036d419a635a19c0081"
+  # -- Number of replicas for the net-istio-controller deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for net-istio-controller. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+webhook:
+  image:
+    # -- Repository of the webhook image
+    repository: "gcr.io/knative-releases/knative.dev/net-istio/cmd/webhook"
+    # -- Tag of the webhook image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority)
+    sha: "ab3dfcf1574780448b3453cc717d6eb2bc33e794d36c090eff1076aa65f05ca0"
+  # -- Number of replicas for the net-istio-webhook deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for net-istio-webhook. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi

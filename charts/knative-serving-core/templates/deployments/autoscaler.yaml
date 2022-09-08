@@ -1,0 +1,113 @@
+# Copyright 2018 The Knative Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoscaler
+  labels:
+    app.kubernetes.io/name: autoscaler
+    {{- include "knative-serving-core.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.autoscaler.replicaCount }}
+  selector:
+    matchLabels:
+      app: autoscaler
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+      labels:
+        app: autoscaler
+        app.kubernetes.io/name: autoscaler
+        {{- include "knative-serving-core.labels" . | nindent 8 }}
+      {{- if .Values.config.defaults }}
+        {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
+      {{- end }}
+    spec:
+      # To avoid node becoming SPOF, spread our replicas to different nodes.
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: autoscaler
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      serviceAccountName: controller
+      {{- if .Values.global.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.global.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.global.tolerations }}
+      tolerations:
+        {{- toYaml .Values.global.tolerations | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: autoscaler
+          {{- if .Values.autoscaler.image.sha }}
+          image: "{{ .Values.autoscaler.image.repository }}@sha256:{{ .Values.autoscaler.image.sha }}"
+          {{- else }}
+          image: "{{ .Values.autoscaler.image.repository }}:{{ .Values.autoscaler.image.tag }}"
+          {{- end }}
+          resources:
+            {{- toYaml .Values.autoscaler.resources | nindent 12 }}
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONFIG_LOGGING_NAME
+              value: config-logging
+            - name: CONFIG_OBSERVABILITY_NAME
+              value: config-observability
+            # TODO(https://github.com/knative/pkg/pull/953): Remove stackdriver specific config
+            - name: METRICS_DOMAIN
+              value: knative.dev/serving
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - all
+          ports:
+            - name: metrics
+              containerPort: 9090
+            - name: profiling
+              containerPort: 8008
+            - name: websocket
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              port: 8080
+              httpHeaders:
+                - name: k-kubelet-probe
+                  value: "autoscaler"
+          livenessProbe:
+            httpGet:
+              port: 8080
+              httpHeaders:
+                - name: k-kubelet-probe
+                  value: "autoscaler"
+            failureThreshold: 6

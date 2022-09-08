@@ -1,0 +1,55 @@
+{{ template "chart.header" . }}
+---
+{{ template "chart.versionBadge" . }}
+{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+## Introduction
+
+This Helm chart installs [Knative Serving Core](https://knative.dev/docs/serving/) and it's CRDs.
+
+## Prerequisites
+
+To use the charts here, [Helm](https://helm.sh/) must be configured for your
+Kubernetes cluster. Setting up Kubernetes and Helm is outside the scope of
+this README. Please refer to the Kubernetes and Helm documentation.
+
+- **Helm 3.0+** – This chart was tested with Helm v3.6.3, but it is also expected to work with earlier Helm versions
+- **Kubernetes 1.22+** – This chart was tested with GKE v1.22.x
+
+## Installation
+
+### Add Helm repository
+
+```shell
+$ helm repo add dsp http://artifactory-gojek.golabs.io/artifactory/generic-local/dsp-charts/
+```
+
+### Installing the chart
+
+This command will install Knative release named `knative-serving` in the `knative-serving` namespace.
+Do not try to install into other namespaces as it will break with other installations like Kserve.
+Default chart values will be used for the installation:
+```shell
+$ helm install dsp/knative-serving-core --namespace knative-serving
+```
+
+You can (and most likely, should) override the default configuration with values suitable for your installation.
+Refer to [Configuration](#configuration) section for the detailed description of available configuration keys.
+
+### Uninstalling the chart
+
+To uninstall `knative-serving-core` release:
+```shell
+$ helm uninstall -n knative-serving knative-serving-core
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release,
+except for postgresql PVC, those will have to be removed manually.
+
+## Configuration
+
+The following table lists the configurable parameters of the Knative Serving Core chart and their default values.
+
+{{ template "chart.valuesTable" . }}

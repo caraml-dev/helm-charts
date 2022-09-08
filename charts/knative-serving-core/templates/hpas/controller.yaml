@@ -1,0 +1,25 @@
+{{- if .Values.controller.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: controller
+  namespace: knative-serving
+  labels:
+    app.kubernetes.io/name: webhook
+    {{- include "knative-serving-core.labels" . | nindent 4 }}
+spec:
+  minReplicas: {{ .Values.controller.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.controller.autoscaling.maxReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: controller
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          # Percentage of the requested CPU
+          averageUtilization: {{ .Values.controller.autoscaling.targetCPUUtilizationPercentage }}
+{{- end }}

@@ -1,0 +1,238 @@
+global:
+  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+  extraPodLabels: {}
+  # -- Define which Nodes the Pods are scheduled on.
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+  # -- If specified, the pod's tolerations.
+  # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+  # -- Assign custom affinity rules to the prometheus operator
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+# -- Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml
+config:
+  autoscaler: {}
+  defaults: {}
+  deployment:
+    queueSidecarImage: gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe
+  domain: {}
+  features: {}
+  gc: {}
+  leaderElection:
+    lease-duration: "15s"
+    renew-deadline: "10s"
+    retry-period: "2s"
+  buckets: "1"
+  logging:
+    logging.request-log-template: ""
+  network: {}
+  observability: {}
+  tracing: {}
+
+activator:
+  autoscaling:
+    # -- Enables autoscaling for activator deployment.
+    enabled: true
+    # -- Minimum number of replicas for activator.
+    minReplicas: 1
+    # -- Maximum number of replicas for activator.
+    maxReplicas: 20
+    # -- Target CPU utlisation before it scales up/down.
+    targetCPUUtilizationPercentage: 50
+  image:
+    # -- Repository of the activator image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/activator"
+    # -- Tag of the activator image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the activator image, either provide tag or SHA (SHA will be given priority)
+    sha: "ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"
+  # -- Number of replicas for the activator deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for activator. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+autoscaler:
+  image:
+    # -- Repository of the autoscaler image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler"
+    # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+    sha: "31aed8b5b241147585cb0e48366451a96354fc6036d6a5667997237c1d302d98"
+  # -- Number of replicas for the autoscaler deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for autoscaler. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+controller:
+  autoscaling:
+    # -- Enables autoscaling for controller deployment.
+    enabled: true
+    # -- Minimum number of replicas for controller.
+    minReplicas: 1
+    # -- Maximum number of replicas for controller.
+    maxReplicas: 20
+    # -- Target CPU utlisation before it scales up/down.
+    targetCPUUtilizationPercentage: 50
+  image:
+    # -- Repository of the controller image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/controller"
+    # -- Tag of the controller image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the controller image, either provide tag or SHA (SHA will be given priority)
+    sha: "c5a77d5642065ff3452d9b043a7226b85bfc81dc068f8dded905abf88d917a4d"
+  # -- Number of replicas for the controller deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for controller. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+domainMapping:
+  image:
+    # -- Repository of the domain mapping image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping"
+    # -- Tag of the domain mapping image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority)
+    sha: "6b5356cf3a2b64d52cbbf1bc0de376b816c4d3f610ccc8ff2dabf3d259c0996b"
+  # -- Number of replicas for the domain mapping deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for domain mapping. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+domainMappingWebhook:
+  image:
+    # -- Repository of the domain mapping webhook image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping-webhook"
+    # -- Tag of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority)
+    sha: "d0cc86f2002660c4804f6e0aed8218d39384c73a8b5006c9ac558becd8f48aa6"
+  # -- Number of replicas for the domain mapping webhook deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for domain mapping webhook. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+webhook:
+  autoscaling:
+    # -- Enables autoscaling for webhook deployment.
+    enabled: true
+    # -- Minimum number of replicas for webhook.
+    minReplicas: 1
+    # -- Maximum number of replicas for webhook.
+    maxReplicas: 20
+    # -- Target CPU utlisation before it scales up/down.
+    targetCPUUtilizationPercentage: 50
+  image:
+    # -- Repository of the webhook image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/webhook"
+    # -- Tag of the webhook image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority)
+    sha: "bd954ec8ced56e359bd4f60ee1886b20000df14126688c796383a3ae40cfffc0"
+  # -- Number of replicas for the webhook deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for webhook. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+queueProxy:
+  image:
+    # -- Repository of the queue proxy image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/queue"
+    # -- Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority)
+    sha: "80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"
+
+monitoring:
+  enabled: true
+  podMonitor:
+    userMetricPortName: metrics
+    selector:
+      matchExpressions:
+        - key: "{{ .Values.monitoring.selectorKey }}"
+          operator: Exists
+    metricRelabelings:
+      - action: drop
+        regex: "{{ .Values.monitoring.metricRelabelingRegex }}"
+  metricRelabelingRegex: (gojek_com_team|gojek_com_stream|gojek_com_orchestrator|gojek_com_environment|gojek_com_app)
+  selectorKey: serving.knative.dev/release

@@ -1,0 +1,37 @@
+global:
+  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+  extraPodLabels: {}
+  # -- Define which Nodes the Pods are scheduled on.
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+  # -- If specified, the pod's tolerations.
+  # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+  # -- Assign custom affinity rules to the prometheus operator
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+autoscalerHpa:
+  image:
+    # -- Repository of the autoscaler image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler-hpa"
+    # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+    sha: "c7020d14b51862fae8e92da7b0442aa7843eb81c32699d158a3b24c19d5af8d4"
+  # -- Number of replicas for the autoscaler deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for autoscaler. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
