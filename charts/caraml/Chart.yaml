@@ -23,6 +23,6 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
 
-maintainers: 
+maintainers:
   - name: caraml-dev
     email: caraml-dev@caraml.com
