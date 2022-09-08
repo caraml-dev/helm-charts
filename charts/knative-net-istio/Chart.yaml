@@ -4,3 +4,14 @@ description: Installs Net Istio for KNative
 type: application
 version: 1.0.1
 appVersion: "v1.0.0"
+dependencies:
+  - name: base
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    version: 1.13.3
+    alias: istioBase
+    condition: istioBase.enabled
+  - name: istiod
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    version: 1.13.3
+    alias: istiod
+    condition: istiod.enabled

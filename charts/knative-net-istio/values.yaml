@@ -43,7 +43,8 @@ controller:
   # -- Resources requests and limits for net-istio-controller. This should be set
   # according to your cluster capacity and service level objectives.
   # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -68,7 +69,8 @@ webhook:
   # -- Resources requests and limits for net-istio-webhook. This should be set
   # according to your cluster capacity and service level objectives.
   # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -79,3 +81,44 @@ webhook:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
+    #
+
+##########################
+# Dependency configs
+##########################
+
+istioBase:
+  enabled: true
+  global:
+    istioNamespace: istio-system
+
+istiod:
+  enabled: true
+  pilot:
+    autoscaleEnabled: true
+    autoscaleMin: 1
+    autoscaleMax: 5
+    rollingMaxSurge: 100%
+    rollingMaxUnavailable: 25%
+
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 1
+        memory: 1024Mi
+    cpu:
+      targetAverageUtilization: 80
+
+    nodeSelector:
+      cloud.google.com/gke-nodepool: infrastructure-node-pool
+
+  meshConfig:
+    enableTracing: true
+    defaultConfig:
+      terminationDrainDuration: 30s
+      tracing:
+        sampling: 0.1
+        zipkin:
+          address: jaeger-tracing-collector.infrastructure:9411
