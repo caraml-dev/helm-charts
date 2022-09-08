@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  caraml:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-09-08T09:29:38.528184448Z"
+    description: A Helm chart for deploying CaraML components
+    digest: 8cc526515a50e0338a3a456477ec1a28ff3c75a3be0da47edb1491542ec653dd
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.1.0/caraml-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-09-08T09:29:38.528189348Z"
