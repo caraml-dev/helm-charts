@@ -4,6 +4,8 @@ Contributions are welcome via GitHub pull requests.
 
 ## Submitting Pull Requests
 
+Ensure you submit the pull request with PR title adhering to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standards.
+
 ### Immutability
 
 All charts' releases must be immutable. All changes require version bump.
