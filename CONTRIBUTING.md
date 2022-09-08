@@ -4,7 +4,7 @@ Contributions are welcome via GitHub pull requests.
 
 ## Submitting Pull Requests
 
-Ensure you submit the pull request with PR title adhering to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standards.
+Ensure you submit the pull request with PR title adhering to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standards. By default, we support the following types in the PR titles: [Converntional Commit types](https://github.com/commitizen/conventional-commit-types/blob/master/index.json)
 
 ### Immutability
 
