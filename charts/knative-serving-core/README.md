@@ -1,8 +1,8 @@
 # knative-serving-core
 
 ---
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square)
-![AppVersion: 1.0.2](https://img.shields.io/badge/AppVersion-1.0.2-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square)
+![AppVersion: v1.0.1](https://img.shields.io/badge/AppVersion-v1.0.1-informational?style=flat-square)
 
 Installs Knative Serving core and CRDs.
 
@@ -58,7 +58,7 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | activator.autoscaling.enabled | bool | `true` | Enables autoscaling for activator deployment. |
 | activator.autoscaling.maxReplicas | int | `20` | Maximum number of replicas for activator. |
 | activator.autoscaling.minReplicas | int | `1` | Minimum number of replicas for activator. |
-| activator.autoscaling.targetCPUUtilizationPercentage | int | `100` | Target CPU utlisation before it scales up/down. |
+| activator.autoscaling.targetCPUUtilizationPercentage | int | `50` | Target CPU utlisation before it scales up/down. |
 | activator.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/activator"` | Repository of the activator image |
 | activator.image.sha | string | `"ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"` | SHA256 of the activator image, either provide tag or SHA (SHA will be given priority) |
 | activator.image.tag | string | `""` | Tag of the activator image, either provide tag or SHA (SHA will be given priority) |
@@ -69,11 +69,11 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | autoscaler.image.tag | string | `""` | Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | autoscaler.replicaCount | int | `1` | Number of replicas for the autoscaler deployment. |
 | autoscaler.resources | object | `{}` | Resources requests and limits for autoscaler. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
-| config | object | `{"autoscaler":{"activator-capacity":"100.0","allow-zero-initial-scale":"false","container-concurrency-target-default":"100","container-concurrency-target-percentage":"70","enable-scale-to-zero":"true","initial-scale":"1","max-scale":"0","max-scale-down-rate":"2.0","max-scale-limit":"0","max-scale-up-rate":"2.0","panic-threshold-percentage":"200.0","panic-window-percentage":"10.0","pod-autoscaler-class":"kpa.autoscaling.knative.dev","requests-per-second-target-default":"200","scale-down-delay":"0s","scale-to-zero-grace-period":"30s","scale-to-zero-pod-retention-period":"0s","stable-window":"300s","target-burst-capacity":"0"},"buckets":"1","defaults":{},"deployment":{"queue-sidecar-cpu-limit":"500m","queue-sidecar-cpu-request":"100m","queueSidecarImage":"gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"},"domain":{"some.dns.here":""},"features":{},"gc":{},"leaderElection":{"lease-duration":"15s","renew-deadline":"10s","retry-period":"2s"},"logging":{"logging.request-log-template":""},"network":{},"observability":{},"tracing":{}}` | Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml |
+| config | object | `{"autoscaler":{},"buckets":"1","defaults":{},"deployment":{"queueSidecarImage":"gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"},"domain":{},"features":{},"gc":{},"leaderElection":{"lease-duration":"15s","renew-deadline":"10s","retry-period":"2s"},"logging":{"logging.request-log-template":""},"network":{},"observability":{},"tracing":{}}` | Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml |
 | controller.autoscaling.enabled | bool | `true` | Enables autoscaling for controller deployment. |
 | controller.autoscaling.maxReplicas | int | `20` | Maximum number of replicas for controller. |
 | controller.autoscaling.minReplicas | int | `1` | Minimum number of replicas for controller. |
-| controller.autoscaling.targetCPUUtilizationPercentage | int | `100` | Target CPU utlisation before it scales up/down. |
+| controller.autoscaling.targetCPUUtilizationPercentage | int | `50` | Target CPU utlisation before it scales up/down. |
 | controller.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/controller"` | Repository of the controller image |
 | controller.image.sha | string | `"c5a77d5642065ff3452d9b043a7226b85bfc81dc068f8dded905abf88d917a4d"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.image.tag | string | `""` | Tag of the controller image, either provide tag or SHA (SHA will be given priority) |
@@ -93,13 +93,21 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
+| monitoring.enabled | bool | `true` |  |
+| monitoring.metricRelabelingRegex | string | `"(gojek_com_team|gojek_com_stream|gojek_com_orchestrator|gojek_com_environment|gojek_com_app)"` |  |
+| monitoring.podMonitor.metricRelabelings[0].action | string | `"drop"` |  |
+| monitoring.podMonitor.metricRelabelings[0].regex | string | `"{{ .Values.monitoring.metricRelabelingRegex }}"` |  |
+| monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.monitoring.selectorKey }}"` |  |
+| monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
+| monitoring.podMonitor.userMetricPortName | string | `"metrics"` |  |
+| monitoring.selectorKey | string | `"serving.knative.dev/release"` |  |
 | queueProxy.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/queue"` | Repository of the queue proxy image |
 | queueProxy.image.sha | string | `"80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"` | SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
 | queueProxy.image.tag | string | `""` | Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
 | webhook.autoscaling.enabled | bool | `true` | Enables autoscaling for webhook deployment. |
 | webhook.autoscaling.maxReplicas | int | `20` | Maximum number of replicas for webhook. |
 | webhook.autoscaling.minReplicas | int | `1` | Minimum number of replicas for webhook. |
-| webhook.autoscaling.targetCPUUtilizationPercentage | int | `100` | Target CPU utlisation before it scales up/down. |
+| webhook.autoscaling.targetCPUUtilizationPercentage | int | `50` | Target CPU utlisation before it scales up/down. |
 | webhook.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/webhook"` | Repository of the webhook image |
 | webhook.image.sha | string | `"bd954ec8ced56e359bd4f60ee1886b20000df14126688c796383a3ae40cfffc0"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |

@@ -22,9 +22,11 @@ dependencies:
     repository: "https://istio-release.storage.googleapis.com/charts"
     version: 1.13.3
     alias: istioIngressGateway
-    condition: istioIngressGateway.enabled
+    # NOTE: workaround for similar issue: https://github.com/open-telemetry/opentelemetry-helm-charts/issues/228
+    # `global` is of type object, so enabled condition can be specified in there
+    condition: istioIngressGateway.global.enabled
   - name: gateway
     repository: "https://istio-release.storage.googleapis.com/charts"
     version: 1.13.3
     alias: clusterLocalGateway
-    condition: clusterLocalGateway.enabled
+    condition: clusterLocalGateway.global.enabled

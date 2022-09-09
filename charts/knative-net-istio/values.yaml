@@ -116,7 +116,8 @@ istiod:
     enableTracing: false
 
 istioIngressGateway:
-  enabled: true
+  global:
+    enabled: true
   autoscaling:
     enabled: true
     minReplicas: 1
@@ -137,7 +138,8 @@ istioIngressGateway:
       memory: 1Gi
 
 clusterLocalGateway:
-  enabled: true
+  global:
+    enabled: true
   labels:
     app: cluster-local-gateway
     istio: cluster-local-gateway
