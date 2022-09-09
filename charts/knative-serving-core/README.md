@@ -93,14 +93,7 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
-| monitoring.enabled | bool | `true` |  |
-| monitoring.metricRelabelingRegex | string | `"(gojek_com_team|gojek_com_stream|gojek_com_orchestrator|gojek_com_environment|gojek_com_app)"` |  |
-| monitoring.podMonitor.metricRelabelings[0].action | string | `"drop"` |  |
-| monitoring.podMonitor.metricRelabelings[0].regex | string | `"{{ .Values.monitoring.metricRelabelingRegex }}"` |  |
-| monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.monitoring.selectorKey }}"` |  |
-| monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
-| monitoring.podMonitor.userMetricPortName | string | `"metrics"` |  |
-| monitoring.selectorKey | string | `"serving.knative.dev/release"` |  |
+| monitoring.enabled | bool | `false` |  |
 | queueProxy.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/queue"` | Repository of the queue proxy image |
 | queueProxy.image.sha | string | `"80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"` | SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
 | queueProxy.image.tag | string | `""` | Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority) |

@@ -61,4 +61,4 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/config/ct.yaml
+        run: helm repo add istio https://istio-release.storage.googleapis.com/charts; ct install --config .github/config/ct.yaml

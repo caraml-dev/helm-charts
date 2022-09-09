@@ -224,15 +224,31 @@ queueProxy:
     sha: "80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"
 
 monitoring:
+  enabled: false
+
+autoscalerHpa:
   enabled: true
-  podMonitor:
-    userMetricPortName: metrics
-    selector:
-      matchExpressions:
-        - key: "{{ .Values.monitoring.selectorKey }}"
-          operator: Exists
-    metricRelabelings:
-      - action: drop
-        regex: "{{ .Values.monitoring.metricRelabelingRegex }}"
-  metricRelabelingRegex: (gojek_com_team|gojek_com_stream|gojek_com_orchestrator|gojek_com_environment|gojek_com_app)
-  selectorKey: serving.knative.dev/release
+  image:
+    # -- Repository of the autoscaler image
+    repository: "gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler-hpa"
+    # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+    sha: "c7020d14b51862fae8e92da7b0442aa7843eb81c32699d158a3b24c19d5af8d4"
+  # -- Number of replicas for the autoscaler deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for autoscaler. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi

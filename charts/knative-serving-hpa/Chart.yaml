@@ -1,9 +1,0 @@
-apiVersion: v2
-name: knative-serving-hpa
-description: Installs Knative Serving HPA Component
-type: application
-version: 1.0.0
-appVersion: "v1.0.1"
-maintainers:
-  - name: caraml-dev
-    email: caraml-dev@caraml.dev

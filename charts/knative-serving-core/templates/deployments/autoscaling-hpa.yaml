@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- if .Values.autoscalingHpa.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -88,3 +89,4 @@ spec:
               containerPort: 9090
             - name: profiling
               containerPort: 8008
+{{- end }}
