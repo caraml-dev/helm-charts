@@ -1,3 +1,4 @@
+---
 global:
   # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
   extraPodLabels: {}
@@ -111,14 +112,59 @@ istiod:
     cpu:
       targetAverageUtilization: 80
 
-    nodeSelector:
-      cloud.google.com/gke-nodepool: infrastructure-node-pool
-
   meshConfig:
-    enableTracing: true
-    defaultConfig:
-      terminationDrainDuration: 30s
-      tracing:
-        sampling: 0.1
-        zipkin:
-          address: jaeger-tracing-collector.infrastructure:9411
+    enableTracing: false
+
+istioIngressGateway:
+  enabled: true
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 80
+
+  env:
+    ISTIO_META_ROUTER_MODE: standard
+    ISTIO_METAJSON_STATS: |
+      {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
+
+  resources:
+    requests:
+      cpu: "2"
+      memory: 1Gi
+    limits:
+      cpu: "4"
+      memory: 1Gi
+
+clusterLocalGateway:
+  enabled: true
+  labels:
+    app: cluster-local-gateway
+    istio: cluster-local-gateway
+
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 60
+
+  env:
+    ISTIO_METAJSON_STATS: |
+      {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
+
+  resources:
+    requests:
+      cpu: "2"
+      memory: 1Gi
+    limits:
+      cpu: "4"
+      memory: 1Gi
+
+  service:
+    type: ClusterIP
+    ports:
+      - port: 80
+        targetPort: 80
+        name: http2
+      - port: 443
+        name: https
