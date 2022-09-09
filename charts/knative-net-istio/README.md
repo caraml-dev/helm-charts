@@ -60,13 +60,10 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | clusterLocalGateway.autoscaling.minReplicas | int | `1` |  |
 | clusterLocalGateway.autoscaling.targetCPUUtilizationPercentage | int | `60` |  |
 | clusterLocalGateway.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
-| clusterLocalGateway.global.enabled | bool | `true` |  |
+| clusterLocalGateway.global.enabled | bool | `true` | Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment |
 | clusterLocalGateway.labels.app | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.labels.istio | string | `"cluster-local-gateway"` |  |
-| clusterLocalGateway.resources.limits.cpu | string | `"4"` |  |
-| clusterLocalGateway.resources.limits.memory | string | `"1Gi"` |  |
-| clusterLocalGateway.resources.requests.cpu | string | `"2"` |  |
-| clusterLocalGateway.resources.requests.memory | string | `"1Gi"` |  |
+| clusterLocalGateway.resources | object | `{}` |  |
 | clusterLocalGateway.service.ports[0].name | string | `"http2"` |  |
 | clusterLocalGateway.service.ports[0].port | int | `80` |  |
 | clusterLocalGateway.service.ports[0].targetPort | int | `80` |  |
@@ -88,7 +85,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
-| istioBase.enabled | bool | `true` |  |
+| istioBase.enabled | bool | `true` | Set to false if there is an existing istio deployment |
 | istioBase.global.istioNamespace | string | `"istio-system"` |  |
 | istioIngressGateway.autoscaling.enabled | bool | `true` |  |
 | istioIngressGateway.autoscaling.maxReplicas | int | `4` |  |
@@ -96,12 +93,12 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istioIngressGateway.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | istioIngressGateway.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | istioIngressGateway.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |
-| istioIngressGateway.global.enabled | bool | `true` |  |
+| istioIngressGateway.global.enabled | bool | `true` | Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment |
 | istioIngressGateway.resources.limits.cpu | string | `"4"` |  |
 | istioIngressGateway.resources.limits.memory | string | `"1Gi"` |  |
 | istioIngressGateway.resources.requests.cpu | string | `"2"` |  |
 | istioIngressGateway.resources.requests.memory | string | `"1Gi"` |  |
-| istiod.enabled | bool | `true` |  |
+| istiod.enabled | bool | `true` | Set to false if there is an existing istio deployment |
 | istiod.meshConfig.enableTracing | bool | `false` |  |
 | istiod.pilot.autoscaleEnabled | bool | `true` |  |
 | istiod.pilot.autoscaleMax | int | `5` |  |

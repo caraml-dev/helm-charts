@@ -89,11 +89,13 @@ webhook:
 ##########################
 
 istioBase:
+  # -- Set to false if there is an existing istio deployment
   enabled: true
   global:
     istioNamespace: istio-system
 
 istiod:
+  # -- Set to false if there is an existing istio deployment
   enabled: true
   pilot:
     autoscaleEnabled: true
@@ -117,6 +119,7 @@ istiod:
 
 istioIngressGateway:
   global:
+    # -- Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment
     enabled: true
   autoscaling:
     enabled: true
@@ -139,6 +142,7 @@ istioIngressGateway:
 
 clusterLocalGateway:
   global:
+    # -- Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment
     enabled: true
   labels:
     app: cluster-local-gateway
@@ -155,12 +159,17 @@ clusterLocalGateway:
       {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
 
   resources:
-    requests:
-      cpu: "2"
-      memory: 1Gi
-    limits:
-      cpu: "4"
-      memory: 1Gi
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
 
   service:
     type: ClusterIP
