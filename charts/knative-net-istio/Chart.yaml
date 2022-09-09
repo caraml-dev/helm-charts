@@ -4,6 +4,9 @@ description: Installs Net Istio for KNative
 type: application
 version: 1.0.1
 appVersion: "v1.0.0"
+maintainers:
+  - name: caraml-dev
+    email: caraml-dev@caraml.dev
 dependencies:
   - name: base
     repository: "https://istio-release.storage.googleapis.com/charts"
