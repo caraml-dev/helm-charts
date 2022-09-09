@@ -19,4 +19,4 @@ spec:
       metricRelabelings:
 {{ tpl (toYaml .Values.monitoring.podMonitor.metricRelabelings | indent 6) . }}
 {{- end }}
-{{- end }}  
+{{- end }}
