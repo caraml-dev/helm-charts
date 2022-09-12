@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: 1.5.4](https://img.shields.io/badge/AppVersion-1.5.4-informational?style=flat-square)
 
 MLP API
 
@@ -20,8 +20,10 @@ MLP API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| dbMigrations.image.tag | string | `"v4.7.1"` |  |
-| dbMigrations.source | string | `"github://gojek/mlp/db-migrations#v1.5.4"` |  |
+| dbMigrations.image.pullPolicy | string | `"IfNotPresent"` |  |
+| dbMigrations.image.registry | string | `"ghcr.io"` |  |
+| dbMigrations.image.repository | string | `"gojek/mlp-db-migrate"` |  |
+| dbMigrations.image.tag | string | `"v1.5.4"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` |  |
 | externalPostgresql.database | string | `"mlp"` |  |
 | externalPostgresql.password | string | `"password"` |  |

@@ -69,9 +69,11 @@ mlp:
     turingHomepage: "http://turing.dev"
 
 dbMigrations:
-  source: github://gojek/mlp/db-migrations#v1.5.4
   image:
-    tag: v4.7.1
+    pullPolicy: IfNotPresent
+    registry: ghcr.io
+    repository: gojek/mlp-db-migrate
+    tag: v1.5.4
 
 # If you would like to use an external postgres database, you can connect using these credentials
 externalPostgresql:

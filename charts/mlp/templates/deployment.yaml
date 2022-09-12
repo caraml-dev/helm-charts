@@ -30,12 +30,13 @@ spec:
     spec:
       initContainers:
       - name: migrations
-        image: "migrate/migrate:{{ .Values.dbMigrations.image.tag }}"
+        image: "{{ .Values.dbMigrations.image.registry }}/{{ .Values.dbMigrations.image.repository }}:{{ .Values.dbMigrations.image.tag }}"
+        imagePullPolicy: {{ .Values.dbMigrations.image.pullPolicy }}
         command: ['/bin/sh', '-c']
         args:
           - |
             /migrate \
-            -source {{ .Values.dbMigrations.source }} \
+            -path /migrations \
             -database postgres://{{ template "postgres.username" . }}:$(PG_PASSWORD)@{{ template "postgres.host" . }}:5432/{{ template "postgres.database" . }}?sslmode=disable \
             up
         env:
