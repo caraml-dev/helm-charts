@@ -4,6 +4,12 @@
 
 MLP API
 
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| caraml-dev | <caraml-dev@caraml.dev> |  |
+
 ## Requirements
 
 | Repository | Name | Version |

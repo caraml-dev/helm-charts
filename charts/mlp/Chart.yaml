@@ -2,3 +2,7 @@ apiVersion: v1
 description: "MLP API"
 name: mlp
 version: 1.0.2
+
+maintainers:
+  - name: caraml-dev
+    email: caraml-dev@caraml.dev
