@@ -28,11 +28,11 @@ jobs:
         with:
           version: v3.8.1
 
-      # Uncomment this after at least one successful chart release. This will fail because there is no index file in gh-pages branch of the repo yet.
       - name: Add dependency chart repos
         run: |
           helm repo add caraml https://caraml-dev.github.io/helm-charts/
           helm repo add istio https://istio-release.storage.googleapis.com/charts
+          helm repo add stable https://charts.helm.sh/stable
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0

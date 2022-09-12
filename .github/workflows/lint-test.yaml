@@ -40,6 +40,7 @@ jobs:
         run: |
           helm repo add caraml https://caraml-dev.github.io/helm-charts/
           helm repo add istio https://istio-release.storage.googleapis.com/charts
+          helm repo add stable https://charts.helm.sh/stable
 
       - name: Run chart-testing (lint)
         run: ct lint --config .github/config/ct.yaml
