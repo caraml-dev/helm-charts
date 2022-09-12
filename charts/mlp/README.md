@@ -21,7 +21,7 @@ MLP API
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | dbMigrations.image.tag | string | `"v4.7.1"` |  |
-| dbMigrations.source | string | `"github://maniteja6799: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@gojek/mlp/db-migrations#v1.5.4"` |  |
+| dbMigrations.source | string | `"github://gojek/mlp/db-migrations#v1.5.4"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` |  |
 | externalPostgresql.database | string | `"mlp"` |  |
 | externalPostgresql.password | string | `"password"` |  |
