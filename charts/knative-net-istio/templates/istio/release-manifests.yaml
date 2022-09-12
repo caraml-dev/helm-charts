@@ -1,0 +1,181 @@
+# The manifests declared here is a hack to get around the inconsistent use of {{ .Release.namespace }} and .Values.global.istioNamespace.
+# Release namespace is not known untill runtime, but some resources are using  .Values.global.istioNamespace
+# eg https://github.com/istio/istio/blob/e7911b20b131082ff2f8e648735692036c814d69/manif[…]charts/istio-control/istio-discovery/templates/rolebinding.yaml vs
+# https://github.com/istio/istio/blob/9ff1e2a02722f013d5ec063bd27459a78acef711/manif[…]/charts/istio-control/istio-discovery/templates/deployment.yaml
+# To get around this, we declare the same manifests here but replace .Values.global.istioNamespace with {{ .Release.namespace }}
+{{- if .Values.istiod.deployInReleaseNs }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: istio-reader-clusterrole{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+  labels:
+    app: istio-reader
+    release: {{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: istio-reader-clusterrole{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: istio-reader-service-account
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: istiod
+    release: {{ .Release.Name }}
+rules:
+  # permissions to verify the webhook is ready and rejecting
+  # invalid config. We use --server-dry-run so no config is persisted.
+  - apiGroups: ["networking.istio.io"]
+    verbs: ["create"]
+    resources: ["gateways"]
+
+  # For storing CA secret
+  - apiGroups: [""]
+    resources: ["secrets"]
+    # TODO lock this down to istio-ca-cert if not using the DNS cert mesh config
+    verbs: ["create", "get", "watch", "list", "update", "delete"]
+---
+apiVersion: v1
+kind: ServiceAccount
+  {{- if .Values.global.imagePullSecrets }}
+imagePullSecrets:
+  {{- range .Values.global.imagePullSecrets }}
+  - name: {{ . }}
+  {{- end }}
+  {{- end }}
+metadata:
+  name: istiod{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: istiod
+    release: {{ .Release.Name }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: istiod-clusterrole{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+  labels:
+    app: istiod
+    release: {{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: istiod-clusterrole{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: istiod-gateway-controller{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+  labels:
+    app: istiod
+    release: {{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: istiod-gateway-controller{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+subjects:
+- kind: ServiceAccount
+  name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+  namespace: {{ .Values.global.istioNamespace }}
+  labels:
+    app: istiod
+    release: {{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+subjects:
+  - kind: ServiceAccount
+    name: istiod{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+  namespace: {{ .Values.global.istioNamespace }}
+  labels:
+    app: istiod
+    release: {{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+subjects:
+  - kind: ServiceAccount
+    name: istiod{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
+    namespace: {{ .Release.Namespace }}
+---
+{{- if .Values.istiod.configValidation }}
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: istio-validator{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}-{{ .Values.global.istioNamespace }}
+  labels:
+    app: istiod
+    release: {{ .Release.Name }}
+    istio: istiod
+    istio.io/rev: {{ .Values.revision | default "default" }}
+webhooks:
+  # Webhook handling per-revision validation. Mostly here so we can determine whether webhooks
+  # are rejecting invalid configs on a per-revision basis.
+  - name: rev.validation.istio.io
+    clientConfig:
+      # Should change from base but cannot for API compat
+      {{- if .Values.base.validationURL }}
+      url: {{ .Values.base.validationURL }}
+      {{- else }}
+      service:
+        name: istiod{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
+        namespace: {{ .Release.Namespace }}
+        path: "/validate"
+      {{- end }}
+    rules:
+      - operations:
+          - CREATE
+          - UPDATE
+        apiGroups:
+          - security.istio.io
+          - networking.istio.io
+          - telemetry.istio.io
+          - extensions.istio.io
+        apiVersions:
+          - "*"
+        resources:
+          - "*"
+    # Fail open until the validation webhook is ready. The webhook controller
+    # will update this to `Fail` and patch in the `caBundle` when the webhook
+    # endpoint is ready.
+    failurePolicy: Ignore
+    sideEffects: None
+    admissionReviewVersions: ["v1beta1", "v1"]
+    objectSelector:
+      matchExpressions:
+        - key: istio.io/rev
+          operator: In
+          values:
+          {{- if (eq .Values.revision "") }}
+          - "default"
+          {{- else }}
+          - "{{ .Values.revision }}"
+          {{- end }}
+---
+{{- end }}
+{{- end }}

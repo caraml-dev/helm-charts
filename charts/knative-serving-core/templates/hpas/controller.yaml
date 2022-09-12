@@ -3,7 +3,6 @@ apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: controller
-  namespace: knative-serving
   labels:
     app.kubernetes.io/name: webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}

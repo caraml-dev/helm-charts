@@ -28,6 +28,10 @@ jobs:
         with:
           version: v3.5.1
 
+      - name: Add helm repo dependencies
+        run: |
+          helm repo add istio https://istio-release.storage.googleapis.com/charts
+
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
@@ -48,7 +52,7 @@ jobs:
         id: helm-docs
         run: |
           ./scripts/helm-docs.sh
-          if [[ $(git diff --stat) != '' ]]; then
+          if [[ $(git diff --stat **/README.md) != '' ]]; then
             echo -e '\033[0;31mDocumentation outdated! ❌\nCheck Contributing Guidelines to know how to update documentation\033[0m'
             git diff --color
             exit 1
@@ -61,4 +65,4 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        run: helm repo add istio https://istio-release.storage.googleapis.com/charts; ct install --config .github/config/ct.yaml
+        run: ct install --charts charts/knative-net-istio --debug
