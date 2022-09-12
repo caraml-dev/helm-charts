@@ -69,7 +69,7 @@ mlp:
     turingHomepage: "http://turing.dev"
 
 dbMigrations:
-  source: github://gojek/mlp/db-migrations#v1.5.4
+  source: github://maniteja6799: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@gojek/mlp/db-migrations#v1.5.4
   image:
     tag: v4.7.1
 
