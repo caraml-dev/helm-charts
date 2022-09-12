@@ -1,14 +1,16 @@
-# The manifests declared here is a hack to get around the inconsistent use of {{ .Release.namespace }} and .Values.global.istioNamespace.
+# The manifests declared here is a hack to get around the inconsistent use of .Release.namespace and .Values.global.istioNamespace.
 # Release namespace is not known untill runtime, but some resources are using  .Values.global.istioNamespace
 # eg https://github.com/istio/istio/blob/e7911b20b131082ff2f8e648735692036c814d69/manif[…]charts/istio-control/istio-discovery/templates/rolebinding.yaml vs
 # https://github.com/istio/istio/blob/9ff1e2a02722f013d5ec063bd27459a78acef711/manif[…]/charts/istio-control/istio-discovery/templates/deployment.yaml
 # To get around this, we declare the same manifests here but replace .Values.global.istioNamespace with {{ .Release.namespace }}
+
+
 {{- if .Values.istiod.deployInReleaseNs }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istio-reader-clusterrole{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+  name: istio-reader-clusterrole{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}-workaround
   labels:
     app: istio-reader
     release: {{ .Release.Name }}
@@ -19,12 +21,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: istio-reader-service-account
+    # NOTE: use .Release.Namespace instead of .values.global.istioNamespace
     namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+    # NOTE: use .Release.Namespace instead of .values.global.istioNamespace
   namespace: {{ .Release.Namespace }}
   labels:
     app: istiod
@@ -52,6 +56,7 @@ imagePullSecrets:
   {{- end }}
 metadata:
   name: istiod{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
+    # NOTE: use .Release.Namespace instead of .values.global.istioNamespace
   namespace: {{ .Release.Namespace }}
   labels:
     app: istiod
@@ -60,7 +65,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istiod-clusterrole{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+  name: istiod-clusterrole{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}-workaround
   labels:
     app: istiod
     release: {{ .Release.Name }}
@@ -71,12 +76,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+    # NOTE: use .Release.Namespace instead of .values.global.istioNamespace
     namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istiod-gateway-controller{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}
+  name: istiod-gateway-controller{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}-workaround
   labels:
     app: istiod
     release: {{ .Release.Name }}
@@ -87,13 +93,15 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
+    # NOTE: use .Release.Namespace instead of .values.global.istioNamespace
   namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
-  namespace: {{ .Values.global.istioNamespace }}
+  # NOTE: use .Release.Namespace instead of .values.global.istioNamespace
+  namespace: {{ .Release.Namespace }}
   labels:
     app: istiod
     release: {{ .Release.Name }}
@@ -104,30 +112,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: istiod{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
-    namespace: {{ .Release.Namespace }}
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
-  namespace: {{ .Values.global.istioNamespace }}
-  labels:
-    app: istiod
-    release: {{ .Release.Name }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: istiod{{- if not (eq .Values.revision "")}}-{{ .Values.revision }}{{- end }}
-subjects:
-  - kind: ServiceAccount
-    name: istiod{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
+    # NOTE: use .Release.Namespace instead of .values.global.istioNamespace
     namespace: {{ .Release.Namespace }}
 ---
 {{- if .Values.istiod.configValidation }}
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: istio-validator{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}-{{ .Values.global.istioNamespace }}
+  name: istio-validator{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}-{{ .Release.Namespace }}-workaround
   labels:
     app: istiod
     release: {{ .Release.Name }}
@@ -144,6 +136,7 @@ webhooks:
       {{- else }}
       service:
         name: istiod{{- if not (eq .Values.revision "") }}-{{ .Values.revision }}{{- end }}
+        # NOTE: use .Release.Namespace instead of .values.global.istioNamespace
         namespace: {{ .Release.Namespace }}
         path: "/validate"
       {{- end }}
