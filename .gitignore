@@ -30,3 +30,7 @@ override.tf.json
 
 # Ignore pre-commit hook configs
 .pre-commit-config.yaml
+
+
+# Ignore inner charts dir
+charts/**/charts
