@@ -1,7 +1,9 @@
 ---
 apiVersion: v2
 name: generic-dep-installer
-description: Runs job with attached hook
+description: |
+  This helm chart is used to control the order of installation of helm chart dependencies.
+  It creates a K8s Job that performs that applies a rendered helm chart to a cluster, while exposing the `.Values.hook.weight` to users to configure which dependency should be installed first.
 type: application
 version: 0.0.1
 appVersion: "v0.0.1"

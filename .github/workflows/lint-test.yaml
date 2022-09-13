@@ -65,4 +65,4 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        run: ct install --namespace caraml --helm-extra-set-args '--set=base.global.istioNamespace=caraml' --helm-extra-set-args '--set=istiod.global.istioNamespace=caraml' --charts charts/knative-net-istio --debug
+        run: ct install --config .github/config/ct.yaml
