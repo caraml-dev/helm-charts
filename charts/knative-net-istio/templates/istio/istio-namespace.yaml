@@ -1,6 +1,6 @@
-{{- if .Values.base.enabled }}
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: {{ .Values.base.global.istioNamespace | default "istio-system" }}
-{{ end }}
+# {{- if .Values.base.enabled }}
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: {{ .Values.base.global.istioNamespace | default "istio-system" }}
+# {{ end }}

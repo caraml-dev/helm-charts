@@ -13,25 +13,42 @@ dependencies:
     version: 1.1.0
     alias: knativeServingCore
     condition: knativeServingCore.enabled
+  - name: generic-dep-installer
+    repository: "file://../helm-dep-installer"
+    version: 0.0.1
+    alias: istiod
+    condition: istiod.enabled
   - name: base
     repository: "https://istio-release.storage.googleapis.com/charts"
     version: 1.13.3
     alias: base
     condition: base.enabled
-  - name: istiod
-    repository: "https://istio-release.storage.googleapis.com/charts"
-    version: 1.13.3
-    alias: istiod
-    condition: istiod.enabled
-  - name: gateway
-    repository: "https://istio-release.storage.googleapis.com/charts"
-    version: 1.13.3
+  # - name: istiod
+  #   repository: "https://istio-release.storage.googleapis.com/charts"
+  #   version: 1.13.3
+  #   alias: istiod
+  #   condition: istiod.enabled
+  # - name: gateway
+  #   repository: "https://istio-release.storage.googleapis.com/charts"
+  #   version: 1.13.3
+  #   alias: istioIngressGateway
+  #   # NOTE: workaround for similar issue: https://github.com/open-telemetry/opentelemetry-helm-charts/issues/228
+  #   # `global` is of type object, so enabled condition can be specified in there
+  #   condition: istioIngressGateway.global.enabled
+  # - name: gateway
+  #   repository: "https://istio-release.storage.googleapis.com/charts"
+  #   version: 1.13.3
+  #   alias: clusterLocalGateway
+  #   condition: clusterLocalGateway.global.enabled
+  - name: generic-dep-installer
+    repository: "file://../helm-dep-installer"
+    version: 0.0.1
     alias: istioIngressGateway
     # NOTE: workaround for similar issue: https://github.com/open-telemetry/opentelemetry-helm-charts/issues/228
     # `global` is of type object, so enabled condition can be specified in there
     condition: istioIngressGateway.global.enabled
-  - name: gateway
-    repository: "https://istio-release.storage.googleapis.com/charts"
-    version: 1.13.3
+  - name: generic-dep-installer
+    repository: "file://../helm-dep-installer"
+    version: 0.0.1
     alias: clusterLocalGateway
     condition: clusterLocalGateway.global.enabled

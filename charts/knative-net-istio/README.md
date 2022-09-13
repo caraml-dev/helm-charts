@@ -58,21 +58,29 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | base.enabled | bool | `true` | Set to false if there is an existing istio deployment |
 | base.global.istioNamespace | string | `"istio-system"` |  |
 | base.validationURL | string | `""` |  |
-| clusterLocalGateway.autoscaling.enabled | bool | `false` |  |
-| clusterLocalGateway.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
+| clusterLocalGateway.chartValues.autoscaling.enabled | bool | `false` |  |
+| clusterLocalGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
+| clusterLocalGateway.chartValues.global.enabled | bool | `true` | Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment |
+| clusterLocalGateway.chartValues.labels.app | string | `"cluster-local-gateway"` |  |
+| clusterLocalGateway.chartValues.labels.istio | string | `"cluster-local-gateway"` |  |
+| clusterLocalGateway.chartValues.name | string | `"cluster-local-gateway"` | Specify name here so each gateway installation has its own unique name |
+| clusterLocalGateway.chartValues.resources | object | `{}` |  |
+| clusterLocalGateway.chartValues.service.ports[0].name | string | `"http2"` |  |
+| clusterLocalGateway.chartValues.service.ports[0].port | int | `80` |  |
+| clusterLocalGateway.chartValues.service.ports[0].targetPort | int | `80` |  |
+| clusterLocalGateway.chartValues.service.ports[1].name | string | `"https"` |  |
+| clusterLocalGateway.chartValues.service.ports[1].port | int | `443` |  |
+| clusterLocalGateway.chartValues.service.type | string | `"ClusterIP"` |  |
+| clusterLocalGateway.chartValues.serviceAccount.create | bool | `true` |  |
+| clusterLocalGateway.chartValues.serviceAccount.name | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.global.enabled | bool | `true` | Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment |
-| clusterLocalGateway.labels.app | string | `"cluster-local-gateway"` |  |
-| clusterLocalGateway.labels.istio | string | `"cluster-local-gateway"` |  |
-| clusterLocalGateway.name | string | `"cluster-local-gateway"` | Specify name here so each gateway installation has its own unique name |
-| clusterLocalGateway.resources | object | `{}` |  |
-| clusterLocalGateway.service.ports[0].name | string | `"http2"` |  |
-| clusterLocalGateway.service.ports[0].port | int | `80` |  |
-| clusterLocalGateway.service.ports[0].targetPort | int | `80` |  |
-| clusterLocalGateway.service.ports[1].name | string | `"https"` |  |
-| clusterLocalGateway.service.ports[1].port | int | `443` |  |
-| clusterLocalGateway.service.type | string | `"ClusterIP"` |  |
-| clusterLocalGateway.serviceAccount.create | bool | `true` |  |
-| clusterLocalGateway.serviceAccount.name | string | `"cluster-local-gateway"` |  |
+| clusterLocalGateway.helmChart.chart | string | `"gateway"` |  |
+| clusterLocalGateway.helmChart.createNamespace | bool | `false` |  |
+| clusterLocalGateway.helmChart.namespace | string | `"istio-system"` |  |
+| clusterLocalGateway.helmChart.release | string | `"cluster-local-gateway"` |  |
+| clusterLocalGateway.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
+| clusterLocalGateway.helmChart.version | string | `"1.13.3"` |  |
+| clusterLocalGateway.hook.weight | int | `1` |  |
 | clusterLocalGatewayIstioSelector | string | `"cluster-local-gateway"` |  |
 | config | object | `{"istio":{"enable-virtualservice-status":"false","gateway.knative-serving.knative-ingress-gateway":"istio-ingressgateway.istio-system.svc.cluster.local","local-gateway.knative-serving.knative-local-gateway":"cluster-local-gateway.istio-system.svc.cluster.local","local-gateway.mesh":"mesh"}}` | Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml |
 | controller.autoscaling.enabled | bool | `false` | Enables autoscaling for net-istio-controller deployment. |
@@ -85,26 +93,39 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
-| istioIngressGateway.autoscaling.enabled | bool | `false` |  |
-| istioIngressGateway.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
-| istioIngressGateway.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |
-| istioIngressGateway.global.enabled | bool | `true` | Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment |
-| istioIngressGateway.name | string | `"istio-ingressgateway"` | Specify name here so each gateway installation has its own unique name |
-| istioIngressGateway.resources | object | `{}` |  |
-| istioIngressGateway.serviceAccount.create | bool | `true` |  |
-| istioIngressGateway.serviceAccount.name | string | `"istio-ingressgateway"` |  |
-| istiod.configValidation | bool | `true` |  |
-| istiod.deployInReleaseNs | bool | `false` |  |
+| istioIngressGateway.chartValues.autoscaling.enabled | bool | `false` |  |
+| istioIngressGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
+| istioIngressGateway.chartValues.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |
+| istioIngressGateway.chartValues.global.enabled | bool | `true` | Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment |
+| istioIngressGateway.chartValues.name | string | `"istio-ingressgateway"` | Specify name here so each gateway installation has its own unique name |
+| istioIngressGateway.chartValues.resources | object | `{}` |  |
+| istioIngressGateway.chartValues.serviceAccount.create | bool | `true` |  |
+| istioIngressGateway.chartValues.serviceAccount.name | string | `"istio-ingressgateway"` |  |
+| istioIngressGateway.helmChart.chart | string | `"gateway"` |  |
+| istioIngressGateway.helmChart.createNamespace | bool | `false` |  |
+| istioIngressGateway.helmChart.namespace | string | `"istio-system"` |  |
+| istioIngressGateway.helmChart.release | string | `"istio-ingress-gateway"` |  |
+| istioIngressGateway.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
+| istioIngressGateway.helmChart.version | string | `"1.13.3"` |  |
+| istioIngressGateway.hook.weight | int | `1` |  |
+| istiod.chartValues.configValidation | bool | `true` |  |
+| istiod.chartValues.deployInReleaseNs | bool | `false` |  |
+| istiod.chartValues.global.configValidation | bool | `true` |  |
+| istiod.chartValues.global.istioNamespace | string | `"istio-system"` |  |
+| istiod.chartValues.meshConfig.enableTracing | bool | `false` |  |
+| istiod.chartValues.pilot.autoscaleEnabled | bool | `false` |  |
+| istiod.chartValues.pilot.cpu.targetAverageUtilization | int | `80` |  |
+| istiod.chartValues.pilot.resources.limits.cpu | int | `1` |  |
+| istiod.chartValues.pilot.resources.limits.memory | string | `"1024Mi"` |  |
+| istiod.chartValues.pilot.resources.requests.cpu | string | `"500m"` |  |
+| istiod.chartValues.pilot.resources.requests.memory | string | `"512Mi"` |  |
 | istiod.enabled | bool | `true` | Set to false if there is an existing istio deployment |
-| istiod.global.configValidation | bool | `true` |  |
-| istiod.global.istioNamespace | string | `"istio-system"` |  |
-| istiod.meshConfig.enableTracing | bool | `false` |  |
-| istiod.pilot.autoscaleEnabled | bool | `false` |  |
-| istiod.pilot.cpu.targetAverageUtilization | int | `80` |  |
-| istiod.pilot.resources.limits.cpu | int | `1` |  |
-| istiod.pilot.resources.limits.memory | string | `"1024Mi"` |  |
-| istiod.pilot.resources.requests.cpu | string | `"500m"` |  |
-| istiod.pilot.resources.requests.memory | string | `"512Mi"` |  |
+| istiod.helmChart.chart | string | `"istiod"` |  |
+| istiod.helmChart.namespace | string | `"istio-system"` |  |
+| istiod.helmChart.release | string | `"istiod"` |  |
+| istiod.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
+| istiod.helmChart.version | string | `"1.13.3"` |  |
+| istiod.hook.weight | int | `0` |  |
 | knativeServingCore.activator.autoscaling.enabled | bool | `false` | Enables autoscaling for activator deployment. |
 | knativeServingCore.activator.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/activator"` | Repository of the activator image |
 | knativeServingCore.activator.image.sha | string | `"ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"` | SHA256 of the activator image, either provide tag or SHA (SHA will be given priority) |
