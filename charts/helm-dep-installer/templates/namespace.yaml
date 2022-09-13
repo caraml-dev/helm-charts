@@ -1,4 +1,4 @@
-{{- if .Values.helmChart.createNamespace }}
+{{- if and .Values.helmChart.createNamespace (ne .Values.helmChart.namespace "") }}
 apiVersion: v1
 kind: Namespace
 metadata:

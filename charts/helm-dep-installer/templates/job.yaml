@@ -27,7 +27,7 @@ spec:
             - {{ .Values.helmChart.chart }}
             - {{ .Values.helmChart.version }}
             - {{ .Values.helmChart.release }}
-            - {{ .Values.helmChart.namespace }}
+            - {{ .Values.helmChart.namespace | default .Release.Namespace }}
             - install
           env:
             - name: CHART_VALUES

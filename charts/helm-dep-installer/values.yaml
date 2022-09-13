@@ -1,4 +1,4 @@
-image: applecider/helm-dep-installer:0.0.8
+image: applecider/helm-dep-installer:0.0.9
 # serviceAccount: helm-dep-installer-sa
 helmChart:
   repository: ""
