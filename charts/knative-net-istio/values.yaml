@@ -367,11 +367,11 @@ base:
 istiod:
   # -- Set to false if there is an existing istio deployment
   enabled: true
-  deployInReleaseNs: true
+  deployInReleaseNs: false
   configValidation: true
   global:
     istioNamespace: "istio-system"
-    configValidation: false
+    configValidation: true
   pilot:
     autoscaleEnabled: false
     # -- Set accordingly based on environment

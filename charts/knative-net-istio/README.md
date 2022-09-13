@@ -94,9 +94,9 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istioIngressGateway.serviceAccount.create | bool | `true` |  |
 | istioIngressGateway.serviceAccount.name | string | `"istio-ingressgateway"` |  |
 | istiod.configValidation | bool | `true` |  |
-| istiod.deployInReleaseNs | bool | `true` |  |
+| istiod.deployInReleaseNs | bool | `false` |  |
 | istiod.enabled | bool | `true` | Set to false if there is an existing istio deployment |
-| istiod.global.configValidation | bool | `false` |  |
+| istiod.global.configValidation | bool | `true` |  |
 | istiod.global.istioNamespace | string | `"istio-system"` |  |
 | istiod.meshConfig.enableTracing | bool | `false` |  |
 | istiod.pilot.autoscaleEnabled | bool | `false` |  |

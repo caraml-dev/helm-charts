@@ -1,0 +1,11 @@
+image: applecider/helm-dep-installer:0.0.4
+# serviceAccount: helm-dep-installer-sa
+helmChart:
+  repository: ""
+  chart: ""
+  version: ""
+  release: ""
+
+hook: {}
+
+chartValues: {}

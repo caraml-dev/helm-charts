@@ -1,0 +1,10 @@
+---
+apiVersion: v2
+name: generic-dep-installer
+description: Runs job with attached hook
+type: application
+version: 0.0.1
+appVersion: "v0.0.1"
+maintainers:
+  - name: caraml-dev
+    email: caraml-dev@caraml.dev
