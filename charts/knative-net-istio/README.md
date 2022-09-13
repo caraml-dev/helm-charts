@@ -58,6 +58,17 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | base.enabled | bool | `true` | Set to false if there is an existing istio deployment |
 | base.global.istioNamespace | string | `"istio-system"` |  |
 | base.validationURL | string | `""` |  |
+| certManager.chartValues.cainjector.resources | object | `{}` |  |
+| certManager.chartValues.resources | object | `{}` |  |
+| certManager.chartValues.webhook.resources | object | `{}` |  |
+| certManager.enabled | bool | `true` |  |
+| certManager.helmChart.chart | string | `"cert-manager"` |  |
+| certManager.helmChart.createNamespace | bool | `true` |  |
+| certManager.helmChart.namespace | string | `"infrastructure"` |  |
+| certManager.helmChart.release | string | `"cert-manager"` |  |
+| certManager.helmChart.repository | string | `"https://charts.jetstack.io/"` |  |
+| certManager.helmChart.version | string | `"1.8.1"` |  |
+| certManager.hook.weight | int | `-1` |  |
 | clusterLocalGateway.chartValues.autoscaling.enabled | bool | `false` |  |
 | clusterLocalGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | clusterLocalGateway.chartValues.global.enabled | bool | `true` | Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment |

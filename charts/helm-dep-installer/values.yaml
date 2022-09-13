@@ -1,4 +1,4 @@
-image: applecider/helm-dep-installer:0.0.6
+image: applecider/helm-dep-installer:0.0.8
 # serviceAccount: helm-dep-installer-sa
 helmChart:
   repository: ""
@@ -11,3 +11,6 @@ helmChart:
 hook: {}
 
 chartValues: {}
+
+deleteJob:
+  enabled: true

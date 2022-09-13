@@ -1,17 +1,15 @@
+---
 {{- $chartVersion := .Values.helmChart.version | replace "." "-" }}
 {{- $serviceAccountName := printf "generic-runner-%s-%s-%s-sa" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
----
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "generic-runner-%s-%s-%s" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+  name: {{ printf "generic-runner-%s-%s-%s-install" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
   labels:
     {{- include "generic-dep-installer.labels" . | nindent 4 }}
   annotations:
-    # This is what defines this resource as a hook. Without this line, the
-    # job is considered part of the release.
     "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
-    "helm.sh/hook": {{ .Values.hook.type | default "pre-install,pre-upgrade" | quote }}
+    "helm.sh/hook": "pre-install,pre-upgrade"
     "helm.sh/hook-weight": {{ .Values.hook.weight | default "0" | quote }}
 spec:
   template:
@@ -22,6 +20,7 @@ spec:
       containers:
         - name: runner
           image: {{ .Values.image }}
+          imagePullPolicy: Always
           command: ["/run.sh"]
           args:
             - {{ .Values.helmChart.repository }}
@@ -29,8 +28,46 @@ spec:
             - {{ .Values.helmChart.version }}
             - {{ .Values.helmChart.release }}
             - {{ .Values.helmChart.namespace }}
+            - install
           env:
             - name: CHART_VALUES
               value: {{ .Values.chartValues | toYaml | b64enc | quote }}
       restartPolicy: Never
   backoffLimit: 10
+
+{{- if .Values.deleteJob.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "generic-runner-%s-%s-%s-delete" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+  labels:
+    {{- include "generic-dep-installer.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "post-delete"
+    "helm.sh/hook-weight": {{ .Values.hook.weight | default "0" | quote }}
+spec:
+  template:
+    metadata:
+      name: {{ printf "generic-runner-%s-%s-%s"  .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+    spec:
+      serviceAccountName: {{ $serviceAccountName }}
+      containers:
+        - name: runner
+          image: {{ .Values.image }}
+          imagePullPolicy: Always
+          command: ["/run.sh"]
+          args:
+            - {{ .Values.helmChart.repository }}
+            - {{ .Values.helmChart.chart }}
+            - {{ .Values.helmChart.version }}
+            - {{ .Values.helmChart.release }}
+            - {{ .Values.helmChart.namespace }}
+            - delete
+          env:
+            - name: CHART_VALUES
+              value: {{ .Values.chartValues | toYaml | b64enc | quote }}
+      restartPolicy: Never
+  backoffLimit: 10
+{{- end }}

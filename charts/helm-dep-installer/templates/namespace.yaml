@@ -1,0 +1,10 @@
+{{- if .Values.helmChart.createNamespace }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    "helm.sh/hook": {{ .Values.hook.type | default "pre-install" | quote }}
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-failed
+  name: {{ .Values.helmChart.namespace }}
+{{- end }}

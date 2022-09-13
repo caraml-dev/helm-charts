@@ -23,6 +23,25 @@ dependencies:
     version: 1.13.3
     alias: base
     condition: base.enabled
+  - name: generic-dep-installer
+    repository: "file://../helm-dep-installer"
+    version: 0.0.1
+    alias: istioIngressGateway
+    # NOTE: workaround for similar issue: https://github.com/open-telemetry/opentelemetry-helm-charts/issues/228
+    # `global` is of type object, so enabled condition can be specified in there
+    condition: istioIngressGateway.global.enabled
+  - name: generic-dep-installer
+    repository: "file://../helm-dep-installer"
+    version: 0.0.1
+    alias: clusterLocalGateway
+    condition: clusterLocalGateway.global.enabled
+  - name: generic-dep-installer
+    repository: "file://../helm-dep-installer"
+    version: 0.0.1
+    alias: certManager
+    condition: certManager.enabled
+
+  # Actual dependencies
   # - name: istiod
   #   repository: "https://istio-release.storage.googleapis.com/charts"
   #   version: 1.13.3
@@ -40,15 +59,3 @@ dependencies:
   #   version: 1.13.3
   #   alias: clusterLocalGateway
   #   condition: clusterLocalGateway.global.enabled
-  - name: generic-dep-installer
-    repository: "file://../helm-dep-installer"
-    version: 0.0.1
-    alias: istioIngressGateway
-    # NOTE: workaround for similar issue: https://github.com/open-telemetry/opentelemetry-helm-charts/issues/228
-    # `global` is of type object, so enabled condition can be specified in there
-    condition: istioIngressGateway.global.enabled
-  - name: generic-dep-installer
-    repository: "file://../helm-dep-installer"
-    version: 0.0.1
-    alias: clusterLocalGateway
-    condition: clusterLocalGateway.global.enabled

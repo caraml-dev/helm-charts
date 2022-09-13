@@ -517,3 +517,44 @@ clusterLocalGateway:
           name: http2
         - port: 443
           name: https
+
+certManager:
+  enabled: true
+  helmChart:
+    repository: "https://charts.jetstack.io/"
+    chart: cert-manager
+    version: 1.8.1
+    release: cert-manager
+    namespace: "infrastructure"
+    createNamespace: true
+  hook:
+    weight: -1
+  chartValues:
+    resources:
+      {}
+      # requests:
+      #   cpu: "100m"
+      #   memory: 500Mi
+      # limits:
+      #   cpu: 1
+      #   memory: 500Mi
+
+    webhook:
+      resources:
+        {}
+        # requests:
+        #   cpu: "100m"
+        #   memory: 500Mi
+        # limits:
+        #   cpu: 1
+        #   memory: 500Mi
+
+    cainjector:
+      resources:
+        {}
+        # requests:
+        #   cpu: "100m"
+        #   memory: 500Mi
+        # limits:
+        #   cpu: 1
+        #   memory: 500Mi
