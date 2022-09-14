@@ -530,6 +530,7 @@ certManager:
   hook:
     weight: -1
   chartValues:
+    installCRDs: true
     resources:
       {}
       # requests:

@@ -59,6 +59,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | base.global.istioNamespace | string | `"istio-system"` |  |
 | base.validationURL | string | `""` |  |
 | certManager.chartValues.cainjector.resources | object | `{}` |  |
+| certManager.chartValues.installCRDs | bool | `true` |  |
 | certManager.chartValues.resources | object | `{}` |  |
 | certManager.chartValues.webhook.resources | object | `{}` |  |
 | certManager.enabled | bool | `true` |  |
