@@ -1,6 +1,6 @@
 ---
 # -- Image used to for installer/delete job
-image: dtzar/helm-kubectl
+image: dtzar/helm-kubectl  # TODO: Rerelease with more official repo (eg ghcr.io/caraml-dev)
 
 helmChart:
   # -- repository of helm chart to install
