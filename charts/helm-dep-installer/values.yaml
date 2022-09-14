@@ -1,6 +1,6 @@
 ---
 # -- Image used to for installer/delete job
-image: applecider/helm-dep-installer:0.0.9  # TODO: Move docker image into caraml-dev repo/ghcr
+image: dtzar/helm-kubectl
 
 helmChart:
   # -- repository of helm chart to install
