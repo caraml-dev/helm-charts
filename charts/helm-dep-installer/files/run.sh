@@ -4,8 +4,7 @@
 
 set -ex
 
-# which helm > /dev/null 2>&1|| { echo "Helm not installed"; exit 1; }
-which helm || { echo "Helm not installed"; exit 1; }
+which helm > /dev/null 2>&1|| { echo "Helm not installed"; exit 1; }
 which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
 
 show_help() {
