@@ -1,10 +1,11 @@
 ---
-{{- $chartVersion := .Values.helmChart.version | replace "." "-" }}
-{{- $serviceAccountName := printf "generic-runner-%s-%s-%s-sa" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+{{- $serviceAccountName := include "generic-dep-installer.sa-name"  . }}
+{{- $resourceName := include "generic-dep-installer.job-name" . }}
+{{- $configMap := include "generic-dep-installer.cm-name" . }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "generic-runner-%s-%s-%s-install" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+  name: {{ printf "%s-installer" $resourceName }}
   labels:
     {{- include "generic-dep-installer.labels" . | nindent 4 }}
   annotations:
@@ -14,12 +15,12 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ printf "generic-runner-%s-%s-%s"  .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+      name: {{ printf "%s-installer" $resourceName }}
     spec:
       volumes:
         - name: run-script
           configMap:
-            name: {{ printf "generic-runner-%s-%s-%s-cm" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+            name: {{ $configMap }}
             defaultMode: 0744  # set execute bit so script can be called as command
       serviceAccountName: {{ $serviceAccountName }}
       containers:
@@ -31,11 +32,7 @@ spec:
           imagePullPolicy: Always
           command: ["/scripts/run.sh"]
           args:
-            - {{ .Values.helmChart.repository }}
-            - {{ .Values.helmChart.chart }}
-            - {{ .Values.helmChart.version }}
-            - {{ .Values.helmChart.release }}
-            - {{ .Values.helmChart.namespace | default .Release.Namespace }}
+          {{- include "generic-dep-installer.job-commands" . | nindent 12 }}
             - install
           env:
             - name: CHART_VALUES
@@ -48,7 +45,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "generic-runner-%s-%s-%s-delete" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+  name: {{ printf "%s-uninstall" $resourceName }}
   labels:
     {{- include "generic-dep-installer.labels" . | nindent 4 }}
   annotations:
@@ -58,12 +55,12 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ printf "generic-runner-%s-%s-%s"  .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+      name: {{ printf "%s-uninstall" $resourceName }}
     spec:
       volumes:
         - name: run-script
           configMap:
-            name: {{ printf "generic-runner-%s-%s-%s-cm" .Values.helmChart.chart $chartVersion .Values.helmChart.release }}
+            name: {{ $configMap }}
             defaultMode: 0744  # set execute bit so script can be called as command
       serviceAccountName: {{ $serviceAccountName }}
       containers:
@@ -75,11 +72,7 @@ spec:
           imagePullPolicy: Always
           command: ["/scripts/run.sh"]
           args:
-            - {{ .Values.helmChart.repository }}
-            - {{ .Values.helmChart.chart }}
-            - {{ .Values.helmChart.version }}
-            - {{ .Values.helmChart.release }}
-            - {{ .Values.helmChart.namespace }}
+          {{- include "generic-dep-installer.job-commands" . | nindent 12 }}
             - delete
           env:
             - name: CHART_VALUES

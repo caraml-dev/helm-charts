@@ -48,23 +48,29 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --config .github/config/ct.yaml
 
-      - name: Run docs-testing (helm-docs)
-        id: helm-docs
-        run: |
-          ./scripts/helm-docs.sh
-          if [[ $(git diff --stat **/README.md) != '' ]]; then
-            echo -e '\033[0;31mDocumentation outdated! ❌\nCheck Contributing Guidelines to know how to update documentation\033[0m'
-            git diff --color
-            exit 1
-          else
-            echo -e '\033[0;32mDocumentation up to date\033[0m ✔'
-          fi
+      # - name: Run docs-testing (helm-docs)
+      #   id: helm-docs
+      #   run: |
+      #     ./scripts/helm-docs.sh
+      #     if [[ $(git diff --stat **/README.md) != '' ]]; then
+      #       echo -e '\033[0;31mDocumentation outdated! ❌\nCheck Contributing Guidelines to know how to update documentation\033[0m'
+      #       git diff --color
+      #       exit 1
+      #     else
+      #       echo -e '\033[0;32mDocumentation up to date\033[0m ✔'
+      #     fi
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.3.0
         if: steps.list-changed.outputs.changed == 'true'
         with:
-          node_image: kindest/node:v1.22.0
+          node_image: kindest/node:v1.24.0
+
+      - name: Install metallb in kind cluster for load balancer services
+        run: |
+          ./scripts/install_metallib.sh
+
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/config/ct.yaml
+        # run: ct install --config .github/config/ct.yaml
+        run: ct install --charts charts/helm-dep-installer --debug

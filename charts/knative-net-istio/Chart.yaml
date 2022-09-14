@@ -27,8 +27,6 @@ dependencies:
     repository: "file://../helm-dep-installer"
     version: 0.0.1
     alias: istioIngressGateway
-    # NOTE: workaround for similar issue: https://github.com/open-telemetry/opentelemetry-helm-charts/issues/228
-    # `global` is of type object, so enabled condition can be specified in there
     condition: istioIngressGateway.global.enabled
   - name: generic-dep-installer
     repository: "file://../helm-dep-installer"

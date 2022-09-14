@@ -22,6 +22,8 @@ hook: {}
 # -- Place all chart values (values.yaml) under this field
 chartValues:
   {}
+  # service:
+  #   type: ClusterIP
   # -- Additional chart values to override values.yaml of chart to install
   # nameOverride: "some-name"
   # etc

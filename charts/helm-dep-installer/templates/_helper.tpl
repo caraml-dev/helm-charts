@@ -24,7 +24,39 @@ Hook annotations
 {{/*
 Generated names
 */}}
-{{- define "generic-dep-installer.generated-names" -}}
+{{- define "generic-dep-installer.chart-version" -}}
 {{- $chartVersion := .Values.helmChart.version | replace "." "-" }}
-{{- $serviceAccountName := printf "generic-runner-%s-%s-%s-sa" .Values.helmChart.chart $chartVersion .Release.Name }}
+{{- printf "%s" $chartVersion}}
+{{- end }}
+
+{{- define "generic-dep-installer.resource-prefix" -}}
+{{- $deployedChart := .Values.helmChart.chart -}}
+{{- $chartVersion := .Values.helmChart.version | replace "." "-" }}
+{{- $deployedReleaseName := .Values.helmChart.release -}}
+{{ printf "generic-runner-%s-%s-%s"  $deployedChart $chartVersion $deployedReleaseName }}
+{{- end }}
+
+{{- define "generic-dep-installer.global-resource-prefix" -}}
+{{- $prefix := include "generic-dep-installer.resource-prefix" . }}
+{{- printf "%s-%s" $prefix .Release.Namespace }}
+{{- end }}
+
+{{- define "generic-dep-installer.sa-name" -}}
+{{- printf "%s-sa" (include "generic-dep-installer.resource-prefix" .) }}
+{{- end }}
+
+{{- define "generic-dep-installer.job-name" -}}
+{{- printf "%s-job" (include "generic-dep-installer.resource-prefix" .) }}
+{{- end }}
+
+{{- define "generic-dep-installer.cm-name" -}}
+{{- printf "%s-cm" (include "generic-dep-installer.resource-prefix" .) }}
+{{- end }}
+
+{{- define "generic-dep-installer.job-commands" -}}
+- {{ .Values.helmChart.repository }}
+- {{ .Values.helmChart.chart }}
+- {{ .Values.helmChart.version }}
+- {{ .Values.helmChart.release }}
+- {{ .Values.helmChart.namespace }}
 {{- end }}
