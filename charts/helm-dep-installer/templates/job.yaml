@@ -29,7 +29,6 @@ spec:
           volumeMounts:
             - name: run-script
               mountPath: /scripts
-          imagePullPolicy: Always
           command: ["/scripts/run.sh"]
           args:
           {{- include "generic-dep-installer.job-commands" . | nindent 12 }}
@@ -69,7 +68,6 @@ spec:
             - name: run-script
               mountPath: /scripts
           image: {{ .Values.image }}
-          imagePullPolicy: Always
           command: ["/scripts/run.sh"]
           args:
           {{- include "generic-dep-installer.job-commands" . | nindent 12 }}
