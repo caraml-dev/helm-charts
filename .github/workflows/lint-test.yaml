@@ -72,5 +72,4 @@ jobs:
 
 
       - name: Run chart-testing (install)
-        # run: ct install --config .github/config/ct.yaml
-        run: ct install --charts charts/helm-dep-installer --debug
+        run: ct install --config .github/config/ct.yaml
