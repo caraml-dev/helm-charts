@@ -33,24 +33,24 @@ Generated names
 {{- $deployedChart := .Values.helmChart.chart -}}
 {{- $chartVersion := .Values.helmChart.version | replace "." "-" }}
 {{- $deployedReleaseName := .Values.helmChart.release -}}
-{{ printf "generic-runner-%s-%s-%s"  $deployedChart $chartVersion $deployedReleaseName }}
+{{ printf "gdi-%s-%s-%s"  $deployedChart $chartVersion $deployedReleaseName }}
 {{- end }}
 
 {{- define "generic-dep-installer.global-resource-prefix" -}}
 {{- $prefix := include "generic-dep-installer.resource-prefix" . }}
-{{- printf "%s-%s" $prefix .Release.Namespace }}
+{{- printf "%s-%s" $prefix .Release.Namespace | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{- define "generic-dep-installer.sa-name" -}}
-{{- printf "%s-sa" (include "generic-dep-installer.resource-prefix" .) }}
+{{- printf "%s-sa" (include "generic-dep-installer.resource-prefix" .) | trunc 63 | trimSuffix "-"}}
 {{- end }}
 
 {{- define "generic-dep-installer.job-name" -}}
-{{- printf "%s-job" (include "generic-dep-installer.resource-prefix" .) }}
+{{- printf "%s-job" (include "generic-dep-installer.resource-prefix" .) | trunc 63 | trimSuffix "-"}}
 {{- end }}
 
 {{- define "generic-dep-installer.cm-name" -}}
-{{- printf "%s-cm" (include "generic-dep-installer.resource-prefix" .) }}
+{{- printf "%s-cm" (include "generic-dep-installer.resource-prefix" .) | trunc 63 | trimSuffix "-"}}
 {{- end }}
 
 {{- define "generic-dep-installer.job-commands" -}}

@@ -5,7 +5,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "%s-installer" $resourceName }}
+  name: {{ printf "%s-installer" $resourceName | trunc 63 | trimSuffix "-" }}
   labels:
     {{- include "generic-dep-installer.labels" . | nindent 4 }}
   annotations:
@@ -45,7 +45,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "%s-uninstall" $resourceName }}
+  name: {{ printf "%s-uninstall" $resourceName | trunc 63 | trimSuffix "-" }}
   labels:
     {{- include "generic-dep-installer.labels" . | nindent 4 }}
   annotations:
