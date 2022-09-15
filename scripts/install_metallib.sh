@@ -18,7 +18,7 @@ HOST_MIN=$(cat /tmp/netcalc_output.txt | grep 'HostMin' | awk '{print $3}')
 
 # Default gateway is assumed to be *.*.*.1,
 # we do not want the default gateway to be part of the IPAddressPool
-# as this prevents external  ip addresses to be routed out
+# as this prevents requests with external ip addresses (eg to the internet) to be routed out
 HOST_MIN=$(echo $HOST_MIN | awk -F '.' '{printf "%s.%s.%s.2", $1,$2,$3}')
 HOST_MAX=$(cat /tmp/netcalc_output.txt | grep 'HostMax' | awk '{print $3}')
 IP_ADDRESS_RANGE="${HOST_MIN}-${HOST_MAX}"
