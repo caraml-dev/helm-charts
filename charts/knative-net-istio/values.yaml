@@ -17,8 +17,8 @@ global:
 config:
   istio:
     # NOTE: assumes istio edge proxies (*-gateway deployments) are deployed in istio-system namespace
-    gateway.knative-serving.knative-ingress-gateway: "istio-ingressgateway.istio-system.svc.cluster.local"
-    local-gateway.knative-serving.knative-local-gateway: "cluster-local-gateway.istio-system.svc.cluster.local"
+    gateway.{{ .Release.Namespace }}.knative-ingress-gateway: "istio-ingressgateway.istio-system.svc.cluster.local"
+    local-gateway.{{ .Release.Namespace }}.knative-local-gateway: "cluster-local-gateway.istio-system.svc.cluster.local"
     local-gateway.mesh: "mesh"
     enable-virtualservice-status: "false"
 

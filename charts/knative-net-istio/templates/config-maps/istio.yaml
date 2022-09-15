@@ -20,6 +20,6 @@ metadata:
     {{- include "knative-net-istio.labels" . | nindent 4 }}
 data:
 {{- if .Values.config.istio }}
-  {{- toYaml .Values.config.istio | nindent 2 }}
+  {{- tpl (toYaml .Values.config.istio) . | nindent 2 }}
 {{- end }}
   _example: ""
