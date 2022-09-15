@@ -37,12 +37,6 @@ dependencies:
     version: 0.0.1
     alias: clusterLocalGateway
     condition: clusterLocalGateway.global.enabled
-  # - name: generic-dep-installer
-  #   # TODO: Replace with caraml-dev url once chart is released
-  #   repository: "file://../helm-dep-installer"
-  #   version: 0.0.1
-  #   alias: certManager
-  #   condition: certManager.enabled
 
   # Actual dependencies
   # - name: istiod
