@@ -10,6 +10,12 @@ MLP API
 | ---- | ------ | --- |
 | caraml-dev | <caraml-dev@caraml.dev> |  |
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://charts.helm.sh/stable | postgresql | 7.0.0 |
+
 ## Values
 
 | Key | Type | Default | Description |
