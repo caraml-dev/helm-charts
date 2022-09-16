@@ -60,3 +60,16 @@ Generated names
 - {{ .Values.helmChart.release }}
 - {{ .Values.helmChart.namespace }}
 {{- end }}
+
+{{/*
+Configured hook values
+*/}}
+{{- define "generic-dep-installer.sa-hook-value" -}}
+{{ printf "%s" ((sub .Values.hook.weight 1) | toString) | quote }}
+{{- end }}
+{{- define "generic-dep-installer.crb-hook-value" -}}
+{{ printf "%s" ((sub .Values.hook.weight 1) | toString) | quote }}
+{{- end }}
+{{- define "generic-dep-installer.namespace-hook-value" -}}
+{{ printf "%s" ((sub .Values.hook.weight 1) | toString) | quote }}
+{{- end }}
