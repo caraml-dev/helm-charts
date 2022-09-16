@@ -11,7 +11,7 @@ show_help() {
   cat <<EOF
 Usage: $(basename "$0") <repository> <chart name> <version> <release name> <namespace> <action>
     -h, --help               Display help
-    action                   install | delete
+    action                   upgrade-install | delete
 EOF
 }
 
@@ -25,7 +25,7 @@ validate_parameters() {
     show_help
     exit 1
   fi
-  if [[ $6 != "install" ]] && [[ $6 != "delete" ]]; then
+  if [[ $6 != "upgrade-install" ]] && [[ $6 != "delete" ]]; then
     echo "Action must be 'install' or 'delete', received $6"
     show_help
     exit 1
@@ -46,7 +46,7 @@ main() {
   echo $CHART_VALUES | base64 -d > $VALUES_FILE_PATH
   helm repo add $REPO_NAME $REPO
   helm template $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --version $VERSION --values $VALUES_FILE_PATH > /tmp/manifests.yaml
-  if [[ $ACTION == "install" ]]; then
+  if [[ $ACTION == "upgrade-install" ]]; then
     helm upgrade --install $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --version $VERSION --atomic --debug --values $VALUES_FILE_PATH
     # kubectl apply -f /tmp/manifests.yaml
     # kubectl wait pods --all -n $NAMESPACE --for=condition=Ready --timeout=180s

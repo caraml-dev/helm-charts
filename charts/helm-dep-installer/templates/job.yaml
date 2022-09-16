@@ -32,7 +32,7 @@ spec:
           command: ["/scripts/run.sh"]
           args:
           {{- include "generic-dep-installer.job-commands" . | nindent 12 }}
-            - install
+            - upgrade-install
           env:
             - name: CHART_VALUES
               value: {{ .Values.chartValues | toYaml | b64enc | quote }}
