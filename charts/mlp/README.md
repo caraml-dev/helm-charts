@@ -20,10 +20,6 @@ MLP API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| dbMigrations.image.pullPolicy | string | `"IfNotPresent"` |  |
-| dbMigrations.image.registry | string | `"ghcr.io"` |  |
-| dbMigrations.image.repository | string | `"gojek/mlp-db-migrate"` |  |
-| dbMigrations.image.tag | string | `"v1.5.4"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` |  |
 | externalPostgresql.database | string | `"mlp"` |  |
 | externalPostgresql.password | string | `"password"` |  |
