@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: 1.5.4](https://img.shields.io/badge/AppVersion-1.5.4-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
 
 MLP API
 
@@ -9,12 +9,6 @@ MLP API
 | Name | Email | Url |
 | ---- | ------ | --- |
 | caraml-dev | <caraml-dev@caraml.dev> |  |
-
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://charts.helm.sh/stable | postgresql | 7.0.0 |
 
 ## Values
 
@@ -38,7 +32,7 @@ MLP API
 | mlp.image.pullPolicy | string | `"IfNotPresent"` |  |
 | mlp.image.registry | string | `"ghcr.io"` |  |
 | mlp.image.repository | string | `"gojek/mlp"` |  |
-| mlp.image.tag | string | `"v1.5.4"` |  |
+| mlp.image.tag | string | `"v1.7.1"` |  |
 | mlp.ingress.enabled | bool | `false` |  |
 | mlp.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | mlp.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
