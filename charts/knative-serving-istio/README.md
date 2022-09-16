@@ -79,7 +79,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | clusterLocalGateway.helmChart.namespace | string | `"istio-system"` |  |
 | clusterLocalGateway.helmChart.release | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
-| clusterLocalGateway.helmChart.version | string | `"1.13.3"` |  |
+| clusterLocalGateway.helmChart.version | string | `"1.13.4"` |  |
 | clusterLocalGateway.hook.weight | int | `1` |  |
 | clusterLocalGatewayIstioSelector | string | `"cluster-local-gateway"` |  |
 | config | object | `{"istio":{"enable-virtualservice-status":"false","gateway.{{ .Release.Namespace }}.knative-ingress-gateway":"istio-ingressgateway.istio-system.svc.cluster.local","local-gateway.mesh":"mesh","local-gateway.{{ .Release.Namespace }}.knative-local-gateway":"cluster-local-gateway.istio-system.svc.cluster.local"}}` | Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml |
@@ -106,7 +106,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istioIngressGateway.helmChart.namespace | string | `"istio-system"` |  |
 | istioIngressGateway.helmChart.release | string | `"istio-ingress-gateway"` |  |
 | istioIngressGateway.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
-| istioIngressGateway.helmChart.version | string | `"1.13.3"` |  |
+| istioIngressGateway.helmChart.version | string | `"1.13.4"` |  |
 | istioIngressGateway.hook.weight | int | `1` |  |
 | istiod.chartValues.configValidation | bool | `true` |  |
 | istiod.chartValues.deployInReleaseNs | bool | `false` |  |
@@ -124,7 +124,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istiod.helmChart.namespace | string | `"istio-system"` |  |
 | istiod.helmChart.release | string | `"istiod"` |  |
 | istiod.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
-| istiod.helmChart.version | string | `"1.13.3"` |  |
+| istiod.helmChart.version | string | `"1.13.4"` |  |
 | istiod.hook.weight | int | `0` |  |
 | knativeServingCore.activator.autoscaling.enabled | bool | `false` | Enables autoscaling for activator deployment. |
 | knativeServingCore.activator.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/activator"` | Repository of the activator image |

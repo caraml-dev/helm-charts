@@ -370,7 +370,7 @@ istiod:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: istiod
-    version: 1.13.3
+    version: 1.13.4
     release: istiod
     namespace: "istio-system"
   hook:
@@ -409,7 +409,7 @@ istioIngressGateway:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: gateway
-    version: 1.13.3
+    version: 1.13.4
     release: istio-ingress-gateway
     namespace: "istio-system"
     createNamespace: false
@@ -463,7 +463,7 @@ clusterLocalGateway:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: gateway
-    version: 1.13.3
+    version: 1.13.4
     release: cluster-local-gateway
     namespace: "istio-system"
     createNamespace: false
