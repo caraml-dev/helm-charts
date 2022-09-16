@@ -17,7 +17,9 @@ helmChart:
   createNamespace: true
 
 # -- Set helm hook parameters, currently only supports weight
-hook: {}
+hook:
+  # -- Hook weight MUST be > -10
+  weight: 0
 
 # -- Place all chart values (values.yaml) under this field
 chartValues:

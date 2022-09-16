@@ -25,7 +25,8 @@ more information on which helm version to use.
 | helmChart.release | string | `"nginx-release"` | release name |
 | helmChart.repository | string | `"https://charts.bitnami.com/bitnami"` | repository of helm chart to install |
 | helmChart.version | string | `"13.2.4"` | Chart version |
-| hook | object | `{}` | Set helm hook parameters, currently only supports weight |
+| hook | object | `{"weight":0}` | Set helm hook parameters, currently only supports weight |
+| hook.weight | int | `0` | Hook weight MUST be > -10 |
 | image | string | `"ghcr.io/dtzar/helm-kubectl:3.9.4"` | Image used to for installer/delete job |
 
 ----------------------------------------------
