@@ -1,6 +1,6 @@
 ---
 # -- Image used to for installer/delete job
-image: ghcr.io/dtzar/helm-kubectl:3.9.4  # TODO: Rerelease with more official repo (eg ghcr.io/caraml-dev)
+image: ghcr.io/dtzar/helm-kubectl:3.9.4  # TODO: Rerelease with more official repo (eg ghcr.io/caraml-dev)?
 
 helmChart:
   # -- repository of helm chart to install
@@ -22,11 +22,12 @@ hook: {}
 # -- Place all chart values (values.yaml) under this field
 chartValues:
   {}
+  # # Example
   # service:
   #   type: ClusterIP
   # -- Additional chart values to override values.yaml of chart to install
   # nameOverride: "some-name"
-  # etc
+  # # etc
 
 # -- Create delete job when helm uninstall is run
 deleteJob:

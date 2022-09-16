@@ -2,7 +2,7 @@
 
 ![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.0.1](https://img.shields.io/badge/AppVersion-v0.0.1-informational?style=flat-square)
 
-This helm chart is used to control the order of installation of helm chart dependencies.
+This helm chart is used to control the order of installation of helm chart dependencies through the use of pre-install hooks and hook weights.
 It creates a K8s Job that performs that applies a rendered helm chart to a cluster, while exposing the `.Values.hook.weight` to users to configure which dependency should be installed first.
 Container image used by job requires helm and kubectl binary to be present, and thus should be set accordingly based on the version of K8s being used. See https://helm.sh/docs/topics/version_skew/ form
 more information on which helm version to use.
