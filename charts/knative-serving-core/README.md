@@ -16,7 +16,7 @@ To use the charts here, [Helm](https://helm.sh/) must be configured for your
 Kubernetes cluster. Setting up Kubernetes and Helm is outside the scope of
 this README. Please refer to the Kubernetes and Helm documentation.
 
-- **Helm 3.0+** – This chart was tested with Helm v3.6.3, but it is also expected to work with earlier Helm versions
+- **Helm 3.0+** – This chart was tested with Helm v3.9.0, but it is also expected to work with earlier Helm versions
 - **Kubernetes 1.22+** – This chart was tested with GKE v1.22.x
 
 ## Installation
@@ -24,7 +24,7 @@ this README. Please refer to the Kubernetes and Helm documentation.
 ### Add Helm repository
 
 ```shell
-$ helm repo add dsp http://artifactory-gojek.golabs.io/artifactory/generic-local/dsp-charts/
+helm repo add caraml https://caraml-dev.github.io/helm-charts
 ```
 
 ### Installing the chart
@@ -33,7 +33,7 @@ This command will install Knative release named `knative-serving` in the `knativ
 Do not try to install into other namespaces as it will break with other installations like Kserve.
 Default chart values will be used for the installation:
 ```shell
-$ helm install dsp/knative-serving-core --namespace knative-serving
+$ helm install caraml/knative-serving-core --namespace knative-serving
 ```
 
 You can (and most likely, should) override the default configuration with values suitable for your installation.
