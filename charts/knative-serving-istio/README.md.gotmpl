@@ -7,7 +7,8 @@
 
 ## Introduction
 
-This Helm chart installs [Knative Net Istio](https://knative.dev/docs/serving/) and it's CRDs.
+This Helm chart installs [Knative Serving Istio](https://knative.dev/docs/serving/) and it's CRDs.
+
 
 ## Prerequisites
 
@@ -15,15 +16,21 @@ To use the charts here, [Helm](https://helm.sh/) must be configured for your
 Kubernetes cluster. Setting up Kubernetes and Helm is outside the scope of
 this README. Please refer to the Kubernetes and Helm documentation.
 
-- **Helm 3.0+** – This chart was tested with Helm v3.6.3, but it is also expected to work with earlier Helm versions
-- **Kubernetes 1.22+** – This chart was tested with GKE v1.22.x
+- **Helm 3.0+** – This chart was tested with Helm v3.9.0, but it is also expected to work with earlier Helm versions
+- **Kubernetes 1.22+** – This chart was tested with Kind v1.22.7 and minikube kubernetes version 1.22.*
+- When installing on minikube, please run in a separate shell:
+  ```sh
+  minikube tunnel
+  ```
+  This is to enable istio loadbalancer services to be allocated an IP address.
+
 
 ## Installation
 
 ### Add Helm repository
 
 ```shell
-$ helm repo add dsp http://artifactory-gojek.golabs.io/artifactory/generic-local/dsp-charts/
+helm repo add caraml https://caraml-dev.github.io/helm-charts
 ```
 
 ### Installing the chart
@@ -32,7 +39,7 @@ This command will install Knative release named `knative-serving` in the `knativ
 Do not try to install into other namespaces as it will break with other installations like Kserve.
 Default chart values will be used for the installation:
 ```shell
-$ helm install dsp/knative-net-istio --namespace knative-serving
+$ helm install caraml/knative-serving-istio --namespace knative-serving
 ```
 
 You can (and most likely, should) override the default configuration with values suitable for your installation.
@@ -42,7 +49,7 @@ Refer to [Configuration](#configuration) section for the detailed description of
 
 To uninstall `knative-net-istio` release:
 ```shell
-$ helm uninstall -n knative-serving knative-net-istio
+$ helm uninstall -n knative-serving knative-serving-istio
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release,
