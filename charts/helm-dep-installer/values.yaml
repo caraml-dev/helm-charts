@@ -3,6 +3,7 @@
 image: ghcr.io/dtzar/helm-kubectl:3.9.4  # TODO: Rerelease with more official repo (eg ghcr.io/caraml-dev)?
 
 helmChart:
+  # The following values are example values. Replace them for dependant chart's values.yaml
   # -- repository of helm chart to install
   repository: "https://charts.bitnami.com/bitnami"
   # -- Chart name
