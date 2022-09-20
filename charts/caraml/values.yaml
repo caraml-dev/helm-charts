@@ -5,11 +5,10 @@
 mlp:
   enabled: true
   postgresql:
-    enabled: false
-
+    enabled: true
 
 postgresql:
-  enabled: true
+  enabled: false
   ## Configure resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##

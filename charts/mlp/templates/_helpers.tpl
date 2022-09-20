@@ -5,30 +5,31 @@
 Generated names
 */}}
 
-{{- define "mlp.chart-version" -}}
-    {{- $chartVersion := .Chart.Version | replace "." "-" }}
-    {{- printf "%s" $chartVersion}}
-{{- end }}
+{{- define "mlp.resource-prefix-with-release-name" -}}
+    {{- $deployedChart := .Chart.Name -}}
+    {{- $chartVersion := .Chart.Version | replace "." "-" -}}
+    {{- $deployedReleaseName := .Release.Name -}}
+    {{ printf "%s-%s-%s"  $deployedChart $chartVersion $deployedReleaseName }}
+{{- end -}}
 
 {{- define "mlp.resource-prefix" -}}
     {{- $deployedChart := .Chart.Name -}}
     {{- $chartVersion := .Chart.Version | replace "." "-" -}}
-    {{- $deployedReleaseName := .Release.Name -}}
-    {{ printf "mlp-%s-%s-%s"  $deployedChart $chartVersion $deployedReleaseName }}
-{{- end }}
+    {{ printf "%s-%s"  $deployedChart $chartVersion }}
+{{- end -}}
 
 
 {{- define "mlp.name" -}}
-    {{- printf "%s" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-"}}
-{{- end }}
+    {{- if .Values.nameOverride -}}
+        {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- printf "%s" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
+    {{- end -}}
+{{- end -}}
 
-{{- define "mlp.job-name" -}}
-    {{- printf "%s-job" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-"}}
-{{- end }}
-
-{{- define "mlp.cm-name" -}}
-    {{- printf "%s-cm" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-"}}
-{{- end }}
+{{- define "mlp.encryption-key-name" -}}
+    {{- printf "%s-encryption-key" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
 
 
 {{- define "mlp.chart" -}}
@@ -36,20 +37,41 @@ Generated names
 {{- end -}}
 
 {{- define "mlp.fullname" -}}
-{{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- if contains $name .Release.Name -}}
-{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-{{- end -}}
+    {{- if .Values.fullnameOverride -}}
+        {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- printf "%s" (include "mlp.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
+    {{- end -}}
 {{- end -}}
 
+{{/*
+Common labels
+*/}}
+{{- define "mlp.labels" -}}
+app.kubernetes.io/name: {{ template "mlp.name" . }}
+helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/part-of: caraml
+{{- end }}
+
+{{/*
+Common annotations
+*/}}
+{{- define "mlp.annotations" -}}
+meta.helm.sh/release-name: {{ .Release.Name }}
+meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+{{- end }}
+
+
+{{/*
+Postgres related
+*/}}
 {{- define "postgres.host" -}}
-{{ if .Values.postgresql.enabled }}
+{{- if .Values.postgresql.enabled -}}
     {{- printf "%s-%s-postgresql.%s.svc.cluster.local" .Release.Name .Chart.Name .Release.Namespace -}}
 {{- else if .Values.externalPostgresql.enabled -}}
     {{- .Values.externalPostgresql.address -}}

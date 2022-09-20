@@ -1,13 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "mlp.fullname" .}}
+  name: {{ template "mlp.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ template "mlp.name" .}}
-    chart: {{ template "mlp.chart" .}}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "mlp.labels" . | nindent 4 }}
+  annotations:
+    {{- include "mlp.annotations" . | nindent 4 }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
@@ -86,7 +85,7 @@ spec:
             - name: ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Release.Name }}-encryption-key"
+                  name: {{ include "mlp.encryption-key-name" . | quote}}
                   key: encryption-key
             - name: AUTHORIZATION_ENABLED
               value: "{{ .Values.deployment.authorization.enabled }}"
