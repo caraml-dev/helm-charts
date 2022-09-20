@@ -20,53 +20,53 @@ MLP API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| deployment.apiHost | string | `"http://mlp/v1"` |  |
+| deployment.authorization.enabled | bool | `false` |  |
+| deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
+| deployment.docs[0].href | string | `"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"` |  |
+| deployment.docs[0].label | string | `"Merlin User Guide"` |  |
+| deployment.docs[1].href | string | `"https://github.com/gojek/turing"` |  |
+| deployment.docs[1].label | string | `"Turing User Guide"` |  |
+| deployment.docs[2].href | string | `"https://docs.feast.dev/user-guide/overview"` |  |
+| deployment.docs[2].label | string | `"Feast User Guide"` |  |
+| deployment.environment | string | `"production"` |  |
+| deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
+| deployment.image.registry | string | `"ghcr.io"` |  |
+| deployment.image.repository | string | `"gojek/mlp"` |  |
+| deployment.image.tag | string | `"v1.7.1"` |  |
+| deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
+| deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
+| deployment.podLabels | object | `{}` |  |
+| deployment.readinessProbe.path | string | `"/v1/internal/ready"` |  |
+| deployment.replicaCount | int | `1` |  |
+| deployment.resources | object | `{}` |  |
+| deployment.streams[0] | string | `"promotion-marketing"` |  |
+| deployment.streams[1] | string | `"operation-strategy"` |  |
+| deployment.streams[2] | string | `"business-analyst"` |  |
+| deployment.teams[0] | string | `"marketing"` |  |
+| deployment.teams[1] | string | `"operation"` |  |
+| deployment.teams[2] | string | `"business"` |  |
+| deployment.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
+| deployment.ui.feastCoreApi | string | `"http://feast.dev/v1"` |  |
+| deployment.ui.feastHomepage | string | `"http://feast.dev"` |  |
+| deployment.ui.kubeflowHomepage | string | `"http://kubeflow.org"` |  |
+| deployment.ui.merlinApi | string | `"http://merlin.dev/v1"` |  |
+| deployment.ui.merlinHomepage | string | `"http://merlin.dev"` |  |
+| deployment.ui.turingApi | string | `"http://turing.dev/v1"` |  |
+| deployment.ui.turingHomepage | string | `"http://turing.dev"` |  |
+| encryption.key | string | `"example-key-here"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` |  |
 | externalPostgresql.database | string | `"mlp"` |  |
 | externalPostgresql.password | string | `"password"` |  |
 | externalPostgresql.username | string | `"mlp"` |  |
-| mlp.apiHost | string | `"http://mlp/v1"` |  |
-| mlp.authorization.enabled | bool | `false` |  |
-| mlp.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
-| mlp.docs[0].href | string | `"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"` |  |
-| mlp.docs[0].label | string | `"Merlin User Guide"` |  |
-| mlp.docs[1].href | string | `"https://github.com/gojek/turing"` |  |
-| mlp.docs[1].label | string | `"Turing User Guide"` |  |
-| mlp.docs[2].href | string | `"https://docs.feast.dev/user-guide/overview"` |  |
-| mlp.docs[2].label | string | `"Feast User Guide"` |  |
-| mlp.encryption.key | string | `"example-key-here"` |  |
-| mlp.environment | string | `"production"` |  |
-| mlp.image.pullPolicy | string | `"IfNotPresent"` |  |
-| mlp.image.registry | string | `"ghcr.io"` |  |
-| mlp.image.repository | string | `"gojek/mlp"` |  |
-| mlp.image.tag | string | `"v1.7.1"` |  |
-| mlp.ingress.enabled | bool | `false` |  |
-| mlp.livenessProbe.path | string | `"/v1/internal/live"` |  |
-| mlp.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
-| mlp.podLabels | object | `{}` |  |
-| mlp.readinessProbe.path | string | `"/v1/internal/ready"` |  |
-| mlp.replicaCount | int | `1` |  |
-| mlp.resources | object | `{}` |  |
-| mlp.service.externalPort | int | `8080` |  |
-| mlp.service.internalPort | int | `8080` |  |
-| mlp.streams[0] | string | `"promotion-marketing"` |  |
-| mlp.streams[1] | string | `"operation-strategy"` |  |
-| mlp.streams[2] | string | `"business-analyst"` |  |
-| mlp.teams[0] | string | `"marketing"` |  |
-| mlp.teams[1] | string | `"operation"` |  |
-| mlp.teams[2] | string | `"business"` |  |
-| mlp.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
-| mlp.ui.feastCoreApi | string | `"http://feast.dev/v1"` |  |
-| mlp.ui.feastHomepage | string | `"http://feast.dev"` |  |
-| mlp.ui.kubeflowHomepage | string | `"http://kubeflow.org"` |  |
-| mlp.ui.merlinApi | string | `"http://merlin.dev/v1"` |  |
-| mlp.ui.merlinHomepage | string | `"http://merlin.dev"` |  |
-| mlp.ui.turingApi | string | `"http://turing.dev/v1"` |  |
-| mlp.ui.turingHomepage | string | `"http://turing.dev"` |  |
+| ingress.enabled | bool | `false` |  |
 | postgresql.enabled | bool | `true` |  |
 | postgresql.persistence.size | string | `"10Gi"` |  |
 | postgresql.postgresqlDatabase | string | `"mlp"` |  |
 | postgresql.postgresqlUsername | string | `"mlp"` |  |
 | postgresql.resources | object | `{}` |  |
+| service.externalPort | int | `8080` |  |
+| service.internalPort | int | `8080` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

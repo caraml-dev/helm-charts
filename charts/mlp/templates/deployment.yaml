@@ -9,7 +9,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.mlp.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:
       app: {{ template "mlp.name" .}}
@@ -24,52 +24,52 @@ spec:
       labels:
         app: {{ template "mlp.name" .}}
         release: {{ .Release.Name }}
-        {{- if .Values.mlp.podLabels }}
-        {{- toYaml .Values.mlp.podLabels | nindent 8 }}
+        {{- if .Values.deployment.podLabels }}
+        {{- toYaml .Values.deployment.podLabels | nindent 8 }}
         {{- end }}
     spec:
       containers:
         - name: api
-          image: "{{ .Values.mlp.image.registry }}/{{ .Values.mlp.image.repository }}:{{ .Values.mlp.image.tag }}"
-          imagePullPolicy: {{ .Values.mlp.image.pullPolicy }}
+          image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.mlp.service.internalPort }}
+            - containerPort: {{ .Values.service.internalPort }}
           livenessProbe:
             httpGet:
-              path: {{ .Values.mlp.livenessProbe.path }}
-              port: {{ .Values.mlp.service.internalPort }}
+              path: {{ .Values.deployment.livenessProbe.path }}
+              port: {{ .Values.service.internalPort }}
               scheme: HTTP
-            initialDelaySeconds: {{ default "30" .Values.mlp.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ default "10" .Values.mlp.livenessProbe.periodSeconds }}
-            successThreshold: {{ default "1" .Values.mlp.livenessProbe.successThreshold }}
-            timeoutSeconds: {{ default "5" .Values.mlp.livenessProbe.timeoutSeconds }}
+            initialDelaySeconds: {{ default "30" .Values.deployment.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ default "10" .Values.deployment.livenessProbe.periodSeconds }}
+            successThreshold: {{ default "1" .Values.deployment.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ default "5" .Values.deployment.livenessProbe.timeoutSeconds }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.mlp.readinessProbe.path }}
-              port: {{ .Values.mlp.service.internalPort }}
+              path: {{ .Values.deployment.readinessProbe.path }}
+              port: {{ .Values.service.internalPort }}
               scheme: HTTP
-            initialDelaySeconds: {{ default "30" .Values.mlp.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ default "10" .Values.mlp.readinessProbe.periodSeconds }}
-            successThreshold: {{ default "1" .Values.mlp.readinessProbe.successThreshold }}
-            timeoutSeconds: {{ default "5" .Values.mlp.readinessProbe.timeoutSeconds }}
-          {{- if .Values.mlp.resources }}
-          resources: {{- toYaml .Values.mlp.resources | nindent 12 }}
+            initialDelaySeconds: {{ default "30" .Values.deployment.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ default "10" .Values.deployment.readinessProbe.periodSeconds }}
+            successThreshold: {{ default "1" .Values.deployment.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ default "5" .Values.deployment.readinessProbe.timeoutSeconds }}
+          {{- if .Values.deployment.resources }}
+          resources: {{- toYaml .Values.deployment.resources | nindent 12 }}
           {{- end }}
-{{- if .Values.mlp.args }}
+{{- if .Values.deployment.args }}
           args:
-{{ toYaml .Values.mlp.args | indent 10 -}}
+{{ toYaml .Values.deployment.args | indent 10 -}}
 {{ end }}
-{{- if .Values.mlp.command }}
+{{- if .Values.deployment.command }}
           command:
-{{ toYaml .Values.mlp.command | indent 10 -}}
+{{ toYaml .Values.deployment.command | indent 10 -}}
 {{ end }}
           env:
             - name: ENVIRONMENT
-              value: "{{ .Values.mlp.environment }}"
+              value: "{{ .Values.deployment.environment }}"
             - name: API_HOST
-              value: "{{ .Values.mlp.apiHost }}"
+              value: "{{ .Values.deployment.apiHost }}"
             - name: PORT
-              value: "{{ .Values.mlp.service.internalPort }}"
+              value: "{{ .Values.service.internalPort }}"
             - name: DATABASE_HOST
               value: {{ template "postgres.host" . }}
             - name: DATABASE_USER
@@ -82,52 +82,52 @@ spec:
             - name: DATABASE_NAME
               value: {{ template "postgres.database" . }}
             - name: MLFLOW_TRACKING_URL
-              value: "{{ .Values.mlp.mlflowTrackingUrl }}"
+              value: "{{ .Values.deployment.mlflowTrackingUrl }}"
             - name: ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
                   name: "{{ .Release.Name }}-encryption-key"
                   key: encryption-key
             - name: AUTHORIZATION_ENABLED
-              value: "{{ .Values.mlp.authorization.enabled }}"
-            {{- if .Values.mlp.authorization.enabled }}
+              value: "{{ .Values.deployment.authorization.enabled }}"
+            {{- if .Values.deployment.authorization.enabled }}
             - name: AUTHORIZATION_SERVER_URL
-              value: "{{ .Values.mlp.authorization.serverUrl }}"
+              value: "{{ .Values.deployment.authorization.serverUrl }}"
             {{- end }}
             - name: OAUTH_CLIENT_ID
-              value: "{{ .Values.mlp.oauthClientID }}"
+              value: "{{ .Values.deployment.oauthClientID }}"
             - name: SENTRY_DSN
-              value: "{{ .Values.mlp.sentryDSN }}"
+              value: "{{ .Values.deployment.sentryDSN }}"
             - name: TEAM_LIST
-              value: "{{ join "," .Values.mlp.teams }}"
+              value: "{{ join "," .Values.deployment.teams }}"
             - name: STREAM_LIST
-              value: "{{ join "," .Values.mlp.streams }}"
-            {{- if .Values.mlp.docs }}
+              value: "{{ join "," .Values.deployment.streams }}"
+            {{- if .Values.deployment.docs }}
             - name: DOC_LIST
-              value: {{ .Values.mlp.docs | toJson | quote  }}
+              value: {{ .Values.deployment.docs | toJson | quote  }}
             {{- end }}
             - name: REACT_APP_FEAST_CORE_API
-              value: "{{ .Values.mlp.ui.feastCoreApi }}"
+              value: "{{ .Values.deployment.ui.feastCoreApi }}"
             - name: REACT_APP_MERLIN_API
-              value: "{{ .Values.mlp.ui.merlinApi }}"
+              value: "{{ .Values.deployment.ui.merlinApi }}"
             - name: REACT_APP_TURING_API
-              value: "{{ .Values.mlp.ui.turingApi }}"
+              value: "{{ .Values.deployment.ui.turingApi }}"
             - name: REACT_APP_CLOCKWORK_UI_HOMEPAGE
-              value: "{{ .Values.mlp.ui.clockworkHomepage }}"
+              value: "{{ .Values.deployment.ui.clockworkHomepage }}"
             - name: REACT_APP_FEAST_UI_HOMEPAGE
-              value: "{{ .Values.mlp.ui.feastHomepage }}"
+              value: "{{ .Values.deployment.ui.feastHomepage }}"
             - name: REACT_APP_KUBEFLOW_UI_HOMEPAGE
-              value: "{{ .Values.mlp.ui.kubeflowHomepage }}"
+              value: "{{ .Values.deployment.ui.kubeflowHomepage }}"
             - name: REACT_APP_MERLIN_UI_HOMEPAGE
-              value: "{{ .Values.mlp.ui.merlinHomepage }}"
+              value: "{{ .Values.deployment.ui.merlinHomepage }}"
             - name: REACT_APP_TURING_UI_HOMEPAGE
-              value: "{{ .Values.mlp.ui.turingHomepage }}"
-{{- if .Values.mlp.imagePullSecrets }}
+              value: "{{ .Values.deployment.ui.turingHomepage }}"
+{{- if .Values.deployment.imagePullSecrets }}
       imagePullSecrets:
-{{ toYaml .Values.mlp.imagePullSecrets | indent 6 }}
+{{ toYaml .Values.deployment.imagePullSecrets | indent 6 }}
 {{- end }}
 
-{{- if .Values.mlp.nodeSelector }}
+{{- if .Values.deployment.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.mlp.nodeSelector | indent 8 }}
+{{ toYaml .Values.deployment.nodeSelector | indent 8 }}
 {{- end }}

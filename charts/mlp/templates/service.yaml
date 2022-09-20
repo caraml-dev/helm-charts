@@ -11,8 +11,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.mlp.service.externalPort }}
-      targetPort: {{ .Values.mlp.service.internalPort }}
+    - port: {{ .Values.service.externalPort }}
+      targetPort: {{ .Values.service.internalPort }}
       name: http
       protocol: TCP
   selector:

@@ -1,11 +1,11 @@
-{{- if .Values.mlp.ingress.enabled }}
+{{- if .Values.ingress.enabled }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ template "mlp.fullname" .}}
   namespace: {{ .Release.Namespace }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.mlp.ingress.class }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
   labels:
     app: {{ include "mlp.name" . }}
     chart: {{ include "mlp.chart" . }}
@@ -16,11 +16,11 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   rules:
-    - host: {{ .Values.mlp.ingress.host }}
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: {{ .Values.mlp.ingress.path | default "/" }}
+          - path: {{ .Values.ingress.path | default "/" }}
             backend:
               serviceName: {{ template "mlp.fullname" .}}
-              servicePort: {{ .Values.mlp.service.externalPort }}
+              servicePort: {{ .Values.service.externalPort }}
 {{- end }}

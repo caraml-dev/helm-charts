@@ -1,4 +1,4 @@
-mlp:
+deployment:
   image:
     pullPolicy: IfNotPresent
     registry: ghcr.io
@@ -21,20 +21,15 @@ mlp:
     path: "/v1/internal/live"
   readinessProbe:
     path: "/v1/internal/ready"
-  service:
-    externalPort: 8080
-    internalPort: 8080
+
   apiHost: "http://mlp/v1"
   mlflowTrackingUrl: "http://mlflow.mlp"
   environment: "production"
-  encryption:
-    # encryption.key must be specified using --set flag.
-    key: "example-key-here"
+
   authorization:
     enabled: false
     serverUrl: http://mlp-authorization-keto
-  ingress:
-    enabled: false
+
   teams:
     - marketing
     - operation
@@ -67,6 +62,20 @@ mlp:
     kubeflowHomepage: "http://kubeflow.org"
     merlinHomepage: "http://merlin.dev"
     turingHomepage: "http://turing.dev"
+
+ingress:
+  enabled: false
+  # class:
+  # host:
+  # path: "/"
+
+encryption:
+  # encryption.key must be specified using --set flag.
+  key: "example-key-here"
+
+service:
+  externalPort: 8080
+  internalPort: 8080
 
 # If you would like to use an external postgres database, you can connect using these credentials
 externalPostgresql:
