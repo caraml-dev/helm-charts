@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "caraml-store-registry.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    component: registry
+{{ include "caraml-store-registry.labels" . | indent 4 }}
+data:
+  application-generated.yaml: |
+{{- if index .Values "application-generated.yaml" "enabled" }}
+    spring:
+      datasource:
+        url: jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/postgres
+
+    server:
+      port: {{ .Values.service.http.targetPort }}
+{{- end }}
+
+  application-override.yaml: |
+{{- if index .Values "application-override.yaml" "enabled" }}
+{{- toYaml (index .Values "application-override.yaml") | nindent 4 }}    
+{{- end }}

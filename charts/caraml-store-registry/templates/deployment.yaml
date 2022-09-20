@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "caraml-store-registry.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    component: registry
+{{ include "caraml-store-registry.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "caraml-store-registry.name" . }}
+      component: registry
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+      labels:
+        component: registry
+{{ include "caraml-store-registry.labels" . | indent 8 }}
+      {{- if .Values.podLabels }}
+        {{ toYaml .Values.podLabels | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      volumes:
+      - name: {{ template "caraml-store-registry.fullname" . }}-config
+        configMap:
+          name: {{ template "caraml-store-registry.fullname" . }}
+      - name: {{ template "caraml-store-registry.fullname" . }}-secret
+        secret:
+          secretName: {{ template "caraml-store-registry.fullname" . }}
+      {{- range $secret := .Values.secrets }}
+      - name: {{ $secret }}
+        secret:
+          secretName: {{ $secret }}
+      {{- end }}
+
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+        volumeMounts:
+        - name: {{ template "caraml-store-registry.fullname" . }}-config
+          mountPath: /etc/caraml-store
+        - name: {{ template "caraml-store-registry.fullname" . }}-secret
+          mountPath: /etc/secrets/caraml-store
+          readOnly: true
+        {{- range $secret := .Values.secrets }}
+        - name: {{ $secret }}
+          mountPath: "/etc/secrets/{{ $secret }}"
+          readOnly: true
+        {{- end }}
+
+        env:
+        - name: LOG_TYPE
+          value: {{ .Values.logType | quote }}
+        - name: LOG_LEVEL
+          value: {{ .Values.logLevel | quote }}
+          
+        {{- if .Values.postgresql.existingSecret }}
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql.existingSecret }}
+              key: postgresql-password
+        {{- end }}
+
+        {{- if .Values.javaOpts }}
+        - name: JAVA_TOOL_OPTIONS
+          value: {{ .Values.javaOpts }}
+        {{- end }}
+
+        {{- range $key, $value := .Values.envOverrides }}
+        - name: {{ printf "%s" $key | replace "." "_" | upper | quote }}
+          {{- if eq (kindOf $value) "map" }}
+          valueFrom:
+            {{- toYaml $value | nindent 12}}
+          {{- else }}
+          value: {{ $value | quote }}
+          {{- end}}
+        {{- end }}
+
+        command:
+        - java
+        - -cp
+        - "@/app/jib-classpath-file"
+        - dev.caraml.store.CaraMLRegistry
+        - --spring.config.location=
+          {{- if index .Values "application.yaml" "enabled" -}}
+          classpath:/application.yaml
+          {{- end }}
+          {{- if index .Values "application-generated.yaml" "enabled" -}}
+          ,file:/etc/caraml-store/application-generated.yaml
+          {{- end }}
+          {{- if index .Values "application-secret.yaml" "enabled" -}}
+          ,file:/etc/secrets/caraml-store/application-secret.yaml
+          {{- end }}
+          {{- if index .Values "application-override.yaml" "enabled" -}}
+          ,file:/etc/caraml-store/application-override.yaml
+          {{- end }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.service.http.targetPort }}
+        - name: grpc
+          containerPort: {{ .Values.service.grpc.targetPort }}
+
+        {{- if .Values.livenessProbe.enabled }}
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+        {{- end }}
+
+        {{- if .Values.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+        {{- end }}
+
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+
+      {{- if .Values.containerRegistrySecret }}
+      imagePullSecrets:
+        - name: {{ .Values.containerRegistrySecret }}
+      {{- end -}}
