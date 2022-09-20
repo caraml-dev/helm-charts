@@ -79,6 +79,7 @@ service:
 
 # If you would like to use an external postgres database, you can connect using these credentials
 externalPostgresql:
+  enabled: false
   username: mlp
   database: mlp
   password: password
@@ -95,6 +96,7 @@ postgresql:
   #     memory: 128Mi
   persistence:
     size: 10Gi
+  nameOverride: mlp-postgresql
   postgresqlUsername: mlp
   postgresqlDatabase: mlp
   # metrics:

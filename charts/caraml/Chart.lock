@@ -1,0 +1,9 @@
+dependencies:
+- name: mlp
+  repository: file://../mlp
+  version: 0.2.0
+- name: postgresql
+  repository: https://charts.helm.sh/stable
+  version: 7.0.0
+digest: sha256:9abac720fc8a128f83825ea11af5d6053844af4f498e935c99ae0eb4bfe8b527
+generated: "2022-09-20T12:55:22.445276+05:30"

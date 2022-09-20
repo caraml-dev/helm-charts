@@ -57,10 +57,12 @@ MLP API
 | encryption.key | string | `"example-key-here"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` |  |
 | externalPostgresql.database | string | `"mlp"` |  |
+| externalPostgresql.enabled | bool | `false` |  |
 | externalPostgresql.password | string | `"password"` |  |
 | externalPostgresql.username | string | `"mlp"` |  |
 | ingress.enabled | bool | `false` |  |
 | postgresql.enabled | bool | `true` |  |
+| postgresql.nameOverride | string | `"mlp-postgresql"` |  |
 | postgresql.persistence.size | string | `"10Gi"` |  |
 | postgresql.postgresqlDatabase | string | `"mlp"` |  |
 | postgresql.postgresqlUsername | string | `"mlp"` |  |

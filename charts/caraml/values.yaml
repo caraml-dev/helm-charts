@@ -1,3 +1,44 @@
 # Default values for caraml.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+
+mlp:
+  enabled: true
+  postgresql:
+    enabled: false
+
+
+postgresql:
+  enabled: true
+  ## Configure resource requests and limits
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources: {}
+  #   requests:
+  #     cpu: 100m
+  #     memory: 128Mi
+  persistence:
+    size: 10Gi
+  postgresqlUsername: caraml
+  postgresqlDatabase: caraml
+  # metrics:
+  #   enabled: true
+  #   serviceMonitor:
+  #     enabled: true
+  # replication:
+  #   enabled: true
+  #   user: repl_user
+  #   password: repl_password
+  #   slaveReplicas: 2
+  #   ## Set synchronous commit mode: on, off, remote_apply, remote_write and local
+  #   ## ref: https://www.postgresql.org/docs/9.6/runtime-config-wal.html#GUC-WAL-LEVEL
+  #   synchronousCommit: "on"
+  #   ## From the number of `slaveReplicas` defined above, set the number of those that will have synchronous replication
+  #   ## NOTE: It cannot be > slaveReplicas
+  #   numSynchronousReplicas: 2
+  #   ## Replication Cluster application name. Useful for defining multiple replication policies
+  #   applicationName: caraml
+
+global:
+  postgresqlUsername: caraml
+  postgresqlDatabase: caraml

@@ -77,7 +77,7 @@ spec:
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}-postgresql
+                  name: {{ template "postgres.password-secret-name" . }}
                   key: postgresql-password
             - name: DATABASE_NAME
               value: {{ template "postgres.database" . }}
