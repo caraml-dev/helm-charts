@@ -58,14 +58,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
 {{- end }}
 
-{{/*
-Common annotations
-*/}}
-{{- define "mlp.annotations" -}}
-meta.helm.sh/release-name: {{ .Release.Name }}
-meta.helm.sh/release-namespace: {{ .Release.Namespace }}
-{{- end }}
-
 
 {{/*
 Postgres related

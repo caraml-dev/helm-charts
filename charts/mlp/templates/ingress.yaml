@@ -8,8 +8,6 @@ metadata:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
   labels:
     {{- include "mlp.labels" . | nindent 4 }}
-  annotations:
-    {{- include "mlp.annotations" . | nindent 4 }}
 spec:
   rules:
     - host: {{ .Values.ingress.host }}

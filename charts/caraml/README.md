@@ -24,8 +24,8 @@ A Helm chart for deploying CaraML components
 | global.postgresqlDatabase | string | `"caraml"` |  |
 | global.postgresqlUsername | string | `"caraml"` |  |
 | mlp.enabled | bool | `true` |  |
-| mlp.postgresql.enabled | bool | `true` |  |
-| postgresql.enabled | bool | `false` |  |
+| mlp.postgresql.enabled | bool | `false` |  |
+| postgresql.enabled | bool | `true` |  |
 | postgresql.persistence.size | string | `"10Gi"` |  |
 | postgresql.postgresqlDatabase | string | `"caraml"` |  |
 | postgresql.postgresqlUsername | string | `"caraml"` |  |

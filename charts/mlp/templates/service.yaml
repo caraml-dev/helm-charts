@@ -5,8 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "mlp.labels" . | nindent 4 }}
-  annotations:
-    {{- include "mlp.annotations" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
