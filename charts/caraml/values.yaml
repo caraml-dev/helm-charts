@@ -3,22 +3,28 @@
 # Declare variables to be passed into your templates.
 
 mlp:
+  # -- To enable/disable MLP chart installation.
   enabled: true
   postgresql:
+    # -- To enable/disable MLP specific postgres
     enabled: false
 
 postgresql:
+  # -- To enable/disable CaraML specific postgres
   enabled: true
-  ## Configure resource requests and limits
-  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  ##
+
+  # -- Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   resources: {}
   #   requests:
   #     cpu: 100m
   #     memory: 128Mi
+
   persistence:
     size: 10Gi
+
+  # -- To set the user name for the database instance
   postgresqlUsername: caraml
+  # -- To set the database schema name created in postgres
   postgresqlDatabase: caraml
   # metrics:
   #   enabled: true
