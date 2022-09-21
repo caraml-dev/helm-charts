@@ -1,0 +1,92 @@
+# Copyright 2018 The Knative Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+{{- if .Values.autoscalerHpa.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoscaler-hpa
+  labels:
+    autoscaling.knative.dev/autoscaler-provider: hpa
+    app.kubernetes.io/name: autoscaler-hpa
+    {{- include "knative-serving-hpa.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.autoscalerHpa.replicaCount }}
+  selector:
+    matchLabels:
+      app: autoscaler-hpa
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+      labels:
+        app: autoscaler-hpa
+        app.kubernetes.io/name: autoscaler-hpa
+        {{- include "knative-serving-hpa.labels" . | nindent 8 }}
+      {{- if .Values.global.extraPodLabels }}
+        {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
+      {{- end }}
+    spec:
+      # To avoid node becoming SPOF, spread our replicas to different nodes.
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: autoscaler-hpa
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      serviceAccountName: controller
+      {{- if .Values.global.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.global.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.global.tolerations }}
+      tolerations:
+        {{- toYaml .Values.global.tolerations | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: autoscaler-hpa
+          {{- if .Values.autoscalerHpa.image.sha }}
+          image: "{{ .Values.autoscalerHpa.image.repository }}@sha256:{{ .Values.autoscalerHpa.image.sha }}"
+          {{- else }}
+          image: "{{ .Values.autoscalerHpa.image.repository }}:{{ .Values.autoscalerHpa.image.tag }}"
+          {{- end }}
+          resources:
+            {{- toYaml .Values.autoscalerHpa.resources | nindent 12 }}
+          env:
+            - name: SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONFIG_LOGGING_NAME
+              value: config-logging
+            - name: CONFIG_OBSERVABILITY_NAME
+              value: config-observability
+            - name: METRICS_DOMAIN
+              value: knative.dev/serving
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - all
+          ports:
+            - name: metrics
+              containerPort: 9090
+            - name: profiling
+              containerPort: 8008
+{{- end }}

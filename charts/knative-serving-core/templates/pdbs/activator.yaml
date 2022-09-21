@@ -1,0 +1,15 @@
+# Activator PDB. Currently we permit unavailability of 20% of tasks at the same time.
+# Given the subsetting and that the activators are partially stateful systems, we want
+# a slow rollout of the new versions and slow migration during node upgrades.
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: activator-pdb
+  labels:
+    app.kubernetes.io/name: activator
+    {{- include "knative-serving-core.labels" . | nindent 4 }}
+spec:
+  minAvailable: 80%
+  selector:
+    matchLabels:
+      app: activator

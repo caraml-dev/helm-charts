@@ -36,10 +36,10 @@ jobs:
             echo "::set-output name=changed::true"
           fi
 
-      # Uncomment this after at least one successful chart release. This will fail because there is no index file in gh-pages branch of the repo yet.
-      # - name: Add dependency chart repos
-      #   run: |
-      #     helm repo add caraml https://caraml-dev.github.io/helm-charts/
+      - name: Add dependency chart repos
+        run: |
+          helm repo add caraml https://caraml-dev.github.io/helm-charts/
+          helm repo add istio https://istio-release.storage.googleapis.com/charts
 
       - name: Run chart-testing (lint)
         run: ct lint --config .github/config/ct.yaml
@@ -48,7 +48,7 @@ jobs:
         id: helm-docs
         run: |
           ./scripts/helm-docs.sh
-          if [[ $(git diff --stat) != '' ]]; then
+          if [[ $(git diff --stat **/README.md) != '' ]]; then
             echo -e '\033[0;31mDocumentation outdated! ❌\nCheck Contributing Guidelines to know how to update documentation\033[0m'
             git diff --color
             exit 1
@@ -57,8 +57,15 @@ jobs:
           fi
 
       - name: Create kind cluster
-        uses: helm/kind-action@v1.2.0
+        uses: helm/kind-action@v1.3.0
         if: steps.list-changed.outputs.changed == 'true'
+        with:
+          node_image: kindest/node:v1.22.7
+
+      - name: Install metallb in kind cluster for load balancer services
+        run: |
+          ./scripts/install_metallib.sh
+
 
       - name: Run chart-testing (install)
         run: ct install --config .github/config/ct.yaml

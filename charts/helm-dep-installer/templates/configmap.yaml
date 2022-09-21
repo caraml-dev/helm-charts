@@ -1,0 +1,13 @@
+---
+{{- $configMap := include "generic-dep-installer.cm-name" . }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $configMap }}
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade,post-delete"
+    "helm.sh/hook-weight": {{ .Values.hook.weight | default "0" | quote }}
+data:
+  run.sh: |
+    {{- .Files.Get "files/run.sh" | nindent 4 }}

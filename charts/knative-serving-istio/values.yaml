@@ -1,0 +1,519 @@
+---
+revision: ""
+global:
+  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+  extraPodLabels: {}
+  # -- Define which Nodes the Pods are scheduled on.
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+  # -- If specified, the pod's tolerations.
+  # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+  # -- Assign custom affinity rules to the prometheus operator
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+# -- Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml
+config:
+  istio:
+    # NOTE: assumes istio edge proxies (*-gateway deployments) are deployed in istio-system namespace
+    gateway.{{ .Release.Namespace }}.knative-ingress-gateway: "istio-ingressgateway.istio-system.svc.cluster.local"
+    local-gateway.{{ .Release.Namespace }}.knative-local-gateway: "cluster-local-gateway.istio-system.svc.cluster.local"
+    local-gateway.mesh: "mesh"
+    enable-virtualservice-status: "false"
+
+clusterLocalGatewayIstioSelector: cluster-local-gateway
+
+controller:
+  autoscaling:
+    # -- Enables autoscaling for net-istio-controller deployment.
+    enabled: false
+    # # -- Set accordingly based on environment
+    # # -- Minimum number of replicas for net-istio-controller.
+    # minReplicas: 1
+    # # -- Maximum number of replicas for net-istio-controller.
+    # maxReplicas: 20
+    # # -- Target CPU utlisation before it scales up/down.
+    # targetCPUUtilizationPercentage: 100
+  image:
+    # -- Repository of the controller image
+    repository: "gcr.io/knative-releases/knative.dev/net-istio/cmd/controller"
+    # -- Tag of the controller image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the controller image, either provide tag or SHA (SHA will be given priority)
+    sha: "1ef74af101cc89d86a2e6b37b9a74545bfd9892d48b1b036d419a635a19c0081"
+  # -- Number of replicas for the net-istio-controller deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for net-istio-controller. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+webhook:
+  image:
+    # -- Repository of the webhook image
+    repository: "gcr.io/knative-releases/knative.dev/net-istio/cmd/webhook"
+    # -- Tag of the webhook image, either provide tag or SHA (SHA will be given priority)
+    tag: ""
+    # -- SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority)
+    sha: "ab3dfcf1574780448b3453cc717d6eb2bc33e794d36c090eff1076aa65f05ca0"
+  # -- Number of replicas for the net-istio-webhook deployment.
+  replicaCount: 1
+  # -- Resources requests and limits for net-istio-webhook. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    #
+
+############################################################
+# Dependency configs
+############################################################
+
+############################################################
+# Knative Serving Core
+############################################################
+knativeServingCore:
+  enabled: true
+  global:
+    # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+    extraPodLabels: {}
+    # -- Define which Nodes the Pods are scheduled on.
+    # ref: https://kubernetes.io/docs/user-guide/node-selection/
+    nodeSelector: {}
+    # -- If specified, the pod's tolerations.
+    # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    tolerations: []
+    # -- Assign custom affinity rules to the prometheus operator
+    # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    affinity: {}
+
+  # -- Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml
+  config:
+    autoscaler: {}
+    defaults: {}
+    deployment:
+      queueSidecarImage: gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe
+    domain: {}
+    features: {}
+    gc: {}
+    leaderElection:
+      lease-duration: "15s"
+      renew-deadline: "10s"
+      retry-period: "2s"
+    buckets: "1"
+    logging:
+      logging.request-log-template: ""
+    network: {}
+    observability: {}
+    tracing: {}
+
+  activator:
+    autoscaling:
+      # -- Enables autoscaling for activator deployment.
+      enabled: false
+      # # -- Minimum number of replicas for activator.
+      # minReplicas: 1
+      # # -- Maximum number of replicas for activator.
+      # maxReplicas: 20
+      # # -- Target CPU utlisation before it scales up/down.
+      # targetCPUUtilizationPercentage: 50
+    image:
+      # -- Repository of the activator image
+      repository: "gcr.io/knative-releases/knative.dev/serving/cmd/activator"
+      # -- Tag of the activator image, either provide tag or SHA (SHA will be given priority)
+      tag: ""
+      # -- SHA256 of the activator image, either provide tag or SHA (SHA will be given priority)
+      sha: "ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"
+    # -- Number of replicas for the activator deployment.
+    replicaCount: 1
+    # -- Resources requests and limits for activator. This should be set
+    # according to your cluster capacity and service level objectives.
+    # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+  autoscaler:
+    image:
+      # -- Repository of the autoscaler image
+      repository: "gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler"
+      # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+      tag: ""
+      # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+      sha: "31aed8b5b241147585cb0e48366451a96354fc6036d6a5667997237c1d302d98"
+    # -- Number of replicas for the autoscaler deployment.
+    replicaCount: 1
+    # -- Resources requests and limits for autoscaler. This should be set
+    # according to your cluster capacity and service level objectives.
+    # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+  controller:
+    autoscaling:
+      # -- Enables autoscaling for controller deployment.
+      enabled: false
+      # # -- Minimum number of replicas for controller.
+      # minReplicas: 1
+      # # -- Maximum number of replicas for controller.
+      # maxReplicas: 20
+      # # -- Target CPU utlisation before it scales up/down.
+      # targetCPUUtilizationPercentage: 50
+    image:
+      # -- Repository of the controller image
+      repository: "gcr.io/knative-releases/knative.dev/serving/cmd/controller"
+      # -- Tag of the controller image, either provide tag or SHA (SHA will be given priority)
+      tag: ""
+      # -- SHA256 of the controller image, either provide tag or SHA (SHA will be given priority)
+      sha: "c5a77d5642065ff3452d9b043a7226b85bfc81dc068f8dded905abf88d917a4d"
+    # -- Number of replicas for the controller deployment.
+    replicaCount: 1
+    # -- Resources requests and limits for controller. This should be set
+    # according to your cluster capacity and service level objectives.
+    # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+  domainMapping:
+    image:
+      # -- Repository of the domain mapping image
+      repository: "gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping"
+      # -- Tag of the domain mapping image, either provide tag or SHA (SHA will be given priority)
+      tag: ""
+      # -- SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority)
+      sha: "6b5356cf3a2b64d52cbbf1bc0de376b816c4d3f610ccc8ff2dabf3d259c0996b"
+    # -- Number of replicas for the domain mapping deployment.
+    replicaCount: 1
+    # -- Resources requests and limits for domain mapping. This should be set
+    # according to your cluster capacity and service level objectives.
+    # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+  domainMappingWebhook:
+    image:
+      # -- Repository of the domain mapping webhook image
+      repository: "gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping-webhook"
+      # -- Tag of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority)
+      tag: ""
+      # -- SHA256 of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority)
+      sha: "d0cc86f2002660c4804f6e0aed8218d39384c73a8b5006c9ac558becd8f48aa6"
+    # -- Number of replicas for the domain mapping webhook deployment.
+    replicaCount: 1
+    # -- Resources requests and limits for domain mapping webhook. This should be set
+    # according to your cluster capacity and service level objectives.
+    # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+  webhook:
+    autoscaling:
+      # -- Enables autoscaling for webhook deployment.
+      enabled: false
+      # # -- Minimum number of replicas for webhook.
+      # minReplicas: 1
+      # # -- Maximum number of replicas for webhook.
+      # maxReplicas: 20
+      # # -- Target CPU utlisation before it scales up/down.
+      # targetCPUUtilizationPercentage: 50
+    image:
+      # -- Repository of the webhook image
+      repository: "gcr.io/knative-releases/knative.dev/serving/cmd/webhook"
+      # -- Tag of the webhook image, either provide tag or SHA (SHA will be given priority)
+      tag: ""
+      # -- SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority)
+      sha: "bd954ec8ced56e359bd4f60ee1886b20000df14126688c796383a3ae40cfffc0"
+    # -- Number of replicas for the webhook deployment.
+    replicaCount: 1
+    # -- Resources requests and limits for webhook. This should be set
+    # according to your cluster capacity and service level objectives.
+    # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+  queueProxy:
+    image:
+      # -- Repository of the queue proxy image
+      repository: "gcr.io/knative-releases/knative.dev/serving/cmd/queue"
+      # -- Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority)
+      tag: ""
+      # -- SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority)
+      sha: "80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"
+
+  monitoring:
+    enabled: false
+
+  autoscalerHpa:
+    enabled: true
+    image:
+      # -- Repository of the autoscaler image
+      repository: "gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler-hpa"
+      # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+      tag: ""
+      # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
+      sha: "c7020d14b51862fae8e92da7b0442aa7843eb81c32699d158a3b24c19d5af8d4"
+    # -- Number of replicas for the autoscaler deployment.
+    replicaCount: 1
+    # -- Resources requests and limits for autoscaler. This should be set
+    # according to your cluster capacity and service level objectives.
+    # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+############################################################
+# Istio Base
+############################################################
+base:
+  # -- Set to false if there is an existing istio deployment
+  enabled: true
+  validationURL: ""
+  global:
+    istioNamespace: "istio-system"
+
+############################################################
+# Istiod - installed using helm-dep-installer chart
+############################################################
+istiod:
+  # -- Set to false if there is an existing istio deployment
+  enabled: true
+  helmChart:
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    chart: istiod
+    version: 1.13.4
+    release: istiod
+    namespace: "istio-system"
+  hook:
+    weight: 0
+  chartValues:
+    deployInReleaseNs: false
+    configValidation: true
+    global:
+      istioNamespace: "istio-system"
+      configValidation: true
+    pilot:
+      autoscaleEnabled: false
+      # -- Set accordingly based on environment
+      # autoscaleMin: 1
+      # autoscaleMax: 5
+      # rollingMaxSurge: 100%
+      # rollingMaxUnavailable: 25%
+
+      resources:
+        requests:
+          cpu: 500m
+          memory: 512Mi
+        limits:
+          cpu: 1
+          memory: 1024Mi
+      cpu:
+        targetAverageUtilization: 80
+
+    meshConfig:
+      enableTracing: false
+
+############################################################
+# istioIngressGateway - installed using helm-dep-installer chart
+############################################################
+istioIngressGateway:
+  helmChart:
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    chart: gateway
+    version: 1.13.4
+    release: istio-ingress-gateway
+    namespace: "istio-system"
+    createNamespace: false
+  hook:
+    weight: 1
+  chartValues:
+    global:
+      # -- Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment
+      enabled: true
+    # -- Specify name here so each gateway installation has its own unique name
+    name: istio-ingressgateway
+    autoscaling:
+      enabled: false
+      # # -- Set accordingly based on environment
+      # minReplicas: 1
+      # maxReplicas: 4
+      # targetCPUUtilizationPercentage: 80
+
+    serviceAccount:
+      # If set, a service account will be created. Otherwise, the default is used
+      create: true
+      # The name of the service account to use.
+      # If not set, the release name is used
+      name: "istio-ingressgateway"
+
+    env:
+      ISTIO_META_ROUTER_MODE: standard
+      ISTIO_METAJSON_STATS: |
+        {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
+
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+############################################################
+# clusterLocalGateway - installed using helm-dep-installer chart
+############################################################
+clusterLocalGateway:
+  global:
+    # -- Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment
+    enabled: true
+  helmChart:
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    chart: gateway
+    version: 1.13.4
+    release: cluster-local-gateway
+    namespace: "istio-system"
+    createNamespace: false
+  hook:
+    weight: 1
+  chartValues:
+    global:
+      # -- Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment
+      enabled: true
+    # -- Specify name here so each gateway installation has its own unique name
+    name: cluster-local-gateway
+    labels:
+      app: cluster-local-gateway
+      istio: cluster-local-gateway
+
+    serviceAccount:
+      # If set, a service account will be created. Otherwise, the default is used
+      create: true
+      # The name of the service account to use.
+      # If not set, the release name is used
+      name: "cluster-local-gateway"
+    autoscaling:
+      enabled: false
+      # # -- Set accordingly based on environment
+      # minReplicas: 1
+      # maxReplicas: 4
+      # targetCPUUtilizationPercentage: 60
+
+    env:
+      ISTIO_METAJSON_STATS: |
+        {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
+
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+    service:
+      type: ClusterIP
+      ports:
+        - port: 80
+          targetPort: 80
+          name: http2
+        - port: 443
+          name: https

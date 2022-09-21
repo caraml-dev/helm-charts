@@ -1,0 +1,9 @@
+apiVersion: v2
+name: knative-serving-core
+description: Installs Knative Serving core and CRDs.
+type: application
+version: 1.1.0
+appVersion: "v1.0.1"
+maintainers:
+  - name: caraml-dev
+    email: caraml-dev@caraml.dev

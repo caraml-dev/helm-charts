@@ -1,0 +1,80 @@
+---
+{{- $serviceAccountName := include "generic-dep-installer.sa-name"  . }}
+{{- $resourceName := include "generic-dep-installer.job-name" . }}
+{{- $configMap := include "generic-dep-installer.cm-name" . }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-installer" $resourceName | trunc 63 | trimSuffix "-" }}
+  labels:
+    {{- include "generic-dep-installer.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-weight": {{ .Values.hook.weight | default "0" | quote }}
+spec:
+  template:
+    metadata:
+      name: {{ printf "%s-installer" $resourceName }}
+    spec:
+      volumes:
+        - name: run-script
+          configMap:
+            name: {{ $configMap }}
+            defaultMode: 0744  # set execute bit so script can be called as command
+      serviceAccountName: {{ $serviceAccountName }}
+      containers:
+        - name: runner
+          image: {{ .Values.image }}
+          volumeMounts:
+            - name: run-script
+              mountPath: /scripts
+          command: ["/scripts/run.sh"]
+          args:
+          {{- include "generic-dep-installer.job-commands" . | nindent 12 }}
+            - upgrade-install
+          env:
+            - name: CHART_VALUES
+              value: {{ .Values.chartValues | toYaml | b64enc | quote }}
+      restartPolicy: Never
+  backoffLimit: 10
+
+{{- if .Values.deleteJob.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-uninstall" $resourceName | trunc 63 | trimSuffix "-" }}
+  labels:
+    {{- include "generic-dep-installer.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "post-delete"
+    "helm.sh/hook-weight": {{ .Values.hook.weight | default "0" | quote }}
+spec:
+  template:
+    metadata:
+      name: {{ printf "%s-uninstall" $resourceName }}
+    spec:
+      volumes:
+        - name: run-script
+          configMap:
+            name: {{ $configMap }}
+            defaultMode: 0744  # set execute bit so script can be called as command
+      serviceAccountName: {{ $serviceAccountName }}
+      containers:
+        - name: runner
+          volumeMounts:
+            - name: run-script
+              mountPath: /scripts
+          image: {{ .Values.image }}
+          command: ["/scripts/run.sh"]
+          args:
+          {{- include "generic-dep-installer.job-commands" . | nindent 12 }}
+            - delete
+          env:
+            - name: CHART_VALUES
+              value: {{ .Values.chartValues | toYaml | b64enc | quote }}
+      restartPolicy: Never
+  backoffLimit: 10
+{{- end }}

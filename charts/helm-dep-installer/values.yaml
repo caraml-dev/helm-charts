@@ -1,0 +1,37 @@
+---
+# -- Image used to for installer/delete job
+image: ghcr.io/dtzar/helm-kubectl:3.9.4  # TODO: Rerelease with more official repo (eg ghcr.io/caraml-dev)?
+
+helmChart:
+  # The following values are example values. Replace them for dependant chart's values.yaml
+  # -- repository of helm chart to install
+  repository: "https://charts.bitnami.com/bitnami"
+  # -- Chart name
+  chart: "nginx"
+  # -- Chart version
+  version: "13.2.4"
+  # -- release name
+  release: "nginx-release"
+  # -- release namespace
+  namespace: "nginx"
+  # -- Set to true to create namespace before installing helm chart
+  createNamespace: true
+
+# -- Set helm hook parameters, currently only supports weight
+hook:
+  # -- Hook weight MUST be > -10
+  weight: 0
+
+# -- Place all chart values (values.yaml) under this field
+chartValues:
+  {}
+  # # Example
+  # service:
+  #   type: ClusterIP
+  # -- Additional chart values to override values.yaml of chart to install
+  # nameOverride: "some-name"
+  # # etc
+
+# -- Create delete job when helm uninstall is run
+deleteJob:
+  enabled: true
