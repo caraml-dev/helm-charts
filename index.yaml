@@ -3,6 +3,19 @@ entries:
   caraml:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2022-09-21T08:55:03.462531736Z"
+    description: A Helm chart for deploying CaraML components
+    digest: 7cf0df275a3e579c48f8e75cdc305bb118cf498f8397d3c1385a3324a6712984
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.1.1/caraml-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2022-09-08T09:29:38.528184448Z"
     description: A Helm chart for deploying CaraML components
     digest: 8cc526515a50e0338a3a456477ec1a28ff3c75a3be0da47edb1491542ec653dd
@@ -14,4 +27,79 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.1.0/caraml-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-08T09:29:38.528189348Z"
+  generic-dep-installer:
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2022-09-21T08:55:03.74411758Z"
+    description: 'This helm chart is used to control the order of installation of
+      helm chart dependencies through the use of pre-install hooks and hook weights.
+      It creates a K8s Job that performs that applies a rendered helm chart to a cluster,
+      while exposing the `.Values.hook.weight` to users to configure which dependency
+      should be installed first. Container image used by job requires helm and kubectl
+      binary to be present, and thus should be set accordingly based on the version
+      of K8s being used. See https://helm.sh/docs/topics/version_skew/ for more info
+      on which helm version to use. '
+    digest: e8daf4f01f667fbf612b963967bbdfb56b042c278052fff2ebbce9236ab251cd
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: generic-dep-installer
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/generic-dep-installer-0.1.0/generic-dep-installer-0.1.0.tgz
+    version: 0.1.0
+  knative-serving-core:
+  - apiVersion: v2
+    appVersion: v1.0.1
+    created: "2022-09-21T08:55:03.929970955Z"
+    description: Installs Knative Serving core and CRDs.
+    digest: ab99d516d8c21272f48ab59d6a3497658667c36fc6bc0f8530a92e2e887848d6
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: knative-serving-core
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-core-1.1.0/knative-serving-core-1.1.0.tgz
+    version: 1.1.0
+  knative-serving-istio:
+  - apiVersion: v2
+    appVersion: v1.0.0
+    created: "2022-09-21T08:55:04.099971452Z"
+    dependencies:
+    - alias: knativeServingCore
+      condition: knativeServingCore.enabled
+      name: knative-serving-core
+      repository: file://../knative-serving-core
+      version: 1.1.0
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: file://../helm-dep-installer
+      version: 0.1.0
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.4
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: file://../helm-dep-installer
+      version: 0.1.0
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: file://../helm-dep-installer
+      version: 0.1.0
+    description: Installs Knative-serving for Istio
+    digest: e51164a052514c07efe757f7324586a5fd71c9b25fa9ceef90a231b5eb4d661e
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: knative-serving-istio
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-istio-1.0.1/knative-serving-istio-1.0.1.tgz
+    version: 1.0.1
+generated: "2022-09-21T08:55:04.099983552Z"
