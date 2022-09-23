@@ -88,7 +88,7 @@ Postgres related
     {{- else if .Values.externalPostgresql.enabled -}}
         {{- .Values.externalPostgresql.database -}}
     {{- else -}}
-        {{- .Values.global.postgresqlDatabase -}}
+        {{- .Values.global.mlp.postgresqlDatabase -}}
     {{- end -}}
 {{- end -}}
 

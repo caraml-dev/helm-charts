@@ -26,6 +26,10 @@ postgresql:
   postgresqlUsername: caraml
   # -- To set the database schema name created in postgres
   postgresqlDatabase: caraml
+
+  initdbScripts:
+    init.sql: |
+      CREATE DATABASE mlp;
   # metrics:
   #   enabled: true
   #   serviceMonitor:
@@ -47,3 +51,5 @@ postgresql:
 global:
   postgresqlUsername: caraml
   postgresqlDatabase: caraml
+  mlp:
+    postgresqlDatabase: mlp
