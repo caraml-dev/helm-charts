@@ -14,7 +14,7 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../mlp | mlp | 0.2.0 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.2.0 |
 | https://charts.helm.sh/stable | postgresql | 7.0.0 |
 
 ## Values

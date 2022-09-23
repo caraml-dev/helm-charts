@@ -1,9 +1,9 @@
 dependencies:
 - name: mlp
-  repository: file://../mlp
+  repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.0
 - name: postgresql
   repository: https://charts.helm.sh/stable
   version: 7.0.0
-digest: sha256:9abac720fc8a128f83825ea11af5d6053844af4f498e935c99ae0eb4bfe8b527
-generated: "2022-09-20T12:55:22.445276+05:30"
+digest: sha256:ceb6cd7210c05df09333d33dbf0fb68b92ff36f8c1e67fea3021dec60ffbe6fb
+generated: "2022-09-23T15:01:17.118111+05:30"
