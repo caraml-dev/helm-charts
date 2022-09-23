@@ -3,6 +3,8 @@ remote: origin
 target-branch: main
 chart-dirs:
   - charts
-# chart-repos:
-#   - caraml=https://caraml-dev.github.io/helm-charts/
+chart-repos:
+  - caraml=https://caraml-dev.github.io/helm-charts/
+  - stable=https://charts.helm.sh/stable
+  - istio=https://istio-release.storage.googleapis.com/charts
 helm-extra-args: --timeout 600s

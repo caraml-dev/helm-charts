@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "mlp.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "mlp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "mlp.name" .}}
+      release: {{ .Release.Name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: {{ template "mlp.name" .}}
+        release: {{ .Release.Name }}
+        {{- if .Values.deployment.podLabels }}
+        {{- toYaml .Values.deployment.podLabels | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: api
+          image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.deployment.livenessProbe.path }}
+              port: {{ .Values.service.internalPort }}
+              scheme: HTTP
+            initialDelaySeconds: {{ default "30" .Values.deployment.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ default "10" .Values.deployment.livenessProbe.periodSeconds }}
+            successThreshold: {{ default "1" .Values.deployment.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ default "5" .Values.deployment.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.deployment.readinessProbe.path }}
+              port: {{ .Values.service.internalPort }}
+              scheme: HTTP
+            initialDelaySeconds: {{ default "30" .Values.deployment.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ default "10" .Values.deployment.readinessProbe.periodSeconds }}
+            successThreshold: {{ default "1" .Values.deployment.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ default "5" .Values.deployment.readinessProbe.timeoutSeconds }}
+          {{- if .Values.deployment.resources }}
+          resources: {{- toYaml .Values.deployment.resources | nindent 12 }}
+          {{- end }}
+{{- if .Values.deployment.args }}
+          args:
+{{ toYaml .Values.deployment.args | indent 10 -}}
+{{ end }}
+{{- if .Values.deployment.command }}
+          command:
+{{ toYaml .Values.deployment.command | indent 10 -}}
+{{ end }}
+          env:
+            - name: ENVIRONMENT
+              value: "{{ .Values.deployment.environment }}"
+            - name: API_HOST
+              value: "{{ .Values.deployment.apiHost }}"
+            - name: PORT
+              value: "{{ .Values.service.internalPort }}"
+            - name: DATABASE_HOST
+              value: {{ template "postgres.host" . }}
+            - name: DATABASE_USER
+              value: {{ template "postgres.username" . }}
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "postgres.password-secret-name" . }}
+                  key: {{ template "postgres.password-secret-key" . }}
+            - name: DATABASE_NAME
+              value: {{ template "postgres.database" . }}
+            - name: MLFLOW_TRACKING_URL
+              value: "{{ .Values.deployment.mlflowTrackingUrl }}"
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "mlp.encryption-key-name" . | quote}}
+                  key: encryption-key
+            - name: AUTHORIZATION_ENABLED
+              value: "{{ .Values.deployment.authorization.enabled }}"
+            {{- if .Values.deployment.authorization.enabled }}
+            - name: AUTHORIZATION_SERVER_URL
+              value: "{{ .Values.deployment.authorization.serverUrl }}"
+            {{- end }}
+            - name: OAUTH_CLIENT_ID
+              value: "{{ .Values.deployment.oauthClientID }}"
+            - name: SENTRY_DSN
+              value: "{{ .Values.deployment.sentryDSN }}"
+            - name: TEAM_LIST
+              value: "{{ join "," .Values.deployment.teams }}"
+            - name: STREAM_LIST
+              value: "{{ join "," .Values.deployment.streams }}"
+            {{- if .Values.deployment.docs }}
+            - name: DOC_LIST
+              value: {{ .Values.deployment.docs | toJson | quote  }}
+            {{- end }}
+            - name: REACT_APP_FEAST_CORE_API
+              value: "{{ .Values.deployment.ui.feastCoreApi }}"
+            - name: REACT_APP_MERLIN_API
+              value: "{{ .Values.deployment.ui.merlinApi }}"
+            - name: REACT_APP_TURING_API
+              value: "{{ .Values.deployment.ui.turingApi }}"
+            - name: REACT_APP_CLOCKWORK_UI_HOMEPAGE
+              value: "{{ .Values.deployment.ui.clockworkHomepage }}"
+            - name: REACT_APP_FEAST_UI_HOMEPAGE
+              value: "{{ .Values.deployment.ui.feastHomepage }}"
+            - name: REACT_APP_KUBEFLOW_UI_HOMEPAGE
+              value: "{{ .Values.deployment.ui.kubeflowHomepage }}"
+            - name: REACT_APP_MERLIN_UI_HOMEPAGE
+              value: "{{ .Values.deployment.ui.merlinHomepage }}"
+            - name: REACT_APP_TURING_UI_HOMEPAGE
+              value: "{{ .Values.deployment.ui.turingHomepage }}"
+{{- if .Values.deployment.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.deployment.imagePullSecrets | indent 6 }}
+{{- end }}
+
+{{- if .Values.deployment.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.deployment.nodeSelector | indent 8 }}
+{{- end }}

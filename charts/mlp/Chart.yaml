@@ -1,0 +1,15 @@
+apiVersion: v2
+description: "MLP API"
+name: mlp
+version: 0.2.0
+appVersion: 1.7.1
+
+maintainers:
+  - name: caraml-dev
+    email: caraml-dev@caraml.dev
+
+dependencies:
+  - name: postgresql
+    repository: https://charts.helm.sh/stable
+    version: 7.0.0
+    condition: postgresql.enabled
