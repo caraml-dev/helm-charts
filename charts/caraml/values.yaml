@@ -2,6 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  postgresqlUsername: caraml
+  postgresqlDatabase: caraml
+  mlp:
+    postgresqlDatabase: mlp
+
 mlp:
   # -- To enable/disable MLP chart installation.
   enabled: true
@@ -47,9 +53,3 @@ postgresql:
   #   numSynchronousReplicas: 2
   #   ## Replication Cluster application name. Useful for defining multiple replication policies
   #   applicationName: caraml
-
-global:
-  postgresqlUsername: caraml
-  postgresqlDatabase: caraml
-  mlp:
-    postgresqlDatabase: mlp
