@@ -1,17 +1,17 @@
 deployment:
+  # -- mlp image related configs
   image:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/mlp
     tag: v1.7.1
+
   replicaCount: 1
 
-  # Additional labels to apply on the pod level
+  # -- Additional labels to apply on the pod level
   podLabels: {}
 
-  ## Configure resource requests and limits
-  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  ##
+  # -- Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   resources: {}
   #   requests:
   #     cpu: 100m
@@ -30,14 +30,19 @@ deployment:
     enabled: false
     serverUrl: http://mlp-authorization-keto
 
+  # -- teams list
   teams:
     - marketing
     - operation
     - business
+
+  # -- Streams list
   streams:
     - promotion-marketing
     - operation-strategy
     - business-analyst
+
+  # -- Documentation list for caraml components, Added as part of env variables.
   docs:
     [
       {
@@ -53,6 +58,7 @@ deployment:
         "href": "https://docs.feast.dev/user-guide/overview",
       },
     ]
+
   ui:
     feastCoreApi: "http://feast.dev/v1"
     merlinApi: "http://merlin.dev/v1"
@@ -77,26 +83,38 @@ service:
   externalPort: 8080
   internalPort: 8080
 
-# If you would like to use an external postgres database, you can connect using these credentials
 externalPostgresql:
+  # -- If you would like to use an external postgres database, enable it here using this
   enabled: false
+  # -- External postgres database user
   username: mlp
+  # -- External postgres database schema
   database: mlp
+  # -- Set the External postgres db password using this value at runtime (using --set flag) to create a secret
   password: password
+  # -- Host address for the External postgres
   address: 127.0.0.1
+  # -- If a secret is created by external systems (eg. Valut)., mention the secret name here
+  secretName: ""
+# -- If a secret is created by external systems (eg. Valut)., mention the key under which password is stored in secret (eg. postgresql-password)
+  secretKey: ""
 
 postgresql:
+  # -- Enable creating mlp specific postgres instance
   enabled: true
-  ## Configure resource requests and limits
-  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  ##
+
+  # -- Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   resources: {}
   #   requests:
   #     cpu: 100m
   #     memory: 128Mi
+
   persistence:
     size: 10Gi
+
+  # -- override the name here so that db gets created like <release_name>-mlp-postgresql
   nameOverride: mlp-postgresql
+
   postgresqlUsername: mlp
   postgresqlDatabase: mlp
   # metrics:

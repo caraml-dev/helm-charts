@@ -23,29 +23,17 @@ MLP API
 | deployment.apiHost | string | `"http://mlp/v1"` |  |
 | deployment.authorization.enabled | bool | `false` |  |
 | deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
-| deployment.docs[0].href | string | `"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"` |  |
-| deployment.docs[0].label | string | `"Merlin User Guide"` |  |
-| deployment.docs[1].href | string | `"https://github.com/gojek/turing"` |  |
-| deployment.docs[1].label | string | `"Turing User Guide"` |  |
-| deployment.docs[2].href | string | `"https://docs.feast.dev/user-guide/overview"` |  |
-| deployment.docs[2].label | string | `"Feast User Guide"` |  |
+| deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components, Added as part of env variables. |
 | deployment.environment | string | `"production"` |  |
-| deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
-| deployment.image.registry | string | `"ghcr.io"` |  |
-| deployment.image.repository | string | `"gojek/mlp"` |  |
-| deployment.image.tag | string | `"v1.7.1"` |  |
+| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"gojek/mlp","tag":"v1.7.1"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
-| deployment.podLabels | object | `{}` |  |
+| deployment.podLabels | object | `{}` | Additional labels to apply on the pod level |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` |  |
 | deployment.replicaCount | int | `1` |  |
-| deployment.resources | object | `{}` |  |
-| deployment.streams[0] | string | `"promotion-marketing"` |  |
-| deployment.streams[1] | string | `"operation-strategy"` |  |
-| deployment.streams[2] | string | `"business-analyst"` |  |
-| deployment.teams[0] | string | `"marketing"` |  |
-| deployment.teams[1] | string | `"operation"` |  |
-| deployment.teams[2] | string | `"business"` |  |
+| deployment.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| deployment.streams | list | `["promotion-marketing","operation-strategy","business-analyst"]` | Streams list |
+| deployment.teams | list | `["marketing","operation","business"]` | teams list |
 | deployment.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
 | deployment.ui.feastCoreApi | string | `"http://feast.dev/v1"` |  |
 | deployment.ui.feastHomepage | string | `"http://feast.dev"` |  |
@@ -55,18 +43,20 @@ MLP API
 | deployment.ui.turingApi | string | `"http://turing.dev/v1"` |  |
 | deployment.ui.turingHomepage | string | `"http://turing.dev"` |  |
 | encryption.key | string | `"example-key-here"` |  |
-| externalPostgresql.address | string | `"127.0.0.1"` |  |
-| externalPostgresql.database | string | `"mlp"` |  |
-| externalPostgresql.enabled | bool | `false` |  |
+| externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| externalPostgresql.database | string | `"mlp"` | External postgres database schema |
+| externalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | externalPostgresql.password | string | `"password"` |  |
-| externalPostgresql.username | string | `"mlp"` |  |
+| externalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Valut)., mention the key under which password is stored in secret (eg. postgresql-password) |
+| externalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Valut)., mention the secret name here |
+| externalPostgresql.username | string | `"mlp"` | External postgres database user |
 | ingress.enabled | bool | `false` |  |
-| postgresql.enabled | bool | `true` |  |
-| postgresql.nameOverride | string | `"mlp-postgresql"` |  |
+| postgresql.enabled | bool | `true` | Enable creating mlp specific postgres instance |
+| postgresql.nameOverride | string | `"mlp-postgresql"` | override the name here so that db gets created like <release_name>-mlp-postgresql |
 | postgresql.persistence.size | string | `"10Gi"` |  |
 | postgresql.postgresqlDatabase | string | `"mlp"` |  |
 | postgresql.postgresqlUsername | string | `"mlp"` |  |
-| postgresql.resources | object | `{}` |  |
+| postgresql.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 

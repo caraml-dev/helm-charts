@@ -75,7 +75,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ template "postgres.password-secret-name" . }}
-                  key: postgresql-password
+                  key: {{ template "postgres.password-secret-key" . }}
             - name: DATABASE_NAME
               value: {{ template "postgres.database" . }}
             - name: MLFLOW_TRACKING_URL

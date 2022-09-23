@@ -96,8 +96,16 @@ Postgres related
     {{- if .Values.postgresql.enabled -}}
         {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
     {{- else if .Values.externalPostgresql.enabled -}}
-        {{- printf "%s-%s-external-postgresql" .Release.Name .Chart.Name -}}
+        {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name) .Values.externalPostgresql.secretName -}}
     {{- else -}}
         {{- printf "%s-postgresql" .Release.Name -}}
+    {{- end -}}
+{{- end -}}
+
+{{- define "postgres.password-secret-key" -}}
+    {{- if and .Values.externalPostgresql.enabled -}}
+        {{- default "postgresql-password" .Values.externalPostgresql.secretKey  -}}
+    {{- else -}}
+        {{- printf "postgresql-password" -}}
     {{- end -}}
 {{- end -}}
