@@ -3,6 +3,28 @@ entries:
   caraml:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2022-09-23T09:27:51.204411019Z"
+    dependencies:
+    - condition: mlp.enabled
+      name: mlp
+      repository: file://../mlp
+      version: 0.2.0
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.0
+    description: A Helm chart for deploying CaraML components
+    digest: df865bb596c1ab0f89de719b70b6a2e5b038d897c7fb8b9efe2876dee6bd9c46
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.2.0/caraml-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2022-09-21T08:55:03.462531736Z"
     description: A Helm chart for deploying CaraML components
     digest: 7cf0df275a3e579c48f8e75cdc305bb118cf498f8397d3c1385a3324a6712984
@@ -141,4 +163,22 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-istio-1.0.1/knative-serving-istio-1.0.1.tgz
     version: 1.0.1
-generated: "2022-09-22T03:59:45.6098414Z"
+  mlp:
+  - apiVersion: v2
+    appVersion: 1.7.1
+    created: "2022-09-23T09:27:51.393239648Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.0
+    description: MLP API
+    digest: 54bcb683b427711fc0197ea3e24d1dcfca41ab6a6b1441ac1949a0d84e79ac12
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: mlp
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
+    version: 0.2.0
+generated: "2022-09-23T09:27:51.393275649Z"
