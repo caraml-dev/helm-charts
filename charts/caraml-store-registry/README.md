@@ -24,7 +24,7 @@ CaraML store registry: Feature registry for CaraML store.
 | envOverrides | object | `{}` | Extra environment variables to set |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/caraml-dev/caraml-store-registry"` | Docker image repository |
-| image.tag | string | `"develop"` | Image tag |
+| image.tag | string | `"0.1.0-build.42-ae3e52f"` | Image tag |
 | javaOpts | string | `nil` | [JVM options](https://docs.oracle.com/cd/E22289_01/html/821-1274/configuring-the-default-jvm-and-java-arguments.html). For better performance, it is advised to set the min and max heap: <br> `-Xms2048m -Xmx2048m` |
 | livenessProbe.enabled | bool | `false` | Flag to enable the probe |
 | livenessProbe.failureThreshold | int | `5` | Min consecutive failures for the probe to be considered failed |
