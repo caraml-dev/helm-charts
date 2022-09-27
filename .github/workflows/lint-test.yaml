@@ -71,5 +71,7 @@ jobs:
 
 
       - name: Run chart-testing (install)
-        # run: ct install --config .github/config/ct.yaml
-        run: ct install --charts charts/kserve
+        run: ct install --config .github/config/ct.yaml
+
+      - name: Run chart-testing for kserve (install)
+        run: ct install --charts charts/kserve --namespace kserve --helm-extra-set-args "--create-namespace"
