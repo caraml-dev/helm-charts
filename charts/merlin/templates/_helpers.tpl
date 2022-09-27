@@ -93,83 +93,118 @@ app.kubernetes.io/part-of: caraml
 {{- end -}}
 {{- end -}}
 
-{{- define "mlflow-postgresql.host" -}}
-{{- if index .Values "mlflow-postgresql" "enabled" -}}
-{{- printf "%s-mlflow-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- else -}}
-{{- index .Values "mlflow-postgresql" "postgresqlHost" -}}
-{{- end -}}
-{{- end -}}
-
-{{- define "mlflow.backendStoreUri" -}}
-{{- if (index .Values "mlflow-postgresql" "enabled") -}}
-{{- printf "postgresql://%s:%s@%s:5432/%s" (index .Values "mlflow-postgresql" "postgresqlUsername") (index .Values "mlflow-postgresql" "postgresqlPassword") (include "mlflow-postgresql.host" .) (index .Values "mlflow-postgresql" "postgresqlDatabase") -}}
-{{- else if (index .Values "mlflow-postgresql" "postgresqlHost") -}}
-{{- printf "postgresql://%s:%s@%s:5432/%s" (index .Values "mlflow-postgresql" "postgresqlUsername") (index .Values "mlflow-postgresql" "postgresqlPassword") (index .Values "mlflow-postgresql" "postgresqlHost") (index .Values "mlflow-postgresql" "postgresqlDatabase") -}}
-{{- else -}}
-{{- printf .Values.mlflow.backendStoreUri -}}
-{{- end -}}
-{{- end -}}
-
-
 {{/*
-Postgres related
+Merlin Postgres related
 */}}
+
 {{- define "merlin-postgres.host" -}}
 {{- if index .Values "merlin-postgresql" "enabled" -}}
-    {{- printf "%s-merlin-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- else if .Values.externalPostgresql.enabled -}}
-    {{- .Values.externalPostgresql.address -}}
-{{- else -}}
-    {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
-
-{{- define "postgres.host" -}}
-{{- if .Values.postgresql.enabled -}}
-    {{- printf "%s-%s-postgresql.%s.svc.cluster.local" .Release.Name .Chart.Name .Release.Namespace -}}
-{{- else if .Values.externalPostgresql.enabled -}}
-    {{- .Values.externalPostgresql.address -}}
+    {{- printf "%s-merlin-postgresql.%s.svc.cluster.local" .Release.Name .Chart.Name .Release.Namespace -}}
+{{- else if .Values.merlinExternalPostgresql.enabled -}}
+    {{- .Values.merlinExternalPostgresql.address -}}
 {{- else -}}
     {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
 {{- end -}}
 {{- end -}}
 
 
-{{- define "postgres.username" -}}
-    {{- if .Values.postgresql.enabled -}}
-        {{- .Values.postgresql.postgresqlUsername -}}
-    {{- else if .Values.externalPostgresql.enabled -}}
-        {{- .Values.externalPostgresql.username -}}
+{{- define "merlin-postgres.username" -}}
+    {{- if index .Values "merlin-postgresql" "enabled" -}}
+        {{- index .Values "merlin-postgresql" "postgresqlUsername" -}}
+    {{- else if .Values.merlinExternalPostgresql.enabled -}}
+        {{- .Values.merlinExternalPostgresql.username -}}
     {{- else -}}
         {{- .Values.global.postgresqlUsername -}}
     {{- end -}}
 {{- end -}}
 
-{{- define "postgres.database" -}}
-    {{- if .Values.postgresql.enabled -}}
-        {{- .Values.postgresql.postgresqlDatabase -}}
-    {{- else if .Values.externalPostgresql.enabled -}}
-        {{- .Values.externalPostgresql.database -}}
+{{- define "merlin-postgres.database" -}}
+    {{- if index .Values "merlin-postgresql" "enabled" -}}
+        {{- index .Values "merlin-postgresql" "postgresqlDatabase" -}}
+    {{- else if .Values.merlinExternalPostgresql.enabled -}}
+        {{- .Values.merlinExternalPostgresql.database -}}
     {{- else -}}
         {{- .Values.global.merlin.postgresqlDatabase -}}
     {{- end -}}
 {{- end -}}
 
-{{- define "postgres.password-secret-name" -}}
+{{- define "merlin-postgres.password-secret-name" -}}
     {{- if .Values.postgresql.enabled -}}
         {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
-    {{- else if .Values.externalPostgresql.enabled -}}
+    {{- else if .Values.merlinExternalPostgresql.enabled -}}
         {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name) .Values.externalPostgresql.secretName -}}
     {{- else -}}
         {{- printf "%s-postgresql" .Release.Name -}}
     {{- end -}}
 {{- end -}}
 
-{{- define "postgres.password-secret-key" -}}
-    {{- if and .Values.externalPostgresql.enabled -}}
+{{- define "merlin-postgres.password-secret-key" -}}
+    {{- if and .Values.merlinExternalPostgresql.enabled -}}
         {{- default "postgresql-password" .Values.externalPostgresql.secretKey  -}}
     {{- else -}}
         {{- printf "postgresql-password" -}}
     {{- end -}}
 {{- end -}}
+
+{{/*
+MLflow Postgres related
+*/}}
+
+{{- define "mlflow-postgres.host" -}}
+{{- if index .Values "mlflow-postgresql" "enabled" -}}
+    {{- printf "%s-mlflow-postgresql.%s.svc.cluster.local" .Release.Name .Chart.Name .Release.Namespace -}}
+{{- else if .Values.mlflowExternalPostgresql.enabled -}}
+    {{- .Values.mlflowExternalPostgresql.address -}}
+{{- else -}}
+    {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+
+{{- define "mlflow-postgres.username" -}}
+    {{- if index .Values "mlflow-postgresql" "enabled" -}}
+        {{- .Values.postgresql.postgresqlUsername -}}
+    {{- else if .Values.mlflowExternalPostgresql.enabled -}}
+        {{- .Values.mlflowExternalPostgresql.username -}}
+    {{- else -}}
+        {{- .Values.global.postgresqlUsername -}}
+    {{- end -}}
+{{- end -}}
+
+{{- define "mlflow-postgres.database" -}}
+    {{- if index .Values "mlflow-postgresql" "enabled" -}}
+        {{- .Values.postgresql.postgresqlDatabase -}}
+    {{- else if .Values.mlflowExternalPostgresql.enabled -}}
+        {{- .Values.mlflowExternalPostgresql.database -}}
+    {{- else -}}
+        {{- .Values.global.merlin.postgresqlDatabase -}}
+    {{- end -}}
+{{- end -}}
+
+{{- define "mlflow.backendStoreUri" -}}
+    {{- if .Values.mlflow.backendStoreUri -}}
+        {{- printf .Values.mlflow.backendStoreUri -}}
+    {{- else -}}
+        {{- printf "postgresql://%s:%s@%s:5432/%s" (include "mlflow-postgresql.username" .) (index .Values "mlflow-postgresql" "postgresqlPassword") (include "mlflow-postgresql.host" .) (include "mlflow-postgresql.database" .) -}}
+    {{- end -}}
+{{- end -}}
+
+
+# TODO: replace hardcoded password with secrets
+# {{- define "mlflow-postgres.password-secret-name" -}}
+#     {{- if index .Values "mlflow-postgresql" "enabled" -}}
+#         {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
+#     {{- else if .Values.mlflowExternalPostgresql.enabled -}}
+#         {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name) .Values.externalPostgresql.secretName -}}
+#     {{- else -}}
+#         {{- printf "%s-postgresql" .Release.Name -}}
+#     {{- end -}}
+# {{- end -}}
+
+# {{- define "mlflow-postgres.password-secret-key" -}}
+#     {{- if and .Values.mlflowExternalPostgresql.enabled -}}
+#         {{- default "postgresql-password" .Values.externalPostgresql.secretKey  -}}
+#     {{- else -}}
+#         {{- printf "postgresql-password" -}}
+#     {{- end -}}
+# {{- end -}}

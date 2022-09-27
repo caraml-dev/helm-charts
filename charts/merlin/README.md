@@ -31,21 +31,19 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | alerts.warden.apiHost | string | `""` |  |
 | authorization.enabled | bool | `true` |  |
 | authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
-| deployment.deploymentLabels | object | `{}` |  |
-| deployment.environment | string | `"dev"` |  |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
 | deployment.image.tag | string | `"0.7.0"` |  |
-| deployment.loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
+| deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
-| deployment.queue.numOfWorkers | int | `1` |  |
 | deployment.replicaCount | string | `"2"` |  |
 | deployment.resources.limits.cpu | string | `"1"` |  |
 | deployment.resources.limits.memory | string | `"1Gi"` |  |
 | deployment.resources.requests.cpu | string | `"500m"` |  |
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | encryption.key | string | `"password"` |  |
+| environment | string | `"dev"` |  |
 | environmentConfigs[0].cluster | string | `"dev"` |  |
 | environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
 | environmentConfigs[0].default_deployment_config.max_replica | int | `1` |  |
@@ -90,20 +88,26 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
 | ingress.enabled | bool | `false` |  |
+| loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
 | merlin-postgresql.persistence.size | string | `"100Gi"` |  |
 | merlin-postgresql.postgresqlDatabase | string | `"merlin"` |  |
-| merlin-postgresql.postgresqlPassword | string | `"merlin"` |  |
 | merlin-postgresql.postgresqlUsername | string | `"merlin"` |  |
 | merlin-postgresql.resources.requests.cpu | string | `"500m"` |  |
 | merlin-postgresql.resources.requests.memory | string | `"2Gi"` |  |
-| merlin-postgresql.useExternalPostgresql | bool | `false` |  |
+| merlinExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| merlinExternalPostgresql.database | string | `"merlin"` | External postgres database schema |
+| merlinExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
+| merlinExternalPostgresql.password | string | `"password"` |  |
+| merlinExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
+| merlinExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
+| merlinExternalPostgresql.username | string | `"merlin"` | External postgres database user |
 | mlflow-postgresql.enabled | bool | `true` |  |
 | mlflow-postgresql.persistence.enabled | bool | `true` |  |
 | mlflow-postgresql.persistence.size | string | `"100Gi"` |  |
 | mlflow-postgresql.postgresqlDatabase | string | `"mlflow"` |  |
-| mlflow-postgresql.postgresqlPassword | string | `"password"` |  |
-| mlflow-postgresql.postgresqlUsername | string | `"username"` |  |
+| mlflow-postgresql.postgresqlPassword | string | `"mlflow"` |  |
+| mlflow-postgresql.postgresqlUsername | string | `"mlflow"` |  |
 | mlflow-postgresql.replicaCount | int | `1` |  |
 | mlflow-postgresql.resources.requests.cpu | string | `"500m"` |  |
 | mlflow-postgresql.resources.requests.memory | string | `"512Mi"` |  |
@@ -138,12 +142,20 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflow.service.type | string | `"ClusterIP"` |  |
 | mlflow.statefulset.updateStrategy | string | `"RollingUpdate"` |  |
 | mlflow.trackingURL | string | `"http://www.example.com"` |  |
+| mlflowExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| mlflowExternalPostgresql.database | string | `"mlflow"` | External postgres database schema |
+| mlflowExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
+| mlflowExternalPostgresql.password | string | `"password"` |  |
+| mlflowExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
+| mlflowExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
+| mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
 | mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
 | monitoring.enabled | bool | `false` |  |
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
 | newrelic.licenseSecretName | string | `"newrelic-license-secret"` |  |
+| queue.numOfWorkers | int | `1` |  |
 | sentry.dsn | string | `""` |  |
 | sentry.enabled | bool | `false` |  |
 | service.externalPort | int | `8080` |  |

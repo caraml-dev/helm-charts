@@ -8,7 +8,7 @@ deployment:
   replicaCount: "2"
 
   # Additional labels to apply to the deployment
-  deploymentLabels: {}
+  labels: {}
 
   # Additional labels to apply to the merlin pods
   podLabels: {}
@@ -21,12 +21,12 @@ deployment:
       cpu: "1"
       memory: 1Gi
 
-  environment: dev
+environment: dev
 
-  loggerDestinationURL: "http://yourDestinationLogger"
+loggerDestinationURL: "http://yourDestinationLogger"
 
-  queue:
-    numOfWorkers: 1
+queue:
+  numOfWorkers: 1
 
 mlpApi:
   apiHost: http://mlp.mlp:8080/v1
@@ -225,17 +225,31 @@ service:
 ingress:
   enabled: false
 
+# If you would like to use an external postgres database for Merlin, you can connect using these credentials
+merlinExternalPostgresql:
+  # -- If you would like to use an external postgres database, enable it here using this
+  enabled: false
+  # -- External postgres database user
+  username: merlin
+  # -- External postgres database schema
+  database: merlin
+  # -- Set the External postgres db password using this value at runtime (using --set flag) to create a secret
+  password: password
+  # -- Host address for the External postgres
+  address: 127.0.0.1
+  # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
+  secretName: ""
+  # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
+  secretKey: ""
+
+
 merlin-postgresql:
   enabled: true
 
-  ## To use an external PostgreSQL instance, Set the below flag to true and set key `postgresqlHost`
-  useExternalPostgresql: false
-  # postgresqlHost: ""
-
   postgresqlUsername: merlin
   postgresqlDatabase: merlin
-  # -- The password secret will be created using this password, must be specified using --set flag.
-  postgresqlPassword: merlin
+  # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
+  # postgresqlPassword: merlin
 
   resources:
     requests:
@@ -359,16 +373,30 @@ mlflow:
   #   stream: unknown
   #   orchestrator: unknown
 
+# If you would like to use an external postgres database for MLflow, you can connect using these credentials
+mlflowExternalPostgresql:
+  # -- If you would like to use an external postgres database, enable it here using this
+  enabled: false
+  # -- External postgres database user
+  username: mlflow
+  # -- External postgres database schema
+  database: mlflow
+  # -- Set the External postgres db password using this value at runtime (using --set flag) to create a secret
+  password: password
+  # -- Host address for the External postgres
+  address: 127.0.0.1
+  # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
+  secretName: ""
+  # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
+  secretKey: ""
+
 mlflow-postgresql:
   enabled: true
-  ## To use an external PostgreSQL instance uncomment the line below:
-  ## postgresqlHost: ""
-  postgresqlUsername: username
-  postgresqlPassword: password
+
+  postgresqlUsername: mlflow
   postgresqlDatabase: mlflow
-  ## Set this to your mlflow postgresql Password
-  # The password secret will be created using this password
-  # postgresqlPassword: ""
+  # -- The password secret will be created using this password, must be specified using --set flag.
+  postgresqlPassword: mlflow
 
   replicaCount: 1
 
