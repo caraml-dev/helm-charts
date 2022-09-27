@@ -41,6 +41,7 @@ jobs:
           helm repo add caraml https://caraml-dev.github.io/helm-charts/
           helm repo add istio https://istio-release.storage.googleapis.com/charts
           helm repo add stable https://charts.helm.sh/stable
+          helm repo add cert-manager https://charts.jetstack.io
 
       - name: Run chart-testing (lint)
         run: ct lint --config .github/config/ct.yaml
@@ -70,4 +71,5 @@ jobs:
 
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/config/ct.yaml
+        # run: ct install --config .github/config/ct.yaml
+        run: ct install --charts charts/kserve
