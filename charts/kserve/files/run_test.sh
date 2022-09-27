@@ -9,7 +9,6 @@ apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
   name: $MODEL_NAME
-  namespace: default
 spec:
   predictor:
     tensorflow:
@@ -18,12 +17,12 @@ EOF
 
 kubectl apply -f /tmp/kserve.yaml
 
-kubectl wait isvc/$MODEL_NAME -n default --for=condition=Ready --timeout=180s
+kubectl wait isvc/$MODEL_NAME --for=condition=Ready --timeout=180s
 
 INPUT_PATH=input.json
 curl https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/tensorflow/input.json -o ${INPUT_PATH}
 INPUT_PATH=@./${INPUT_PATH}
-HOSTNAME=$(kubectl get isvc ${MODEL_NAME} -n default -o jsonpath='{.status.url}' | awk -F '//' '{print $2}')
+HOSTNAME=$(kubectl get isvc ${MODEL_NAME} -o jsonpath='{.status.url}' | awk -F '//' '{print $2}')
 LOAD_BALANCER_IP=$(kubectl get services -n istio-system istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
 output=$(curl -X POST -vv -H "content-type: application/json" ${LOAD_BALANCER_IP}/v1/models/${MODEL_NAME}:predict -d $INPUT_PATH -o /tmp/output.json -w "%{http_code}" -H "Host: $HOSTNAME")
