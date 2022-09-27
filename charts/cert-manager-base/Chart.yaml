@@ -1,0 +1,9 @@
+apiVersion: v2
+name: cert-manager-base
+description: A Helm chart for installing Cert-Manager CRDs
+type: application
+version: 1.8.1
+appVersion: "v1.8.1"
+maintainers:
+  - name: caraml-dev
+    email: caraml-dev@caraml.dev
