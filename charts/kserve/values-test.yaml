@@ -187,11 +187,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - autoSelect: true
         name: lightgbm
@@ -212,11 +212,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "1"
-            memory: 2Gi
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "1"
-            memory: 2Gi
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - name: sklearn
         version: "0"
@@ -238,11 +238,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - autoSelect: true
         name: paddle
@@ -258,11 +258,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - autoSelect: true
         name: pmml
@@ -281,11 +281,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - autoSelect: true
         name: sklearn
@@ -305,11 +305,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - autoSelect: true
         name: tensorflow
@@ -332,11 +332,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - autoSelect: true
         name: pytorch
@@ -355,11 +355,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - name: tensorrt
         version: "8"
@@ -387,11 +387,11 @@ clusterServingRuntimes:
         name: kserve-container
         resources:
           limits:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
           requests:
-            cpu: "0.5"
-            memory: 250M
+            cpu: 100m
+            memory: 250Mi
       supportedModelFormats:
       - autoSelect: true
         name: xgboost
