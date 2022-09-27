@@ -18,7 +18,7 @@ EOF
 
 kubectl apply -f /tmp/kserve.yaml
 
-kubectl wait isvc/$MODEL_NAME -n default --for=condition=Ready --timeout=60s
+kubectl wait isvc/$MODEL_NAME -n default --for=condition=Ready --timeout=120s
 
 INPUT_PATH=input.json
 curl https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/tensorflow/input.json -o ${INPUT_PATH}
