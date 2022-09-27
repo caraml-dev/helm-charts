@@ -31,7 +31,7 @@ ingress:
   ingressGateway: knative-serving/knative-ingress-gateway
   ingressService: istio-ingressgateway.istio-system.svc.cluster.local
   localGateway: knative-serving/knative-local-gateway
-  localGatewayService: knative-local-gateway.istio-system.svc.cluster.local
+  localGatewayService: cluster-local-gateway.istio-system.svc.cluster.local
   ingressDomain: example.com
   ingressClassName: istio
   domainTemplate: "{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }}"
@@ -403,9 +403,17 @@ clusterServingRuntimes:
 # #################################################################
 knativeServingIstio:
   enabled: true
+  helmChart:
+    chart: knative-serving-istio
+    version: 1.0.2
+    repository: "https://caraml-dev.github.io/helm-charts"
+    release: knative-serving
+    namespace: knative-serving
+    createNamespace: true
+
 
 ###################################################################
-# Cert manager Base
+# Cert manager Base for Cert Manager CRDs
 # #################################################################
 certManagerBase:
   enabled: true
