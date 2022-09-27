@@ -5,7 +5,7 @@ image:
   # image.repository -- Docker image repository
   repository: ghcr.io/caraml-dev/caraml-store-registry
   # image.tag -- Image tag
-  tag: develop
+  tag: 0.1.0-build.42-ae3e52f
   # image.pullPolicy -- Image pull policy
   pullPolicy: IfNotPresent
 
