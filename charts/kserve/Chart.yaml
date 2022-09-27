@@ -8,11 +8,6 @@ maintainers:
   - name: caraml-dev
     email: caraml-dev@caraml.dev
 dependencies:
-  # - name: knative-serving-istio
-  #   version: 1.0.2
-  #   repository: "https://caraml-dev.github.io/helm-charts"
-  #   alias: knativeServingIstio
-  #   condition: knativeServingIstio.enabled
   - name: generic-dep-installer
     version: 0.1.0
     repository: "https://caraml-dev.github.io/helm-charts"
