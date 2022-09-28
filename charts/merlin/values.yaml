@@ -3,7 +3,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
-    tag: 0.7.0
+    tag: 0.21.0
 
   replicaCount: "2"
 
@@ -56,8 +56,8 @@ imageBuilder:
   maxRetry: 3
 
 vault:
-  secretName: "vault-secret" # Must be bootstraped first.
-
+  # -- Must be bootstraped first.
+  secretName: "vault-secret"
 
 alerts:
   # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
@@ -76,12 +76,10 @@ alerts:
   warden:
     apiHost: ""
 
-
 monitoring:
   enabled: false
   # baseURL: ""
   # jobBaseURL: ""
-
 
 transformer:
   simulation:
@@ -206,12 +204,13 @@ ui:
   mlp:
     apiHost: /api/v1
 
-  docsURL: [
-    {
-      "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
-      "label": "Getting Started with Merlin",
-    },
-  ]
+  docsURL:
+    [
+      {
+        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
+        "label": "Getting Started with Merlin",
+      },
+    ]
 
   # Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
@@ -242,7 +241,6 @@ merlinExternalPostgresql:
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
   secretKey: ""
 
-
 merlin-postgresql:
   enabled: true
 
@@ -257,7 +255,7 @@ merlin-postgresql:
       cpu: 500m
 
   persistence:
-    size: 100Gi
+    size: 10Gi
 
   # metrics:
   #   enabled: true
@@ -276,7 +274,6 @@ merlin-postgresql:
   #   numSynchronousReplicas: 2
   #   Replication Cluster application name. Useful for defining multiple replication policies
   #   applicationName: merlin
-
 
 mlflow:
   # This should be the actual DNS registered
@@ -326,7 +323,7 @@ mlflow:
   ## and run metadata as well as params, metrics, and tags for runs.
   ## MLflow supports two types of backend stores: file store and database-backed store.
   #
-  backendStoreUri: "/data/mlruns"
+  # backendStoreUri: "/data/mlruns"
 
   ## Local or GCS URI to store artifacts in, for
   ## newly created experiments. Note that this flag
@@ -407,7 +404,7 @@ mlflow-postgresql:
 
   persistence:
     enabled: true
-    size: 100Gi
+    size: 10Gi
 
 swagger:
   enabled: true

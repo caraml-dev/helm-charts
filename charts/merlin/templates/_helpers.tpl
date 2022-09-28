@@ -85,21 +85,13 @@ app.kubernetes.io/part-of: caraml
 
 
 
-{{- define "merlin-postgresql.host" -}}
-{{- if index .Values "merlin-postgresql" "enabled" -}}
-{{- printf "%s-merlin-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- else -}}
-{{- index .Values "merlin-postgresql" "postgresqlHost" -}}
-{{- end -}}
-{{- end -}}
-
 {{/*
 Merlin Postgres related
 */}}
 
-{{- define "merlin-postgres.host" -}}
+{{- define "merlin-postgresql.host" -}}
 {{- if index .Values "merlin-postgresql" "enabled" -}}
-    {{- printf "%s-merlin-postgresql.%s.svc.cluster.local" .Release.Name .Chart.Name .Release.Namespace -}}
+    {{- printf "%s-merlin-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
 {{- else if .Values.merlinExternalPostgresql.enabled -}}
     {{- .Values.merlinExternalPostgresql.address -}}
 {{- else -}}
@@ -108,7 +100,7 @@ Merlin Postgres related
 {{- end -}}
 
 
-{{- define "merlin-postgres.username" -}}
+{{- define "merlin-postgresql.username" -}}
     {{- if index .Values "merlin-postgresql" "enabled" -}}
         {{- index .Values "merlin-postgresql" "postgresqlUsername" -}}
     {{- else if .Values.merlinExternalPostgresql.enabled -}}
@@ -118,7 +110,7 @@ Merlin Postgres related
     {{- end -}}
 {{- end -}}
 
-{{- define "merlin-postgres.database" -}}
+{{- define "merlin-postgresql.database" -}}
     {{- if index .Values "merlin-postgresql" "enabled" -}}
         {{- index .Values "merlin-postgresql" "postgresqlDatabase" -}}
     {{- else if .Values.merlinExternalPostgresql.enabled -}}
@@ -128,8 +120,8 @@ Merlin Postgres related
     {{- end -}}
 {{- end -}}
 
-{{- define "merlin-postgres.password-secret-name" -}}
-    {{- if .Values.postgresql.enabled -}}
+{{- define "merlin-postgresql.password-secret-name" -}}
+    {{- if index .Values "merlin-postgresql" "enabled" -}}
         {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
     {{- else if .Values.merlinExternalPostgresql.enabled -}}
         {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name) .Values.externalPostgresql.secretName -}}
@@ -138,7 +130,7 @@ Merlin Postgres related
     {{- end -}}
 {{- end -}}
 
-{{- define "merlin-postgres.password-secret-key" -}}
+{{- define "merlin-postgresql.password-secret-key" -}}
     {{- if and .Values.merlinExternalPostgresql.enabled -}}
         {{- default "postgresql-password" .Values.externalPostgresql.secretKey  -}}
     {{- else -}}
@@ -150,9 +142,9 @@ Merlin Postgres related
 MLflow Postgres related
 */}}
 
-{{- define "mlflow-postgres.host" -}}
+{{- define "mlflow-postgresql.host" -}}
 {{- if index .Values "mlflow-postgresql" "enabled" -}}
-    {{- printf "%s-mlflow-postgresql.%s.svc.cluster.local" .Release.Name .Chart.Name .Release.Namespace -}}
+    {{- printf "%s-mlflow-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
 {{- else if .Values.mlflowExternalPostgresql.enabled -}}
     {{- .Values.mlflowExternalPostgresql.address -}}
 {{- else -}}
@@ -161,9 +153,9 @@ MLflow Postgres related
 {{- end -}}
 
 
-{{- define "mlflow-postgres.username" -}}
+{{- define "mlflow-postgresql.username" -}}
     {{- if index .Values "mlflow-postgresql" "enabled" -}}
-        {{- .Values.postgresql.postgresqlUsername -}}
+        {{- index .Values "mlflow-postgresql" "postgresqlUsername" -}}
     {{- else if .Values.mlflowExternalPostgresql.enabled -}}
         {{- .Values.mlflowExternalPostgresql.username -}}
     {{- else -}}
@@ -171,9 +163,9 @@ MLflow Postgres related
     {{- end -}}
 {{- end -}}
 
-{{- define "mlflow-postgres.database" -}}
+{{- define "mlflow-postgresql.database" -}}
     {{- if index .Values "mlflow-postgresql" "enabled" -}}
-        {{- .Values.postgresql.postgresqlDatabase -}}
+        {{- index .Values "mlflow-postgresql" "postgresqlDatabase" -}}
     {{- else if .Values.mlflowExternalPostgresql.enabled -}}
         {{- .Values.mlflowExternalPostgresql.database -}}
     {{- else -}}
