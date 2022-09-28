@@ -2,11 +2,18 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Specify how inference service is deployed:
+
+# -- For release specific common labels
+labels:
+  common: {}
+
+
+# -- Specify how inference service is deployed:
 # - Serverless, use Knative
 # - RawDeployment, use K8S Deployment
 defaultDeploymentMode: Serverless
 
+# controller deployment configuration
 controller:
   image:
     registry: ""
@@ -15,6 +22,7 @@ controller:
     # Overrides the image tag whose default is the chart appVersion.
     tag: "v0.8.0"
 
+  # -- These are example resource values set for the controller, please override accordingly
   resources:
     limits:
       cpu: 100m
@@ -27,14 +35,33 @@ controller:
   tolerations: []
   affinity: {}
 
+# -- Ingress configuration
 ingress:
+  # -- ingressGateway refers to the Istio Gateway resource name. Assumed
+  # to be in knative-serving namespace by default.
   ingressGateway: knative-serving/knative-ingress-gateway
+
+  # -- ingressService refers to the ingressgateway service name. Assumed to be in istio-system
+  # namespace by default.
   ingressService: istio-ingressgateway.istio-system.svc.cluster.local
+
+  # -- localGateway refers to the Istio Gateway resource name. Assumed to in
+  # knative-serving namespace by default.
   localGateway: knative-serving/knative-local-gateway
+
+  # -- ingressService refers to the local ingressgateway service name. Assumed to be in istio-system
+  # namespace by default and called cluster-local-gateway.
   localGatewayService: cluster-local-gateway.istio-system.svc.cluster.local
+
+  # -- domain used for inferenceservice deployments
   ingressDomain: example.com
   ingressClassName: istio
+
+  # Format of deployments
   domainTemplate: "{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }}"
+
+  # -- Set default scheme of inferenceservice url, defaults to http if unset
+  # urlScheme: "http"
 
 logger:
   image:
@@ -76,6 +103,7 @@ batcher:
       cpu: 1
       memory: 1Gi
 
+# storageInitializer container specs if enabled
 storageInitializer:
   image:
     registry: ""
@@ -89,6 +117,7 @@ storageInitializer:
       cpu: 100m
       memory: 100Mi
 
+# predictor spec configs for inferenceservices
 predictors:
   tensorflow:
     image: tensorflow/serving
@@ -174,6 +203,7 @@ predictors:
     multiModelServer: false
 
 
+# clusterServingRuntimes contains specs for each predictor in predictors above
 clusterServingRuntimes:
   - name: kserve-lgbserver
     spec:

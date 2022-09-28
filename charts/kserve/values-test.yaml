@@ -2,6 +2,10 @@
 # Memory and CPU resources for ClusterServingRuntimes
 # scaled down drastically, DO NOT USE for production!
 
+labels:
+  common:
+    environment: "test"
+
 # Specify how inference service is deployed:
 # - Serverless, use Knative
 # - RawDeployment, use K8S Deployment

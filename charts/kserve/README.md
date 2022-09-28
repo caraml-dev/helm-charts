@@ -241,19 +241,15 @@ The following table lists the configurable parameters of the Kserve chart and th
 | controller.image.repository | string | `"kserve/kserve-controller"` |  |
 | controller.image.tag | string | `"v0.8.0"` |  |
 | controller.nodeSelector | object | `{}` |  |
-| controller.resources.limits.cpu | string | `"100m"` |  |
-| controller.resources.limits.memory | string | `"128Mi"` |  |
-| controller.resources.requests.cpu | string | `"100m"` |  |
-| controller.resources.requests.memory | string | `"128Mi"` |  |
+| controller.resources | object | `{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | These are example resource values set for the controller, please override accordingly |
 | controller.tolerations | list | `[]` |  |
-| defaultDeploymentMode | string | `"Serverless"` |  |
-| ingress.domainTemplate | string | `"{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }}"` |  |
-| ingress.ingressClassName | string | `"istio"` |  |
-| ingress.ingressDomain | string | `"example.com"` |  |
-| ingress.ingressGateway | string | `"knative-serving/knative-ingress-gateway"` |  |
-| ingress.ingressService | string | `"istio-ingressgateway.istio-system.svc.cluster.local"` |  |
-| ingress.localGateway | string | `"knative-serving/knative-local-gateway"` |  |
-| ingress.localGatewayService | string | `"cluster-local-gateway.istio-system.svc.cluster.local"` |  |
+| defaultDeploymentMode | string | `"Serverless"` | Specify how inference service is deployed: - Serverless, use Knative - RawDeployment, use K8S Deployment |
+| ingress | object | `{"domainTemplate":"{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }}","ingressClassName":"istio","ingressDomain":"example.com","ingressGateway":"knative-serving/knative-ingress-gateway","ingressService":"istio-ingressgateway.istio-system.svc.cluster.local","localGateway":"knative-serving/knative-local-gateway","localGatewayService":"cluster-local-gateway.istio-system.svc.cluster.local"}` | Ingress configuration |
+| ingress.ingressDomain | string | `"example.com"` | domain used for inferenceservice deployments |
+| ingress.ingressGateway | string | `"knative-serving/knative-ingress-gateway"` | ingressGateway refers to the Istio Gateway resource name. Assumed to be in knative-serving namespace by default. |
+| ingress.ingressService | string | `"istio-ingressgateway.istio-system.svc.cluster.local"` | ingressService refers to the ingressgateway service name. Assumed to be in istio-system namespace by default. |
+| ingress.localGateway | string | `"knative-serving/knative-local-gateway"` | localGateway refers to the Istio Gateway resource name. Assumed to in knative-serving namespace by default. |
+| ingress.localGatewayService | string | `"cluster-local-gateway.istio-system.svc.cluster.local"` | ingressService refers to the local ingressgateway service name. Assumed to be in istio-system namespace by default and called cluster-local-gateway. |
 | knativeServingIstio.enabled | bool | `true` |  |
 | knativeServingIstio.helmChart.chart | string | `"knative-serving-istio"` |  |
 | knativeServingIstio.helmChart.createNamespace | bool | `true` |  |
@@ -261,6 +257,7 @@ The following table lists the configurable parameters of the Kserve chart and th
 | knativeServingIstio.helmChart.release | string | `"knative-serving"` |  |
 | knativeServingIstio.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
 | knativeServingIstio.helmChart.version | string | `"1.0.2"` |  |
+| labels | object | `{"common":{}}` | For release specific common labels |
 | logger.defaultUrl | string | `"http://default-broker"` |  |
 | logger.image.registry | string | `""` |  |
 | logger.image.repository | string | `"kserve/agent"` |  |
