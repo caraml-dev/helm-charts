@@ -23,7 +23,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 |-----|------|---------|-------------|
 | alerts.alertBranch | string | `"master"` |  |
 | alerts.alertRepository | string | `"lens/artillery/datascience"` |  |
-| alerts.alertsRepoPlatform | string | `"gitlab"` | Repository platform where the created Alerts and Dashboards need to be pushed. |
+| alerts.alertsRepoPlatform | string | `"gitlab"` | Repository platform where the created Alerts and Dashboards need to be pushed. Platforms supported as of now: Gitlab |
 | alerts.baseURL | string | `"https://gitlab.com/"` |  |
 | alerts.dashboardBranch | string | `"master"` |  |
 | alerts.dashboardRepository | string | `"data-science/slo-specs"` |  |

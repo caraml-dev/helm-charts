@@ -63,10 +63,10 @@ alerts:
   # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
   enabled: false
 
-  # -- Repository platform where the created Alerts and Dashboards need to be pushed.
+  # -- Repository platform where the created Alerts and Dashboards need to be pushed. Platforms supported as of now: Gitlab
   alertsRepoPlatform: gitlab
   baseURL: https://gitlab.com/
-  # GitLab token must be specified using --set flag.
+  # Access token must be specified using --set flag.
   # token:
   dashboardRepository: data-science/slo-specs
   dashboardBranch: master
