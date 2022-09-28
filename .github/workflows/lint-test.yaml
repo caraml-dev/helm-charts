@@ -34,6 +34,7 @@ jobs:
           changed=$(ct list-changed --config .github/config/ct.yaml)
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
+            echo "::set-output name=charts_changed::$change"
           fi
 
       - name: Add dependency chart repos
@@ -69,9 +70,13 @@ jobs:
         run: |
           ./scripts/install_metallib.sh
 
-
       - name: Run chart-testing (install)
-        run: ct install --config .github/config/ct.yaml
+        run: ct install --config .github/config/ct.yaml --excluded-charts charts/kserve
 
       - name: Run chart-testing for kserve (install)
-        run: ct install --charts charts/kserve --namespace kserve --helm-extra-set-args "--create-namespace --values=./charts/kserve/values-test.yaml" --debug
+        env:
+          CHARTS_CHANGED: {{ steps.list-changed.outputs.charts_changed }}
+        run: |
+          if $(echo $CHARTS_CHANGED | grep 'charts/kserve'); then
+            ct install --charts charts/kserve --namespace kserve --helm-extra-set-args "--create-namespace --values=./charts/kserve/values-test.yaml" --debug
+          fi

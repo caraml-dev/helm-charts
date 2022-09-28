@@ -3,8 +3,6 @@ remote: origin
 target-branch: main
 chart-dirs:
   - charts
-excluded-charts:
-  - kserve
 chart-repos:
   - caraml=https://caraml-dev.github.io/helm-charts/
   - stable=https://charts.helm.sh/stable
