@@ -71,6 +71,20 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.1.0/caraml-0.1.0.tgz
     version: 0.1.0
+  cert-manager-base:
+  - apiVersion: v2
+    appVersion: v1.8.1
+    created: "2022-09-29T10:01:43.428074518Z"
+    description: A Helm chart for installing Cert-Manager CRDs
+    digest: 101a12ca73576a314e268ad019f33701d0b48aa87a4f6212044f10d792ee0e3b
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: cert-manager-base
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/cert-manager-base-1.8.1/cert-manager-base-1.8.1.tgz
+    version: 1.8.1
   generic-dep-installer:
   - apiVersion: v2
     appVersion: v0.1.0
@@ -185,6 +199,35 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-istio-1.0.1/knative-serving-istio-1.0.1.tgz
     version: 1.0.1
+  kserve:
+  - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2022-09-29T10:01:43.621551589Z"
+    dependencies:
+    - alias: knativeServingIstio
+      condition: knativeServingIstio.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: file://../cert-manager-base
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.8.1
+    description: A Helm chart for installing Kserve
+    digest: 6284144dc8187ebc0fc2a22ece9503b1e0b08d86e54d456ad2ece7534448d904
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: kserve
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/kserve-0.8.2/kserve-0.8.2.tgz
+    version: 0.8.2
   mlp:
   - apiVersion: v2
     appVersion: 1.7.1
@@ -203,4 +246,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2022-09-23T10:08:16.126248575Z"
+generated: "2022-09-29T10:01:43.621575591Z"
