@@ -75,7 +75,7 @@ jobs:
 
       - name: Run chart-testing for kserve (install)
         env:
-          CHARTS_CHANGED: {{ steps.list-changed.outputs.charts_changed }}
+          CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |
           if $(echo $CHARTS_CHANGED | grep 'charts/kserve'); then
             ct install --charts charts/kserve --namespace kserve --helm-extra-set-args "--create-namespace --values=./charts/kserve/values-test.yaml" --debug
