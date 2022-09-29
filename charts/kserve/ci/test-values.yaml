@@ -1,3 +1,7 @@
+# See https://github.com/helm/chart-testing/blob/main/doc/ct_install.md#synopsis
+# This file is picked up by ct testing tool
+
+
 # Default values for kserve PURELY FOR github action tests
 # Memory and CPU resources for ClusterServingRuntimes
 # scaled down drastically, DO NOT USE for production!
