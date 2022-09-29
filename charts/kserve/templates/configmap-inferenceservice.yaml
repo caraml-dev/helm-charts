@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: inferenceservice-config
+  labels:
+    {{- include "kserve.labels" . | nindent 4 }}
+data:
+  agent: |-
+    {
+        "image" : "{{- if .Values.agent.image.registry -}}{{ .Values.agent.image.registry }}/{{- end -}}{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}",
+        "memoryRequest": "{{ .Values.agent.resources.requests.memory }}",
+        "memoryLimit": "{{ .Values.agent.resources.limits.memory }}",
+        "cpuRequest": "{{ .Values.agent.resources.requests.cpu }}",
+        "cpuLimit": "{{ .Values.agent.resources.limits.cpu }}"
+    }
+  batcher: |-
+    {
+        "image" : "{{- if .Values.batcher.image.registry -}}{{ .Values.batcher.image.registry }}/{{- end -}}{{ .Values.batcher.image.repository }}:{{ .Values.batcher.image.tag }}",
+        "memoryRequest": "{{ .Values.batcher.resources.requests.memory }}",
+        "memoryLimit": "{{ .Values.batcher.resources.limits.memory }}",
+        "cpuRequest": "{{ .Values.batcher.resources.requests.cpu }}",
+        "cpuLimit": "{{ .Values.batcher.resources.limits.cpu }}"
+    }
+  credentials: |-
+    {
+       "gcs": {
+           "gcsCredentialFileName": "gcloud-application-credentials.json"
+       },
+       "s3": {
+           "s3AccessKeyIDName": "AWS_ACCESS_KEY_ID",
+           "s3SecretAccessKeyName": "AWS_SECRET_ACCESS_KEY"
+       }
+    }
+  deploy: |-
+    {
+      "defaultDeploymentMode": "{{ .Values.defaultDeploymentMode }}"
+    }
+  explainers: |-
+    {
+        "alibi": {
+            "image" : "kserve/alibi-explainer",
+            "defaultImageVersion": "latest"
+        },
+        "aix": {
+            "image" : "kserve/aix-explainer",
+            "defaultImageVersion": "latest"
+        },
+        "art": {
+            "image" : "kserve/art-explainer",
+            "defaultImageVersion": "latest"
+        }
+    }
+  ingress: |-
+    {
+        "ingressGateway" : "{{ .Values.ingress.ingressGateway }}",
+        "ingressService" : "{{ .Values.ingress.ingressService }}",
+        "localGateway" : "{{ .Values.ingress.localGateway }}",
+        "localGatewayService" : "{{ .Values.ingress.localGatewayService }}",
+        "ingressDomain"  : "{{ .Values.ingress.ingressDomain }}",
+        "ingressClassName" : "{{ .Values.ingress.ingressClassName }}",
+        "domainTemplate": "{{ .Values.ingress.domainTemplate }}"
+    }
+  logger: |-
+    {
+        "image" : "{{- if .Values.logger.image.registry -}}{{ .Values.logger.image.registry }}/{{- end -}}{{ .Values.logger.image.repository }}:{{ .Values.logger.image.tag }}",
+        "memoryRequest": "{{ .Values.logger.resources.requests.memory }}",
+        "memoryLimit": "{{ .Values.logger.resources.limits.memory }}",
+        "cpuRequest": "{{ .Values.logger.resources.requests.cpu }}",
+        "cpuLimit": "{{ .Values.logger.resources.limits.cpu }}",
+        "defaultUrl": "{{ .Values.logger.defaultUrl }}"
+    }
+  predictors: |-
+    {{ toJson .Values.predictors | default "{}" }}
+  storageInitializer: |-
+    {
+        "image" : "{{- if .Values.storageInitializer.image.registry -}}{{ .Values.storageInitializer.image.registry }}/{{- end -}}{{ .Values.storageInitializer.image.repository }}:{{ .Values.storageInitializer.image.tag }}",
+        "memoryRequest": "{{ .Values.storageInitializer.resources.requests.memory }}",
+        "memoryLimit": "{{ .Values.storageInitializer.resources.limits.memory }}",
+        "cpuRequest": "{{ .Values.storageInitializer.resources.requests.cpu }}",
+        "cpuLimit": "{{ .Values.storageInitializer.resources.limits.cpu }}"
+    }
+  transformers: |-
+    {
+    }

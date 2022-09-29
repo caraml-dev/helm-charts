@@ -1,0 +1,12 @@
+{{- range .Values.clusterServingRuntimes }}
+apiVersion: serving.kserve.io/v1alpha1
+kind: ClusterServingRuntime
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "kserve.labels" $ | nindent 4 }}
+spec:
+{{ toYaml .spec | indent 2 }}
+
+---
+{{- end }}

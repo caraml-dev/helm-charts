@@ -1,0 +1,24 @@
+apiVersion: v2
+name: kserve
+description: A Helm chart for installing Kserve
+type: application
+version: 0.8.2
+appVersion: 0.8.0
+maintainers:
+  - name: caraml-dev
+    email: caraml-dev@caraml.dev
+dependencies:
+  - name: generic-dep-installer
+    version: 0.1.0
+    repository: "https://caraml-dev.github.io/helm-charts"
+    alias: knativeServingIstio
+    condition: knativeServingIstio.enabled
+  - name: cert-manager-base
+    version: 1.8.1
+    repository: "file://../cert-manager-base"
+    alias: certManagerBase
+    condition: certManagerBase.enabled
+  - name: cert-manager
+    repository: "https://charts.jetstack.io"
+    version: 1.8.1
+    condition: cert-manager.enabled

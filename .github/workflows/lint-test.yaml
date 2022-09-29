@@ -26,14 +26,15 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.2.1
         with:
-          version: v3.5.1
+          version: v3.7.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed --config .github/config/ct.yaml)
+          changed=$(ct list-changed --config .github/config/ct.yaml | tr '\n' ' ')
           if [[ -n "$changed" ]]; then
             echo "::set-output name=changed::true"
+            echo "::set-output name=charts_changed::$changed"
           fi
 
       - name: Add dependency chart repos
@@ -41,6 +42,7 @@ jobs:
           helm repo add caraml https://caraml-dev.github.io/helm-charts/
           helm repo add istio https://istio-release.storage.googleapis.com/charts
           helm repo add stable https://charts.helm.sh/stable
+          helm repo add cert-manager https://charts.jetstack.io
 
       - name: Run chart-testing (lint)
         run: ct lint --config .github/config/ct.yaml
@@ -68,6 +70,13 @@ jobs:
         run: |
           ./scripts/install_metallib.sh
 
-
       - name: Run chart-testing (install)
-        run: ct install --config .github/config/ct.yaml
+        run: ct install --config .github/config/ct.yaml --excluded-charts kserve
+
+      - name: Run chart-testing for kserve (install)
+        env:
+          CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
+        run: |
+          if [[ $(echo $CHARTS_CHANGED | grep 'charts/kserve') ]]; then
+            ct install --charts charts/kserve --namespace kserve --helm-extra-set-args "--create-namespace" --debug
+          fi
