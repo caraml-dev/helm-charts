@@ -77,6 +77,6 @@ jobs:
         env:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |
-          if $(echo $CHARTS_CHANGED | grep 'charts/kserve'); then
+          if $(echo $CHARTS_CHANGED | grep 'kserve'); then
             ct install --charts charts/kserve --namespace kserve --helm-extra-set-args "--create-namespace" --debug
           fi
