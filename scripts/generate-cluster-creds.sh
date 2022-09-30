@@ -10,7 +10,7 @@ which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
 
 show_help() {
   cat <<EOF
-Usage: $(basename "$0") <clusterType> <clusterName: Caraml.Merlin.Values.ImageBuilder.ClusterName>
+Usage: $(basename "$0") <clusterType> [clusterName: Caraml.Merlin.Values.ImageBuilder.ClusterName]
     -h, --help               Display help
 EOF
 }
@@ -20,8 +20,8 @@ validate_parameters() {
     show_help
     exit 0
   fi
-  if [[ "$#" -ne 2 ]]; then
-    echo "Insufficient number of positional arguments"
+  if [[ "$#" -lt 1 || "$#" -gt 2]]; then
+    echo "Incorrect number of positional arguments"
     show_help
     exit 1
   fi
@@ -65,7 +65,8 @@ EOF
   fi
 
   if [ "$CLUSTER_TYPE" == "kind" ]; then
-    kind get kubeconfig $CLUSTER_NAME > kubeconfig.yaml
+    kind get kubeconfig > kubeconfig.yaml
+    echo "Kind cluster name: $(yq '.clusters[0].name' kubeconfig.yaml)"
     cat > cluster-credential.json <<EOF
 {
 "name": "$(yq '.clusters[0].name' kubeconfig.yaml)",

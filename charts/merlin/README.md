@@ -73,7 +73,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | feastCoreApi.apiHost | string | `"http://feast-core.mlp:8080/v1"` |  |
 | imageBuilder.baseImage | string | `""` |  |
 | imageBuilder.buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.clusterName | string | `"dev"` |  |
+| imageBuilder.clusterName | string | `"chart-testing"` |  |
 | imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
 | imageBuilder.dockerfilePath | string | `"./Dockerfile"` |  |
 | imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
@@ -170,7 +170,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | sentry.enabled | bool | `false` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
-| setupScript.clusterType | string | `"minikube"` |  |
+| setupScript.clusterType | string | `"kind"` |  |
 | setupScript.image | string | `"ghcr.io/dtzar/helm-kubectl:3.9.4"` | Image used to for setup scripts job |
 | swagger.apiHost | string | `"merlin.dev"` |  |
 | swagger.basePath | string | `"/api/merlin/v1"` |  |

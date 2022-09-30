@@ -37,7 +37,7 @@ feastCoreApi:
   apiHost: http://feast-core.mlp:8080/v1
 
 imageBuilder:
-  clusterName: "dev"
+  clusterName: "chart-testing"
   buildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
   baseImage: ""
   dockerfilePath: "./Dockerfile"
@@ -460,4 +460,4 @@ minio:
 setupScript:
   # -- Image used to for setup scripts job
   image: ghcr.io/dtzar/helm-kubectl:3.9.4  # TODO: Rerelease with more official repo (eg ghcr.io/caraml-dev)?
-  clusterType: minikube
+  clusterType: kind
