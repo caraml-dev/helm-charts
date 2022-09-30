@@ -8,7 +8,7 @@ metadata:
     {{- include "caraml-routes.labels" . | nindent 4 }}
 spec:
   hosts:
-    {{- range .Values.mlflow.routes.hosts }}
+    {{- range .Values.mlflow.vs.hosts }}
     - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain ) }}
     {{- end}}
   gateways:
@@ -16,7 +16,7 @@ spec:
   http:
     - route:
         - destination:
-            host: merlin-mlflow
+            host: {{ .Values.mlflow.vs.route.destination }}
             port:
-              number: 80
+              number: {{ .Values.mlflow.vs.route.port }}
 {{- end }}

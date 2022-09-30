@@ -7,7 +7,7 @@ metadata:
     {{- include "caraml-routes.labels" . | nindent 4 }}
 spec:
   hosts:
-    {{- range .Values.mlpDocs.routes.hosts }}
+    {{- range .Values.mlpDocs.vs.hosts }}
     - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain ) }}
     {{- end}}
   gateways:
@@ -25,7 +25,7 @@ spec:
     #########################################################
     #                  Merlin API Docs
     #########################################################
-    {{- with .Values.mlpDocs.routes.merlin }}
+    {{- with .Values.mlpDocs.vs.merlin }}
     {{- if .enabled }}
     {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
     {{- end }}
@@ -33,7 +33,7 @@ spec:
     #########################################################
     #                   Turing API Docs
     #########################################################
-    {{- with .Values.mlpDocs.routes.turing }}
+    {{- with .Values.mlpDocs.vs.turing }}
     {{- if .enabled }}
     {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
     {{- end }}
@@ -41,12 +41,12 @@ spec:
     #########################################################
     #              Turing Experiments API Docs
     #########################################################
-    {{- with .Values.mlpDocs.routes.xpManagement }}
+    {{- with .Values.mlpDocs.vs.xpManagement }}
     {{- if .enabled }}
     {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
     {{- end }}
     {{- end }}
-    {{- with .Values.mlpDocs.routes.xpTreatment }}
+    {{- with .Values.mlpDocs.vs.xpTreatment }}
     {{- if .enabled }}
     {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
     {{- end }}

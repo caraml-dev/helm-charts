@@ -1,8 +1,12 @@
+# -- istioIngressIP takes precedence over domain. Used for local deployment
 istioIngressIP: ""
+
+# -- Domain used to configure gateway and virtual service
 domain: "ai.golabs.io"
 namespace: mlp
+
 mlpDocs:
-  routes:
+  vs:
     hosts:
       - "docs"
     merlin:
@@ -35,11 +39,14 @@ mlpDocs:
       destPort: 8080
 
 mlflow:
-  routes:
+  vs:
     hosts:
       - "mlflow"
+    route:
+      destination: merlin-mlflow
+      port: 80
 mlp:
-  routes:
+  vs:
     hosts:
       - "console"
     mlpAuthGateway:
@@ -149,6 +156,7 @@ https:
   tls:
     mode: SIMPLE
     credentialName: mlp-tls-cert
+
 mlpGateway:
   name: mlp-gateway
   selector:

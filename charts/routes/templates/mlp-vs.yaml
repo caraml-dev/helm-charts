@@ -7,7 +7,7 @@ metadata:
     {{- include "caraml-routes.labels" . | nindent 4 }}
 spec:
   hosts:
-    {{- range .Values.mlp.routes.hosts }}
+    {{- range .Values.mlp.vs.hosts }}
     - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain ) }}
     {{- end}}
   gateways:
@@ -16,7 +16,7 @@ spec:
     #########################################################
     #              MLP API AUTHENTICATION GATEWAY
     #########################################################
-    {{- with .Values.mlp.routes.mlpAuthGateway }}
+    {{- with .Values.mlp.vs.mlpAuthGateway }}
     {{- if .enabled }}
     - name: "mlp-api-auth-proxy"
       match:
@@ -37,7 +37,7 @@ spec:
     #########################################################
     #                       MLP API
     #########################################################
-    {{- with .Values.mlp.routes.feastUIBackend }}
+    {{- with .Values.mlp.vs.feastUIBackend }}
     {{- if .enabled }}
     - name: "feast-ui-backend"
       match:
@@ -51,7 +51,7 @@ spec:
     #########################################################
     #                 MLP COMPONENTS UI
     #########################################################
-    {{- with .Values.mlp.routes.mlp }}
+    {{- with .Values.mlp.vs.mlp }}
     {{- if (and .feastUIRedirect.enabled .feastUI.enabled) }}
     - name: "feast-ui-redirect"
       match:
