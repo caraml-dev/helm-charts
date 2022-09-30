@@ -1,0 +1,36 @@
+{{ template "chart.header" . }}
+---
+{{ template "chart.versionBadge" . }}
+{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+## Introduction
+
+This Helm chart installs Caraml Routes.
+
+
+## Installation
+
+### Add Helm repository
+
+```shell
+helm repo add caraml https://caraml-dev.github.io/helm-charts
+```
+
+### Installing the chart
+* For local installation of CaraML, this chart should be installed after installing the main Caraml chart.
+* This is because we need the local istio ingress's load balancer IP address, to enable successful routing of requests
+* Routes will be exposed at `<component>.<INGRESS_IP>.nip.io`
+
+
+```shell
+$ INGRESS_IP=$(k get services -n istio-system istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+$ helm install caraml/routes --set istioIngressIP=$INGRESS_IP
+```
+
+## Configuration
+
+The following table lists the configurable parameters of the Routes chart and their default values.
+
+{{ template "chart.valuesTable" . }}
