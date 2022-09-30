@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: {{ include "caraml-routes.mlp-gateway" . }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
   labels:
     {{- include "caraml-routes.labels" . | nindent 4 }}
 spec:

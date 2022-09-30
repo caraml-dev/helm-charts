@@ -3,7 +3,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-mlflow-vs" }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
   labels:
     {{- include "caraml-routes.labels" . | nindent 4 }}
 spec:
