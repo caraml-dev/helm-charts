@@ -1,0 +1,53 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-docs-vs" }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  hosts:
+    {{- range .Values.mlpDocs.routes.hosts }}
+    - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain ) }}
+    {{- end}}
+  gateways:
+    - {{ include "caraml-routes.mlp-gateway" . }}
+  http:
+    # redirect all http to https
+    {{- if .Values.https.enabled }}
+    - name: "docs-http-to-https"
+      match:
+        - scheme:
+            exact: http
+      redirect:
+        scheme: https
+    {{- end }}
+    #########################################################
+    #                  Merlin API Docs
+    #########################################################
+    {{- with .Values.mlpDocs.routes.merlin }}
+    {{- if .enabled }}
+    {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
+    {{- end }}
+    {{- end }}
+    #########################################################
+    #                   Turing API Docs
+    #########################################################
+    {{- with .Values.mlpDocs.routes.turing }}
+    {{- if .enabled }}
+    {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
+    {{- end }}
+    {{- end }}
+    #########################################################
+    #              Turing Experiments API Docs
+    #########################################################
+    {{- with .Values.mlpDocs.routes.xpManagement }}
+    {{- if .enabled }}
+    {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
+    {{- end }}
+    {{- end }}
+    {{- with .Values.mlpDocs.routes.xpTreatment }}
+    {{- if .enabled }}
+    {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
+    {{- end }}
+    {{- end }}

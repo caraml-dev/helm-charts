@@ -1,0 +1,101 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-vs" }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  hosts:
+    {{- range .Values.mlp.routes.hosts }}
+    - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain ) }}
+    {{- end}}
+  gateways:
+    - {{ include "caraml-routes.mlp-gateway" . }}
+  http:
+    #########################################################
+    #              MLP API AUTHENTICATION GATEWAY
+    #########################################################
+    {{- with .Values.mlp.routes.mlpAuthGateway }}
+    {{- if .enabled }}
+    - name: "mlp-api-auth-proxy"
+      match:
+        {{- toYaml .match | nindent 8 }}
+      rewrite:
+        {{- toYaml .rewrite | nindent 8 }}
+      corsPolicy:
+        allowOrigins:
+        {{- toYaml .allowOrigins | nindent 10 }}
+        allowMethods:
+          {{- toYaml .allowMethods | nindent 10 }}
+        allowHeaders:
+          {{- toYaml .allowHeaders | nindent 10 }}
+      route:
+        {{- toYaml .route | nindent 8 }}
+    {{- end }}
+    {{- end }}
+    #########################################################
+    #                       MLP API
+    #########################################################
+    {{- with .Values.mlp.routes.feastUIBackend }}
+    {{- if .enabled }}
+    - name: "feast-ui-backend"
+      match:
+        {{- toYaml .match | nindent 8}}
+      rewrite:
+        {{- toYaml .rewrite | nindent 8 }}
+      route:
+        {{- toYaml .route | nindent 8 }}
+    {{- end }}
+    {{- end }}
+    #########################################################
+    #                 MLP COMPONENTS UI
+    #########################################################
+    {{- with .Values.mlp.routes.mlp }}
+    {{- if (and .feastUIRedirect.enabled .feastUI.enabled) }}
+    - name: "feast-ui-redirect"
+      match:
+      {{- toYaml .feastUIRedirect.match | nindent 8 }}
+      redirect:
+        uri: {{ .feastUIRedirect.redirect }}
+    - name: "feast-ui"
+      match:
+        - uri:
+            prefix: {{ .feastUIRedirect.redirect }}
+      route:
+        {{- toYaml .feastUI.route | nindent 8 }}
+    {{- end }}
+    {{- if .merlinUI.enabled}}
+    - name: "merlin-ui"
+      match:
+      {{- toYaml .merlinUI.match | nindent 8 }}
+      route:
+        {{- toYaml .merlinUI.route | nindent 8 }}
+    {{- end }}
+    {{- if .pipelineUI.enabled}}
+    - name: "pipeline-ui"
+      match:
+      {{- toYaml .pipelineUI.match | nindent 8 }}
+      route:
+        {{- toYaml .pipelineUI.route | nindent 8 }}
+    {{- end }}
+    {{- if .turingUI.enabled }}
+    - name: "turing-ui"
+      match:
+      {{- toYaml .turingUI.match | nindent 8 }}
+      route:
+        {{- toYaml .turingUI.route | nindent 8 }}
+    {{- end }}
+    {{- if .turingXpUI.enabled }}
+    - name: "turing-experiments-ui"
+      match:
+      {{- toYaml .turingXpUI.match | nindent 8 }}
+      route:
+        {{- toYaml .turingXpUI.route | nindent 8 }}
+    {{- end }}
+    {{- if .mlpUIConsole.enabled }}
+    - name: "mlp-ui-console"
+      route:
+        {{- toYaml .mlpUIConsole.route | nindent 8 }}
+    {{- end }}
+    {{- end }}

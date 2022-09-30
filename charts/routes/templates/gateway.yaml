@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{ include "caraml-routes.mlp-gateway" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+{{- with .Values.mlpGateway }}
+  selector:
+    {{- toYaml .selector | nindent 6}}
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        {{- range .hosts }}
+        - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain) }}
+        {{- end }}
+{{- end }}
+    {{- if .Values.https.enabled }}
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        {{- toYaml .Values.https.tls | nindent 8 }}
+      hosts:
+        {{- range .hosts }}
+        - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain) }}
+        {{- end }}
+    {{- end }}

@@ -1,0 +1,159 @@
+istioIngressIP: ""
+domain: "ai.golabs.io"
+namespace: mlp
+mlpDocs:
+  routes:
+    hosts:
+      - "docs"
+    merlin:
+      enabled: true
+      app: merlin
+      redirectMatch: /merlin/rest-api
+      rewriteUri: "/"
+      destHost: merlin-swagger
+      destPort: 8080
+    turing:
+      enabled: true
+      app: turing
+      redirectMatch: /turing/rest-api
+      rewriteUri: "/api-docs"
+      destHost: turing
+      destPort: 8080
+    xpManagement:
+      enabled: true
+      app: xp-management
+      redirectMatch: /xp/rest-api
+      rewriteUri: "/"
+      destHost: xp-management-swagger
+      destPort: 8080
+    xpTreatment:
+      enabled: true
+      app: xp-treatment
+      redirectMatch: /xp/treatment-api
+      rewriteUri: "/"
+      destHost: xp-treatment-swagger
+      destPort: 8080
+
+mlflow:
+  routes:
+    hosts:
+      - "mlflow"
+mlp:
+  routes:
+    hosts:
+      - "console"
+    mlpAuthGateway:
+      enabled: true
+      allowOrigins:
+        - exact: "*"
+      allowMethods:
+        - POST
+        - GET
+        - PUT
+        - DELETE
+      allowHeaders:
+        - Authorization
+        - Content-Type
+      rewrite:
+        uri: /
+      match:
+        - uri:
+            prefix: /api/
+      route:
+      - destination:
+          host: mlp-authentication
+          port:
+            number: 8080
+    feastUIBackend:
+      enabled: true
+      rewrite:
+        uri: /api/
+      match:
+        - uri:
+            prefix: /feast/api/
+        - uri:
+            prefix: /feast/api
+      route:
+        - destination:
+            host: feast-ui
+            port:
+              number: 8080
+    mlp:
+      feastUIRedirect:
+        enabled: true
+        redirect: /feast/
+        match:
+          - uri:
+              prefix: /feast
+      feastUI:
+        enabled: true
+        match:
+          - uri:
+              prefix: /feast/
+        route:
+          - destination:
+              host: feast-ui
+              port:
+                number: 8080
+
+      merlinUI:
+        enabled: true
+        match:
+          - uri:
+              prefix: /merlin
+        route:
+          - destination:
+              host: merlin
+              port:
+                number: 8080
+
+      pipelineUI:
+        enabled: true
+        match:
+          - uri:
+              prefix: /pipeline
+        route:
+          - destination:
+              host: pipeline-ui
+              port:
+                number: 8080
+      turingUI:
+        enabled: true
+        match:
+          - uri:
+              prefix: /turing
+        route:
+          - destination:
+              host: turing
+              port:
+                number: 8080
+      turingXpUI:
+        enabled: true
+        match:
+          - uri:
+              prefix: /xp
+        route:
+          - destination:
+              host: xp-management
+              port:
+                number: 8080
+      mlpUIConsole:
+        enabled: true
+        route:
+          - destination:
+              host: mlp
+              port:
+                number: 8080
+https:
+  enabled: true
+  tls:
+    mode: SIMPLE
+    credentialName: mlp-tls-cert
+mlpGateway:
+  name: mlp-gateway
+  selector:
+    istio: ingressgateway
+  hosts:
+    - console
+    - docs
+    - mlflow

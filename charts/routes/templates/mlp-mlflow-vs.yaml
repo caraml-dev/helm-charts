@@ -1,0 +1,22 @@
+{{- if .Values.mlflow.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-mlflow-vs" }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  hosts:
+    {{- range .Values.mlflow.routes.hosts }}
+    - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain ) }}
+    {{- end}}
+  gateways:
+    - {{ include "caraml-routes.mlp-gateway" . }}
+  http:
+    - route:
+        - destination:
+            host: merlin-mlflow
+            port:
+              number: 80
+{{- end }}
