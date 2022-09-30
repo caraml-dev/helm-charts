@@ -34,6 +34,7 @@ The following table lists the configurable parameters of the Routes chart and th
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| base.enabled | bool | `true` |  |
 | domain | string | `"ai.golabs.io"` | Domain used to configure gateway and virtual service |
 | https.enabled | bool | `true` |  |
 | https.tls.credentialName | string | `"mlp-tls-cert"` |  |
