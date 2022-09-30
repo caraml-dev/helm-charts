@@ -20,7 +20,7 @@ validate_parameters() {
     show_help
     exit 0
   fi
-  if [[ "$#" -lt 1 || "$#" -gt 2]]; then
+  if [[ "$#" -lt 1 || "$#" -gt 2 ]]; then
     echo "Incorrect number of positional arguments"
     show_help
     exit 1
@@ -79,7 +79,7 @@ EOF
     rm kubeconfig.yaml
   fi
 
-  if [ ! -f cluster-credential.json ]; then
+  if [ -f cluster-credential.json ]; then
     echo "moving geenrated creds to $SCRIPT_DIR/../charts/merlin/files"
     mv cluster-credential.json $SCRIPT_DIR/../charts/merlin/files
   fi
