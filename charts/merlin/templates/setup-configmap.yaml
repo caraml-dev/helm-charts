@@ -1,0 +1,15 @@
+---
+{{- $configMap := include "merlin.scripts-cm-name" . }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $configMap }}
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-failed,before-hook-creation"
+    "helm.sh/hook": "post-install,post-upgrade"
+    "helm.sh/hook-weight": "-2"
+data:
+  run.sh: |
+    {{- .Files.Get "files/run.sh" | nindent 4 }}
+  cluster-credential.json: |
+    {{- .Files.Get "files/cluster-credential.json" | nindent 4 }}

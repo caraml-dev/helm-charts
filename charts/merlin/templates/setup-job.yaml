@@ -1,0 +1,39 @@
+---
+{{- $configMap := include "merlin.scripts-cm-name" . }}
+{{- $jobName := printf "%s-setup-job" (include "merlin.resource-prefix" .) }}
+{{- $serviceAccountName := printf "%s-setup-sa" (include "merlin.resource-prefix" .) }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $jobName }}
+  labels:
+    {{- include "merlin.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "post-install,post-upgrade"
+    "helm.sh/hook-weight": "-1"
+spec:
+  template:
+    metadata:
+      name: {{ $jobName }}
+    spec:
+      volumes:
+        - name: run-script
+          configMap:
+            name: {{ $configMap }}
+            defaultMode: 0744  # set execute bit so script can be called as command
+      serviceAccountName: {{ $serviceAccountName }}
+      containers:
+        - name: runner
+          image: {{ .Values.setupScript.image }}
+          volumeMounts:
+            - name: run-script
+              mountPath: /scripts
+          command: ["/scripts/run.sh"]
+          args:
+            - {{ $configMap }}
+            - {{ .Release.Namespace }}
+            - {{ .Release.Name }}
+            - {{ .Values.imageBuilder.clusterName }}
+      restartPolicy: Never
+  backoffLimit: 10

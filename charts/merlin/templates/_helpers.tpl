@@ -7,15 +7,15 @@ Generated names
 
 {{- define "merlin.resource-prefix-with-release-name" -}}
     {{- $deployedChart := .Chart.Name -}}
-    {{- $chartVersion := .Chart.Version | replace "." "-" -}}
+    {{- $appVersion := .Chart.AppVersion | replace "." "-" -}}
     {{- $deployedReleaseName := .Release.Name -}}
-    {{ printf "%s-%s-%s"  $deployedChart $chartVersion $deployedReleaseName }}
+    {{ printf "%s-%s-%s"  $deployedChart $appVersion $deployedReleaseName }}
 {{- end -}}
 
 {{- define "merlin.resource-prefix" -}}
     {{- $deployedChart := .Chart.Name -}}
-    {{- $chartVersion := .Chart.Version | replace "." "-" -}}
-    {{ printf "%s-%s"  $deployedChart $chartVersion }}
+    {{- $appVersion := .Chart.AppVersion | replace "." "-" -}}
+    {{ printf "%s-%s"  $deployedChart $appVersion }}
 {{- end -}}
 
 
@@ -29,6 +29,10 @@ Generated names
 
 {{- define "merlin.envs-cm-name" -}}
     {{- printf "%s-environments" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "merlin.scripts-cm-name" -}}
+    {{- printf "%s-scripts" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "merlin.mlp-api-encryption-key-name" -}}

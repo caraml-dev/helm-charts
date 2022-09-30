@@ -2,7 +2,7 @@ apiVersion: v2
 description: Kubernetes-friendly ML model management, deployment, and serving.
 name: merlin
 version: 0.8.0
-appVersion: 0.7.0
+appVersion: 0.22.0
 
 maintainers:
   - name: caraml-dev
@@ -19,3 +19,7 @@ dependencies:
     version: 7.0.0
     alias: mlflow-postgresql
     condition: mlflow-postgresql.enabled
+  - name: vault
+    repository: https://helm.releases.hashicorp.com
+    version: 0.19.0
+    condition: vault.enabled

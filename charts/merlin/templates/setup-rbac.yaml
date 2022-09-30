@@ -1,0 +1,40 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-failed,before-hook-creation"
+    "helm.sh/hook": "post-install,post-upgrade"
+    "helm.sh/hook-weight": "-3"
+  name: {{ printf "%s-setup-role" (include "merlin.resource-prefix" .) }}
+  namespace: {{ .Release.Namespace }}
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames: ["*vault*"]
+    verbs: ["delete", "get"]
+
+---
+{{- $serviceAccountName := printf "%s-setup-sa" (include "merlin.resource-prefix" .) }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-failed,before-hook-creation"
+    "helm.sh/hook": "post-install,post-upgrade"
+    "helm.sh/hook-weight": "-2"
+  name: {{ printf "%s-setup-crb" (include "merlin.resource-prefix" .) }}
+roleRef:
+  kind: ClusterRole
+  name: {{ printf "%s-setup-role" (include "merlin.resource-prefix" .) }}
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: {{ $serviceAccountName }}
+    namespace: {{ .Release.Namespace }}

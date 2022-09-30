@@ -44,20 +44,34 @@ imageBuilder:
   predictionJobBuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
   predictionJobBaseImage: "gojek/mlp/merlin-pyspark:v0.4.1"
   predictionJobDockerfilePath: "docker/app.Dockerfile"
+  predictionJobContextSubPath: ""
   namespace: "mlp"
-  dockerRegistry: "gojek"
+  dockerRegistry: "dockerRegistry"
   timeout: "30m"
-  contextSubPath: "python/pyfunc-server"
-  predictionJobContextSubPath: "python/batch-predictor"
-  kanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
   retention: "48h"
+  kanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
   tolerations: []
   nodeSelectors: {}
   maxRetry: 3
 
 vault:
-  # -- Must be bootstraped first.
+  enabled: true
   secretName: "vault-secret"
+
+  injector:
+    enabled: false
+  server:
+    # -- This is just for quick install. For a production, NEVER EVER use the vault server in dev mode.
+    dev:
+      enabled: true
+    dataStore:
+      enabled: false
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+    affinity: null
+    tolerations: null
 
 alerts:
   # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
@@ -370,6 +384,13 @@ mlflow:
   #   stream: unknown
   #   orchestrator: unknown
 
+  # Add the following configs when you wish to point to an actual S3 for mlflow to store its artifacts
+  # extraEnvs:
+  #   AWS_ACCESS_KEY_ID: YOURACCESSKEY
+  #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
+  #   AWS_DEFAULT_REGION: ap-southeast-2
+  #   MLFLOW_S3_ENDPOINT_URL: http://minio.minio.svc.cluster.local:9000
+
 # If you would like to use an external postgres database for MLflow, you can connect using these credentials
 mlflowExternalPostgresql:
   # -- If you would like to use an external postgres database, enable it here using this
@@ -415,3 +436,28 @@ swagger:
   service:
     internalPort: 8081
     externalPort: 8080
+
+minio:
+  enabled: true
+  replicas: 1
+  persistence:
+    enabled: false
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+  livenessProbe:
+    initialDelaySeconds: 30
+  defaultBucket:
+    enabled: true
+    name: mlflow
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: istio
+    path: /*
+
+setupScript:
+  # -- Image used to for setup scripts job
+  image: ghcr.io/dtzar/helm-kubectl:3.9.4  # TODO: Rerelease with more official repo (eg ghcr.io/caraml-dev)?
+  clusterType: minikube
