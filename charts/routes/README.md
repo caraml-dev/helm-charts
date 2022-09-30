@@ -34,12 +34,14 @@ The following table lists the configurable parameters of the Routes chart and th
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| base.enabled | bool | `true` |  |
+| base.enabled | bool | `false` | Set to false if there is an existing istio deployment |
 | domain | string | `"ai.golabs.io"` | Domain used to configure gateway and virtual service |
 | https.enabled | bool | `true` |  |
 | https.tls.credentialName | string | `"mlp-tls-cert"` |  |
 | https.tls.mode | string | `"SIMPLE"` |  |
+| istioIngressGateway.global.enabled | bool | `false` |  |
 | istioIngressIP | string | `""` | istioIngressIP takes precedence over domain. Used for local deployment |
+| istiod.enabled | bool | `false` | Set to false if there is an existing istio deployment |
 | mlflow.vs.hosts[0] | string | `"mlflow"` |  |
 | mlflow.vs.route.destination | string | `"merlin-mlflow"` |  |
 | mlflow.vs.route.port | int | `80` |  |
@@ -118,4 +120,3 @@ The following table lists the configurable parameters of the Routes chart and th
 | mlpGateway.hosts[2] | string | `"mlflow"` |  |
 | mlpGateway.name | string | `"mlp-gateway"` |  |
 | mlpGateway.selector.istio | string | `"ingressgateway"` |  |
-| namespace | string | `"mlp"` |  |

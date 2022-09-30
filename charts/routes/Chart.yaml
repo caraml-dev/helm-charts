@@ -28,8 +28,21 @@ maintainers:
     email: caraml-dev@caraml.dev
 
 dependencies:
+  - name: generic-dep-installer
+    repository: "https://caraml-dev.github.io/helm-charts"
+    version: 0.1.0
+    alias: istiod
+    # NOTE: Disabled by default
+    condition: istiod.enabled
   - name: base
     repository: "https://istio-release.storage.googleapis.com/charts"
     version: 1.13.4
     alias: base
+    # NOTE: Disabled by default
     condition: base.enabled
+  - name: generic-dep-installer
+    repository: "https://caraml-dev.github.io/helm-charts"
+    version: 0.1.0
+    alias: istioIngressGateway
+    # NOTE: Disabled by default
+    condition: istioIngressGateway.global.enabled
