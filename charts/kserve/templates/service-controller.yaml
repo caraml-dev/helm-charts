@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    control-plane: kserve-controller-manager
+    controller-tools.k8s.io: "1.0"
+    {{- include "kserve.labels" . | nindent 4 }}
+  name: kserve-controller-manager-service
+spec:
+  ports:
+  - port: 8443
+    protocol: TCP
+    targetPort: https
+  selector:
+    control-plane: kserve-controller-manager
+    controller-tools.k8s.io: "1.0"

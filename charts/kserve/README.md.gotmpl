@@ -1,0 +1,64 @@
+{{ template "chart.header" . }}
+---
+{{ template "chart.versionBadge" . }}
+{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+## Introduction
+
+This Helm chart installs [Kserve](https://kserve.github.io/website/0.8/) and it's CRDs. It also installs the dependencies that Kserve requires, unless disabled.
+See `Chart.yaml` for full list of dependencies.
+
+
+## Prerequisites
+
+To use the charts here, [Helm](https://helm.sh/) must be configured for your
+Kubernetes cluster. Setting up Kubernetes and Helm is outside the scope of
+this README. Please refer to the Kubernetes and Helm documentation.
+
+- **Helm 3.0+** – This chart was tested with Helm v3.9.0, but it is also expected to work with earlier Helm versions
+- **Kubernetes 1.22+** – This chart was tested with Kind v1.22.7 and minikube kubernetes version 1.22.*
+- When installing on minikube, please run in a separate shell:
+  ```sh
+  minikube tunnel
+  ```
+  This is to enable istio loadbalancer services to be allocated an IP address.
+
+
+## Installation
+
+### Add Helm repository
+
+```shell
+helm repo add caraml https://caraml-dev.github.io/helm-charts
+```
+
+### Installing the chart
+
+This chart MUST be installed in the `kserve` namespace.
+This command will install Kserve release named `kserve` in the `kserve` namespace.
+Do not try to install into other namespaces as it will break with other installations.
+Default chart values will be used for the installation:
+```shell
+$ helm install caraml/kserve --namespace kserve --create-namespace
+```
+
+You can (and most likely, should) override the default configuration with values suitable for your installation.
+Refer to [Configuration](#configuration) section for the detailed description of available configuration keys.
+
+### Uninstalling the chart
+
+To uninstall `kserve` release:
+```shell
+$ helm uninstall -n kserve kserve
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+This includes the dependencies that were installed for Kserve, e.g. Istio, Cert-Manager.
+
+## Configuration
+
+The following table lists the configurable parameters of the Kserve chart and their default values.
+
+{{ template "chart.valuesTable" . }}

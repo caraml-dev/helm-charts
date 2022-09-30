@@ -1,0 +1,60 @@
+---
+{{- $serviceAccountName := "kserve-test-sa" }}
+{{- $resourceName := "kserve-test-job" }}
+{{- $configMap := "kserve-test-cm" }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-test" $resourceName | trunc 63 | trimSuffix "-" }}
+  labels:
+    {{- include "kserve.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "test"
+spec:
+  template:
+    metadata:
+      name: {{ printf "%s-installer" $resourceName }}
+    spec:
+      volumes:
+        - name: run-script
+          configMap:
+            name: {{  $configMap }}
+            defaultMode: 0744  # set execute bit so script can be called as command
+      serviceAccountName: default
+      containers:
+        - name: runner
+          image: dtzar/helm-kubectl
+          volumeMounts:
+            - name: run-script
+              mountPath: /scripts
+          command: ["/scripts/run_test.sh"]
+      restartPolicy: Never
+  backoffLimit: 10
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "test"
+  name: {{ printf "%s-crb" $resourceName }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $configMap }}
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "test"
+data:
+  run_test.sh: |
+    {{- .Files.Get "files/run_test.sh" | nindent 4 }}

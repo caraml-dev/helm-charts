@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  ingressGateway: knative-serving/knative-ingress-gateway
+kind: ConfigMap
+metadata:
+  name: kserve-config
+  labels:
+    {{- include "kserve.labels" . | nindent 4 }}
