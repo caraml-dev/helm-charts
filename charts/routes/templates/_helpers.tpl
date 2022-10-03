@@ -128,14 +128,14 @@ IngressIP takes precedence over domain
         Authorization:
             regex: "^Bearer [^\\.]+\\.[^\\.]+\\.[^\\.]+$"
       {{- end }}
-      rewrite:
-        uri: {{ $rewriteUri | quote }}
-      corsPolicy:
-        allowOrigins:
-          - exact: "*"
-      route:
-        - destination:
-            host: {{ $destHost }}
+  rewrite:
+    uri: {{ $rewriteUri | quote }}
+  corsPolicy:
+    allowOrigins:
+      - exact: "*"
+  route:
+    - destination:
+        host: {{ $destHost }}
 {{- end }}
 
 
