@@ -151,7 +151,8 @@ mlp:
               port:
                 number: 8080
 https:
-  enabled: true
+  # NOTE: Set https to false by default, enable from parent chart
+  enabled: false
   tls:
     mode: SIMPLE
     credentialName: mlp-tls-cert

@@ -36,7 +36,7 @@ The following table lists the configurable parameters of the Routes chart and th
 |-----|------|---------|-------------|
 | base.enabled | bool | `false` | Set to false if there is an existing istio deployment |
 | domain | string | `"ai.golabs.io"` | Domain used to configure gateway and virtual service |
-| https.enabled | bool | `true` |  |
+| https.enabled | bool | `false` |  |
 | https.tls.credentialName | string | `"mlp-tls-cert"` |  |
 | https.tls.mode | string | `"SIMPLE"` |  |
 | istioIngressGateway.global.enabled | bool | `false` |  |
