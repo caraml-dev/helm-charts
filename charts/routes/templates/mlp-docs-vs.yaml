@@ -25,28 +25,28 @@ spec:
     #########################################################
     #                  Merlin API Docs
     #########################################################
-    {{- with .Values.mlpDocs.vs.merlin }}
-    {{- if .enabled }}
+    {{- if .Values.merlin.enabled }}
+    {{- with .Values.merlin.docs }}
     {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
     {{- end }}
     {{- end }}
     #########################################################
     #                   Turing API Docs
     #########################################################
-    {{- with .Values.mlpDocs.vs.turing }}
-    {{- if .enabled }}
+    {{- if .Values.turing.enabled }}
+    {{- with .Values.turing.docs }}
     {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
     {{- end }}
     {{- end }}
     #########################################################
     #              Turing Experiments API Docs
     #########################################################
-    {{- with .Values.mlpDocs.vs.xpManagement }}
-    {{- if .enabled }}
+    {{- if .Values.xp.enabled }}
+    {{- with .Values.xp.managementDocs }}
     {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
     {{- end }}
     {{- end }}
-    {{- with .Values.mlpDocs.vs.xpTreatment }}
+    {{- with .Values.xp.treatmentDocs }}
     {{- if .enabled }}
     {{- include "caraml-routes.api-docs" (list .app .redirectMatch .rewriteUri .destHost .destPort) | indent 4}}
     {{- end }}

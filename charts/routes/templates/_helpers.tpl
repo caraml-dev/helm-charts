@@ -70,14 +70,22 @@ IngressIP takes precedence over domain
 {{- $subdomain := index . 0 }}
 {{- $ingressIP := index . 1 }}
 {{- $domain := index . 2 }}
-{{- if ne $ingressIP "" }}
-{{- printf "%s.%s.nip.io" $subdomain $ingressIP }}
-{{- else }}
+{{- if ne $domain "" }}
 {{- ternary (printf "%s.%s" $subdomain $domain) (printf "%s" $subdomain) (ne $domain "") }}
+{{- else }}
+{{- printf "%s.%s.nip.io" $subdomain $ingressIP }}
 {{- end }}
 {{- end }}
 
 
+{{/*
+Function to add generate Uri Match and redirect match for routess
+Takes in 3 arguments:
+subdomain, ingressIp, domain
+Usage:
+{{- include "caraml-routes.localiseDomain" (list $val1 $val2 $val3 ) }}
+IngressIP takes precedence over domain
+*/}}
 {{- define "caraml-routes.api-docs" }}
 {{- $appName := index . 0 }}
 {{- $redirectMatch := index . 1 }}
@@ -102,4 +110,40 @@ IngressIP takes precedence over domain
         host: {{ $destHost }}
         port:
           number: {{ $destPort }}
+{{- end }}
+
+
+{{- define "caraml-routes.mlp-api-routes" }}
+{{- $appName := index . 0 }}
+{{- $prefixMatch := index . 1 }}
+{{- $rewriteUri := index . 2 }}
+{{- $destHost := index . 3 }}
+{{- $enableHeaderMatch := index . 4 }}
+- name: {{ printf "%s-api" $appName }}
+  match:
+    - uri:
+        prefix: {{ $prefixMatch | quote }}
+      {{- if $enableHeaderMatch }}
+      headers:
+        Authorization:
+            regex: "^Bearer [^\\.]+\\.[^\\.]+\\.[^\\.]+$"
+      {{- end }}
+      rewrite:
+        uri: {{ $rewriteUri | quote }}
+      corsPolicy:
+        allowOrigins:
+          - exact: "*"
+      route:
+        - destination:
+            host: {{ $destHost }}
+{{- end }}
+
+
+{{- define "caraml-routes.istio-lookup" }}
+{{- $istioLookupResult := (lookup "v1" "Service" .Values.istioLookUp.namespace .Values.istioLookUp.name ) }}
+{{- if $istioLookupResult }}
+{{ printf "%s" (index $istioLookupResult.status.loadBalancer.ingress 0).ip }}
+{{- else }}
+{{ printf "" }}
+{{- end }}
 {{- end }}

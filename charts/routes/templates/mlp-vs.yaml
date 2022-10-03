@@ -1,3 +1,4 @@
+{{- $ingressIP := include "caraml-routes.istio-lookup" . }}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -8,37 +9,36 @@ metadata:
 spec:
   hosts:
     {{- range .Values.mlp.vs.hosts }}
-    - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain ) }}
+    - {{ include "caraml-routes.localiseDomain" (list . $ingressIP $.Values.domain ) }}
     {{- end}}
   gateways:
     - {{ include "caraml-routes.mlp-gateway" . }}
   http:
-    #########################################################
-    #              MLP API AUTHENTICATION GATEWAY
-    #########################################################
-    {{- with .Values.mlp.vs.mlpAuthGateway }}
-    {{- if .enabled }}
-    - name: "mlp-api-auth-proxy"
-      match:
-        {{- toYaml .match | nindent 8 }}
-      rewrite:
-        {{- toYaml .rewrite | nindent 8 }}
-      corsPolicy:
-        allowOrigins:
-        {{- toYaml .allowOrigins | nindent 10 }}
-        allowMethods:
-          {{- toYaml .allowMethods | nindent 10 }}
-        allowHeaders:
-          {{- toYaml .allowHeaders | nindent 10 }}
-      route:
-        {{- toYaml .route | nindent 8 }}
+    {{- if .Values.turing.enabled }}
+    {{- with .Values.turing.api }}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName .prefixMatch .rewriteUri .destHost .authHeader) | indent 4}}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.xp.enabled }}
+    {{- with .Values.xp.api }}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName .prefixMatch .rewriteUri .destHost .authHeader) | indent 4}}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.merlin.enabled }}
+    {{- with .Values.merlin.api }}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName .prefixMatch .rewriteUri .destHost .authHeader) | indent 4}}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.mlp.enabled }}
+    {{- with .Values.mlp.api }}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName .prefixMatch .rewriteUri .destHost .authHeader) | indent 4}}
     {{- end }}
     {{- end }}
     #########################################################
     #                       MLP API
     #########################################################
-    {{- with .Values.mlp.vs.feastUIBackend }}
-    {{- if .enabled }}
+    {{- if .Values.feast.enabled }}
+    {{- with .Values.feast.feastUIBackend }}
     - name: "feast-ui-backend"
       match:
         {{- toYaml .match | nindent 8}}
@@ -51,8 +51,8 @@ spec:
     #########################################################
     #                 MLP COMPONENTS UI
     #########################################################
-    {{- with .Values.mlp.vs.mlp }}
-    {{- if (and .feastUIRedirect.enabled .feastUI.enabled) }}
+    {{- if .Values.feast.enabled }}
+    {{- with .Values.feast }}
     - name: "feast-ui-redirect"
       match:
       {{- toYaml .feastUIRedirect.match | nindent 8 }}
@@ -65,35 +65,45 @@ spec:
       route:
         {{- toYaml .feastUI.route | nindent 8 }}
     {{- end }}
-    {{- if .merlinUI.enabled}}
+    {{- end }}
+    {{- if .Values.merlin.enabled }}
+    {{- with .Values.merlin }}
     - name: "merlin-ui"
       match:
       {{- toYaml .merlinUI.match | nindent 8 }}
       route:
         {{- toYaml .merlinUI.route | nindent 8 }}
     {{- end }}
-    {{- if .pipelineUI.enabled}}
+    {{- end }}
+    {{- if .Values.pipeline.enabled}}
+    {{- with .Values.pipeline }}
     - name: "pipeline-ui"
       match:
       {{- toYaml .pipelineUI.match | nindent 8 }}
       route:
         {{- toYaml .pipelineUI.route | nindent 8 }}
     {{- end }}
-    {{- if .turingUI.enabled }}
+    {{- end }}
+    {{- if .Values.turing.enabled }}
+    {{- with .Values.turing }}
     - name: "turing-ui"
       match:
       {{- toYaml .turingUI.match | nindent 8 }}
       route:
         {{- toYaml .turingUI.route | nindent 8 }}
     {{- end }}
-    {{- if .turingXpUI.enabled }}
+    {{- end }}
+    {{- if .Values.xp.enabled }}
+    {{- with .Values.xp }}
     - name: "turing-experiments-ui"
       match:
       {{- toYaml .turingXpUI.match | nindent 8 }}
       route:
         {{- toYaml .turingXpUI.route | nindent 8 }}
     {{- end }}
-    {{- if .mlpUIConsole.enabled }}
+    {{- end }}
+    {{- if .Values.mlp.enabled }}
+    {{- with .Values.mlp }}
     - name: "mlp-ui-console"
       route:
         {{- toYaml .mlpUIConsole.route | nindent 8 }}
