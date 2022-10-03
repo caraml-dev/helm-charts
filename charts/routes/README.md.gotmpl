@@ -26,7 +26,7 @@ helm repo add caraml https://caraml-dev.github.io/helm-charts
 
 ```shell
 $ INGRESS_IP=$(k get services -n istio-system istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-$ helm install caraml/routes --set istioIngressIP=$INGRESS_IP
+$ helm install routes caraml/caraml-routes --set istioIngressIP=$INGRESS_IP
 ```
 
 ## Configuration
