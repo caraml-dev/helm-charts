@@ -19,7 +19,9 @@ helm repo add caraml https://caraml-dev.github.io/helm-charts
 ```
 
 ### Installing the chart
-* For local installation of CaraML, this chart should be installed after installing the main Caraml chart.
+* For local installation of CaraML,
+  * this chart must be installed after installing the main Caraml chart, and
+  * installed in the SAME K8s Namespace as the main Caraml Chart
 * This is because we need the local istio ingress's load balancer IP address, to enable successful routing of requests
 * Routes will be exposed at `<component>.<INGRESS_IP>.nip.io`
 
@@ -45,18 +47,18 @@ The following table lists the configurable parameters of the Routes chart and th
 | mlflow.vs.hosts[0] | string | `"mlflow"` |  |
 | mlflow.vs.route.destination | string | `"merlin-mlflow"` |  |
 | mlflow.vs.route.port | int | `80` |  |
-| mlp.vs.feastUIBackend.enabled | bool | `true` |  |
+| mlp.vs.feastUIBackend.enabled | bool | `false` |  |
 | mlp.vs.feastUIBackend.match[0].uri.prefix | string | `"/feast/api/"` |  |
 | mlp.vs.feastUIBackend.match[1].uri.prefix | string | `"/feast/api"` |  |
 | mlp.vs.feastUIBackend.rewrite.uri | string | `"/api/"` |  |
 | mlp.vs.feastUIBackend.route[0].destination.host | string | `"feast-ui"` |  |
 | mlp.vs.feastUIBackend.route[0].destination.port.number | int | `8080` |  |
 | mlp.vs.hosts[0] | string | `"console"` |  |
-| mlp.vs.mlp.feastUI.enabled | bool | `true` |  |
+| mlp.vs.mlp.feastUI.enabled | bool | `false` |  |
 | mlp.vs.mlp.feastUI.match[0].uri.prefix | string | `"/feast/"` |  |
 | mlp.vs.mlp.feastUI.route[0].destination.host | string | `"feast-ui"` |  |
 | mlp.vs.mlp.feastUI.route[0].destination.port.number | int | `8080` |  |
-| mlp.vs.mlp.feastUIRedirect.enabled | bool | `true` |  |
+| mlp.vs.mlp.feastUIRedirect.enabled | bool | `false` |  |
 | mlp.vs.mlp.feastUIRedirect.match[0].uri.prefix | string | `"/feast"` |  |
 | mlp.vs.mlp.feastUIRedirect.redirect | string | `"/feast/"` |  |
 | mlp.vs.mlp.merlinUI.enabled | bool | `true` |  |
@@ -66,15 +68,15 @@ The following table lists the configurable parameters of the Routes chart and th
 | mlp.vs.mlp.mlpUIConsole.enabled | bool | `true` |  |
 | mlp.vs.mlp.mlpUIConsole.route[0].destination.host | string | `"mlp"` |  |
 | mlp.vs.mlp.mlpUIConsole.route[0].destination.port.number | int | `8080` |  |
-| mlp.vs.mlp.pipelineUI.enabled | bool | `true` |  |
+| mlp.vs.mlp.pipelineUI.enabled | bool | `false` |  |
 | mlp.vs.mlp.pipelineUI.match[0].uri.prefix | string | `"/pipeline"` |  |
 | mlp.vs.mlp.pipelineUI.route[0].destination.host | string | `"pipeline-ui"` |  |
 | mlp.vs.mlp.pipelineUI.route[0].destination.port.number | int | `8080` |  |
-| mlp.vs.mlp.turingUI.enabled | bool | `true` |  |
+| mlp.vs.mlp.turingUI.enabled | bool | `false` |  |
 | mlp.vs.mlp.turingUI.match[0].uri.prefix | string | `"/turing"` |  |
 | mlp.vs.mlp.turingUI.route[0].destination.host | string | `"turing"` |  |
 | mlp.vs.mlp.turingUI.route[0].destination.port.number | int | `8080` |  |
-| mlp.vs.mlp.turingXpUI.enabled | bool | `true` |  |
+| mlp.vs.mlp.turingXpUI.enabled | bool | `false` |  |
 | mlp.vs.mlp.turingXpUI.match[0].uri.prefix | string | `"/xp"` |  |
 | mlp.vs.mlp.turingXpUI.route[0].destination.host | string | `"xp-management"` |  |
 | mlp.vs.mlp.turingXpUI.route[0].destination.port.number | int | `8080` |  |
@@ -100,19 +102,19 @@ The following table lists the configurable parameters of the Routes chart and th
 | mlpDocs.vs.turing.app | string | `"turing"` |  |
 | mlpDocs.vs.turing.destHost | string | `"turing"` |  |
 | mlpDocs.vs.turing.destPort | int | `8080` |  |
-| mlpDocs.vs.turing.enabled | bool | `true` |  |
+| mlpDocs.vs.turing.enabled | bool | `false` |  |
 | mlpDocs.vs.turing.redirectMatch | string | `"/turing/rest-api"` |  |
 | mlpDocs.vs.turing.rewriteUri | string | `"/api-docs"` |  |
 | mlpDocs.vs.xpManagement.app | string | `"xp-management"` |  |
 | mlpDocs.vs.xpManagement.destHost | string | `"xp-management-swagger"` |  |
 | mlpDocs.vs.xpManagement.destPort | int | `8080` |  |
-| mlpDocs.vs.xpManagement.enabled | bool | `true` |  |
+| mlpDocs.vs.xpManagement.enabled | bool | `false` |  |
 | mlpDocs.vs.xpManagement.redirectMatch | string | `"/xp/rest-api"` |  |
 | mlpDocs.vs.xpManagement.rewriteUri | string | `"/"` |  |
 | mlpDocs.vs.xpTreatment.app | string | `"xp-treatment"` |  |
 | mlpDocs.vs.xpTreatment.destHost | string | `"xp-treatment-swagger"` |  |
 | mlpDocs.vs.xpTreatment.destPort | int | `8080` |  |
-| mlpDocs.vs.xpTreatment.enabled | bool | `true` |  |
+| mlpDocs.vs.xpTreatment.enabled | bool | `false` |  |
 | mlpDocs.vs.xpTreatment.redirectMatch | string | `"/xp/treatment-api"` |  |
 | mlpDocs.vs.xpTreatment.rewriteUri | string | `"/"` |  |
 | mlpGateway.hosts[0] | string | `"console"` |  |

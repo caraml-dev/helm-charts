@@ -16,21 +16,21 @@ mlpDocs:
       destHost: merlin-swagger
       destPort: 8080
     turing:
-      enabled: true
+      enabled: false
       app: turing
       redirectMatch: /turing/rest-api
       rewriteUri: "/api-docs"
       destHost: turing
       destPort: 8080
     xpManagement:
-      enabled: true
+      enabled: false
       app: xp-management
       redirectMatch: /xp/rest-api
       rewriteUri: "/"
       destHost: xp-management-swagger
       destPort: 8080
     xpTreatment:
-      enabled: true
+      enabled: false
       app: xp-treatment
       redirectMatch: /xp/treatment-api
       rewriteUri: "/"
@@ -71,7 +71,7 @@ mlp:
           port:
             number: 8080
     feastUIBackend:
-      enabled: true
+      enabled: false
       rewrite:
         uri: /api/
       match:
@@ -86,13 +86,13 @@ mlp:
               number: 8080
     mlp:
       feastUIRedirect:
-        enabled: true
+        enabled: false
         redirect: /feast/
         match:
           - uri:
               prefix: /feast
       feastUI:
-        enabled: true
+        enabled: false
         match:
           - uri:
               prefix: /feast/
@@ -114,7 +114,7 @@ mlp:
                 number: 8080
 
       pipelineUI:
-        enabled: true
+        enabled: false
         match:
           - uri:
               prefix: /pipeline
@@ -124,7 +124,7 @@ mlp:
               port:
                 number: 8080
       turingUI:
-        enabled: true
+        enabled: false
         match:
           - uri:
               prefix: /turing
@@ -134,7 +134,7 @@ mlp:
               port:
                 number: 8080
       turingXpUI:
-        enabled: true
+        enabled: false
         match:
           - uri:
               prefix: /xp

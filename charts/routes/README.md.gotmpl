@@ -19,7 +19,9 @@ helm repo add caraml https://caraml-dev.github.io/helm-charts
 ```
 
 ### Installing the chart
-* For local installation of CaraML, this chart should be installed after installing the main Caraml chart.
+* For local installation of CaraML,
+  * this chart must be installed after installing the main Caraml chart, and
+  * installed in the SAME K8s Namespace as the main Caraml Chart
 * This is because we need the local istio ingress's load balancer IP address, to enable successful routing of requests
 * Routes will be exposed at `<component>.<INGRESS_IP>.nip.io`
 
