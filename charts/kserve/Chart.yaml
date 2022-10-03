@@ -2,7 +2,7 @@ apiVersion: v2
 name: kserve
 description: A Helm chart for installing Kserve
 type: application
-version: 0.8.2
+version: 0.8.3
 appVersion: 0.8.0
 maintainers:
   - name: caraml-dev
