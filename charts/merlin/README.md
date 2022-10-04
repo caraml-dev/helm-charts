@@ -93,8 +93,8 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | merlin-postgresql.persistence.size | string | `"10Gi"` |  |
 | merlin-postgresql.postgresqlDatabase | string | `"merlin"` |  |
 | merlin-postgresql.postgresqlUsername | string | `"merlin"` |  |
-| merlin-postgresql.resources.requests.cpu | string | `"500m"` |  |
-| merlin-postgresql.resources.requests.memory | string | `"2Gi"` |  |
+| merlin-postgresql.resources.requests.cpu | string | `"100m"` |  |
+| merlin-postgresql.resources.requests.memory | string | `"512Mi"` |  |
 | merlinExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | merlinExternalPostgresql.database | string | `"merlin"` | External postgres database schema |
 | merlinExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |

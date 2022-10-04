@@ -75,7 +75,7 @@ jobs:
         env:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |
-          wget https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_linux_arm64.tar.gz -O - | tar xz && mv yq_linux_arm64 /usr/bin/yq
+          wget https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_linux_arm64.tar.gz -O - | tar xz && mv yq_linux_arm64 yq
           if [[ $(echo $CHARTS_CHANGED | grep 'charts/\(merlin\|caraml\)') ]]; then
             ./scripts/generate-cluster-creds.sh kind chart-testing
           fi

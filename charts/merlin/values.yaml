@@ -265,8 +265,8 @@ merlin-postgresql:
 
   resources:
     requests:
-      memory: 2Gi
-      cpu: 500m
+      cpu: 100m
+      memory: 512Mi
 
   persistence:
     size: 10Gi

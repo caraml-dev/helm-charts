@@ -5,7 +5,11 @@
 
 set -ex
 
-which yq > /dev/null 2>&1|| { echo "yq not installed, Check https://github.com/mikefarah/yq/#install"; exit 1; }
+if [ -f yq ]; then
+./yq > /dev/null 2>&1|| { echo "yq not installed, Check https://github.com/mikefarah/yq/#install"; exit 1; }
+else
+yq > /dev/null 2>&1|| { echo "yq not installed, Check https://github.com/mikefarah/yq/#install"; exit 1; }
+fi
 which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
 
 show_help() {
@@ -66,14 +70,14 @@ EOF
 
   if [ "$CLUSTER_TYPE" == "kind" ]; then
     kind get kubeconfig --name $CLUSTER_NAME > kubeconfig.yaml
-    echo "Kind cluster name: $(yq '.clusters[0].name' kubeconfig.yaml)"
+    echo "Kind cluster name: $(./yq '.clusters[0].name' kubeconfig.yaml)"
     cat > cluster-credential.json <<EOF
 {
-"name": "$(yq '.clusters[0].name' kubeconfig.yaml)",
+"name": "$(./yq '.clusters[0].name' kubeconfig.yaml)",
 "master_ip": "kubernetes.default:443",
-"certs": "$(yq '.clusters[0].cluster."certificate-authority-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_certificate": "$(yq '.users[0].user."client-certificate-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_key": "$(yq '.users[0].user."client-key-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')"
+"certs": "$(./yq '.clusters[0].cluster."certificate-authority-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_certificate": "$(./yq '.users[0].user."client-certificate-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_key": "$(./yq '.users[0].user."client-key-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')"
 }
 EOF
     rm kubeconfig.yaml
