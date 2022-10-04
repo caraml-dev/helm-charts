@@ -1,3 +1,4 @@
+{{- $ingressIP := include "caraml-routes.istio-lookup" . }}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -8,7 +9,7 @@ metadata:
 spec:
   hosts:
     {{- range .Values.mlpDocs.vs.hosts }}
-    - {{ include "caraml-routes.localiseDomain" (list . $.Values.istioIngressIP $.Values.domain ) }}
+    - {{ include "caraml-routes.localiseDomain" (list . $ingressIP $.Values.domain ) }}
     {{- end}}
   gateways:
     - {{ include "caraml-routes.mlp-gateway" . }}

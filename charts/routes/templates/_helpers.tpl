@@ -73,18 +73,13 @@ IngressIP takes precedence over domain
 {{- if ne $domain "" }}
 {{- ternary (printf "%s.%s" $subdomain $domain) (printf "%s" $subdomain) (ne $domain "") }}
 {{- else }}
-{{- printf "%s.%s.nip.io" $subdomain $ingressIP }}
+{{- printf "%s.%s.nip.io" $subdomain (ternary $ingressIP "example" (ne $ingressIP "")) }}
 {{- end }}
 {{- end }}
 
 
 {{/*
 Function to add generate Uri Match and redirect match for routess
-Takes in 3 arguments:
-subdomain, ingressIp, domain
-Usage:
-{{- include "caraml-routes.localiseDomain" (list $val1 $val2 $val3 ) }}
-IngressIP takes precedence over domain
 */}}
 {{- define "caraml-routes.api-docs" }}
 {{- $appName := index . 0 }}
@@ -142,8 +137,8 @@ IngressIP takes precedence over domain
 {{- define "caraml-routes.istio-lookup" }}
 {{- $istioLookupResult := (lookup "v1" "Service" .Values.istioLookUp.namespace .Values.istioLookUp.name ) }}
 {{- if $istioLookupResult }}
-{{ printf "%s" (index $istioLookupResult.status.loadBalancer.ingress 0).ip }}
+{{- printf "%s" (index $istioLookupResult.status.loadBalancer.ingress 0).ip }}
 {{- else }}
-{{ printf "" }}
+{{- printf "" }}
 {{- end }}
 {{- end }}

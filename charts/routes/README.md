@@ -37,7 +37,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | base.enabled | bool | `false` | Set to false if there is an existing istio deployment |
-| domain | string | `"ai.golabs.io"` | Domain used to configure gateway and virtual service |
+| domain | string | `""` | Domain used to configure gateway and virtual service |
 | feast.enabled | bool | `true` |  |
 | feast.feastUI.match[0].uri.prefix | string | `"/feast/"` |  |
 | feast.feastUI.route[0].destination.host | string | `"feast-ui"` |  |

@@ -4,7 +4,7 @@ istioLookUp:
   name: istio-ingressgateway
 
 # -- Domain used to configure gateway and virtual service
-domain: "ai.golabs.io"
+domain: ""
 
 turing:
   enabled: true
