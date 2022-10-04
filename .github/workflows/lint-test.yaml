@@ -66,19 +66,19 @@ jobs:
         with:
           node_image: kindest/node:v1.22.7
 
-      # - name: Install metallb in kind cluster for load balancer services
-      #   if: steps.list-changed.outputs.changed == 'true'
-      #   run: |
-      #     ./scripts/install_metallib.sh
+      - name: Install metallb in kind cluster for load balancer services
+        if: steps.list-changed.outputs.changed == 'true'
+        run: |
+          ./scripts/install_metallib.sh
 
       - name: Add cluster credentials as a file if merlin is being installed
         env:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |
-          if [[ $(echo $CHARTS_CHANGED | grep 'charts/(merlin|caraml)') ]]; then
-            ./scripts/generate-cluster-creds.sh kind
+          wget https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_linux_arm64.tar.gz -O - | tar xz && mv yq_linux_arm64 /usr/bin/yq
+          if [[ $(echo $CHARTS_CHANGED | grep 'charts/\(merlin\|caraml\)') ]]; then
+            ./scripts/generate-cluster-creds.sh kind chart-testing
           fi
-
 
       - name: Run chart-testing (install)
         run: ct install --config .github/config/ct.yaml --excluded-charts kserve

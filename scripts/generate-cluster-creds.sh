@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 
 # This file is used to populate configmap templates/setup-configmap.yaml
 # This will upload the cluster credentials to vault.
@@ -20,7 +20,7 @@ validate_parameters() {
     show_help
     exit 0
   fi
-  if [[ "$#" -lt 1 || "$#" -gt 2 ]]; then
+  if [[ "$#" -ne 2 ]]; then
     echo "Incorrect number of positional arguments"
     show_help
     exit 1
@@ -65,7 +65,7 @@ EOF
   fi
 
   if [ "$CLUSTER_TYPE" == "kind" ]; then
-    kind get kubeconfig > kubeconfig.yaml
+    kind get kubeconfig --name $CLUSTER_NAME > kubeconfig.yaml
     echo "Kind cluster name: $(yq '.clusters[0].name' kubeconfig.yaml)"
     cat > cluster-credential.json <<EOF
 {
