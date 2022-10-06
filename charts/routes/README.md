@@ -36,34 +36,92 @@ The following table lists the configurable parameters of the Routes chart and th
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| base.enabled | bool | `false` | Set to false if there is an existing istio deployment |
+| base.enabled | bool | `false` |  |
 | cert-manager.enabled | bool | `true` |  |
 | certManagerBase.enabled | bool | `true` |  |
-| domain | string | `""` | Domain used to configure gateway and virtual service |
-| feast | object | `{"enabled":true,"feastUI":{"match":[{"uri":{"prefix":"/feast/"}}],"route":[{"destination":{"host":"feast-ui","port":{"number":8080}}}]},"feastUIBackend":{"match":[{"uri":{"prefix":"/feast/api/"}},{"uri":{"prefix":"/feast/api"}}],"rewrite":{"uri":"/api/"},"route":[{"destination":{"host":"feast-ui","port":{"number":8080}}}]},"feastUIRedirect":{"match":[{"uri":{"exact":"/feast"}}],"redirect":"/feast/"}}` | Configuration for feast |
+| domain | string | `""` |  |
+| feast.enabled | bool | `true` |  |
+| feast.feastUI.match[0].uri.prefix | string | `"/feast/"` |  |
+| feast.feastUI.route[0].destination.host | string | `"feast-ui"` |  |
+| feast.feastUI.route[0].destination.port.number | int | `8080` |  |
+| feast.feastUIBackend.match[0].uri.prefix | string | `"/feast/api/"` |  |
+| feast.feastUIBackend.match[1].uri.prefix | string | `"/feast/api"` |  |
+| feast.feastUIBackend.rewrite.uri | string | `"/api/"` |  |
+| feast.feastUIBackend.route[0].destination.host | string | `"feast-ui"` |  |
+| feast.feastUIBackend.route[0].destination.port.number | int | `8080` |  |
+| feast.feastUIRedirect.match[0].uri.exact | string | `"/feast"` |  |
+| feast.feastUIRedirect.redirect | string | `"/feast/"` |  |
 | https.enabled | bool | `true` |  |
 | https.tls.credentialName | string | `"mlp-tls-cert"` |  |
 | https.tls.mode | string | `"SIMPLE"` |  |
 | istioIngressGateway.global.enabled | bool | `false` |  |
 | istioLookUp | object | `{"name":"istio-ingressgateway","namespace":"istio-system"}` | istioIngressIP takes precedence over domain. Used for local deployment |
-| istiod.enabled | bool | `false` | Set to false if there is an existing istio deployment |
-| merlin | object | `{"api":{"appName":"merlin","authHeader":false,"destHost":"merlin","prefixMatch":"/api/merlin/","rewriteUri":"/"},"docs":{"app":"merlin","destHost":"merlin-swagger","destPort":8080,"redirectMatch":"/merlin/rest-api","rewriteUri":"/"},"enabled":true,"merlinUI":{"match":[{"uri":{"prefix":"/merlin"}}],"route":[{"destination":{"host":"merlin","port":{"number":8080}}}]}}` | Configuration for merlin |
-| merlin.api | object | `{"appName":"merlin","authHeader":false,"destHost":"merlin","prefixMatch":"/api/merlin/","rewriteUri":"/"}` | Config to route requests to merlin api |
-| merlin.docs | object | `{"app":"merlin","destHost":"merlin-swagger","destPort":8080,"redirectMatch":"/merlin/rest-api","rewriteUri":"/"}` | Config to route requests to merlin docs |
-| merlin.merlinUI | object | `{"match":[{"uri":{"prefix":"/merlin"}}],"route":[{"destination":{"host":"merlin","port":{"number":8080}}}]}` | Config to route requests to merlin UI |
-| mlflow | object | `{"enabled":true,"vs":{"hosts":["mlflow"],"route":{"destination":"merlin-mlflow","port":80}}}` | Configuration for mlflow |
-| mlp | object | `{"api":{"appName":"mlp","authHeader":false,"destHost":"mlp","prefixMatch":"/api/","rewriteUri":"/"},"enabled":true,"mlpUIConsole":{"route":[{"destination":{"host":"mlp","port":{"number":8080}}}]},"vs":{"hosts":["console"]}}` | Configuration for mlp |
-| mlpDocs | object | `{"vs":{"hosts":["docs"]}}` | Configuration for mlpDocs hosts |
-| mlpGateway | object | `{"hosts":["console","docs","mlflow"],"name":"mlp-gateway","selector":{"istio":"ingressgateway"}}` | Configuration for mlp |
-| mlpGateway.hosts | list | `["console","docs","mlflow"]` | hosts will be concatenated with domain or ingress IP address |
-| pipeline | object | `{"enabled":true,"pipelineUI":{"match":[{"uri":{"prefix":"/pipeline"}}],"route":[{"destination":{"host":"pipeline-ui","port":{"number":8080}}}]}}` | Configuration for pipeline |
+| istiod.enabled | bool | `false` |  |
+| merlin.api.appName | string | `"merlin"` |  |
+| merlin.api.authHeader | bool | `false` |  |
+| merlin.api.destHost | string | `"merlin"` |  |
+| merlin.api.prefixMatch | string | `"/api/merlin/"` |  |
+| merlin.api.rewriteUri | string | `"/"` |  |
+| merlin.docs.app | string | `"merlin"` |  |
+| merlin.docs.destHost | string | `"merlin-swagger"` |  |
+| merlin.docs.destPort | int | `8080` |  |
+| merlin.docs.redirectMatch | string | `"/merlin/rest-api"` |  |
+| merlin.docs.rewriteUri | string | `"/"` |  |
+| merlin.enabled | bool | `true` |  |
+| merlin.merlinUI.match[0].uri.prefix | string | `"/merlin"` |  |
+| merlin.merlinUI.route[0].destination.host | string | `"merlin"` |  |
+| merlin.merlinUI.route[0].destination.port.number | int | `8080` |  |
+| mlflow.enabled | bool | `true` |  |
+| mlflow.vs.hosts[0] | string | `"mlflow"` |  |
+| mlflow.vs.route.destination | string | `"merlin-mlflow"` |  |
+| mlflow.vs.route.port | int | `80` |  |
+| mlp.api.appName | string | `"mlp"` |  |
+| mlp.api.authHeader | bool | `false` |  |
+| mlp.api.destHost | string | `"mlp"` |  |
+| mlp.api.prefixMatch | string | `"/api/"` |  |
+| mlp.api.rewriteUri | string | `"/"` |  |
+| mlp.enabled | bool | `true` |  |
+| mlp.mlpUIConsole.route[0].destination.host | string | `"mlp"` |  |
+| mlp.mlpUIConsole.route[0].destination.port.number | int | `8080` |  |
+| mlp.vs.hosts[0] | string | `"console"` |  |
+| mlpDocs.vs.hosts[0] | string | `"docs"` |  |
+| mlpGateway.hosts[0] | string | `"console"` |  |
+| mlpGateway.hosts[1] | string | `"docs"` |  |
+| mlpGateway.hosts[2] | string | `"mlflow"` |  |
+| mlpGateway.name | string | `"mlp-gateway"` |  |
+| mlpGateway.selector.istio | string | `"ingressgateway"` |  |
+| pipeline.enabled | bool | `true` |  |
 | pipeline.pipelineUI | object | `{"match":[{"uri":{"prefix":"/pipeline"}}],"route":[{"destination":{"host":"pipeline-ui","port":{"number":8080}}}]}` | Config to route requests to pipeline UI |
-| turing | object | `{"api":{"appName":"turing","authHeader":false,"destHost":"turing","prefixMatch":"/api/turing/","rewriteUri":"/"},"docs":{"app":"turing","destHost":"turing","destPort":8080,"redirectMatch":"/turing/rest-api","rewriteUri":"/api-docs"},"enabled":true,"turingUI":{"match":[{"uri":{"prefix":"/turing"}}],"route":[{"destination":{"host":"turing","port":{"number":8080}}}]}}` | Configuration for turing |
-| turing.api | object | `{"appName":"turing","authHeader":false,"destHost":"turing","prefixMatch":"/api/turing/","rewriteUri":"/"}` | Config to route requests to turing api |
-| turing.docs | object | `{"app":"turing","destHost":"turing","destPort":8080,"redirectMatch":"/turing/rest-api","rewriteUri":"/api-docs"}` | Config to route requests to turing docs |
-| turing.turingUI | object | `{"match":[{"uri":{"prefix":"/turing"}}],"route":[{"destination":{"host":"turing","port":{"number":8080}}}]}` | Config to route requests to turing UI |
-| xp | object | `{"api":{"appName":"xp","authHeader":false,"destHost":"xp-management","prefixMatch":"/api/xp/","rewriteUri":"/"},"enabled":true,"managementDocs":{"app":"xp-management","destHost":"xp-management-swagger","destPort":8080,"redirectMatch":"/xp/rest-api","rewriteUri":"/"},"treatmentDocs":{"app":"xp-treatment","destHost":"xp-treatment-swagger","destPort":8080,"redirectMatch":"/xp/treatment-api","rewriteUri":"/"},"turingXpUI":{"match":[{"uri":{"prefix":"/xp"}}],"route":[{"destination":{"host":"xp-management","port":{"number":8080}}}]}}` | Configuration for xp |
-| xp.api | object | `{"appName":"xp","authHeader":false,"destHost":"xp-management","prefixMatch":"/api/xp/","rewriteUri":"/"}` | Config to route requests to xp api |
-| xp.managementDocs | object | `{"app":"xp-management","destHost":"xp-management-swagger","destPort":8080,"redirectMatch":"/xp/rest-api","rewriteUri":"/"}` | Config to route requests to xp management docs |
-| xp.treatmentDocs | object | `{"app":"xp-treatment","destHost":"xp-treatment-swagger","destPort":8080,"redirectMatch":"/xp/treatment-api","rewriteUri":"/"}` | Config to route requests to xp treatment docs |
-| xp.turingXpUI | object | `{"match":[{"uri":{"prefix":"/xp"}}],"route":[{"destination":{"host":"xp-management","port":{"number":8080}}}]}` | Config to route requests to xp UI |
+| turing.api.appName | string | `"turing"` |  |
+| turing.api.authHeader | bool | `false` |  |
+| turing.api.destHost | string | `"turing"` |  |
+| turing.api.prefixMatch | string | `"/api/turing/"` |  |
+| turing.api.rewriteUri | string | `"/"` |  |
+| turing.docs.app | string | `"turing"` |  |
+| turing.docs.destHost | string | `"turing"` |  |
+| turing.docs.destPort | int | `8080` |  |
+| turing.docs.redirectMatch | string | `"/turing/rest-api"` |  |
+| turing.docs.rewriteUri | string | `"/api-docs"` |  |
+| turing.enabled | bool | `true` |  |
+| turing.turingUI.match[0].uri.prefix | string | `"/turing"` |  |
+| turing.turingUI.route[0].destination.host | string | `"turing"` |  |
+| turing.turingUI.route[0].destination.port.number | int | `8080` |  |
+| xp.api.appName | string | `"xp"` |  |
+| xp.api.authHeader | bool | `false` |  |
+| xp.api.destHost | string | `"xp-management"` |  |
+| xp.api.prefixMatch | string | `"/api/xp/"` |  |
+| xp.api.rewriteUri | string | `"/"` |  |
+| xp.enabled | bool | `true` |  |
+| xp.managementDocs.app | string | `"xp-management"` |  |
+| xp.managementDocs.destHost | string | `"xp-management-swagger"` |  |
+| xp.managementDocs.destPort | int | `8080` |  |
+| xp.managementDocs.redirectMatch | string | `"/xp/rest-api"` |  |
+| xp.managementDocs.rewriteUri | string | `"/"` |  |
+| xp.treatmentDocs.app | string | `"xp-treatment"` |  |
+| xp.treatmentDocs.destHost | string | `"xp-treatment-swagger"` |  |
+| xp.treatmentDocs.destPort | int | `8080` |  |
+| xp.treatmentDocs.redirectMatch | string | `"/xp/treatment-api"` |  |
+| xp.treatmentDocs.rewriteUri | string | `"/"` |  |
+| xp.turingXpUI.match[0].uri.prefix | string | `"/xp"` |  |
+| xp.turingXpUI.route[0].destination.host | string | `"xp-management"` |  |
+| xp.turingXpUI.route[0].destination.port.number | int | `8080` |  |
