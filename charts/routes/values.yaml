@@ -6,20 +6,25 @@ istioLookUp:
 # -- Domain used to configure gateway and virtual service
 domain: ""
 
+# -- Configuration for turing
 turing:
   enabled: true
+  # -- Config to route requests to turing api
   api:
     appName: "turing"
     prefixMatch: "/api/turing/"
     rewriteUri: "/"
     destHost: "turing"
+    # set authHeader to true to require Bearer token to be present before routing requests
     authHeader: false
+  # -- Config to route requests to turing docs
   docs:
     app: turing
     redirectMatch: /turing/rest-api
     rewriteUri: "/api-docs"
     destHost: turing
     destPort: 8080
+  # -- Config to route requests to turing UI
   turingUI:
     match:
       - uri:
@@ -29,30 +34,26 @@ turing:
           host: turing
           port:
             number: 8080
-  turingXpUI:
-    match:
-      - uri:
-          prefix: /xp
-    route:
-      - destination:
-          host: xp-management
-          port:
-            number: 8080
 
+# -- Configuration for merlin
 merlin:
   enabled: true
+  # -- Config to route requests to merlin api
   api:
     appName: "merlin"
     prefixMatch: "/api/merlin/"
     rewriteUri: "/"
     destHost: "merlin"
+    # set authHeader to true to require Bearer token to be present before routing requests
     authHeader: false
+  # -- Config to route requests to merlin docs
   docs:
     app: merlin
     redirectMatch: /merlin/rest-api
     rewriteUri: "/"
     destHost: merlin-swagger
     destPort: 8080
+  # -- Config to route requests to merlin UI
   merlinUI:
     match:
       - uri:
@@ -62,8 +63,11 @@ merlin:
           host: merlin
           port:
             number: 8080
+
+# -- Configuration for pipeline
 pipeline:
   enabled: true
+  # -- Config to route requests to pipeline UI
   pipelineUI:
     match:
       - uri:
@@ -74,26 +78,32 @@ pipeline:
           port:
             number: 8080
 
+# -- Configuration for xp
 xp:
   enabled: true
+  # -- Config to route requests to xp api
   api:
     appName: "xp"
     prefixMatch: "/api/xp/"
     rewriteUri: "/"
     destHost: "xp-management"
-    headerMatch: false
+    # set authHeader to true to require Bearer token to be present before routing requests
+    authHeader: false
+  # -- Config to route requests to xp management docs
   managementDocs:
     app: xp-management
     redirectMatch: /xp/rest-api
     rewriteUri: "/"
     destHost: xp-management-swagger
     destPort: 8080
+  # -- Config to route requests to xp treatment docs
   treatmentDocs:
     app: xp-treatment
     redirectMatch: /xp/treatment-api
     rewriteUri: "/"
     destHost: xp-treatment-swagger
     destPort: 8080
+  # -- Config to route requests to xp UI
   turingXpUI:
     match:
       - uri:
@@ -104,11 +114,7 @@ xp:
           port:
             number: 8080
 
-mlpDocs:
-  vs:
-    hosts:
-      - "docs"
-
+# -- Configuration for feast
 feast:
   enabled: true
   feastUIBackend:
@@ -129,7 +135,7 @@ feast:
     redirect: /feast/
     match:
       - uri:
-          prefix: /feast
+          exact: /feast
   feastUI:
     match:
       - uri:
@@ -140,6 +146,13 @@ feast:
           port:
             number: 8080
 
+# -- Configuration for mlpDocs hosts
+mlpDocs:
+  vs:
+    hosts:
+      - "docs"
+
+# -- Configuration for mlflow
 mlflow:
   enabled: true
   vs:
@@ -148,6 +161,8 @@ mlflow:
     route:
       destination: merlin-mlflow
       port: 80
+
+# -- Configuration for mlp
 mlp:
   enabled: true
   vs:
@@ -166,16 +181,19 @@ mlp:
           port:
             number: 8080
 https:
-  # NOTE: Set https to false by default, enable from parent chart
-  enabled: false
+  # NOTE: Set https to true by default to allow google oauth login, disable from parent chart
+  enabled: true
   tls:
     mode: SIMPLE
     credentialName: mlp-tls-cert
 
+
+# -- Configuration for mlp
 mlpGateway:
   name: mlp-gateway
   selector:
     istio: ingressgateway
+  # -- hosts will be concatenated with domain or ingress IP address
   hosts:
     - console
     - docs

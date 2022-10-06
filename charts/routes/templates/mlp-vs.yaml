@@ -55,13 +55,12 @@ spec:
     {{- with .Values.feast }}
     - name: "feast-ui-redirect"
       match:
-      {{- toYaml .feastUIRedirect.match | nindent 8 }}
+        {{- toYaml .feastUIRedirect.match | nindent 8 }}
       redirect:
         uri: {{ .feastUIRedirect.redirect }}
     - name: "feast-ui"
       match:
-        - uri:
-            prefix: {{ .feastUIRedirect.redirect }}
+        {{- toYaml .feastUI.match | nindent 8 }}
       route:
         {{- toYaml .feastUI.route | nindent 8 }}
     {{- end }}
