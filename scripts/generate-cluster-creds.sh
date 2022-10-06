@@ -5,13 +5,6 @@
 
 set -ex
 
-if [ -f yq ]; then
-./yq > /dev/null 2>&1|| { echo "yq not installed, Check https://github.com/mikefarah/yq/#install"; exit 1; }
-else
-yq > /dev/null 2>&1|| { echo "yq not installed, Check https://github.com/mikefarah/yq/#install"; exit 1; }
-fi
-which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
-
 show_help() {
   cat <<EOF
 Usage: $(basename "$0") <clusterType> [clusterName: Caraml.Merlin.Values.ImageBuilder.ClusterName]
@@ -36,6 +29,10 @@ validate_parameters() {
   fi
 }
 
+yaml() {
+    python3 -c "import yaml;print(yaml.safe_load(open('$1'))$2)"
+}
+
 main() {
   validate_parameters "$@"
   CLUSTER_TYPE="$1"
@@ -58,11 +55,11 @@ EOF
     k3d kubeconfig get $CLUSTER_NAME > kubeconfig.yaml
     cat > cluster-credential.json <<EOF
 {
-"name": "$(yq '.clusters[0].name' kubeconfig.yaml)",
+"name": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"name\"])",
 "master_ip": "kubernetes.default:443",
-"certs": "$(yq '.clusters[0].cluster."certificate-authority-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_certificate": "$(yq '.users[0].user."client-certificate-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_key": "$(yq '.users[0].user."client-key-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')"
+"certs": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"cluster\"][\"certificate-authority-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_certificate": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-certificate-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_key": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-key-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')"
 }
 EOF
     rm kubeconfig.yaml
@@ -70,14 +67,14 @@ EOF
 
   if [ "$CLUSTER_TYPE" == "kind" ]; then
     kind get kubeconfig --name $CLUSTER_NAME > kubeconfig.yaml
-    echo "Kind cluster name: $(./yq '.clusters[0].name' kubeconfig.yaml)"
+    echo "Kind cluster name: $(yaml kubeconfig.yaml [\"clusters\"][0][\"name\"])"
     cat > cluster-credential.json <<EOF
 {
-"name": "$(./yq '.clusters[0].name' kubeconfig.yaml)",
+"name": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"name\"])",
 "master_ip": "kubernetes.default:443",
-"certs": "$(./yq '.clusters[0].cluster."certificate-authority-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_certificate": "$(./yq '.users[0].user."client-certificate-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_key": "$(./yq '.users[0].user."client-key-data"' kubeconfig.yaml | base64 --decode | awk '{printf "%s\\n", $0}')"
+"certs": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"cluster\"][\"certificate-authority-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_certificate": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-certificate-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_key": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-key-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')"
 }
 EOF
     rm kubeconfig.yaml
