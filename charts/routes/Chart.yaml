@@ -46,3 +46,12 @@ dependencies:
     alias: istioIngressGateway
     # NOTE: Disabled by default
     condition: istioIngressGateway.global.enabled
+  - name: cert-manager-base
+    version: 1.8.1
+    repository: "file://../cert-manager-base"
+    alias: certManagerBase
+    condition: certManagerBase.enabled
+  - name: cert-manager
+    repository: "https://charts.jetstack.io"
+    version: 1.8.1
+    condition: cert-manager.enabled

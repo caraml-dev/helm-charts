@@ -108,34 +108,6 @@ mlpDocs:
   vs:
     hosts:
       - "docs"
-    merlin:
-      enabled: true
-      app: merlin
-      redirectMatch: /merlin/rest-api
-      rewriteUri: "/"
-      destHost: merlin-swagger
-      destPort: 8080
-    turing:
-      enabled: false
-      app: turing
-      redirectMatch: /turing/rest-api
-      rewriteUri: "/api-docs"
-      destHost: turing
-      destPort: 8080
-    xpManagement:
-      enabled: false
-      app: xp-management
-      redirectMatch: /xp/rest-api
-      rewriteUri: "/"
-      destHost: xp-management-swagger
-      destPort: 8080
-    xpTreatment:
-      enabled: false
-      app: xp-treatment
-      redirectMatch: /xp/treatment-api
-      rewriteUri: "/"
-      destHost: xp-treatment-swagger
-      destPort: 8080
 
 feast:
   enabled: true
@@ -182,7 +154,7 @@ mlp:
     hosts:
       - "console"
   api:
-    appName: "merlin"
+    appName: "mlp"
     prefixMatch: "/api/"
     rewriteUri: "/"
     destHost: "mlp"
@@ -230,3 +202,9 @@ istiod:
 istioIngressGateway:
   global:
     enabled: false
+
+certManagerBase:
+  enabled: true
+
+cert-manager:
+  enabled: true

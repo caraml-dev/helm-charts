@@ -1,43 +1,147 @@
 # -- istioIngressIP takes precedence over domain. Used for local deployment
-istioIngressIP: ""
+istioLookUp:
+  namespace: istio-system
+  name: istio-ingressgateway
 
 # -- Domain used to configure gateway and virtual service
-domain: "ai.golabs.io"
+domain: ""
+
+turing:
+  enabled: true
+  api:
+    appName: "turing"
+    prefixMatch: "/api/turing/"
+    rewriteUri: "/"
+    destHost: "turing"
+    authHeader: false
+  docs:
+    app: turing
+    redirectMatch: /turing/rest-api
+    rewriteUri: "/api-docs"
+    destHost: turing
+    destPort: 8080
+  turingUI:
+    match:
+      - uri:
+          prefix: /turing
+    route:
+      - destination:
+          host: turing
+          port:
+            number: 8080
+  turingXpUI:
+    match:
+      - uri:
+          prefix: /xp
+    route:
+      - destination:
+          host: xp-management
+          port:
+            number: 8080
+
+merlin:
+  enabled: true
+  api:
+    appName: "merlin"
+    prefixMatch: "/api/merlin/"
+    rewriteUri: "/"
+    destHost: "merlin"
+    authHeader: false
+  docs:
+    app: merlin
+    redirectMatch: /merlin/rest-api
+    rewriteUri: "/"
+    destHost: merlin-swagger
+    destPort: 8080
+  merlinUI:
+    match:
+      - uri:
+          prefix: /merlin
+    route:
+      - destination:
+          host: merlin
+          port:
+            number: 8080
+pipeline:
+  enabled: true
+  pipelineUI:
+    match:
+      - uri:
+          prefix: /pipeline
+    route:
+      - destination:
+          host: pipeline-ui
+          port:
+            number: 8080
+
+xp:
+  enabled: true
+  api:
+    appName: "xp"
+    prefixMatch: "/api/xp/"
+    rewriteUri: "/"
+    destHost: "xp-management"
+    headerMatch: false
+  managementDocs:
+    app: xp-management
+    redirectMatch: /xp/rest-api
+    rewriteUri: "/"
+    destHost: xp-management-swagger
+    destPort: 8080
+  treatmentDocs:
+    app: xp-treatment
+    redirectMatch: /xp/treatment-api
+    rewriteUri: "/"
+    destHost: xp-treatment-swagger
+    destPort: 8080
+  turingXpUI:
+    match:
+      - uri:
+          prefix: /xp
+    route:
+      - destination:
+          host: xp-management
+          port:
+            number: 8080
+
+feast:
+  enabled: true
+  feastUIBackend:
+    rewrite:
+      uri: /api/
+    match:
+      - uri:
+          prefix: /feast/api/
+      - uri:
+          prefix: /feast/api
+    route:
+      - destination:
+          host: feast-ui
+          port:
+            number: 8080
+
+  feastUIRedirect:
+    redirect: /feast/
+    match:
+      - uri:
+          prefix: /feast
+  feastUI:
+    match:
+      - uri:
+          prefix: /feast/
+    route:
+      - destination:
+          host: feast-ui
+          port:
+            number: 8080
 
 mlpDocs:
   vs:
     hosts:
       - "docs"
-    merlin:
-      enabled: true
-      app: merlin
-      redirectMatch: /merlin/rest-api
-      rewriteUri: "/"
-      destHost: merlin-swagger
-      destPort: 8080
-    turing:
-      enabled: true
-      app: turing
-      redirectMatch: /turing/rest-api
-      rewriteUri: "/api-docs"
-      destHost: turing
-      destPort: 8080
-    xpManagement:
-      enabled: true
-      app: xp-management
-      redirectMatch: /xp/rest-api
-      rewriteUri: "/"
-      destHost: xp-management-swagger
-      destPort: 8080
-    xpTreatment:
-      enabled: true
-      app: xp-treatment
-      redirectMatch: /xp/treatment-api
-      rewriteUri: "/"
-      destHost: xp-treatment-swagger
-      destPort: 8080
 
 mlflow:
+  enabled: true
   vs:
     hosts:
       - "mlflow"
@@ -45,113 +149,25 @@ mlflow:
       destination: merlin-mlflow
       port: 80
 mlp:
+  enabled: true
   vs:
     hosts:
       - "console"
-    mlpAuthGateway:
-      enabled: true
-      allowOrigins:
-        - exact: "*"
-      allowMethods:
-        - POST
-        - GET
-        - PUT
-        - DELETE
-      allowHeaders:
-        - Authorization
-        - Content-Type
-      rewrite:
-        uri: /
-      match:
-        - uri:
-            prefix: /api/
-      route:
+  api:
+    appName: "mlp"
+    prefixMatch: "/api/"
+    rewriteUri: "/"
+    destHost: "mlp"
+    authHeader: false
+  mlpUIConsole:
+    route:
       - destination:
-          host: mlp-authentication
+          host: mlp
           port:
             number: 8080
-    feastUIBackend:
-      enabled: true
-      rewrite:
-        uri: /api/
-      match:
-        - uri:
-            prefix: /feast/api/
-        - uri:
-            prefix: /feast/api
-      route:
-        - destination:
-            host: feast-ui
-            port:
-              number: 8080
-    mlp:
-      feastUIRedirect:
-        enabled: true
-        redirect: /feast/
-        match:
-          - uri:
-              prefix: /feast
-      feastUI:
-        enabled: true
-        match:
-          - uri:
-              prefix: /feast/
-        route:
-          - destination:
-              host: feast-ui
-              port:
-                number: 8080
-
-      merlinUI:
-        enabled: true
-        match:
-          - uri:
-              prefix: /merlin
-        route:
-          - destination:
-              host: merlin
-              port:
-                number: 8080
-
-      pipelineUI:
-        enabled: true
-        match:
-          - uri:
-              prefix: /pipeline
-        route:
-          - destination:
-              host: pipeline-ui
-              port:
-                number: 8080
-      turingUI:
-        enabled: true
-        match:
-          - uri:
-              prefix: /turing
-        route:
-          - destination:
-              host: turing
-              port:
-                number: 8080
-      turingXpUI:
-        enabled: true
-        match:
-          - uri:
-              prefix: /xp
-        route:
-          - destination:
-              host: xp-management
-              port:
-                number: 8080
-      mlpUIConsole:
-        enabled: true
-        route:
-          - destination:
-              host: mlp
-              port:
-                number: 8080
 https:
-  enabled: true
+  # NOTE: Set https to false by default, enable from parent chart
+  enabled: false
   tls:
     mode: SIMPLE
     credentialName: mlp-tls-cert
@@ -164,6 +180,8 @@ mlpGateway:
     - console
     - docs
     - mlflow
+
+
 
 
 ############################################################

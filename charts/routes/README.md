@@ -37,6 +37,8 @@ The following table lists the configurable parameters of the Routes chart and th
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | base.enabled | bool | `false` | Set to false if there is an existing istio deployment |
+| cert-manager.enabled | bool | `true` |  |
+| certManagerBase.enabled | bool | `true` |  |
 | domain | string | `""` | Domain used to configure gateway and virtual service |
 | feast.enabled | bool | `true` |  |
 | feast.feastUI.match[0].uri.prefix | string | `"/feast/"` |  |
@@ -73,7 +75,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | mlflow.vs.hosts[0] | string | `"mlflow"` |  |
 | mlflow.vs.route.destination | string | `"merlin-mlflow"` |  |
 | mlflow.vs.route.port | int | `80` |  |
-| mlp.api.appName | string | `"merlin"` |  |
+| mlp.api.appName | string | `"mlp"` |  |
 | mlp.api.authHeader | bool | `false` |  |
 | mlp.api.destHost | string | `"mlp"` |  |
 | mlp.api.prefixMatch | string | `"/api/"` |  |
@@ -83,30 +85,6 @@ The following table lists the configurable parameters of the Routes chart and th
 | mlp.mlpUIConsole.route[0].destination.port.number | int | `8080` |  |
 | mlp.vs.hosts[0] | string | `"console"` |  |
 | mlpDocs.vs.hosts[0] | string | `"docs"` |  |
-| mlpDocs.vs.merlin.app | string | `"merlin"` |  |
-| mlpDocs.vs.merlin.destHost | string | `"merlin-swagger"` |  |
-| mlpDocs.vs.merlin.destPort | int | `8080` |  |
-| mlpDocs.vs.merlin.enabled | bool | `true` |  |
-| mlpDocs.vs.merlin.redirectMatch | string | `"/merlin/rest-api"` |  |
-| mlpDocs.vs.merlin.rewriteUri | string | `"/"` |  |
-| mlpDocs.vs.turing.app | string | `"turing"` |  |
-| mlpDocs.vs.turing.destHost | string | `"turing"` |  |
-| mlpDocs.vs.turing.destPort | int | `8080` |  |
-| mlpDocs.vs.turing.enabled | bool | `false` |  |
-| mlpDocs.vs.turing.redirectMatch | string | `"/turing/rest-api"` |  |
-| mlpDocs.vs.turing.rewriteUri | string | `"/api-docs"` |  |
-| mlpDocs.vs.xpManagement.app | string | `"xp-management"` |  |
-| mlpDocs.vs.xpManagement.destHost | string | `"xp-management-swagger"` |  |
-| mlpDocs.vs.xpManagement.destPort | int | `8080` |  |
-| mlpDocs.vs.xpManagement.enabled | bool | `false` |  |
-| mlpDocs.vs.xpManagement.redirectMatch | string | `"/xp/rest-api"` |  |
-| mlpDocs.vs.xpManagement.rewriteUri | string | `"/"` |  |
-| mlpDocs.vs.xpTreatment.app | string | `"xp-treatment"` |  |
-| mlpDocs.vs.xpTreatment.destHost | string | `"xp-treatment-swagger"` |  |
-| mlpDocs.vs.xpTreatment.destPort | int | `8080` |  |
-| mlpDocs.vs.xpTreatment.enabled | bool | `false` |  |
-| mlpDocs.vs.xpTreatment.redirectMatch | string | `"/xp/treatment-api"` |  |
-| mlpDocs.vs.xpTreatment.rewriteUri | string | `"/"` |  |
 | mlpGateway.hosts[0] | string | `"console"` |  |
 | mlpGateway.hosts[1] | string | `"docs"` |  |
 | mlpGateway.hosts[2] | string | `"mlflow"` |  |
