@@ -66,12 +66,12 @@ spec:
         - name: LOG_LEVEL
           value: {{ .Values.logLevel | quote }}
           
-        {{- if .Values.postgresql.existingSecret }}
+        {{- if .Values.env.postgresql.enabled }}
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.postgresql.existingSecret }}
-              key: postgresql-password
+              name: {{ .Values.env.postgresql.secret | default (printf "%s-postgresql" (.Release.Name)) }}
+              key: {{ .Values.env.postgresql.key }}
         {{- end }}
 
         {{- if .Values.javaOpts }}

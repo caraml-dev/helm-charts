@@ -7,8 +7,8 @@ metadata:
     component: registry
 {{ include "caraml-store-registry.labels" . | indent 4 }}
 data:
-  application-generated.yaml: |
 {{- if index .Values "application-generated.yaml" "enabled" }}
+  application-generated.yaml: |
     spring:
       datasource:
         url: jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/postgres

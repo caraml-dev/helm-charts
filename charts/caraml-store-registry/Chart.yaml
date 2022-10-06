@@ -12,3 +12,8 @@ keywords:
 maintainers:
   - name: caraml-dev
     email: caraml-dev@caraml.dev
+dependencies:
+  - name: postgresql
+    version: 11.9.7
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
