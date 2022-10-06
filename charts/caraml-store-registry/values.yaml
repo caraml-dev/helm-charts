@@ -4,8 +4,8 @@ replicaCount: 1
 image:
   # image.repository -- Docker image repository
   repository: ghcr.io/caraml-dev/caraml-store-registry
-  # image.tag -- Image tag
-  tag: 0.1.0-build.42-ae3e52f
+  # image.tag -- Overrides the image tag which default is the chart appVersion.
+  tag: ""
   # image.pullPolicy -- Image pull policy
   pullPolicy: IfNotPresent
 
@@ -14,7 +14,7 @@ application.yaml:
   enabled: true
 
 application-generated.yaml:
-  # "application-generated.yaml".enabled -- Flag to include Helm generated configuration for http port, database URL, Kafka bootstrap servers and jobs metrics host. This is useful for deployment that uses default configuration for Kafka, Postgres and StatsD exporter. Please set `application-override.yaml` to override this configuration.
+  # "application-generated.yaml".enabled -- Flag to include Helm generated configuration for database URL. This is useful for deployment that uses default configuration for Postgres. Please set `application-override.yaml` to override this configuration.
   enabled: true
 
 # "application-secret.yaml" -- Configuration to override the default application.yaml. Will be created as a Secret. `application-override.yaml` has a higher precedence than `application-secret.yaml`. It is recommended to either set `application-override.yaml` or `application-secret.yaml` only to simplify config management.
