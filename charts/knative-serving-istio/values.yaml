@@ -406,6 +406,9 @@ istiod:
 # istioIngressGateway - installed using helm-dep-installer chart
 ############################################################
 istioIngressGateway:
+  global:
+    # -- Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment
+    enabled: true
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: gateway
@@ -416,9 +419,6 @@ istioIngressGateway:
   hook:
     weight: 1
   chartValues:
-    global:
-      # -- Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment
-      enabled: true
     # -- Specify name here so each gateway installation has its own unique name
     name: istio-ingressgateway
     autoscaling:
