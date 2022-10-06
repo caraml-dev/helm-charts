@@ -19,15 +19,25 @@ helm repo add caraml https://caraml-dev.github.io/helm-charts
 ```
 
 ### Installing the chart
-* For local installation of CaraML,
+* For installation of CaraML into local or managed K8s clusters,
   * this chart must be installed after installing the main Caraml chart, and
   * installed in the SAME K8s Namespace as the main Caraml Chart
+* It assumes that Istio will be installed together with the main Caraml chart, or is already installed the cluster
 * This is because we need the local istio ingress's load balancer IP address, to enable successful routing of requests
 * Routes will be exposed at `<component>.<INGRESS_IP>.nip.io`
 
 ```shell
-$ INGRESS_IP=$(k get services -n istio-system istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-$ helm install routes caraml/caraml-routes --set istioIngressIP=$INGRESS_IP
+$ helm install routes caraml/caraml-routes
+```
+
+### Installation of Routes chart with Istio
+* If istio is not installed together with the main Caraml chart or for testing purposes, Istio can be installed together with the routes chart.
+```sh
+$ helm install routes charts/routes --values charts/routes/ci/test-values.yaml --wait
+```
+* Once the chart is installed successfully, run this command to update the hostnames to use the correct istio ingress IP.
+```sh
+$ helm upgrade routes
 ```
 
 ## Configuration
