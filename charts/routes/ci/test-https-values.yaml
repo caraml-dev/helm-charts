@@ -1,6 +1,0 @@
-https:
-  # NOTE: Set https to false by default, enable from parent chart
-  enabled: true
-  tls:
-    mode: SIMPLE
-    credentialName: mlp-tls-cert
