@@ -11,7 +11,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ $fullname }}
+      app: {{ template "caraml-store-registry.name" . }}
       component: registry
       release: {{ .Release.Name }}
   template:
