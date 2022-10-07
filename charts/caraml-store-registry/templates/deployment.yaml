@@ -1,7 +1,8 @@
+{{- $fullname := include "caraml-store-registry.fullname" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "caraml-store-registry.fullname" . }}
+  name: {{ $fullname }}
   namespace: {{ .Release.Namespace }}
   labels:
     component: registry
@@ -10,7 +11,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "caraml-store-registry.name" . }}
+      app: {{ $fullname }}
       component: registry
       release: {{ .Release.Name }}
   template:
@@ -31,12 +32,12 @@ spec:
       {{- end }}
 
       volumes:
-      - name: {{ template "caraml-store-registry.fullname" . }}-config
+      - name: {{ $fullname }}-config
         configMap:
-          name: {{ template "caraml-store-registry.fullname" . }}
-      - name: {{ template "caraml-store-registry.fullname" . }}-secret
+          name: {{ $fullname }}
+      - name: {{ $fullname }}-secret
         secret:
-          secretName: {{ template "caraml-store-registry.fullname" . }}
+          secretName: {{ $fullname }}
       {{- range $secret := .Values.secrets }}
       - name: {{ $secret }}
         secret:
@@ -49,9 +50,9 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
 
         volumeMounts:
-        - name: {{ template "caraml-store-registry.fullname" . }}-config
+        - name: {{ $fullname }}-config
           mountPath: /etc/caraml-store
-        - name: {{ template "caraml-store-registry.fullname" . }}-secret
+        - name: {{ $fullname }}-secret
           mountPath: /etc/secrets/caraml-store
           readOnly: true
         {{- range $secret := .Values.secrets }}

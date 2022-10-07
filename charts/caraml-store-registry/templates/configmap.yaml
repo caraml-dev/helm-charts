@@ -17,7 +17,7 @@ data:
       port: {{ .Values.service.http.targetPort }}
 {{- end }}
 
-  application-override.yaml: |
 {{- if index .Values "application-override.yaml" "enabled" }}
-{{- toYaml (index .Values "application-override.yaml") | nindent 4 }}    
+  application-override.yaml: |
+{{- toYaml (index .Values "application-override.yaml") | nindent 4 }}
 {{- end }}
