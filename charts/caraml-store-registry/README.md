@@ -1,6 +1,6 @@
 # caraml-store-registry
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: 0.1.1](https://img.shields.io/badge/AppVersion-0.1.1-informational?style=flat-square)
 
 CaraML store registry: Feature registry for CaraML store.
 
@@ -12,19 +12,28 @@ CaraML store registry: Feature registry for CaraML store.
 | ---- | ------ | --- |
 | caraml-dev | <caraml-dev@caraml.dev> |  |
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://charts.bitnami.com/bitnami | postgresql | 11.9.7 |
+
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| "application-generated.yaml".enabled | bool | `true` | Flag to include Helm generated configuration for http port, database URL, Kafka bootstrap servers and jobs metrics host. This is useful for deployment that uses default configuration for Kafka, Postgres and StatsD exporter. Please set `application-override.yaml` to override this configuration. |
+| "application-generated.yaml".enabled | bool | `true` | Flag to include Helm generated configuration for database URL. This is useful for deployment that uses default configuration for Postgres. Please set `application-override.yaml` to override this configuration. |
 | "application-override.yaml" | object | `{"enabled":true}` | Configuration to override the default application.yaml. Will be created as a ConfigMap. `application-override.yaml` has a higher precedence than `application-secret.yaml` |
 | "application-secret.yaml" | object | `{"enabled":true}` | Configuration to override the default application.yaml. Will be created as a Secret. `application-override.yaml` has a higher precedence than `application-secret.yaml`. It is recommended to either set `application-override.yaml` or `application-secret.yaml` only to simplify config management. |
 | "application.yaml".enabled | bool | `true` | Flag to include the default configuration. Please set `application-override.yaml` to override this configuration. |
 | containerRegistrySecret | string | `""` |  |
+| env.postgresql.enabled | bool | `true` |  |
+| env.postgresql.key | string | `"postgres-password"` |  |
+| env.postgresql.secret | string | `""` |  |
 | envOverrides | object | `{}` | Extra environment variables to set |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/caraml-dev/caraml-store-registry"` | Docker image repository |
-| image.tag | string | `"0.1.0-build.42-ae3e52f"` | Image tag |
+| image.tag | string | `""` | Overrides the image tag which default is the chart appVersion. |
 | javaOpts | string | `nil` | [JVM options](https://docs.oracle.com/cd/E22289_01/html/821-1274/configuring-the-default-jvm-and-java-arguments.html). For better performance, it is advised to set the min and max heap: <br> `-Xms2048m -Xmx2048m` |
 | livenessProbe.enabled | bool | `false` | Flag to enable the probe |
 | livenessProbe.failureThreshold | int | `5` | Min consecutive failures for the probe to be considered failed |
@@ -36,7 +45,7 @@ CaraML store registry: Feature registry for CaraML store.
 | logType | string | `"Console"` | Log format, either `JSON` or `Console` |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
 | podLabels | object | `{}` | Labels to be added to CaraML store registry pods |
-| postgresql.existingSecret | string | `""` | Existing secret to use for authenticating to Postgres |
+| postgresql | object | `{"enabled":true}` | Existing secret to use for authenticating to a postgres database. Will be provided as environment variable. |
 | prometheus.enabled | bool | `true` | Flag to enable scraping of CaraML store registry metrics |
 | readinessProbe.enabled | bool | `true` | Flag to enable the probe |
 | readinessProbe.failureThreshold | int | `5` | Min consecutive failures for the probe to be considered failed |

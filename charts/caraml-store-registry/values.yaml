@@ -26,7 +26,7 @@ application-override.yaml:
   enabled: true
 
 env:
-  # postgresql -- Existing secret to use for authenticating to a postgres database not managed by this chart. Will be provided as environment variable.
+  # postgresql -- Existing secret to use for authenticating to a postgres database. Will be provided as environment variable.
   postgresql:
     enabled: true
     secret: ""
