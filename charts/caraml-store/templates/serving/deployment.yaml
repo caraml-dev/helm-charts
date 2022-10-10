@@ -1,3 +1,4 @@
+{{- if index .Values "serving" "enabled" }}
 {{- $fullname := include "caraml-store.serving.fullname" . }}
 apiVersion: apps/v1
 kind: Deployment
@@ -121,3 +122,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}

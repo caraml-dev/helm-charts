@@ -1,3 +1,4 @@
+{{- if index .Values "serving" "enabled" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -25,4 +26,5 @@ data:
     {{- if index .Values.serving "application-override.yaml" "enabled" }}
   application-override.yaml: |
 {{- toYaml (index .Values.serving "application-override.yaml") | nindent 4 }}
+{{- end }}
 {{- end }}

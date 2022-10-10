@@ -1,3 +1,4 @@
+{{- if index .Values "serving" "enabled" }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -15,3 +16,4 @@ spec:
     {{- end }}
   selector:
     {{- include "caraml-store.serving.selectorLabels" . | nindent 4 }}
+{{- end }}
