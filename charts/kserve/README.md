@@ -1,7 +1,7 @@
 # kserve
 
 ---
-![Version: 0.8.3](https://img.shields.io/badge/Version-0.8.3-informational?style=flat-square)
+![Version: 0.8.4](https://img.shields.io/badge/Version-0.8.4-informational?style=flat-square)
 ![AppVersion: 0.8.0](https://img.shields.io/badge/AppVersion-0.8.0-informational?style=flat-square)
 
 A Helm chart for installing Kserve
@@ -256,7 +256,7 @@ The following table lists the configurable parameters of the Kserve chart and th
 | knativeServingIstio.helmChart.namespace | string | `"knative-serving"` |  |
 | knativeServingIstio.helmChart.release | string | `"knative-serving"` |  |
 | knativeServingIstio.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| knativeServingIstio.helmChart.version | string | `"1.0.2"` |  |
+| knativeServingIstio.helmChart.version | string | `"1.0.3"` |  |
 | labels | object | `{"common":{}}` | For release specific common labels |
 | logger.defaultUrl | string | `"http://default-broker"` |  |
 | logger.image.registry | string | `""` |  |
