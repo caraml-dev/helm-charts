@@ -28,16 +28,14 @@ CaraML store registry: Feature registry for CaraML store.
 | redis.enabled | bool | `true` |  |
 | redis.master.persistence.enabled | bool | `false` |  |
 | redis.replica.replicaCount | int | `0` |  |
-| registry."application-generated.yaml".enabled | bool | `true` |  |
-| registry."application-override.yaml".enabled | bool | `true` |  |
-| registry."application-secret.yaml".enabled | bool | `true` |  |
-| registry."application.yaml".enabled | bool | `true` |  |
-| registry.actuator.port | int | `8080` |  |
+| registry."application-generated.yaml".enabled | bool | `true` | Flag to include Helm generated configuration for database URL. This is useful for deployment that uses default configuration for Postgres. Please set `application-override.yaml` to override this configuration. |
+| registry."application-override.yaml" | object | `{"enabled":true}` | Configuration to override the default application.yaml. Will be created as a ConfigMap. `application-override.yaml` has a higher precedence than `application-secret.yaml` |
+| registry."application-secret.yaml" | object | `{"enabled":true}` | Configuration to override the default application.yaml. Will be created as a Secret. `application-override.yaml` has a higher precedence than `application-secret.yaml`. It is recommended to either set `application-override.yaml` or `application-secret.yaml` only to simplify config management. |
+| registry."application.yaml".enabled | bool | `true` | Flag to include the default configuration. Please set `application-override.yaml` to override this configuration. |
+| registry.actuator.port | int | `8080` | Port for Spring actuator endpoint |
 | registry.affinity | object | `{}` |  |
 | registry.enabled | bool | `true` |  |
-| registry.env.postgresql.enabled | bool | `true` |  |
-| registry.env.postgresql.key | string | `"postgres-password"` |  |
-| registry.env.postgresql.secret | string | `""` |  |
+| registry.env.postgresql | object | `{"enabled":true,"key":"postgres-password","secret":""}` | Existing secret to use for authenticating to a postgres database. Will be provided as environment variable. |
 | registry.envOverrides | object | `{}` |  |
 | registry.fullnameOverride | string | `""` |  |
 | registry.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -50,25 +48,25 @@ CaraML store registry: Feature registry for CaraML store.
 | registry.nodeSelector | object | `{}` |  |
 | registry.podAnnotations | object | `{}` |  |
 | registry.podLabels | object | `{}` |  |
-| registry.readinessProbe.enabled | bool | `true` |  |
-| registry.readinessProbe.failureThreshold | int | `5` |  |
-| registry.readinessProbe.initialDelaySeconds | int | `20` |  |
-| registry.readinessProbe.periodSeconds | int | `10` |  |
-| registry.readinessProbe.successThreshold | int | `1` |  |
-| registry.readinessProbe.timeoutSeconds | int | `10` |  |
+| registry.readinessProbe.enabled | bool | `true` | Flag to enable the probe |
+| registry.readinessProbe.failureThreshold | int | `5` | Min consecutive failures for the probe to be considered failed |
+| registry.readinessProbe.initialDelaySeconds | int | `20` | Delay before the probe is initiated |
+| registry.readinessProbe.periodSeconds | int | `10` | How often to perform the probe |
+| registry.readinessProbe.successThreshold | int | `1` | Min consecutive success for the probe to be considered successful |
+| registry.readinessProbe.timeoutSeconds | int | `10` | When the probe times out |
 | registry.replicaCount | int | `1` |  |
 | registry.resources | object | `{}` |  |
 | registry.secrets | list | `[]` |  |
 | registry.service.grpc.nodePort | string | `nil` |  |
-| registry.service.grpc.port | int | `6565` |  |
-| registry.service.grpc.targetPort | int | `6565` |  |
-| registry.service.type | string | `"ClusterIP"` |  |
+| registry.service.grpc.port | int | `6565` | Service port for GRPC requests |
+| registry.service.grpc.targetPort | int | `6565` | Container port serving GRPC requests |
+| registry.service.type | string | `"ClusterIP"` | Kubernetes service type |
 | registry.tolerations | list | `[]` |  |
-| serving."application-generated.yaml".enabled | bool | `true` |  |
-| serving."application-override.yaml".enabled | bool | `true` |  |
-| serving."application-secret.yaml".enabled | bool | `true` |  |
-| serving."application.yaml".enabled | bool | `true` |  |
-| serving.actuator.port | int | `8080` |  |
+| serving."application-generated.yaml".enabled | bool | `true` | Flag to include Helm generated configuration for database URL. This is useful for deployment that uses default configuration for Postgres. Please set `application-override.yaml` to override this configuration. |
+| serving."application-override.yaml" | object | `{"enabled":true}` | Configuration to override the default application.yaml. Will be created as a ConfigMap. `application-override.yaml` has a higher precedence than `application-secret.yaml` |
+| serving."application-secret.yaml" | object | `{"enabled":true}` | Configuration to override the default application.yaml. Will be created as a Secret. `application-override.yaml` has a higher precedence than `application-secret.yaml`. It is recommended to either set `application-override.yaml` or `application-secret.yaml` only to simplify config management. |
+| serving."application.yaml".enabled | bool | `true` | Flag to include the default configuration. Please set `application-override.yaml` to override this configuration. |
+| serving.actuator.port | int | `8080` | Port for Spring actuator endpoint |
 | serving.affinity | object | `{}` |  |
 | serving.enabled | bool | `true` |  |
 | serving.envOverrides | object | `{}` |  |
@@ -83,19 +81,19 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.nodeSelector | object | `{}` |  |
 | serving.podAnnotations | object | `{}` |  |
 | serving.podLabels | object | `{}` |  |
-| serving.readinessProbe.enabled | bool | `true` |  |
-| serving.readinessProbe.failureThreshold | int | `5` |  |
-| serving.readinessProbe.initialDelaySeconds | int | `20` |  |
-| serving.readinessProbe.periodSeconds | int | `10` |  |
-| serving.readinessProbe.successThreshold | int | `1` |  |
-| serving.readinessProbe.timeoutSeconds | int | `10` |  |
+| serving.readinessProbe.enabled | bool | `true` | Flag to enable the probe |
+| serving.readinessProbe.failureThreshold | int | `5` | Min consecutive failures for the probe to be considered failed |
+| serving.readinessProbe.initialDelaySeconds | int | `20` | Delay before the probe is initiated |
+| serving.readinessProbe.periodSeconds | int | `10` | How often to perform the probe |
+| serving.readinessProbe.successThreshold | int | `1` | Min consecutive success for the probe to be considered successful |
+| serving.readinessProbe.timeoutSeconds | int | `10` | When the probe times out |
 | serving.replicaCount | int | `1` |  |
 | serving.resources | object | `{}` |  |
 | serving.secrets | list | `[]` |  |
-| serving.service.grpc.nodePort | string | `nil` |  |
-| serving.service.grpc.port | int | `6566` |  |
-| serving.service.grpc.targetPort | int | `6566` |  |
-| serving.service.type | string | `"ClusterIP"` |  |
+| serving.service.grpc.nodePort | string | `nil` | Port number that each cluster node will listen to |
+| serving.service.grpc.port | int | `6566` | Service port for GRPC requests |
+| serving.service.grpc.targetPort | int | `6566` | Container port serving GRPC requests |
+| serving.service.type | string | `"ClusterIP"` | Kubernetes service type |
 | serving.tolerations | list | `[]` |  |
 
 ----------------------------------------------
