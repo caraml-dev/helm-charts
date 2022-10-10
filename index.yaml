@@ -123,6 +123,45 @@ entries:
   knative-serving-istio:
   - apiVersion: v2
     appVersion: v1.0.0
+    created: "2022-10-10T06:06:55.631434773Z"
+    dependencies:
+    - alias: knativeServingCore
+      condition: knativeServingCore.enabled
+      name: knative-serving-core
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.1.0
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.4
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    description: Installs Knative-serving for Istio
+    digest: 4036f751c65e2b718731e5ff7e68c7dc8c1129c58ce0e9140358223c2ad5b218
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: knative-serving-istio
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-istio-1.0.3/knative-serving-istio-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: v1.0.0
     created: "2022-09-22T03:59:45.6098264Z"
     dependencies:
     - alias: knativeServingCore
@@ -202,6 +241,34 @@ entries:
   kserve:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2022-10-10T06:06:55.788846642Z"
+    dependencies:
+    - alias: knativeServingIstio
+      condition: knativeServingIstio.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.8.1
+    description: A Helm chart for installing Kserve
+    digest: 57bc2a18b905ec8eff36cc7cac155db0b46da251b56b8c31ddc4fdef9f856bf2
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: kserve
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/kserve-0.8.4/kserve-0.8.4.tgz
+    version: 0.8.4
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2022-10-03T06:03:07.903270678Z"
     dependencies:
     - alias: knativeServingIstio
@@ -274,4 +341,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2022-10-03T06:03:07.903305578Z"
+generated: "2022-10-10T06:06:55.788881042Z"
