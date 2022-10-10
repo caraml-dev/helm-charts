@@ -1,0 +1,23 @@
+apiVersion: v2
+description: "CaraML store registry: Feature registry for CaraML store."
+name: caraml-store
+version: 0.1.0
+appVersion: 0.1.2
+home: https://github.com/caraml-dev/caraml-store
+keywords:
+  - machine learning
+  - feature store
+  - big data
+  - mlops
+maintainers:
+  - name: caraml-dev
+    email: caraml-dev@caraml.dev
+dependencies:
+  - name: postgresql
+    version: 11.9.7
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: redis
+    version: 17.3.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled

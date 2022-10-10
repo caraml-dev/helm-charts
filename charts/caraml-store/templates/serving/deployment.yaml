@@ -1,0 +1,123 @@
+{{- $fullname := include "caraml-store.serving.fullname" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "caraml-store.serving.fullname" . }}
+  labels:
+    {{- include "caraml-store.serving.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.serving.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "caraml-store.serving.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/serving/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/serving/secret.yaml") . | sha256sum }}
+      {{- with .Values.serving.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "caraml-store.serving.labels" . | nindent 8 }}
+      {{- with .Values.serving.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with .Values.serving.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: {{ $fullname }}-config
+          configMap:
+            name: {{ $fullname }}
+        - name: {{ $fullname }}-secret
+          secret:
+            secretName: {{ $fullname }}
+        {{- range $secret := .Values.serving.secrets }}
+        - name: {{ $secret }}
+          secret:
+            secretName: {{ $secret }}
+        {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-serving
+          image: "{{ .Values.serving.image.repository }}:{{ .Values.serving.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.serving.image.pullPolicy }}
+          volumeMounts:
+            - name: {{ $fullname }}-config
+              mountPath: /etc/caraml-store
+            - name: {{ $fullname }}-secret
+              mountPath: /etc/secrets/caraml-store
+              readOnly: true
+          {{- range $secret := .Values.serving.secrets }}
+            - name: {{ $secret }}
+              mountPath: "/etc/secrets/{{ $secret }}"
+              readOnly: true
+          {{- end }}
+          env:
+          {{- if .Values.serving.javaOpts }}
+            - name: JAVA_TOOL_OPTIONS
+              value: {{ .Values.serving.javaOpts }}
+          {{- end }}
+          {{- range $key, $value := .Values.serving.envOverrides }}
+            - name: {{ printf "%s" $key | replace "." "_" | upper | quote }}
+            {{- if eq (kindOf $value) "map" }}
+              valueFrom:
+              {{- toYaml $value | nindent 12}}
+            {{- else }}
+              value: {{ $value | quote }}
+            {{- end}}
+          {{- end }}
+
+          command:
+            - java
+            - -cp
+            - "@/app/jib-classpath-file"
+            - dev.caraml.serving.CaraMLServing
+            - --spring.config.location=
+          {{- if index .Values.registry "application.yaml" "enabled" -}}
+              classpath:/application.yaml
+          {{- end }}
+          {{- if index .Values.registry "application-generated.yaml" "enabled" -}}
+              ,file:/etc/caraml-store/application-generated.yaml
+          {{- end }}
+          {{- if index .Values.registry "application-secret.yaml" "enabled" -}}
+              ,file:/etc/secrets/caraml-store/application-secret.yaml
+          {{- end }}
+          {{- if index .Values.registry "application-override.yaml" "enabled" -}}
+              ,file:/etc/caraml-store/application-override.yaml
+          {{- end }}
+
+          ports:
+            - name: grpc
+              containerPort: {{ .Values.serving.service.grpc.targetPort }}
+              protocol: TCP
+            - name: http
+              containerPort: {{ .Values.serving.actuator.port }}
+              protocol: TCP
+          {{- if .Values.serving.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.serving.actuator.port }}
+            initialDelaySeconds: {{ .Values.serving.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.serving.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.serving.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.serving.readinessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.serving.readinessProbe.failureThreshold }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.serving.resources | nindent 12 }}
+      {{- with .Values.serving.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.serving.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.serving.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

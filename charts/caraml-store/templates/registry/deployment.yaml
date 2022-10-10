@@ -1,0 +1,130 @@
+{{- $fullname := include "caraml-store.registry.fullname" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $fullname }}
+  labels:
+    {{- include "caraml-store.registry.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.registry.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "caraml-store.registry.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/registry/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/registry/secret.yaml") . | sha256sum }}
+      {{- with .Values.registry.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "caraml-store.registry.labels" . | nindent 8 }}
+      {{- with .Values.registry.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with .Values.registry.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: {{ $fullname }}-config
+          configMap:
+            name: {{ $fullname }}
+        - name: {{ $fullname }}-secret
+          secret:
+            secretName: {{ $fullname }}
+        {{- range $secret := .Values.registry.secrets }}
+        - name: {{ $secret }}
+          secret:
+            secretName: {{ $secret }}
+        {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-registry
+          image: "{{ .Values.registry.image.repository }}:{{ .Values.registry.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.registry.image.pullPolicy }}
+          volumeMounts:
+            - name: {{ $fullname }}-config
+              mountPath: /etc/caraml-store
+            - name: {{ $fullname }}-secret
+              mountPath: /etc/secrets/caraml-store
+              readOnly: true
+          {{- range $secret := .Values.registry.secrets }}
+            - name: {{ $secret }}
+              mountPath: "/etc/secrets/{{ $secret }}"
+              readOnly: true
+          {{- end }}
+          env:
+          {{- if .Values.registry.env.postgresql.enabled }}
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.registry.env.postgresql.secret | default (printf "%s-postgresql" (.Release.Name)) }}
+                key: {{ .Values.registry.env.postgresql.key }}
+          {{- end }}
+          {{- if .Values.registry.javaOpts }}
+          - name: JAVA_TOOL_OPTIONS
+            value: {{ .Values.registry.javaOpts }}
+          {{- end }}
+          {{- range $key, $value := .Values.registry.envOverrides }}
+          - name: {{ printf "%s" $key | replace "." "_" | upper | quote }}
+            {{- if eq (kindOf $value) "map" }}
+            valueFrom:
+              {{- toYaml $value | nindent 12}}
+            {{- else }}
+            value: {{ $value | quote }}
+            {{- end}}
+          {{- end }}
+
+          command:
+          - java
+          - -cp
+          - "@/app/jib-classpath-file"
+          - dev.caraml.store.CaraMLRegistry
+          - --spring.config.location=
+          {{- if index .Values.registry "application.yaml" "enabled" -}}
+            classpath:/application.yaml
+          {{- end }}
+          {{- if index .Values.registry "application-generated.yaml" "enabled" -}}
+            ,file:/etc/caraml-store/application-generated.yaml
+          {{- end }}
+          {{- if index .Values.registry "application-secret.yaml" "enabled" -}}
+            ,file:/etc/secrets/caraml-store/application-secret.yaml
+          {{- end }}
+          {{- if index .Values.registry "application-override.yaml" "enabled" -}}
+            ,file:/etc/caraml-store/application-override.yaml
+          {{- end }}
+
+          ports:
+            - name: grpc
+              containerPort: {{ .Values.registry.service.grpc.targetPort }}
+              protocol: TCP
+            - name: http
+              containerPort: {{ .Values.registry.actuator.port }}
+              protocol: TCP
+          {{- if .Values.registry.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.registry.actuator.port }}
+            initialDelaySeconds: {{ .Values.registry.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.registry.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.registry.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.registry.readinessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.registry.readinessProbe.failureThreshold }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.registry.resources | nindent 12 }}
+      {{- with .Values.registry.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.registry.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.registry.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
