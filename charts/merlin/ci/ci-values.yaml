@@ -1,11 +1,12 @@
 deployment:
+  replicaCount: "1"
   resources:
     requests:
       cpu: 100m
-      memory: 512Mi
+      memory: 256Mi
     limits:
-      cpu: "1"
-      memory: 1Gi
+      cpu: "500m"
+      memory: 512Mi
 
 imageBuilder:
   clusterName: "chart-testing"
@@ -41,29 +42,20 @@ merlin-postgresql:
 mlflow:
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "512Mi"
 
 mlflow-postgresql:
   resources:
     requests:
-      cpu: 500m
+      cpu: 100m
       memory: 256Mi
   persistence:
     enabled: true
     size: 5Gi
-
-swagger:
-  enabled: true
-  image:
-    tag: v3.23.5
-  apiHost: "merlin.dev"
-  basePath: "/api/merlin/v1"
-  service:
-    internalPort: 8081
-    externalPort: 8080
 
 minio:
   resources:
