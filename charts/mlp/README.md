@@ -28,6 +28,7 @@ MLP API
 | deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"gojek/mlp","tag":"v1.7.1"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
+| deployment.oauthClientID | string | `""` | OAuth client id for login |
 | deployment.podLabels | object | `{}` | Additional labels to apply on the pod level |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` |  |
 | deployment.replicaCount | int | `1` |  |

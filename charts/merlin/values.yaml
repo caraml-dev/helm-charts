@@ -3,7 +3,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
-    tag: 0.21.0
+    tag: 0.23.0-rc1
 
   replicaCount: "2"
 
@@ -37,7 +37,7 @@ feastCoreApi:
   apiHost: http://feast-core.mlp:8080/v1
 
 imageBuilder:
-  clusterName: "chart-testing"
+  clusterName: "test"
   buildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
   baseImage: ""
   dockerfilePath: "./Dockerfile"
@@ -165,7 +165,7 @@ transformer:
 environmentConfigs:
   - name: "id-dev"
     is_default: true
-    cluster: "dev"
+    cluster: "test"
     region: "id"
     gcp_project: "gcp-project"
     deployment_timeout: "10m"
@@ -459,5 +459,5 @@ minio:
 
 setupScript:
   # -- Image used to for setup scripts job
-  image: ghcr.io/dtzar/helm-kubectl:3.9.4  # TODO: Rerelease with more official repo (eg ghcr.io/caraml-dev)?
+  image: bitnami/kubectl:latest
   clusterType: kind

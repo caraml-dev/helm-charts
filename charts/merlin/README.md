@@ -14,6 +14,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://caraml-dev.github.io/helm-charts | mlp | 0.2.0 |
 | https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.0 |
 | https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.0 |
 | https://helm.releases.hashicorp.com | vault | 0.19.0 |
@@ -35,7 +36,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.21.0"` |  |
+| deployment.image.tag | string | `"0.23.0-rc1"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -45,7 +46,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | encryption.key | string | `"password"` |  |
 | environment | string | `"dev"` |  |
-| environmentConfigs[0].cluster | string | `"dev"` |  |
+| environmentConfigs[0].cluster | string | `"test"` |  |
 | environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
 | environmentConfigs[0].default_deployment_config.max_replica | int | `1` |  |
 | environmentConfigs[0].default_deployment_config.memory_request | string | `"500Mi"` |  |
@@ -73,7 +74,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | feastCoreApi.apiHost | string | `"http://feast-core.mlp:8080/v1"` |  |
 | imageBuilder.baseImage | string | `""` |  |
 | imageBuilder.buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.clusterName | string | `"chart-testing"` |  |
+| imageBuilder.clusterName | string | `"test"` |  |
 | imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
 | imageBuilder.dockerfilePath | string | `"./Dockerfile"` |  |
 | imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
@@ -171,7 +172,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | setupScript.clusterType | string | `"kind"` |  |
-| setupScript.image | string | `"ghcr.io/dtzar/helm-kubectl:3.9.4"` | Image used to for setup scripts job |
+| setupScript.image | string | `"bitnami/kubectl:latest"` | Image used to for setup scripts job |
 | swagger.apiHost | string | `"merlin.dev"` |  |
 | swagger.basePath | string | `"/api/merlin/v1"` |  |
 | swagger.enabled | bool | `true` |  |

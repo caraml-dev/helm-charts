@@ -23,3 +23,11 @@ dependencies:
     repository: https://helm.releases.hashicorp.com
     version: 0.19.0
     condition: vault.enabled
+  - name: mlp
+    repository: "https://caraml-dev.github.io/helm-charts"
+    version: 0.2.0
+    condition: mlp.enabled
+  # - name: kserve
+  #   repository: "https://caraml-dev.github.io/helm-charts"
+  #   version: 0.8.2
+  #   condition: kserve.enabled

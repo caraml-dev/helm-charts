@@ -8,5 +8,8 @@ dependencies:
 - name: vault
   repository: https://helm.releases.hashicorp.com
   version: 0.19.0
-digest: sha256:b7f55dac2b870a1e8cfe8321dae26d791a817d207a9ab97bcd8674be41e26258
-generated: "2022-09-29T15:47:59.24139+05:30"
+- name: mlp
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.0
+digest: sha256:c8347aeb94002d5953b8c96747896e6c1f336e0bc4866fa86a456800768ff13f
+generated: "2022-10-10T11:17:34.186898+05:30"

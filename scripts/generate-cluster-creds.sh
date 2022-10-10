@@ -57,9 +57,9 @@ EOF
 {
 "name": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"name\"])",
 "master_ip": "kubernetes.default:443",
-"certs": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"cluster\"][\"certificate-authority-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_certificate": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-certificate-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_key": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-key-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')"
+"certs": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"cluster\"][\"certificate-authority-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_certificate": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-certificate-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_key": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-key-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')"
 }
 EOF
     rm kubeconfig.yaml
@@ -72,9 +72,9 @@ EOF
 {
 "name": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"name\"])",
 "master_ip": "kubernetes.default:443",
-"certs": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"cluster\"][\"certificate-authority-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_certificate": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-certificate-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_key": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-key-data\"]) | base64 --decode | awk '{printf "%s\\n", $0}')"
+"certs": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"cluster\"][\"certificate-authority-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_certificate": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-certificate-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')",
+"client_key": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-key-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')"
 }
 EOF
     rm kubeconfig.yaml

@@ -1,11 +1,10 @@
-#! /bin/sh
+#!/bin/bash
 
 # This file is used to populate configmap templates/setup-configmap.yaml
 # This will upload the cluster credentials to vault.
 
 set -ex
 
-which helm > /dev/null 2>&1|| { echo "Helm not installed"; exit 1; }
 which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
 
 show_help() {
@@ -43,12 +42,12 @@ main() {
   kubectl exec $RELEASE_NAME-vault-0 --namespace=$RELEASE_NAMESPACE -- vault secrets enable -version=1 -path=secret kv
 
   # Write cluster credential to be saved in Vault
-  cat /scripts/cluster-credential.json > cluster-credential.json
-  kubectl cp cluster-credential.json $RELEASE_NAME-vault-0:/tmp/cluster-credential.json
+  cat /scripts/cluster-credential.json > /tmp/cluster-credential.json
+  kubectl cp /tmp/cluster-credential.json $RELEASE_NAME-vault-0:/tmp/cluster-credential.json
   kubectl exec $RELEASE_NAME-vault-0 --namespace=$RELEASE_NAMESPACE -- vault kv put secret/$CLUSTER_NAME @/tmp/cluster-credential.json
   kubectl exec $RELEASE_NAME-vault-0 --namespace=$RELEASE_NAMESPACE -- rm /tmp/cluster-credential.json
   kubectl delete configmap $CONFIG_MAP_NAME
-  rm cluster-credential.json
+  rm /tmp/cluster-credential.json
 
 
 }
