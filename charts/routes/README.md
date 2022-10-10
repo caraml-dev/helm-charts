@@ -49,6 +49,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | base.enabled | bool | `false` |  |
 | cert-manager.enabled | bool | `true` |  |
 | certManagerBase.enabled | bool | `true` |  |
+| common.enabled | bool | `true` |  |
 | domain | string | `""` |  |
 | feast.enabled | bool | `true` |  |
 | feast.feastUI.match[0].uri.prefix | string | `"/feast/"` |  |

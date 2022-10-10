@@ -1,4 +1,6 @@
 {{- $ingressIP := include "caraml-routes.istio-lookup" . }}
+{{- $s := include "common.store" . | fromJson }}
+{{- $apps := $s.services}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -9,29 +11,29 @@ metadata:
 spec:
   hosts:
     {{- range .Values.mlp.vs.hosts }}
-    - {{ include "caraml-routes.localiseDomain" (list . $ingressIP $.Values.domain ) }}
+    - {{ include "common.localiseDomain" (list . $s.ingressIP $.Values.domain ) }}
     {{- end}}
   gateways:
     - {{ include "caraml-routes.mlp-gateway" . }}
   http:
     {{- if .Values.turing.enabled }}
     {{- with .Values.turing.api }}
-    {{- include "caraml-routes.mlp-api-routes" (list .appName .prefixMatch .rewriteUri .destHost .authHeader) | indent 4}}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName $apps.turing.vsPrefixMatch .rewriteUri $apps.turing.serviceName .authHeader) | indent 4}}
     {{- end }}
     {{- end }}
     {{- if .Values.xp.enabled }}
     {{- with .Values.xp.api }}
-    {{- include "caraml-routes.mlp-api-routes" (list .appName .prefixMatch .rewriteUri .destHost .authHeader) | indent 4}}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName $apps.xp.vsPrefixMatch .rewriteUri $apps.xp.serviceName .authHeader) | indent 4}}
     {{- end }}
     {{- end }}
     {{- if .Values.merlin.enabled }}
     {{- with .Values.merlin.api }}
-    {{- include "caraml-routes.mlp-api-routes" (list .appName .prefixMatch .rewriteUri .destHost .authHeader) | indent 4}}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName $apps.merlin.vsPrefixMatch .rewriteUri $apps.merlin.serviceName .authHeader) | indent 4}}
     {{- end }}
     {{- end }}
     {{- if .Values.mlp.enabled }}
     {{- with .Values.mlp.api }}
-    {{- include "caraml-routes.mlp-api-routes" (list .appName .prefixMatch .rewriteUri .destHost .authHeader) | indent 4}}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName $apps.mlp.vsPrefixMatch .rewriteUri $apps.mlp.serviceName .authHeader) | indent 4}}
     {{- end }}
     {{- end }}
     #########################################################
@@ -69,9 +71,13 @@ spec:
     {{- with .Values.merlin }}
     - name: "merlin-ui"
       match:
-      {{- toYaml .merlinUI.match | nindent 8 }}
+        - uri:
+            prefix: {{ $apps.merlin.ui }}
       route:
-        {{- toYaml .merlinUI.route | nindent 8 }}
+        - destination:
+            host: {{ $apps.merlin.uiServiceName}}
+            port:
+              number: 8080
     {{- end }}
     {{- end }}
     {{- if .Values.pipeline.enabled}}

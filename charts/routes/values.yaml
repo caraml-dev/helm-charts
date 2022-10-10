@@ -226,3 +226,7 @@ certManagerBase:
 
 cert-manager:
   enabled: true
+
+
+common:
+  enabled: true

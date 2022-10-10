@@ -55,3 +55,7 @@ dependencies:
     repository: "https://charts.jetstack.io"
     version: 1.8.1
     condition: cert-manager.enabled
+  - name: common
+    repository: "file://../common"
+    condition: common.enabled
+    version: 0.1.0
