@@ -2,7 +2,7 @@ apiVersion: v2
 description: "CaraML store registry: Feature registry for CaraML store."
 name: caraml-store
 version: 0.1.0
-appVersion: 0.1.2
+appVersion: 0.1.3
 home: https://github.com/caraml-dev/caraml-store
 keywords:
   - machine learning

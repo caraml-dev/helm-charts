@@ -8,11 +8,19 @@ metadata:
 data:
 {{- if index .Values.registry "application-generated.yaml" "enabled" }}
   application-generated.yaml: |
+
+    {{- if index .Values "postgresql" "enabled" }}
     spring:
       datasource:
         url: jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/postgres
+    {{- end }}
     server:
       port: {{ .Values.registry.actuator.port }}
+    kubernetes:
+      inCluster: true
+    jobService:
+      common:
+        sparkImage: "ghcr.io/caraml-dev/caraml-store-spark:{{ .Values.registry.image.tag | default .Chart.AppVersion }}"
 {{- end }}
 
 {{- if index .Values.registry "application-override.yaml" "enabled" }}
