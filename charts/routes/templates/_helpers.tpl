@@ -58,25 +58,6 @@ mlp gateway name
 {{- printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-gateway" }}
 {{- end }}
 
-{{/*
-Function to add nip.io to domain
-Takes in 3 arguments:
-subdomain, ingressIp, domain
-Usage:
-{{- include "caraml-routes.localiseDomain" (list $val1 $val2 $val3 ) }}
-IngressIP takes precedence over domain
-*/}}
-{{- define "caraml-routes.localiseDomain" -}}
-{{- $subdomain := index . 0 }}
-{{- $ingressIP := index . 1 }}
-{{- $domain := index . 2 }}
-{{- if ne $domain "" }}
-{{- ternary (printf "%s.%s" $subdomain $domain) (printf "%s" $subdomain) (ne $domain "") }}
-{{- else }}
-{{- printf "%s.%s.nip.io" $subdomain (ternary $ingressIP "example" (ne $ingressIP "")) }}
-{{- end }}
-{{- end }}
-
 
 {{/*
 Function to add generate Uri Match and redirect match for routess
@@ -131,14 +112,4 @@ Function to add generate Uri Match and redirect match for routess
   route:
     - destination:
         host: {{ $destHost }}
-{{- end }}
-
-
-{{- define "caraml-routes.istio-lookup" }}
-{{- $istioLookupResult := (lookup "v1" "Service" .Values.istioLookUp.namespace .Values.istioLookUp.name ) }}
-{{- if $istioLookupResult }}
-{{- printf "%s" (index $istioLookupResult.status.loadBalancer.ingress 0).ip }}
-{{- else }}
-{{- printf "" }}
-{{- end }}
 {{- end }}

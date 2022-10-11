@@ -1,4 +1,4 @@
-{{- $ingressIP := include "caraml-routes.istio-lookup" . }}
+{{- $ingressIP := include "common.istio-lookup" .Values.global }}
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
@@ -17,7 +17,7 @@ spec:
         protocol: HTTP
       hosts:
         {{- range .hosts }}
-        - {{ include "caraml-routes.localiseDomain" (list . $ingressIP $.Values.domain) }}
+        - {{ include "common.localiseDomain" (list . $ingressIP $.Values.domain) }}
         {{- end }}
 {{- end }}
     {{- if .Values.https.enabled }}
@@ -29,6 +29,6 @@ spec:
         {{- toYaml .Values.https.tls | nindent 8 }}
       hosts:
         {{- range .Values.mlpGateway.hosts }}
-        - {{ include "caraml-routes.localiseDomain" (list . $ingressIP $.Values.domain) }}
+        - {{ include "common.localiseDomain" (list . $ingressIP $.Values.domain) }}
         {{- end }}
     {{- end }}

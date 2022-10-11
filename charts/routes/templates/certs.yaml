@@ -1,4 +1,4 @@
-{{- $ingressIP := include "caraml-routes.istio-lookup" . }}
+{{- $ingressIP := include "common.istio-lookup" .Values.global }}
 {{- if and .Values.https.enabled }}
 ---
 apiVersion: cert-manager.io/v1
@@ -13,7 +13,7 @@ kind: Certificate
 metadata:
   name: mlp-tls-cert
   # NOTE: certificate secret needs to be in same namespace as istiod
-  namespace: {{ .Values.istioLookUp.namespace }}
+  namespace: {{ .Values.global.istioLookUp.namespace }}
 spec:
   secretName: {{ .Values.https.tls.credentialName }}
   issuerRef:
@@ -22,6 +22,6 @@ spec:
     group: cert-manager.io
   dnsNames:
     {{- range .Values.mlpGateway.hosts }}
-    - {{ include "caraml-routes.localiseDomain" (list . $ingressIP $.Values.domain) }}
+    - {{ include "common.localiseDomain" (list . $ingressIP $.Values.domain) }}
     {{- end }}
 {{- end }}

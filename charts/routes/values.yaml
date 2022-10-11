@@ -1,20 +1,73 @@
-# -- istioIngressIP takes precedence over domain. Used for local deployment
-istioLookUp:
-  namespace: istio-system
-  name: istio-ingressgateway
+global:
+  ingressIP: "127.0.0.1"
+  oauthclient: "test-client-123"
+  # -- istioIngressIP takes precedence over domain. Used for local deployment
+  istioLookUp:
+    namespace: istio-system
+    name: istio-ingressgateway
 
-# Domain used to configure gateway and virtual service
-domain: ""
+  # Domain used to configure gateway and virtual service
+  domain: ""
 
+  mlp:
+    apiPrefix: "/v1" # path prefix to where mlp endpoints lie if running on localhost
+    serviceName: mlp
+    vsPrefix: "/api"
+    useServiceFqdn: false # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/"
+    uiServiceName: mlp
+
+  merlin:
+    apiPrefix: "/v1"
+    serviceName: merlin
+    vsPrefix: "/api/merlin"
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/merlin"
+    uiServiceName: merlin
+    docsServiceName: merlin-swagger
+
+  turing:
+    apiPrefix: "/v1"
+    serviceName: turing
+    vsPrefix: "/api/turing"
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/turing"
+    uiServiceName: turing
+
+  xp:
+    apiPrefix: "/"
+    serviceName: xp-management
+    vsPrefix: "/api/xp"
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/xp"
+    uiServiceName: xp-management
+
+  pipeline:
+    uiPrefix: "/pipeline"
+    serviceName: pipeline-ui
+
+  feast:
+    apiPrefix: "/api"
+    serviceName: feast-ui
+    vsPrefix: "/feast"
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiServiceName: feast-ui
+
+  mlflow:
+    serviceName: merlin-mlflow
+
+
+
+#################################################################################################
+# Routes chart specific configuration
+# ###############################################################################################
 # Configuration for turing
 turing:
   enabled: true
   # Config to route requests to turing api
   api:
     appName: "turing"
-    prefixMatch: "/api/turing/"
     rewriteUri: "/"
-    destHost: "turing"
     # set authHeader to true to require Bearer token to be present before routing requests
     authHeader: false
   # Config to route requests to turing docs
@@ -24,16 +77,6 @@ turing:
     rewriteUri: "/api-docs"
     destHost: turing
     destPort: 8080
-  # Config to route requests to turing UI
-  turingUI:
-    match:
-      - uri:
-          prefix: /turing
-    route:
-      - destination:
-          host: turing
-          port:
-            number: 8080
 
 # Configuration for merlin
 merlin:
@@ -41,9 +84,7 @@ merlin:
   # Config to route requests to merlin api
   api:
     appName: "merlin"
-    prefixMatch: "/api/merlin/"
     rewriteUri: "/"
-    destHost: "merlin"
     # set authHeader to true to require Bearer token to be present before routing requests
     authHeader: false
   # Config to route requests to merlin docs
@@ -53,30 +94,10 @@ merlin:
     rewriteUri: "/"
     destHost: merlin-swagger
     destPort: 8080
-  # Config to route requests to merlin UI
-  merlinUI:
-    match:
-      - uri:
-          prefix: /merlin
-    route:
-      - destination:
-          host: merlin
-          port:
-            number: 8080
 
 # Configuration for pipeline
 pipeline:
   enabled: true
-  # -- Config to route requests to pipeline UI
-  pipelineUI:
-    match:
-      - uri:
-          prefix: /pipeline
-    route:
-      - destination:
-          host: pipeline-ui
-          port:
-            number: 8080
 
 # Configuration for xp
 xp:
@@ -84,9 +105,7 @@ xp:
   # Config to route requests to xp api
   api:
     appName: "xp"
-    prefixMatch: "/api/xp/"
     rewriteUri: "/"
-    destHost: "xp-management"
     # set authHeader to true to require Bearer token to be present before routing requests
     authHeader: false
   # Config to route requests to xp management docs
@@ -103,48 +122,10 @@ xp:
     rewriteUri: "/"
     destHost: xp-treatment-swagger
     destPort: 8080
-  # Config to route requests to xp UI
-  turingXpUI:
-    match:
-      - uri:
-          prefix: /xp
-    route:
-      - destination:
-          host: xp-management
-          port:
-            number: 8080
 
 # Configuration for feast
 feast:
   enabled: true
-  feastUIBackend:
-    rewrite:
-      uri: /api/
-    match:
-      - uri:
-          prefix: /feast/api/
-      - uri:
-          prefix: /feast/api
-    route:
-      - destination:
-          host: feast-ui
-          port:
-            number: 8080
-
-  feastUIRedirect:
-    redirect: /feast/
-    match:
-      - uri:
-          exact: /feast
-  feastUI:
-    match:
-      - uri:
-          prefix: /feast/
-    route:
-      - destination:
-          host: feast-ui
-          port:
-            number: 8080
 
 # Configuration for mlpDocs hosts
 mlpDocs:
@@ -170,16 +151,9 @@ mlp:
       - "console"
   api:
     appName: "mlp"
-    prefixMatch: "/api/"
     rewriteUri: "/"
-    destHost: "mlp"
     authHeader: false
-  mlpUIConsole:
-    route:
-      - destination:
-          host: mlp
-          port:
-            number: 8080
+
 https:
   # NOTE: Set https to true by default to allow google oauth login, disable from parent chart
   enabled: true
