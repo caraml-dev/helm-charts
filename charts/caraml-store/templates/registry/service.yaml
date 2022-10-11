@@ -14,6 +14,9 @@ spec:
     {{- if .Values.registry.service.grpc.nodePort }}
       nodePort: {{ .Values.registry.service.grpc.nodePort }}
     {{- end }}
+    - name: http
+      port: {{ .Values.registry.actuator.port }}
+      targetPort: {{ .Values.registry.actuator.port }}
   selector:
     {{- include "caraml-store.registry.selectorLabels" . | nindent 4 }}
 {{- end }}
