@@ -68,7 +68,6 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.merlin.uiServiceName | string | `"merlin"` |  |
 | global.merlin.useServiceFqdn | bool | `true` |  |
 | global.merlin.vsPrefix | string | `"/api/merlin"` |  |
-| global.mlflow.hosts[0] | string | `"mlflow"` |  |
 | global.mlflow.port | int | `80` |  |
 | global.mlflow.serviceName | string | `"merlin-mlflow"` |  |
 | global.mlp.apiPrefix | string | `"/v1"` |  |
