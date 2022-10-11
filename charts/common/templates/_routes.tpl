@@ -2,7 +2,9 @@
 
 {{/*
 Input argument: global object
-Get domain to use in hosts based on domain or ingressIP
+Get domain to use in hosts based on domain or ingressIP. domain takes precedence over ingressIP
+If both are unset, will try to lookup ingress IP address using istio's loadbalancer service, returning
+"example" as ip address if not found
 */}}
 {{- define "common.get-external-hostname" }}
 {{- if .domain }}
@@ -17,10 +19,8 @@ Get domain to use in hosts based on domain or ingressIP
 
 {{/*
 Function to add nip.io to domain
-Takes in 3 arguments:
+Takes in 2 arguments:
 subdomain, domain
-If domain is not "", use domain instead of <ipaddress>.nip.io
-IngressIP takes precedence over domain
 */}}
 {{- define "common.localiseDomain" -}}
 {{- $subdomain := index . 0 }}
