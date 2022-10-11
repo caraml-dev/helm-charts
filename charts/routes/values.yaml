@@ -8,12 +8,16 @@ global:
 
   # Domain used to configure gateway and virtual service
   domain: ""
+  hosts:
+    mlp: ["console"]
+    mlpdocs: ["docs"]
+    mlflow: ["mlflow"]
 
   mlp:
-    apiPrefix: "/v1" # path prefix to where mlp endpoints lie if running on localhost
+    apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
     serviceName: mlp
     vsPrefix: "/api"
-    useServiceFqdn: false # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: false  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/"
     uiServiceName: mlp
 
@@ -21,16 +25,15 @@ global:
     apiPrefix: "/v1"
     serviceName: merlin
     vsPrefix: "/api/merlin"
-    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/merlin"
     uiServiceName: merlin
-    docsServiceName: merlin-swagger
 
   turing:
     apiPrefix: "/v1"
     serviceName: turing
     vsPrefix: "/api/turing"
-    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/turing"
     uiServiceName: turing
 
@@ -38,7 +41,7 @@ global:
     apiPrefix: "/"
     serviceName: xp-management
     vsPrefix: "/api/xp"
-    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/xp"
     uiServiceName: xp-management
 
@@ -50,12 +53,14 @@ global:
     apiPrefix: "/api"
     serviceName: feast-ui
     vsPrefix: "/feast"
-    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiServiceName: feast-ui
 
   mlflow:
     serviceName: merlin-mlflow
-
+    port: 80
+    hosts:
+      - "mlflow"
 
 
 #################################################################################################
@@ -127,28 +132,13 @@ xp:
 feast:
   enabled: true
 
-# Configuration for mlpDocs hosts
-mlpDocs:
-  vs:
-    hosts:
-      - "docs"
-
 # Configuration for mlflow
 mlflow:
   enabled: true
-  vs:
-    hosts:
-      - "mlflow"
-    route:
-      destination: merlin-mlflow
-      port: 80
 
 # Configuration for mlp
 mlp:
   enabled: true
-  vs:
-    hosts:
-      - "console"
   api:
     appName: "mlp"
     rewriteUri: "/"
@@ -167,11 +157,6 @@ mlpGateway:
   name: mlp-gateway
   selector:
     istio: ingressgateway
-  # hosts will be concatenated with domain or ingress IP address
-  hosts:
-    - console
-    - docs
-    - mlflow
 
 
 ############################################################

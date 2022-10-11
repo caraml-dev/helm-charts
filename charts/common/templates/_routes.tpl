@@ -1,41 +1,5 @@
 {{/* vim: set filetype=mustache: */}}
 
-{{/* TODO: REMOVE */}}
-{{- define "common.store" }}
-{{- $values := .Values.common }}
-{{- $ingressIP := include "common.istio-lookup" $values }}
-{{- $mlp := include "common.generate-component-values" (list . $values.mlp) | fromJson }}
-{{- $merlin := include "common.generate-component-values" (list . $values.merlin)| fromJson }}
-{{- $turing := include "common.generate-component-values" (list . $values.turing)| fromJson }}
-{{- $xp := include "common.generate-component-values" (list . $values.xp)| fromJson }}
-{{- $store := include "common.generate-component-values" (list . $values.store)| fromJson }}
-{{- $services := dict "mlp" $mlp "merlin" $merlin "turing" $turing "store" $store  "xp" $xp }}
-{{- $chartStore := dict "services" $services "ingressIP" $ingressIP "oauthclientid" $values.oauthclient }}
-{{- $chartStore | toJson }}
-{{- end }}
-
-
-
-{{/* TODO: REMOVE */}}
-{{- define "common.generate-component-values" }}
-{{- $ := index . 0 }}
-{{- $relNs := $.Release.Namespace }}
-{{- $values := index . 1}}
-{{- with $values }}
-{{- $inClusterPrefix := printf "%s%s" .vsPrefix .apiPrefix }}
-{{- $host := "" }}
-{{- if .useServiceFqdn }}
-{{- $host = printf "%s.%s.svc.cluster.local%s" .serviceName $relNs .apiPrefix}}
-{{- else }}
-{{- $host = printf "%s%s" (include "common.get-external-host" $) $inClusterPrefix }}
-{{- end }}
-{{- $vsPrefixMatch := printf "%s/" .vsPrefix}}
-{{- $newDict := dict "inClusterPrefix" $inClusterPrefix "host" $host "vsPrefixMatch" $vsPrefixMatch}}
-{{- $d1 := mergeOverwrite . $newDict }}
-{{- $d1 | toJson }}
-{{- end }}
-{{- end }}
-
 {{- define "common.get-external-host" }}
 {{- if .domain }}
 {{- printf "%s" .domain }}
