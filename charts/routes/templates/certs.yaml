@@ -1,4 +1,3 @@
-{{- $ingressIP := ternary .Values.global.ingressIP (include "common.istio-lookup" .Values.global) (ne .Values.global.ingressIP "") }}
 {{- $hosts := (concat (get $.Values.global.hosts "mlp") (get $.Values.global.hosts "mlpdocs") (get $.Values.global.hosts "mlflow") )}}
 {{- if and .Values.https.enabled }}
 ---
@@ -23,6 +22,6 @@ spec:
     group: cert-manager.io
   dnsNames:
     {{- range $hosts }}
-    - {{ include "common.localiseDomain" (list . $ingressIP $.Values.domain) }}
+    - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global)) }}
     {{- end }}
 {{- end }}

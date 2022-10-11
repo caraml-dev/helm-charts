@@ -1,32 +1,31 @@
 {{/* vim: set filetype=mustache: */}}
 
-{{- define "common.get-external-host" }}
+{{/*
+Input argument: global object
+Get domain to use in hosts based on domain or ingressIP
+*/}}
+{{- define "common.get-external-hostname" }}
 {{- if .domain }}
 {{- printf "%s" .domain }}
 {{- else if ne .ingressIP "" }}
-{{- printf "%s" .ingressIP }}
+{{- printf "%s.nip.io" .ingressIP }}
 {{- else }}
-{{- include "common.istio-lookup" . }}
+{{- $istioIp := include "common.istio-lookup" . }}
+{{- ternary (printf "%s.nip.io" $istioIp) ("example.nip.io") (ne $istioIp "")}}
 {{- end }}
 {{- end }}
 
 {{/*
 Function to add nip.io to domain
 Takes in 3 arguments:
-subdomain, ingressIp, domain
-Usage:
-{{- include "common.localiseDomain" (list $val1 $val2 $val3 ) }}
+subdomain, domain
+If domain is not "", use domain instead of <ipaddress>.nip.io
 IngressIP takes precedence over domain
 */}}
 {{- define "common.localiseDomain" -}}
 {{- $subdomain := index . 0 }}
-{{- $ingressIP := index . 1 }}
-{{- $domain := index . 2 }}
-{{- if ne $domain "" }}
+{{- $domain := index . 1 }}
 {{- ternary (printf "%s.%s" $subdomain $domain) (printf "%s" $subdomain) (ne $domain "") }}
-{{- else }}
-{{- printf "%s.%s.nip.io" $subdomain (ternary $ingressIP "example" (ne $ingressIP "")) }}
-{{- end }}
 {{- end }}
 
 {{- define "common.istio-lookup" }}
@@ -52,7 +51,7 @@ IngressIP takes precedence over domain
 {{- if .useServiceFqdn }}
 {{- $host = printf "%s.%s.svc.cluster.local%s" .serviceName $relNs .apiPrefix}}
 {{- else }}
-{{- $host = printf "%s%s" (include "common.get-external-host" $) $inClusterPrefix }}
+{{- $host = printf "%s%s" (include "common.get-external-hostname" $) $inClusterPrefix }}
 {{- end }}
 {{- end }}
 {{- end }}

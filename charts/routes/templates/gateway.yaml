@@ -1,4 +1,3 @@
-{{- $ingressIP := ternary .Values.global.ingressIP (include "common.istio-lookup" .Values.global) (ne .Values.global.ingressIP "") }}
 {{- $hosts := (concat (get $.Values.global.hosts "mlp") (get $.Values.global.hosts "mlpdocs") (get $.Values.global.hosts "mlflow") )}}
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
@@ -18,7 +17,7 @@ spec:
         protocol: HTTP
       hosts:
         {{- range $hosts }}
-        - {{ include "common.localiseDomain" (list . $ingressIP $.Values.global.domain) }}
+        - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global) ) }}
         {{- end }}
 {{- end }}
     {{- if .Values.https.enabled }}
@@ -30,6 +29,6 @@ spec:
         {{- toYaml .Values.https.tls | nindent 8 }}
       hosts:
         {{- range $hosts }}
-        - {{ include "common.localiseDomain" (list . $ingressIP $.Values.global.domain) }}
+        - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global) ) }}
         {{- end }}
     {{- end }}

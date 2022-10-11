@@ -1,6 +1,7 @@
 {{/* vim: set filetype=mustache: */}}
 {{/*
-Pick value from store if value supplied is ""
+Receives 2 arguments,
+Returns store if value supplied is ""
 */}}
 {{- define "common.set-value"}}
 {{- $store := index . 0 }}
