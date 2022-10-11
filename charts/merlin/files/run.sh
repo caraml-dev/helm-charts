@@ -9,7 +9,7 @@ which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
 
 show_help() {
   cat <<EOF
-Usage: $(basename "$0") <configMapName> <releaseNamespace>  <releaseName> <imageBuilderClusterName>
+Usage: $(basename "$0") <configMapName>  <imageBuilderClusterName>
     -h, --help               Display help
 EOF
 }
@@ -19,7 +19,7 @@ validate_parameters() {
     show_help
     exit 0
   fi
-  if [[ "$#" -ne 4 ]]; then
+  if [[ "$#" -ne 2 ]]; then
     echo "Insufficient number of positional arguments"
     show_help
     exit 1
@@ -30,8 +30,7 @@ main() {
   validate_parameters "$@"
   CONFIG_MAP_NAME="$1"
   VAULT_RELEASE_NAMESPACE="vault"
-  RELEASE_NAME="$3"
-  CLUSTER_NAME="$4"
+  CLUSTER_NAME="$2"
 
   echo "Waiting for vault pod(pod/vault-0) to be ready.."
   sleep 5

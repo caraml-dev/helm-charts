@@ -1,3 +1,4 @@
+{{- if .Values.setupScript.enabled }}
 ---
 {{- $configMap := include "merlin.scripts-cm-name" . }}
 {{- $jobName := printf "%s-setup-job" (include "merlin.resource-prefix" .) }}
@@ -28,8 +29,7 @@ spec:
           command: ["/scripts/run.sh"]
           args:
             - {{ $configMap }}
-            - {{ .Release.Namespace }}
-            - {{ .Release.Name }}
             - {{ .Values.imageBuilder.clusterName }}
       restartPolicy: Never
   backoffLimit: 10
+{{- end }}

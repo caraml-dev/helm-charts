@@ -172,6 +172,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | setupScript.clusterType | string | `"kind"` |  |
+| setupScript.enabled | bool | `true` |  |
 | setupScript.image | string | `"bitnami/kubectl:latest"` | Image used to for setup scripts job |
 | swagger.apiHost | string | `"merlin.dev"` |  |
 | swagger.basePath | string | `"/api/merlin/v1"` |  |

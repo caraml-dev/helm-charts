@@ -467,6 +467,7 @@ minio:
     path: /*
 
 setupScript:
+  enabled: true
   # -- Image used to for setup scripts job
   image: bitnami/kubectl:latest
   clusterType: kind
