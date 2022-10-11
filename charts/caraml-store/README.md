@@ -48,6 +48,7 @@ CaraML store registry: Feature registry for CaraML store.
 | registry.nodeSelector | object | `{}` |  |
 | registry.podAnnotations | object | `{}` |  |
 | registry.podLabels | object | `{}` |  |
+| registry.prometheus.monitor.enabled | bool | `false` | Create a ServiceMonitor resource to expose Prometheus metrics |
 | registry.readinessProbe.enabled | bool | `true` | Flag to enable the probe |
 | registry.readinessProbe.failureThreshold | int | `5` | Min consecutive failures for the probe to be considered failed |
 | registry.readinessProbe.initialDelaySeconds | int | `20` | Delay before the probe is initiated |
@@ -61,7 +62,6 @@ CaraML store registry: Feature registry for CaraML store.
 | registry.service.grpc.port | int | `6565` | Service port for GRPC requests |
 | registry.service.grpc.targetPort | int | `6565` | Container port serving GRPC requests |
 | registry.service.type | string | `"ClusterIP"` | Kubernetes service type |
-| registry.serviceMonitor.enabled | bool | `false` | Create a ServiceMonitor resource to expose Prometheus metrics |
 | registry.tolerations | list | `[]` |  |
 | serving."application-generated.yaml".enabled | bool | `true` | Flag to include Helm generated configuration for database URL. This is useful for deployment that uses default configuration for Postgres. Please set `application-override.yaml` to override this configuration. |
 | serving."application-override.yaml" | object | `{"enabled":true}` | Configuration to override the default application.yaml. Will be created as a ConfigMap. `application-override.yaml` has a higher precedence than `application-secret.yaml` |
@@ -82,6 +82,7 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.nodeSelector | object | `{}` |  |
 | serving.podAnnotations | object | `{}` |  |
 | serving.podLabels | object | `{}` |  |
+| serving.prometheus.monitor.enabled | bool | `false` | Create a ServiceMonitor resource to expose Prometheus metrics |
 | serving.readinessProbe.enabled | bool | `true` | Flag to enable the probe |
 | serving.readinessProbe.failureThreshold | int | `5` | Min consecutive failures for the probe to be considered failed |
 | serving.readinessProbe.initialDelaySeconds | int | `20` | Delay before the probe is initiated |
@@ -95,7 +96,6 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.service.grpc.port | int | `6566` | Service port for GRPC requests |
 | serving.service.grpc.targetPort | int | `6566` | Container port serving GRPC requests |
 | serving.service.type | string | `"ClusterIP"` | Kubernetes service type |
-| serving.serviceMonitor.enabled | bool | `false` | Create a ServiceMonitor resource to expose Prometheus metrics |
 | serving.tolerations | list | `[]` |  |
 
 ----------------------------------------------

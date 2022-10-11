@@ -57,9 +57,10 @@ registry:
     # registry.actuator.port -- Port for Spring actuator endpoint
     port: 8080
 
-  serviceMonitor:
-    # registry.serviceMonitor.enabled -- Create a ServiceMonitor resource to expose Prometheus metrics
-    enabled: false
+  prometheus:
+    monitor:
+      # registry.prometheus.monitor.enabled -- Create a ServiceMonitor resource to expose Prometheus metrics
+      enabled: false
 
   javaOpts:
 
@@ -135,9 +136,10 @@ serving:
     # serving.actuator.port -- Port for Spring actuator endpoint
     port: 8080
 
-  serviceMonitor:
-    # serving.serviceMonitor.enabled -- Create a ServiceMonitor resource to expose Prometheus metrics
-    enabled: false
+  prometheus:
+    monitor:
+      # serving.prometheus.monitor.enabled -- Create a ServiceMonitor resource to expose Prometheus metrics
+      enabled: false
 
   javaOpts:
 
