@@ -60,7 +60,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.hosts.mlflow[0] | string | `"mlflow"` |  |
 | global.hosts.mlp[0] | string | `"console"` |  |
 | global.hosts.mlpdocs[0] | string | `"docs"` |  |
-| global.ingressIP | string | `"127.0.0.1"` |  |
+| global.ingressIP | string | `""` |  |
 | global.istioLookUp | object | `{"name":"istio-ingressgateway","namespace":"istio-system"}` | istioIngressIP takes precedence over domain. Used for local deployment |
 | global.merlin.apiPrefix | string | `"/v1"` |  |
 | global.merlin.serviceName | string | `"merlin"` |  |

@@ -38,9 +38,9 @@ spec:
     - name: "feast-ui-backend"
       match:
         - uri:
-            prefix: {{ printf "%s%s" .Values.global.feast.vsPrefix .Values.global.feast.apiPrefix }}
-        - uri:
             prefix: {{ printf "%s%s/" .Values.global.feast.vsPrefix .Values.global.feast.apiPrefix }}
+        - uri:
+            prefix: {{ printf "%s%s" .Values.global.feast.vsPrefix .Values.global.feast.apiPrefix }}
       rewrite:
         uri: {{ printf "%s/" .Values.global.feast.apiPrefix }}
       route:
@@ -58,11 +58,12 @@ spec:
       match:
         - uri:
             exact: {{ .Values.global.feast.vsPrefix }}
-      redirect: {{ $feastPP }}
+      redirect:
+        uri: {{ $feastPP }}
     - name: "feast-ui"
       match:
         - uri:
-            prefix: $feastPP
+            prefix: {{ $feastPP }}
       route:
         - destination:
             host: {{ .Values.global.feast.uiServiceName }}

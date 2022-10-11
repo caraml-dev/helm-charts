@@ -1,4 +1,5 @@
-{{- $ingressIP := include "common.istio-lookup" .Values.global }}
+{{- $ingressIP := ternary .Values.global.ingressIP (include "common.istio-lookup" .Values.global) (ne .Values.global.ingressIP "") }}
+{{- $hosts := (concat (get $.Values.global.hosts "mlp") (get $.Values.global.hosts "mlpdocs") (get $.Values.global.hosts "mlflow") )}}
 {{- if and .Values.https.enabled }}
 ---
 apiVersion: cert-manager.io/v1
@@ -21,7 +22,7 @@ spec:
     kind: ClusterIssuer
     group: cert-manager.io
   dnsNames:
-    {{- range .Values.mlpGateway.hosts }}
+    {{- range $hosts }}
     - {{ include "common.localiseDomain" (list . $ingressIP $.Values.domain) }}
     {{- end }}
 {{- end }}

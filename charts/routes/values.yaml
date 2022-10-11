@@ -1,5 +1,5 @@
 global:
-  ingressIP: "127.0.0.1"
+  ingressIP: ""
   oauthclient: "test-client-123"
   # -- istioIngressIP takes precedence over domain. Used for local deployment
   istioLookUp:
