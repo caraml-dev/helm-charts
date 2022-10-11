@@ -42,7 +42,7 @@ $ helm upgrade routes
 
 ## Configuration
 
-The following table lists the configurable parameters of the Routes chart and their default values.
+The following table lists the configurable parameters of the Routes chart and their default values. The `global` field in `values.yaml` is used to by default in this chart.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
