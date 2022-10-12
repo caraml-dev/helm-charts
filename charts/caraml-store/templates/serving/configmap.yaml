@@ -1,0 +1,30 @@
+{{- if index .Values "serving" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "caraml-store.serving.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "caraml-store.serving.labels" . | indent 4 }}
+data:
+{{- if index .Values.serving "application-generated.yaml" "enabled" }}
+  application-generated.yaml: |
+    server:
+      port: {{ .Values.serving.actuator.port }}
+    caraml:
+      registry:
+        host: {{ include "caraml-store.registry.fullname" . }}
+        port: {{ .Values.registry.service.grpc.port }}
+      store:
+        active: redis
+        redis:
+          host: {{ .Release.Name }}-redis-headless
+          password: 6379
+
+{{- end }}
+
+    {{- if index .Values.serving "application-override.yaml" "enabled" }}
+  application-override.yaml: |
+{{- toYaml (index .Values.serving "application-override.yaml") | nindent 4 }}
+{{- end }}
+{{- end }}

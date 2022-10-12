@@ -1,7 +1,7 @@
 # knative-serving-istio
 
 ---
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
 ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
 
 Installs Knative-serving for Istio
@@ -101,11 +101,11 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istioIngressGateway.chartValues.autoscaling.enabled | bool | `false` |  |
 | istioIngressGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | istioIngressGateway.chartValues.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |
-| istioIngressGateway.chartValues.global.enabled | bool | `true` | Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment |
 | istioIngressGateway.chartValues.name | string | `"istio-ingressgateway"` | Specify name here so each gateway installation has its own unique name |
 | istioIngressGateway.chartValues.resources | object | `{}` |  |
 | istioIngressGateway.chartValues.serviceAccount.create | bool | `true` |  |
 | istioIngressGateway.chartValues.serviceAccount.name | string | `"istio-ingressgateway"` |  |
+| istioIngressGateway.global.enabled | bool | `true` | Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment |
 | istioIngressGateway.helmChart.chart | string | `"gateway"` |  |
 | istioIngressGateway.helmChart.createNamespace | bool | `false` |  |
 | istioIngressGateway.helmChart.namespace | string | `"istio-system"` |  |

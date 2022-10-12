@@ -9,4 +9,5 @@ chart-repos:
   - istio=https://istio-release.storage.googleapis.com/charts
   - jetstack=https://charts.jetstack.io
   - hashicorp=https://helm.releases.hashicorp.com
+  - bitnami=https://charts.bitnami.com/bitnami
 helm-extra-args: --timeout 600s
