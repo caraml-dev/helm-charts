@@ -26,7 +26,8 @@ spec:
         name: https
         protocol: HTTPS
       tls:
-        {{- toYaml .Values.https.tls | nindent 8 }}
+        mode: {{ .Values.https.tls.mode }}
+        credentialName: {{ include "caraml-routes.tls-cert-name" . }}
       hosts:
         {{- range $hosts }}
         - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global) ) }}

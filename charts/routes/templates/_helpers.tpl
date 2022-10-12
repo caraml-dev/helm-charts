@@ -113,3 +113,8 @@ Function to add generate Uri Match and redirect match for routess
     - destination:
         host: {{ $destHost }}
 {{- end }}
+
+
+{{- define "caraml-routes.tls-cert-name" }}
+{{- printf "%s-%s" (include "caraml-routes.fullname" .) (.Values.https.tls.credentialName)}}
+{{- end }}
