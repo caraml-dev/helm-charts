@@ -1,0 +1,179 @@
+# Default values for caraml-store.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+registry:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: "ghcr.io/caraml-dev/caraml-store-registry"
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  imagePullSecrets: []
+  name: registry
+  nameOverride: ""
+  fullnameOverride: ""
+  application.yaml:
+    # registry."application.yaml".enabled -- Flag to include the default configuration. Please set `application-override.yaml` to override this configuration.
+    enabled: true
+
+  application-generated.yaml:
+    # registry."application-generated.yaml".enabled -- Flag to include Helm generated configuration for database URL. This is useful for deployment that uses default configuration for Postgres. Please set `application-override.yaml` to override this configuration.
+    enabled: true
+
+  # registry."application-secret.yaml" -- Configuration to override the default application.yaml. Will be created as a Secret. `application-override.yaml` has a higher precedence than `application-secret.yaml`. It is recommended to either set `application-override.yaml` or `application-secret.yaml` only to simplify config management.
+  application-secret.yaml:
+    enabled: true
+
+  # registry."application-override.yaml" -- Configuration to override the default application.yaml. Will be created as a ConfigMap. `application-override.yaml` has a higher precedence than `application-secret.yaml`
+  application-override.yaml:
+    enabled: true
+  secrets: []
+  podLabels: {}
+  podAnnotations: {}
+  service:
+    # registry.service.type -- Kubernetes service type
+    type: ClusterIP
+    grpc:
+      # registry.service.grpc.port -- Service port for GRPC requests
+      port: 6565
+      # registry.service.grpc.targetPort -- Container port serving GRPC requests
+      targetPort: 6565
+      # service.grpc.nodePort -- Port number that each cluster node will listen to
+      nodePort:
+
+  env:
+    # registry.env.postgresql -- Existing secret to use for authenticating to a postgres database. Will be provided as environment variable.
+    postgresql:
+      enabled: true
+      secret: ""
+      key: postgres-password
+
+  envOverrides: {}
+
+  actuator:
+    # registry.actuator.port -- Port for Spring actuator endpoint
+    port: 8080
+
+  prometheus:
+    monitor:
+      # registry.prometheus.monitor.enabled -- Create a ServiceMonitor resource to expose Prometheus metrics
+      enabled: false
+
+  javaOpts:
+
+  readinessProbe:
+    # registry.readinessProbe.enabled -- Flag to enable the probe
+    enabled: true
+    # registry.readinessProbe.initialDelaySeconds -- Delay before the probe is initiated
+    initialDelaySeconds: 20
+    # registry.readinessProbe.periodSeconds -- How often to perform the probe
+    periodSeconds: 10
+    # registry.readinessProbe.timeoutSeconds -- When the probe times out
+    timeoutSeconds: 10
+    # registry.readinessProbe.successThreshold -- Min consecutive success for the probe to be considered successful
+    successThreshold: 1
+    # registry.readinessProbe.failureThreshold -- Min consecutive failures for the probe to be considered failed
+    failureThreshold: 5
+
+  resources: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+serving:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: "ghcr.io/caraml-dev/caraml-store-serving"
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  imagePullSecrets: []
+  name: serving
+  nameOverride: ""
+  fullnameOverride: ""
+  application.yaml:
+    # serving."application.yaml".enabled -- Flag to include the default configuration. Please set `application-override.yaml` to override this configuration.
+    enabled: true
+
+  application-generated.yaml:
+    # serving."application-generated.yaml".enabled -- Flag to include Helm generated configuration for database URL. This is useful for deployment that uses default configuration for Postgres. Please set `application-override.yaml` to override this configuration.
+    enabled: true
+
+  # serving."application-secret.yaml" -- Configuration to override the default application.yaml. Will be created as a Secret. `application-override.yaml` has a higher precedence than `application-secret.yaml`. It is recommended to either set `application-override.yaml` or `application-secret.yaml` only to simplify config management.
+  application-secret.yaml:
+    enabled: true
+
+  # serving."application-override.yaml" -- Configuration to override the default application.yaml. Will be created as a ConfigMap. `application-override.yaml` has a higher precedence than `application-secret.yaml`
+  application-override.yaml:
+    enabled: true
+
+  secrets: []
+
+  podLabels: {}
+  podAnnotations: {}
+  service:
+    # serving.service.type -- Kubernetes service type
+    type: ClusterIP
+    grpc:
+      # serving.service.grpc.port -- Service port for GRPC requests
+      port: 6566
+      # serving.service.grpc.targetPort -- Container port serving GRPC requests
+      targetPort: 6566
+      # serving.service.grpc.nodePort -- Port number that each cluster node will listen to
+      nodePort:
+
+  envOverrides: {}
+
+  actuator:
+    # serving.actuator.port -- Port for Spring actuator endpoint
+    port: 8080
+
+  prometheus:
+    monitor:
+      # serving.prometheus.monitor.enabled -- Create a ServiceMonitor resource to expose Prometheus metrics
+      enabled: false
+
+  javaOpts:
+
+  readinessProbe:
+    # serving.readinessProbe.enabled -- Flag to enable the probe
+    enabled: true
+    # serving.readinessProbe.initialDelaySeconds -- Delay before the probe is initiated
+    initialDelaySeconds: 20
+    # serving.readinessProbe.periodSeconds -- How often to perform the probe
+    periodSeconds: 10
+    # serving.readinessProbe.timeoutSeconds -- When the probe times out
+    timeoutSeconds: 10
+    # serving.readinessProbe.successThreshold -- Min consecutive success for the probe to be considered successful
+    successThreshold: 1
+    # serving.readinessProbe.failureThreshold -- Min consecutive failures for the probe to be considered failed
+    failureThreshold: 5
+
+  resources: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+postgresql:
+  enabled: true
+
+redis:
+  enabled: true
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false
+  replica:
+    replicaCount: 0
