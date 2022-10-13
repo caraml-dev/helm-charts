@@ -448,6 +448,9 @@ vault:
   enabled: true
   secretName: "vault-secret"
 
+  hook:
+    weight: "-2"
+
   helmChart:
     chart: vault
     repository: https://helm.releases.hashicorp.com
@@ -474,6 +477,8 @@ vault:
 
 kserve:
   enabled: true
+  hook:
+    weight: "-2"
   helmChart:
     chart: kserve
     repository: "https://caraml-dev.github.io/helm-charts"

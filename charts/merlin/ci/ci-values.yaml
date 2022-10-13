@@ -521,6 +521,8 @@ kserve:
     # #################################################################
     knativeServingIstio:
       enabled: true
+      hook:
+        weight: "-2"
       helmChart:
         chart: knative-serving-istio
         version: 1.0.2

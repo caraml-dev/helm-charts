@@ -97,6 +97,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | kserve.helmChart.release | string | `"kserve"` |  |
 | kserve.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
 | kserve.helmChart.version | string | `"0.8.2"` |  |
+| kserve.hook.weight | string | `"-2"` |  |
 | loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
 | merlin-postgresql.persistence.size | string | `"10Gi"` |  |
@@ -232,6 +233,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | vault.helmChart.release | string | `"vault"` |  |
 | vault.helmChart.repository | string | `"https://helm.releases.hashicorp.com"` |  |
 | vault.helmChart.version | string | `"0.19.0"` |  |
+| vault.hook.weight | string | `"-2"` |  |
 | vault.secretName | string | `"vault-secret"` |  |
 
 ----------------------------------------------
