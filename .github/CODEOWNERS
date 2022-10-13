@@ -1,2 +1,4 @@
 # Default owners for repo
 * @caraml-dev/platform
+
+charts/caraml-store @caraml-dev/feast-dev
