@@ -77,16 +77,16 @@ spec:
             - "@/app/jib-classpath-file"
             - dev.caraml.serving.CaraMLServing
             - --spring.config.location=
-          {{- if index .Values.registry "application.yaml" "enabled" -}}
+          {{- if index .Values.serving "application.yaml" "enabled" -}}
               classpath:/application.yaml
           {{- end }}
-          {{- if index .Values.registry "application-generated.yaml" "enabled" -}}
+          {{- if index .Values.serving "application-generated.yaml" "enabled" -}}
               ,file:/etc/caraml-store/application-generated.yaml
           {{- end }}
-          {{- if index .Values.registry "application-secret.yaml" "enabled" -}}
+          {{- if index .Values.serving "application-secret.yaml" "enabled" -}}
               ,file:/etc/secrets/caraml-store/application-secret.yaml
           {{- end }}
-          {{- if index .Values.registry "application-override.yaml" "enabled" -}}
+          {{- if index .Values.serving "application-override.yaml" "enabled" -}}
               ,file:/etc/caraml-store/application-override.yaml
           {{- end }}
 
