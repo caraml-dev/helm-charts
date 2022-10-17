@@ -33,7 +33,7 @@ This will generate a cluster-credentials.json file under `charts/merlin/files` d
   "client_certificate": "",
   "client_key": ""
 }
-``
+```
 
 ## Install Merlin
 

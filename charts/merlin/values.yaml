@@ -366,11 +366,11 @@ mlflow:
   #   orchestrator: unknown
 
   # Add the following configs when you wish to point to an actual S3 for mlflow to store its artifacts
-  # extraEnvs:
+  extraEnvs:
   #   AWS_ACCESS_KEY_ID: YOURACCESSKEY
   #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
   #   AWS_DEFAULT_REGION: ap-southeast-2
-  #   MLFLOW_S3_ENDPOINT_URL: http://minio.minio.svc.cluster.local:9000
+    MLFLOW_S3_ENDPOINT_URL: http://minio.minio.svc.cluster.local:9000
 
 # If you would like to use an external postgres database for MLflow, you can connect using these credentials
 mlflowExternalPostgresql:
@@ -420,23 +420,33 @@ swagger:
 
 minio:
   enabled: true
-  replicas: 1
-  persistence:
-    enabled: false
-  resources:
-    requests:
-      cpu: 25m
-      memory: 64Mi
-  livenessProbe:
-    initialDelaySeconds: 30
-  defaultBucket:
-    enabled: true
-    name: mlflow
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: istio
-    path: /*
+  hook:
+    weight: "-2"
+  helmChart:
+    chart: minio
+    repository: "https://helm.min.io/"
+    version: 7.0.2
+    release: minio
+    namespace: minio
+    createNamespace: true
+  chartValues:
+    replicas: 1
+    persistence:
+      enabled: false
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+    livenessProbe:
+      initialDelaySeconds: 30
+    defaultBucket:
+      enabled: true
+      name: mlflow
+    ingress:
+      enabled: false
+      annotations:
+        kubernetes.io/ingress.class: istio
+      path: /*
 
 setupScript:
   enabled: true

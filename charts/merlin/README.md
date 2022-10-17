@@ -16,6 +16,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 |------------|------|---------|
 | https://caraml-dev.github.io/helm-charts | vault(generic-dep-installer) | 0.1.0 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.1.0 |
+| https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.1.0 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.2.0 |
 | https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.0 |
 | https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.0 |
@@ -112,17 +113,24 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | merlinExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | merlinExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | merlinExternalPostgresql.username | string | `"merlin"` | External postgres database user |
-| minio.defaultBucket.enabled | bool | `true` |  |
-| minio.defaultBucket.name | string | `"mlflow"` |  |
+| minio.chartValues.defaultBucket.enabled | bool | `true` |  |
+| minio.chartValues.defaultBucket.name | string | `"mlflow"` |  |
+| minio.chartValues.ingress.annotations."kubernetes.io/ingress.class" | string | `"istio"` |  |
+| minio.chartValues.ingress.enabled | bool | `false` |  |
+| minio.chartValues.ingress.path | string | `"/*"` |  |
+| minio.chartValues.livenessProbe.initialDelaySeconds | int | `30` |  |
+| minio.chartValues.persistence.enabled | bool | `false` |  |
+| minio.chartValues.replicas | int | `1` |  |
+| minio.chartValues.resources.requests.cpu | string | `"25m"` |  |
+| minio.chartValues.resources.requests.memory | string | `"64Mi"` |  |
 | minio.enabled | bool | `true` |  |
-| minio.ingress.annotations."kubernetes.io/ingress.class" | string | `"istio"` |  |
-| minio.ingress.enabled | bool | `true` |  |
-| minio.ingress.path | string | `"/*"` |  |
-| minio.livenessProbe.initialDelaySeconds | int | `30` |  |
-| minio.persistence.enabled | bool | `false` |  |
-| minio.replicas | int | `1` |  |
-| minio.resources.requests.cpu | string | `"25m"` |  |
-| minio.resources.requests.memory | string | `"64Mi"` |  |
+| minio.helmChart.chart | string | `"minio"` |  |
+| minio.helmChart.createNamespace | bool | `true` |  |
+| minio.helmChart.namespace | string | `"minio"` |  |
+| minio.helmChart.release | string | `"minio"` |  |
+| minio.helmChart.repository | string | `"https://helm.min.io/"` |  |
+| minio.helmChart.version | string | `"7.0.2"` |  |
+| minio.hook.weight | string | `"-2"` |  |
 | mlflow-postgresql.enabled | bool | `true` |  |
 | mlflow-postgresql.persistence.enabled | bool | `true` |  |
 | mlflow-postgresql.persistence.size | string | `"10Gi"` |  |
@@ -134,6 +142,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflow-postgresql.resources.requests.memory | string | `"512Mi"` |  |
 | mlflow.artifactRoot | string | `"/data/artifacts"` |  |
 | mlflow.deploymentLabels | object | `{}` |  |
+| mlflow.extraEnvs.MLFLOW_S3_ENDPOINT_URL | string | `"http://minio.minio.svc.cluster.local:9000"` |  |
 | mlflow.host | string | `"0.0.0.0"` |  |
 | mlflow.image.pullPolicy | string | `"Always"` |  |
 | mlflow.image.registry | string | `"ghcr.io"` |  |
