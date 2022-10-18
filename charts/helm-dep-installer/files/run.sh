@@ -51,8 +51,9 @@ main() {
     # kubectl apply -f /tmp/manifests.yaml
     # kubectl wait pods --all -n $NAMESPACE --for=condition=Ready --timeout=180s
   elif [[ $ACTION == "delete" ]]; then
-    kubectl delete -f /tmp/manifests.yaml --ignore-not-found
-    kubectl wait -f /tmp/manifests.yaml --for=delete --timeout=180s
+    helm uninstall $RELEASE_NAME --namespace $NAMESPACE --debug --wait --timeout=180s
+    # kubectl delete -f /tmp/manifests.yaml --ignore-not-found
+    # kubectl wait -f /tmp/manifests.yaml --for=delete --timeout=180s
     kubectl delete ns $NAMESPACE --ignore-not-found
   fi
 }
