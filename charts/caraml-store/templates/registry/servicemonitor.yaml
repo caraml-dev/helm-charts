@@ -7,7 +7,8 @@ metadata:
 {{ include "caraml-store.registry.labels" . | indent 4 }}
 spec:
   selector:
-{{- include "caraml-store.registry.selectorLabels" . | nindent 4 }}
+    matchLabels:
+{{- include "caraml-store.registry.selectorLabels" . | nindent 6 }}
   endpoints:
     - path: /actuator/prometheus
     - targetPort: {{ .Values.registry.actuator.port }}

@@ -19,9 +19,10 @@ data:
       port: {{ .Values.registry.actuator.port }}
     kubernetes:
       inCluster: true
-    jobService:
-      common:
-        sparkImage: "ghcr.io/caraml-dev/caraml-store-spark:{{ .Values.registry.image.tag | default .Chart.AppVersion }}"
+    caraml:
+      jobService:
+        common:
+          sparkImage: "ghcr.io/caraml-dev/caraml-store-spark:{{ .Values.registry.image.tag | default .Chart.AppVersion }}"
 {{- end }}
 
 {{- if index .Values.registry "application-override.yaml" "enabled" }}
