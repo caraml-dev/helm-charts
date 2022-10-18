@@ -43,7 +43,7 @@ jobs:
           for dir in $(ls -d charts/*/); do
             num_of_deps=$(( $(helm dependency list $dir 2> /dev/null | tail +2 | wc -l ) -1 ))
             if [ $num_of_deps -gt 0 ]; then
-              helm dependency list $dir 2> /dev/null | tail +2 | head -n $num_of_deps | awk '{ print " " $1 " " $3 }' | xargs -n 2 helm repo add
+              helm dependency list $dir 2> /dev/null | tail +2 | head -n $num_of_deps | awk '{ print " " $1 " " $3 }' | xargs -n 2 helm repo add --force-update
             fi
           done
 
