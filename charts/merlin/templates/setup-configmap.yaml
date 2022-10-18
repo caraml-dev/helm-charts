@@ -1,0 +1,15 @@
+{{- if .Values.setupScript.enabled }}
+---
+{{- $configMap := include "merlin.scripts-cm-name" . }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $configMap }}
+  labels:
+    {{- include "merlin.labels" . | nindent 4 }}
+data:
+  run.sh: |
+    {{- .Files.Get "files/run.sh" | nindent 4 }}
+  cluster-credential.json: |
+    {{- .Files.Get "files/cluster-credential.json" | nindent 4 }}
+{{- end }}
