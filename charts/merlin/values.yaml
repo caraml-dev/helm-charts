@@ -394,8 +394,8 @@ mlflow-postgresql:
 
   postgresqlUsername: mlflow
   postgresqlDatabase: mlflow
-  # -- The password secret will be created using this password, must be specified using --set flag.
-  postgresqlPassword: mlflow
+  # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
+  # postgresqlPassword: mlflow
 
   replicaCount: 1
 

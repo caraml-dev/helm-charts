@@ -135,7 +135,6 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflow-postgresql.persistence.enabled | bool | `true` |  |
 | mlflow-postgresql.persistence.size | string | `"10Gi"` |  |
 | mlflow-postgresql.postgresqlDatabase | string | `"mlflow"` |  |
-| mlflow-postgresql.postgresqlPassword | string | `"mlflow"` |  |
 | mlflow-postgresql.postgresqlUsername | string | `"mlflow"` |  |
 | mlflow-postgresql.replicaCount | int | `1` |  |
 | mlflow-postgresql.resources.requests.cpu | string | `"500m"` |  |

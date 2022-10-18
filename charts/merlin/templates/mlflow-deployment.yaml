@@ -57,6 +57,11 @@ spec:
         resources:
 {{ toYaml .Values.mlflow.resources | indent 10 }}
         env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "{{ template "mlflow-postgresql.password-secret-name" . }}"
+              key: "{{ template "mlflow-postgresql.password-secret-key" . }}"
         - name: BACKEND_STORE_URI
           value: "{{ template "mlflow.backendStoreUri" . }}"
         - name: ARTIFACT_ROOT

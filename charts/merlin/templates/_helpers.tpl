@@ -181,26 +181,25 @@ MLflow Postgres related
     {{- if .Values.mlflow.backendStoreUri -}}
         {{- printf .Values.mlflow.backendStoreUri -}}
     {{- else -}}
-        {{- printf "postgresql://%s:%s@%s:5432/%s" (include "mlflow-postgresql.username" .) (index .Values "mlflow-postgresql" "postgresqlPassword") (include "mlflow-postgresql.host" .) (include "mlflow-postgresql.database" .) -}}
+        {{- printf "postgresql://%s:$(DATABASE_PASSWORD)@%s:5432/%s" (include "mlflow-postgresql.username" .) (include "mlflow-postgresql.host" .) (include "mlflow-postgresql.database" .) -}}
     {{- end -}}
 {{- end -}}
 
 
-# TODO: replace hardcoded password with secrets
-# {{- define "mlflow-postgres.password-secret-name" -}}
-#     {{- if index .Values "mlflow-postgresql" "enabled" -}}
-#         {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
-#     {{- else if .Values.mlflowExternalPostgresql.enabled -}}
-#         {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name) .Values.externalPostgresql.secretName -}}
-#     {{- else -}}
-#         {{- printf "%s-postgresql" .Release.Name -}}
-#     {{- end -}}
-# {{- end -}}
+{{- define "mlflow-postgresql.password-secret-name" -}}
+    {{- if index .Values "mlflow-postgresql" "enabled" -}}
+        {{- printf "%s-mlflow-postgresql" .Release.Name -}}
+    {{- else if .Values.mlflowExternalPostgresql.enabled -}}
+        {{- default (printf "%s-mlflow-external-postgresql" .Release.Name) .Values.externalPostgresql.secretName -}}
+    {{- else -}}
+        {{- printf "%s-postgresql" .Release.Name -}}
+    {{- end -}}
+{{- end -}}
 
-# {{- define "mlflow-postgres.password-secret-key" -}}
-#     {{- if and .Values.mlflowExternalPostgresql.enabled -}}
-#         {{- default "postgresql-password" .Values.externalPostgresql.secretKey  -}}
-#     {{- else -}}
-#         {{- printf "postgresql-password" -}}
-#     {{- end -}}
-# {{- end -}}
+{{- define "mlflow-postgresql.password-secret-key" -}}
+    {{- if and .Values.mlflowExternalPostgresql.enabled -}}
+        {{- default "postgresql-password" .Values.externalPostgresql.secretKey  -}}
+    {{- else -}}
+        {{- printf "postgresql-password" -}}
+    {{- end -}}
+{{- end -}}

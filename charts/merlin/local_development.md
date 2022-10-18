@@ -15,6 +15,9 @@ export CLUSTER_NAME=dev
 minikube start --cpus=4 --memory=8192 --kubernetes-version=v1.16.15 --driver=virtualbox
 ```
 
+Lastly, we need to enable Minikube's LoadBalancer services by running `minikube tunnel` in another terminal.
+If using a Kind cluster, Use `./scripts/install_metallib.sh` to install the prerequisite balancers before you install CaraML
+
 ## Generate Cluster Credentials
 
 Vault is needed to store the model cluster credential where models will be deployed. For local development, we will use the same Minikube cluster as model cluster. In production, you may have multiple model clusters. You can use the scripts added in the CaraML charts repo (`caraml/scripts/generate-cluster-creds.sh`) to generate the cluster credentials file in to merlin files, So that the chart will upload it to your local vault when you install CaraML.
