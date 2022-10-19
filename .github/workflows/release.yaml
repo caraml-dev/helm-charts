@@ -37,10 +37,10 @@ jobs:
             fi
           done
 
-      # - name: Run chart-releaser
-      #   uses: helm/chart-releaser-action@v1.4.0
-      #   with:
-      #     charts_dir: charts
-      #     config: .github/config/cr.yaml
-      #   env:
-      #     CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.4.0
+        with:
+          charts_dir: charts
+          config: .github/config/cr.yaml
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
