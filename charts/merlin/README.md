@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![AppVersion: 0.22.0](https://img.shields.io/badge/AppVersion-0.22.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![AppVersion: 0.22.0](https://img.shields.io/badge/AppVersion-0.22.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
