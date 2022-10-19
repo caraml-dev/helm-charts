@@ -1,0 +1,189 @@
+global:
+  ingressIP: ""
+  oauthclient: "test-client-123"
+  # -- istioIngressIP takes precedence over domain. Used for local deployment
+  istioLookUp:
+    namespace: istio-system
+    name: istio-ingressgateway
+
+  # Domain used to configure gateway and virtual service
+  domain: ""
+  hosts:
+    mlp: ["console"]
+    mlpdocs: ["docs"]
+    mlflow: ["mlflow"]
+
+  mlp:
+    apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
+    serviceName: mlp
+    vsPrefix: "/api"
+    useServiceFqdn: false  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/"
+    uiServiceName: mlp
+
+  merlin:
+    apiPrefix: "/v1"
+    serviceName: merlin
+    vsPrefix: "/api/merlin"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/merlin"
+    uiServiceName: merlin
+
+  turing:
+    apiPrefix: "/v1"
+    serviceName: turing
+    vsPrefix: "/api/turing"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/turing"
+    uiServiceName: turing
+
+  xp:
+    apiPrefix: "/"
+    serviceName: xp-management
+    vsPrefix: "/api/xp"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/xp"
+    uiServiceName: xp-management
+
+  pipeline:
+    uiPrefix: "/pipeline"
+    serviceName: pipeline-ui
+
+  feast:
+    apiPrefix: "/api"
+    serviceName: feast-ui
+    vsPrefix: "/feast"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiServiceName: feast-ui
+
+  mlflow:
+    serviceName: merlin-mlflow
+    port: 80
+
+
+#################################################################################################
+# Routes chart specific configuration
+# ###############################################################################################
+# Configuration for turing
+turing:
+  enabled: true
+  # Config to route requests to turing api
+  api:
+    appName: "turing"
+    rewriteUri: "/"
+    # set authHeader to true to require Bearer token to be present before routing requests
+    authHeader: false
+  # Config to route requests to turing docs
+  docs:
+    app: turing
+    redirectMatch: /turing/rest-api
+    rewriteUri: "/api-docs"
+    destHost: turing
+    destPort: 8080
+
+# Configuration for merlin
+merlin:
+  enabled: true
+  # Config to route requests to merlin api
+  api:
+    appName: "merlin"
+    rewriteUri: "/"
+    # set authHeader to true to require Bearer token to be present before routing requests
+    authHeader: false
+  # Config to route requests to merlin docs
+  docs:
+    app: merlin
+    redirectMatch: /merlin/rest-api
+    rewriteUri: "/"
+    destHost: merlin-swagger
+    destPort: 8080
+
+# Configuration for pipeline
+pipeline:
+  enabled: true
+
+# Configuration for xp
+xp:
+  enabled: true
+  # Config to route requests to xp api
+  api:
+    appName: "xp"
+    rewriteUri: "/"
+    # set authHeader to true to require Bearer token to be present before routing requests
+    authHeader: false
+  # Config to route requests to xp management docs
+  managementDocs:
+    app: xp-management
+    redirectMatch: /xp/rest-api
+    rewriteUri: "/"
+    destHost: xp-management-swagger
+    destPort: 8080
+  # Config to route requests to xp treatment docs
+  treatmentDocs:
+    app: xp-treatment
+    redirectMatch: /xp/treatment-api
+    rewriteUri: "/"
+    destHost: xp-treatment-swagger
+    destPort: 8080
+
+# Configuration for feast
+feast:
+  enabled: true
+
+# Configuration for mlflow
+mlflow:
+  enabled: true
+
+# Configuration for mlp
+mlp:
+  enabled: true
+  api:
+    appName: "mlp"
+    rewriteUri: "/"
+    authHeader: false
+
+https:
+  # NOTE: Set https to true by default to allow google oauth login, disable from parent chart
+  enabled: true
+  tls:
+    mode: SIMPLE
+    credentialName: mlp-tls-cert
+
+
+# Configuration for mlp
+mlpGateway:
+  name: mlp-gateway
+  selector:
+    istio: ingressgateway
+
+
+############################################################
+# Istio Base
+############################################################
+base:
+  # Set to false if there is an existing istio deployment
+  enabled: false
+
+############################################################
+# Istiod - installed using helm-dep-installer chart
+############################################################
+istiod:
+  # Set to false if there is an existing istio deployment
+  enabled: false
+
+############################################################
+# istioIngressGateway - installed using helm-dep-installer chart
+############################################################
+istioIngressGateway:
+  global:
+    enabled: false
+
+certManagerBase:
+  enabled: true
+
+cert-manager:
+  enabled: true
+
+
+common:
+  enabled: true

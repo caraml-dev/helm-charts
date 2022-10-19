@@ -82,7 +82,7 @@ jobs:
           fi
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/config/ct.yaml --excluded-charts kserve
+        run: ct install --config .github/config/ct.yaml --excluded-charts kserve,common
 
       - name: Run chart-testing for kserve (install)
         env:

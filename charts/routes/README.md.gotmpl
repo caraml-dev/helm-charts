@@ -1,0 +1,48 @@
+{{ template "chart.header" . }}
+---
+{{ template "chart.versionBadge" . }}
+{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+## Introduction
+
+This Helm chart installs Caraml Routes.
+
+
+## Installation
+
+### Add Helm repository
+
+```shell
+helm repo add caraml https://caraml-dev.github.io/helm-charts
+```
+
+### Installing the chart
+* For installation of CaraML into local or managed K8s clusters,
+  * this chart must be installed after installing the main Caraml chart, and
+  * installed in the SAME K8s Namespace as the main Caraml Chart
+* It assumes that Istio will be installed together with the main Caraml chart, or is already installed the cluster
+* This is because we need the local istio ingress's load balancer IP address, to enable successful routing of requests
+* Routes will be exposed at `<component>.<INGRESS_IP>.nip.io`
+
+
+```shell
+$ helm install routes caraml/caraml-routes
+```
+
+### Installation of Routes chart with Istio
+* If istio is not installed together with the main Caraml chart or for testing purposes, Istio can be installed together with the routes chart.
+```sh
+$ helm install routes charts/routes --values charts/routes/ci/test-values.yaml --wait
+```
+* Once the chart is installed successfully, run this command to update the hostnames to use the correct istio ingress IP.
+```sh
+$ helm upgrade routes
+```
+
+## Configuration
+
+The following table lists the configurable parameters of the Routes chart and their default values. The `global` field in `values.yaml` is used to by default in this chart.
+
+{{ template "chart.valuesTable" . }}

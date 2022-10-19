@@ -1,0 +1,22 @@
+{{- if .Values.mlflow.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-mlflow-vs" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  hosts:
+    {{- range .Values.global.hosts.mlflow }}
+    - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global) ) }}
+    {{- end}}
+  gateways:
+    - {{ include "caraml-routes.mlp-gateway" . }}
+  http:
+    - route:
+        - destination:
+            host: {{ .Values.global.mlflow.serviceName }}
+            port:
+              number: {{ .Values.global.mlflow.port }}
+{{- end }}

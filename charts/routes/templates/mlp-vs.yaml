@@ -1,0 +1,123 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-vs" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  hosts:
+    {{- range .Values.global.hosts.mlp }}
+    - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global) ) }}
+    {{- end}}
+  gateways:
+    - {{ include "caraml-routes.mlp-gateway" . }}
+  http:
+    {{- if .Values.turing.enabled }}
+    {{- with .Values.turing.api }}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName (include "common.get-prefix-match" $.Values.global.turing) .rewriteUri $.Values.global.turing.serviceName .authHeader) | indent 4}}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.xp.enabled }}
+    {{- with .Values.xp.api }}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName (include "common.get-prefix-match" $.Values.global.xp) .rewriteUri $.Values.global.xp.serviceName .authHeader) | indent 4}}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.merlin.enabled }}
+    {{- with .Values.merlin.api }}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName (include "common.get-prefix-match" $.Values.global.merlin) .rewriteUri $.Values.global.merlin.serviceName .authHeader) | indent 4}}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.mlp.enabled }}
+    {{- with .Values.mlp.api }}
+    {{- include "caraml-routes.mlp-api-routes" (list .appName (include "common.get-prefix-match" $.Values.global.mlp) .rewriteUri $.Values.global.mlp.serviceName .authHeader) | indent 4}}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.feast.enabled }}
+    - name: "feast-ui-backend"
+      match:
+        - uri:
+            prefix: {{ printf "%s%s/" .Values.global.feast.vsPrefix .Values.global.feast.apiPrefix }}
+        - uri:
+            prefix: {{ printf "%s%s" .Values.global.feast.vsPrefix .Values.global.feast.apiPrefix }}
+      rewrite:
+        uri: {{ printf "%s/" .Values.global.feast.apiPrefix }}
+      route:
+        - destination:
+            host: {{ .Values.global.feast.serviceName }}
+            port:
+              number: 8080
+    {{- end }}
+    #########################################################
+    #                 MLP COMPONENTS UI
+    #########################################################
+    {{- if .Values.feast.enabled }}
+    {{ $feastPP := printf "%s/" .Values.global.feast.vsPrefix }}
+    - name: "feast-ui-redirect"
+      match:
+        - uri:
+            exact: {{ .Values.global.feast.vsPrefix }}
+      redirect:
+        uri: {{ $feastPP }}
+    - name: "feast-ui"
+      match:
+        - uri:
+            prefix: {{ $feastPP }}
+      route:
+        - destination:
+            host: {{ .Values.global.feast.uiServiceName }}
+            port:
+              number: 8080
+    {{- end }}
+    {{- if .Values.merlin.enabled }}
+    - name: "merlin-ui"
+      match:
+        - uri:
+            prefix: {{ .Values.global.merlin.uiPrefix }}
+      route:
+        - destination:
+            host: {{ .Values.global.merlin.serviceName }}
+            port:
+              number: 8080
+    {{- end }}
+    {{- if .Values.pipeline.enabled}}
+    - name: "pipeline-ui"
+      match:
+        - uri:
+            prefix: {{ .Values.global.pipeline.uiPrefix }}
+      route:
+        - destination:
+            host: {{ .Values.global.pipeline.serviceName }}
+            port:
+              number: 8080
+    {{- end }}
+    {{- if .Values.turing.enabled }}
+    - name: "turing-ui"
+      match:
+        - uri:
+            prefix: {{ .Values.global.turing.uiPrefix }}
+      route:
+        - destination:
+            host: {{ .Values.global.turing.uiServiceName }}
+            port:
+              number: 8080
+    {{- end }}
+    {{- if .Values.xp.enabled }}
+    - name: "turing-experiments-ui"
+      match:
+        - uri:
+            prefix: {{ .Values.global.xp.uiPrefix }}
+      route:
+        - destination:
+            host: {{ .Values.global.xp.uiServiceName }}
+            port:
+              number: 8080
+    {{- end }}
+    {{- if .Values.mlp.enabled }}
+    - name: "mlp-ui-console"
+      route:
+        - destination:
+            host: {{ .Values.global.mlp.uiServiceName }}
+            port:
+              number: 8080
+    {{- end }}

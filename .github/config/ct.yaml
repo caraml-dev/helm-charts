@@ -8,6 +8,8 @@ chart-repos:
   - stable=https://charts.helm.sh/stable
   - istio=https://istio-release.storage.googleapis.com/charts
   - jetstack=https://charts.jetstack.io
+excluded-charts:
+  - common
   - hashicorp=https://helm.releases.hashicorp.com
   - bitnami=https://charts.bitnami.com/bitnami
 helm-extra-args: --timeout 800s
