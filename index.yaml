@@ -71,6 +71,49 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.1.0/caraml-0.1.0.tgz
     version: 0.1.0
+  caraml-routes:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-10-19T08:49:28.952486062Z"
+    dependencies:
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.4
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: file://../cert-manager-base
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.8.1
+    - condition: common.enabled
+      name: common
+      repository: file://../common
+      version: 0.1.0
+    description: A Helm chart for deploying CaraML networking resources
+    digest: 33b8950ff3e46381094ecc47288317a7c3e6d41bb52300ffff2270665c19c299
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml-routes
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-routes-0.1.0/caraml-routes-0.1.0.tgz
+    version: 0.1.0
   caraml-store:
   - apiVersion: v2
     appVersion: 0.1.3
@@ -140,6 +183,17 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/cert-manager-base-1.8.1/cert-manager-base-1.8.1.tgz
     version: 1.8.1
+  common:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-10-19T08:49:29.109356024Z"
+    description: A Helm chart for Kubernetes
+    digest: 6d2e61aff2af1be4cea46b662069a5fd8378eafcfa8dfd7b9574e9ad3c7a70a2
+    name: common
+    type: library
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/common-0.1.0/common-0.1.0.tgz
+    version: 0.1.0
   generic-dep-installer:
   - apiVersion: v2
     appVersion: v0.1.0
@@ -355,6 +409,34 @@ entries:
   kserve:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2022-10-19T08:49:29.258438743Z"
+    dependencies:
+    - alias: knativeServingIstio
+      condition: knativeServingIstio.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.1
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.8.1
+    description: A Helm chart for installing Kserve
+    digest: 4d798016f714d674e100739ccb4971adb6b96fc0f41d5572f0f94d9145c37f2b
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: kserve
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/kserve-0.8.5/kserve-0.8.5.tgz
+    version: 0.8.5
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2022-10-10T06:06:55.788846642Z"
     dependencies:
     - alias: knativeServingIstio
@@ -515,4 +597,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2022-10-19T05:09:24.105085206Z"
+generated: "2022-10-19T08:49:29.258556345Z"
