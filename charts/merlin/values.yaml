@@ -38,14 +38,14 @@ feastCoreApi:
 
 imageBuilder:
   clusterName: "test"
-  baseImages: 
-    3.7.*: 
+  baseImages:
+    3.7.*:
       imageName: pyfunc-py37:v0.1.0
       dockerfilePath: "docker/Dockerfile"
       buildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
       mainAppPath: /merlin-spark-app/main.py
-  predictionJobBaseImages: 
-    3.7.*: 
+  predictionJobBaseImages:
+    3.7.*:
       imageName: pyspark-py37:v0.1.0
       dockerfilePath: "docker/app.Dockerfile"
       buildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
