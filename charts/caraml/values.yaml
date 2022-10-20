@@ -57,8 +57,6 @@ caraml-routes:
   cert-manager:
     enabled: false
 
-
-
 postgresql:
   # -- To enable/disable CaraML specific postgres
   enabled: true
@@ -100,7 +98,6 @@ postgresql:
       CREATE DATABASE mlp;
       CREATE DATABASE merlin;
       CREATE DATABASE mlflow;
-
 
 ############################################################
 # Istio Base
