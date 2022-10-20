@@ -111,21 +111,21 @@ spec:
               value: {{ .Values.deployment.docs | toJson | quote  }}
             {{- end }}
             - name: REACT_APP_FEAST_CORE_API
-              value: {{ include "common.set-value" (list $globFeastApi .Values.deployment.ui.feastCoreApi) | quote }}
+              value: {{ include "common.set-value" (list .Values.deployment.ui.feastCoreApi $globFeastApi) | quote }}
             - name: REACT_APP_MERLIN_API
-              value: {{ include "common.set-value" (list $globMerlinApi .Values.deployment.ui.merlinApi) | quote }}
+              value: {{ include "common.set-value" (list .Values.deployment.ui.merlinApi $globMerlinApi) | quote }}
             - name: REACT_APP_TURING_API
-              value: {{ include "common.set-value" (list $globTuringApi .Values.deployment.ui.turingApi) | quote }}
+              value: {{ include "common.set-value" (list .Values.deployment.ui.turingApi $globTuringApi) | quote }}
             - name: REACT_APP_CLOCKWORK_UI_HOMEPAGE
               value: "{{ .Values.deployment.ui.clockworkHomepage }}"
             - name: REACT_APP_FEAST_UI_HOMEPAGE
-              value: {{ include "common.set-value" (list $globFeastUI .Values.deployment.ui.feastHomepage) | quote }}
+              value: {{ include "common.set-value" (list .Values.deployment.ui.feastHomepage $globFeastUI) | quote }}
             - name: REACT_APP_KUBEFLOW_UI_HOMEPAGE
               value: "{{ .Values.deployment.ui.kubeflowHomepage }}"
             - name: REACT_APP_MERLIN_UI_HOMEPAGE
-              value: {{ include "common.set-value" (list $globMerlinUI .Values.deployment.ui.merlinHomepage) | quote }}
+              value: {{ include "common.set-value" (list .Values.deployment.ui.merlinHomepage $globMerlinUI) | quote }}
             - name: REACT_APP_TURING_UI_HOMEPAGE
-              value: {{ include "common.set-value" (list $globTuringUI .Values.deployment.ui.turingHomepage) | quote }}
+              value: {{ include "common.set-value" (list .Values.deployment.ui.turingHomepage $globTuringUI) | quote }}
 {{- if .Values.deployment.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.deployment.imagePullSecrets | indent 6 }}
