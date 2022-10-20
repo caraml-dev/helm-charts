@@ -30,6 +30,33 @@ merlin:
     enabled: false
   mlp:
     enabled: false
+  kserve:
+    enabled: true
+    chartValues:
+      knativeServingIstio:
+        chartValues:
+          istiod:
+            enabled: false
+          base:
+            enabled: false
+          istioIngressGateway:
+            enabled: false
+          clusterLocalGateway:
+            enabled: false
+      # NOTE: If kserve is enabled, install cert-manager through kserve because
+      # kserve requires cert-manager to be installed first
+      # certManagerBase:
+      #   enabled: false
+      cert-manager:
+        enabled: true
+
+caraml-routes:
+  enabled: true
+  certManagerBase:
+    enabled: false
+  cert-manager:
+    enabled: false
+
 
 
 postgresql:
@@ -73,3 +100,186 @@ postgresql:
       CREATE DATABASE mlp;
       CREATE DATABASE merlin;
       CREATE DATABASE mlflow;
+
+
+############################################################
+# Istio Base
+############################################################
+base:
+  # -- Set to false if there is an existing istio deployment
+  enabled: true
+  validationURL: ""
+  global:
+    istioNamespace: "istio-system"
+
+############################################################
+# Istiod - installed using helm-dep-installer chart
+############################################################
+istiod:
+  # -- Set to false if there is an existing istio deployment
+  enabled: true
+  helmChart:
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    chart: istiod
+    version: 1.13.4
+    release: istiod
+    namespace: "istio-system"
+  hook:
+    weight: -3
+  chartValues:
+    deployInReleaseNs: false
+    configValidation: true
+    global:
+      istioNamespace: "istio-system"
+      configValidation: true
+    pilot:
+      autoscaleEnabled: false
+      # -- Set accordingly based on environment
+      # autoscaleMin: 1
+      # autoscaleMax: 5
+      # rollingMaxSurge: 100%
+      # rollingMaxUnavailable: 25%
+
+      resources:
+        requests:
+          cpu: 500m
+          memory: 512Mi
+        limits:
+          cpu: 1
+          memory: 1024Mi
+      cpu:
+        targetAverageUtilization: 80
+
+    meshConfig:
+      enableTracing: false
+
+############################################################
+# istioIngressGateway - installed using helm-dep-installer chart
+############################################################
+istioIngressGateway:
+  global:
+    # -- Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment
+    enabled: true
+  helmChart:
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    chart: gateway
+    version: 1.13.4
+    release: istio-ingress-gateway
+    namespace: "istio-system"
+    createNamespace: false
+  hook:
+    weight: 1
+  chartValues:
+    # -- Specify name here so each gateway installation has its own unique name
+    name: istio-ingressgateway
+    autoscaling:
+      enabled: false
+      # # -- Set accordingly based on environment
+      # minReplicas: 1
+      # maxReplicas: 4
+      # targetCPUUtilizationPercentage: 80
+
+    serviceAccount:
+      # If set, a service account will be created. Otherwise, the default is used
+      create: true
+      # The name of the service account to use.
+      # If not set, the release name is used
+      name: "istio-ingressgateway"
+
+    env:
+      ISTIO_META_ROUTER_MODE: standard
+      ISTIO_METAJSON_STATS: |
+        {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
+
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+############################################################
+# clusterLocalGateway - installed using helm-dep-installer chart
+############################################################
+clusterLocalGateway:
+  global:
+    # -- Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment
+    enabled: true
+  helmChart:
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    chart: gateway
+    version: 1.13.4
+    release: cluster-local-gateway
+    namespace: "istio-system"
+    createNamespace: false
+  hook:
+    weight: 1
+  chartValues:
+    global:
+      # -- Controls deployment of cluster-local-gateway. Set to false if there is an existing istio deployment
+      enabled: true
+    # -- Specify name here so each gateway installation has its own unique name
+    name: cluster-local-gateway
+    labels:
+      app: cluster-local-gateway
+      istio: cluster-local-gateway
+
+    serviceAccount:
+      # If set, a service account will be created. Otherwise, the default is used
+      create: true
+      # The name of the service account to use.
+      # If not set, the release name is used
+      name: "cluster-local-gateway"
+    autoscaling:
+      enabled: false
+      # # -- Set accordingly based on environment
+      # minReplicas: 1
+      # maxReplicas: 4
+      # targetCPUUtilizationPercentage: 60
+
+    env:
+      ISTIO_METAJSON_STATS: |
+        {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
+
+    resources:
+      {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+    service:
+      type: ClusterIP
+      ports:
+        - port: 80
+          targetPort: 80
+          name: http2
+        - port: 443
+          name: https
+
+###################################################################
+# Cert manager Base for Cert Manager CRDs
+# #################################################################
+certManagerBase:
+  enabled: true
+
+###################################################################
+# Cert manager dependency
+# #################################################################
+# Use hyphen so chart name can be used as part of resource name
+cert-manager:
+  # NOTE: disable certmanager if kserve needs to be installed
+  fullnameOverride: cert-manager
+  enabled: false
