@@ -104,9 +104,9 @@ spec:
           - name: IMG_BUILDER_CLUSTER_NAME
             value: "{{ .Values.imageBuilder.clusterName }}"
           - name: IMG_BUILDER_BASE_IMAGES
-            value: {{ .Values.merlin.imageBuilder.baseImages | toJson | quote }}
+            value: {{ .Values.imageBuilder.baseImages | toJson | quote }}
           - name: IMG_BUILDER_PREDICTION_JOB_BASE_IMAGES
-            value: {{ .Values.merlin.imageBuilder.predictionJobBaseImages | toJson | quote }}
+            value: {{ .Values.imageBuilder.predictionJobBaseImages | toJson | quote }}
           - name: IMG_BUILDER_NAMESPACE
             value: "{{ .Values.imageBuilder.namespace }}"
           - name: IMG_BUILDER_DOCKER_REGISTRY
