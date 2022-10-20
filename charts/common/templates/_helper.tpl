@@ -33,15 +33,13 @@ Takes 3 arguments:
 {{- end }}
 
 {{/*
-1st arg is global map object, 2nd arg is value in values.yaml
+Pass in is global map object
 */}}
 {{- define "common.get-oauth-client" }}
-{{- $store := index . 0 }}
-{{- $val := index . 1 }}
-{{- if $store }}
-{{- $temp := printf "%s" $store.oauthclient }}
-{{- include "common.set-value" (list $temp $val)}}
+{{- $store := . }}
+{{- if ne $store.oauthclient "" }}
+{{- printf "%s" $store.oauthclient }}
 {{- else }}
-{{- printf "%s" $val}}
+{{- printf "" }}
 {{- end }}
 {{- end }}
