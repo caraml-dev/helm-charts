@@ -48,7 +48,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | encryption.key | string | `"password"` |  |
 | environment | string | `"dev"` |  |
-| environmentConfigs[0].cluster | string | `"test"` |  |
+| environmentConfigs[0].cluster | string | `"caraml-test"` |  |
 | environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
 | environmentConfigs[0].default_deployment_config.max_replica | int | `1` |  |
 | environmentConfigs[0].default_deployment_config.memory_request | string | `"500Mi"` |  |
@@ -76,7 +76,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | feastCoreApi.apiHost | string | `"http://feast-core.mlp:8080/v1"` |  |
 | imageBuilder.baseImage | string | `""` |  |
 | imageBuilder.buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.clusterName | string | `"test"` |  |
+| imageBuilder.clusterName | string | `"caraml-test"` |  |
 | imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
 | imageBuilder.dockerfilePath | string | `"./Dockerfile"` |  |
 | imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
@@ -177,6 +177,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflowExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | mlflowExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
+| mlp.enabled | bool | `true` |  |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
 | mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
 | monitoring.enabled | bool | `false` |  |

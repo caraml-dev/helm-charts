@@ -14,6 +14,7 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://caraml-dev.github.io/helm-charts | merlin | 0.8.1 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.2.0 |
 | https://charts.helm.sh/stable | postgresql | 7.0.0 |
 
@@ -21,13 +22,19 @@ A Helm chart for deploying CaraML components
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| global.merlin.mlflow.postgresqlDatabase | string | `"mlflow"` |  |
+| global.merlin.postgresqlDatabase | string | `"merlin"` |  |
 | global.mlp.postgresqlDatabase | string | `"mlp"` |  |
 | global.postgresqlDatabase | string | `"caraml"` |  |
 | global.postgresqlUsername | string | `"caraml"` |  |
+| merlin.enabled | bool | `true` | To enable/disable merlin chart installation. |
+| merlin.merlin-postgresql.enabled | bool | `false` | To enable/disable merlin specific postgres |
+| merlin.mlflow-postgresql.enabled | bool | `false` | To enable/disable mlflow specific postgres |
+| merlin.mlp.enabled | bool | `false` |  |
 | mlp.enabled | bool | `true` | To enable/disable MLP chart installation. |
 | mlp.postgresql.enabled | bool | `false` | To enable/disable MLP specific postgres |
 | postgresql.enabled | bool | `true` | To enable/disable CaraML specific postgres |
-| postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\n"` |  |
+| postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\nCREATE DATABASE merlin;\nCREATE DATABASE mlflow;\n"` |  |
 | postgresql.persistence.size | string | `"10Gi"` |  |
 | postgresql.postgresqlDatabase | string | `"caraml"` | To set the database schema name created in postgres |
 | postgresql.postgresqlUsername | string | `"caraml"` | To set the user name for the database instance |

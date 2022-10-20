@@ -173,7 +173,7 @@ MLflow Postgres related
     {{- else if .Values.mlflowExternalPostgresql.enabled -}}
         {{- .Values.mlflowExternalPostgresql.database -}}
     {{- else -}}
-        {{- .Values.global.merlin.postgresqlDatabase -}}
+        {{- .Values.global.merlin.mlflow.postgresqlDatabase -}}
     {{- end -}}
 {{- end -}}
 

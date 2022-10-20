@@ -7,6 +7,10 @@ global:
   postgresqlDatabase: caraml
   mlp:
     postgresqlDatabase: mlp
+  merlin:
+    postgresqlDatabase: merlin
+    mlflow:
+      postgresqlDatabase: mlflow
 
 mlp:
   # -- To enable/disable MLP chart installation.
@@ -14,6 +18,19 @@ mlp:
   postgresql:
     # -- To enable/disable MLP specific postgres
     enabled: false
+
+merlin:
+  # -- To enable/disable merlin chart installation.
+  enabled: true
+  merlin-postgresql:
+    # -- To enable/disable merlin specific postgres
+    enabled: false
+  mlflow-postgresql:
+    # -- To enable/disable mlflow specific postgres
+    enabled: false
+  mlp:
+    enabled: false
+
 
 postgresql:
   # -- To enable/disable CaraML specific postgres
@@ -33,9 +50,6 @@ postgresql:
   # -- To set the database schema name created in postgres
   postgresqlDatabase: caraml
 
-  initdbScripts:
-    init.sql: |
-      CREATE DATABASE mlp;
   # metrics:
   #   enabled: true
   #   serviceMonitor:
@@ -53,3 +67,9 @@ postgresql:
   #   numSynchronousReplicas: 2
   #   ## Replication Cluster application name. Useful for defining multiple replication policies
   #   applicationName: caraml
+
+  initdbScripts:
+    init.sql: |
+      CREATE DATABASE mlp;
+      CREATE DATABASE merlin;
+      CREATE DATABASE mlflow;
