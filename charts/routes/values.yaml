@@ -16,6 +16,7 @@ global:
   mlp:
     apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
     serviceName: mlp
+    externalPort: "8080"
     vsPrefix: "/api"
     useServiceFqdn: false  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/"
@@ -24,6 +25,7 @@ global:
   merlin:
     apiPrefix: "/v1"
     serviceName: merlin
+    externalPort: "8080"
     vsPrefix: "/api/merlin"
     useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/merlin"
@@ -32,6 +34,7 @@ global:
   turing:
     apiPrefix: "/v1"
     serviceName: turing
+    externalPort: "8080"
     vsPrefix: "/api/turing"
     useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/turing"
@@ -40,6 +43,7 @@ global:
   xp:
     apiPrefix: "/"
     serviceName: xp-management
+    externalPort: "8080"
     vsPrefix: "/api/xp"
     useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/xp"
@@ -48,17 +52,19 @@ global:
   pipeline:
     uiPrefix: "/pipeline"
     serviceName: pipeline-ui
+    externalPort: "8080"
 
   feast:
     apiPrefix: "/api"
     serviceName: feast-ui
+    externalPort: "8080"
     vsPrefix: "/feast"
     useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiServiceName: feast-ui
 
   mlflow:
     serviceName: merlin-mlflow
-    port: 80
+    externalPort: "80"
 
 
 #################################################################################################

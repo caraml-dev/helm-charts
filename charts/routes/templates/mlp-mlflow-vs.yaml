@@ -18,5 +18,5 @@ spec:
         - destination:
             host: {{ .Values.global.mlflow.serviceName }}
             port:
-              number: {{ .Values.global.mlflow.port }}
+              number: {{ .Values.global.mlflow.externalPort | atoi }}
 {{- end }}

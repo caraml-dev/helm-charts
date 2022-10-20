@@ -46,7 +46,7 @@ spec:
         - destination:
             host: {{ .Values.global.feast.serviceName }}
             port:
-              number: 8080
+              number: {{ .Values.global.feast.externalPort | atoi }}
     {{- end }}
     #########################################################
     #                 MLP COMPONENTS UI
@@ -67,7 +67,7 @@ spec:
         - destination:
             host: {{ .Values.global.feast.uiServiceName }}
             port:
-              number: 8080
+              number: {{ .Values.global.feast.externalPort | atoi }}
     {{- end }}
     {{- if .Values.merlin.enabled }}
     - name: "merlin-ui"
@@ -78,7 +78,7 @@ spec:
         - destination:
             host: {{ .Values.global.merlin.serviceName }}
             port:
-              number: 8080
+              number: {{ .Values.global.merlin.externalPort | atoi }}
     {{- end }}
     {{- if .Values.pipeline.enabled}}
     - name: "pipeline-ui"
@@ -89,7 +89,7 @@ spec:
         - destination:
             host: {{ .Values.global.pipeline.serviceName }}
             port:
-              number: 8080
+              number: {{ .Values.global.pipeline.externalPort | atoi }}
     {{- end }}
     {{- if .Values.turing.enabled }}
     - name: "turing-ui"
@@ -100,7 +100,7 @@ spec:
         - destination:
             host: {{ .Values.global.turing.uiServiceName }}
             port:
-              number: 8080
+              number: {{ .Values.global.turing.externalPort | atoi }}
     {{- end }}
     {{- if .Values.xp.enabled }}
     - name: "turing-experiments-ui"
@@ -111,7 +111,7 @@ spec:
         - destination:
             host: {{ .Values.global.xp.uiServiceName }}
             port:
-              number: 8080
+              number: {{ .Values.global.xp.externalPort | atoi }}
     {{- end }}
     {{- if .Values.mlp.enabled }}
     - name: "mlp-ui-console"
@@ -119,5 +119,5 @@ spec:
         - destination:
             host: {{ .Values.global.mlp.uiServiceName }}
             port:
-              number: 8080
+              number: {{ .Values.global.mlp.externalPort | atoi }}
     {{- end }}
