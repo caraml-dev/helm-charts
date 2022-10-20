@@ -4,7 +4,7 @@ dependencies:
   version: 0.2.0
 - name: merlin
   repository: file://../merlin
-  version: 0.8.2
+  version: 0.9.1
 - name: postgresql
   repository: https://charts.helm.sh/stable
   version: 7.0.0
@@ -32,5 +32,5 @@ dependencies:
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.8.1
-digest: sha256:e527e52f6e9c0d3dd68389a27f1526d86a095cd64a5cd007162a4f50cc7b8396
-generated: "2022-10-20T14:19:40.445862+05:30"
+digest: sha256:8d5eba63983ca70bf2088f9dda7e971f40b9dafe2022c2a2cc9e875615d77222
+generated: "2022-10-20T14:52:56.265942+05:30"

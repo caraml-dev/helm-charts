@@ -14,7 +14,7 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../merlin | merlin | 0.8.2 |
+| file://../merlin | merlin | 0.9.1 |
 | https://caraml-dev.github.io/helm-charts | caraml-routes | 0.1.0 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.1 |
