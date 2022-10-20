@@ -3,7 +3,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
-    tag: 0.23.0-rc1
+    tag: 0.24.0-rc1
 
   replicaCount: "2"
 
