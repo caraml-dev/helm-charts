@@ -36,7 +36,7 @@ Takes 3 arguments:
 Pass in is global map object
 */}}
 {{- define "common.get-oauth-client" }}
-{{- $store := index . 0 }}
+{{- $store := . }}
 {{- if ne $store.oauthclient "" }}
 {{- printf "%s" $store.oauthclient }}
 {{- else }}
