@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.8.2](https://img.shields.io/badge/Version-0.8.2-informational?style=flat-square) ![AppVersion: 0.23.0](https://img.shields.io/badge/AppVersion-0.23.0-informational?style=flat-square)
+![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -38,7 +38,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.23.0"` |  |
+| deployment.image.tag | string | `"0.24.0-rc1"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -74,19 +74,21 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | environmentConfigs[0].queue_resource_percentage | string | `"20"` |  |
 | environmentConfigs[0].region | string | `"id"` |  |
 | feastCoreApi.apiHost | string | `"http://feast-core.mlp:8080/v1"` |  |
-| imageBuilder.baseImage | string | `""` |  |
-| imageBuilder.buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.clusterName | string | `"caraml-test"` |  |
+| imageBuilder.baseImages."3.7.*".buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
+| imageBuilder.baseImages."3.7.*".dockerfilePath | string | `"docker/Dockerfile"` |  |
+| imageBuilder.baseImages."3.7.*".imageName | string | `"pyfunc-py37:v0.1.0"` |  |
+| imageBuilder.baseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| imageBuilder.clusterName | string | `"test"` |  |
 | imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
-| imageBuilder.dockerfilePath | string | `"./Dockerfile"` |  |
 | imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
 | imageBuilder.maxRetry | int | `3` |  |
 | imageBuilder.namespace | string | `"mlp"` |  |
 | imageBuilder.nodeSelectors | object | `{}` |  |
-| imageBuilder.predictionJobBaseImage | string | `"gojek/mlp/merlin-pyspark:v0.4.1"` |  |
-| imageBuilder.predictionJobBuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
+| imageBuilder.predictionJobBaseImages."3.7.*".buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
+| imageBuilder.predictionJobBaseImages."3.7.*".dockerfilePath | string | `"docker/app.Dockerfile"` |  |
+| imageBuilder.predictionJobBaseImages."3.7.*".imageName | string | `"pyspark-py37:v0.1.0"` |  |
+| imageBuilder.predictionJobBaseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.predictionJobContextSubPath | string | `""` |  |
-| imageBuilder.predictionJobDockerfilePath | string | `"docker/app.Dockerfile"` |  |
 | imageBuilder.retention | string | `"48h"` |  |
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
