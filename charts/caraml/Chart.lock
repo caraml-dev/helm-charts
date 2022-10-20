@@ -8,5 +8,29 @@ dependencies:
 - name: postgresql
   repository: https://charts.helm.sh/stable
   version: 7.0.0
-digest: sha256:f057bc14e978f0d71b3bbf9844f8080180663700910f327be9ce729f4bb561e7
-generated: "2022-10-20T10:40:05.193282+05:30"
+- name: caraml-routes
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.1.0
+- name: common
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.1
+- name: base
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.13.4
+- name: generic-dep-installer
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.1.1
+- name: generic-dep-installer
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.1.1
+- name: generic-dep-installer
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.1.1
+- name: cert-manager-base
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 1.8.1
+- name: cert-manager
+  repository: https://charts.jetstack.io
+  version: v1.8.1
+digest: sha256:f1429599d75f7eafcd328740f36ff2f232ed04236229bd0e36a468f63fca7fb3
+generated: "2022-10-20T14:55:58.741902+08:00"
