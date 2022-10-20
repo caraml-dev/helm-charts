@@ -103,18 +103,10 @@ spec:
             value: "{{ .Values.ui.maxAllowedReplica }}"
           - name: IMG_BUILDER_CLUSTER_NAME
             value: "{{ .Values.imageBuilder.clusterName }}"
-          - name: IMG_BUILDER_BUILD_CONTEXT_URI
-            value: "{{ .Values.imageBuilder.buildContextURI }}"
-          - name: IMG_BUILDER_DOCKERFILE_PATH
-            value: "{{ .Values.imageBuilder.dockerfilePath }}"
-          - name: IMG_BUILDER_BASE_IMAGE
-            value: "{{ .Values.imageBuilder.baseImage }}"
-          - name: IMG_BUILDER_PREDICTION_JOB_BUILD_CONTEXT_URI
-            value: "{{ .Values.imageBuilder.predictionJobBuildContextURI }}"
-          - name: IMG_BUILDER_PREDICTION_JOB_DOCKERFILE_PATH
-            value: "{{ .Values.imageBuilder.predictionJobDockerfilePath }}"
-          - name: IMG_BUILDER_PREDICTION_JOB_BASE_IMAGE
-            value: "{{ .Values.imageBuilder.predictionJobBaseImage }}"
+          - name: IMG_BUILDER_BASE_IMAGES
+            value: {{ .Values.imageBuilder.baseImages | toJson | quote }}
+          - name: IMG_BUILDER_PREDICTION_JOB_BASE_IMAGES
+            value: {{ .Values.imageBuilder.predictionJobBaseImages | toJson | quote }}
           - name: IMG_BUILDER_NAMESPACE
             value: "{{ .Values.imageBuilder.namespace }}"
           - name: IMG_BUILDER_DOCKER_REGISTRY
