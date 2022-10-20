@@ -31,6 +31,7 @@ merlin:
   mlp:
     enabled: false
   kserve:
+    enabled: true
     chartValues:
       knativeServingIstio:
         chartValues:
@@ -42,12 +43,15 @@ merlin:
             enabled: false
           clusterLocalGateway:
             enabled: false
-      certManagerBase:
-        enabled: false
+      # NOTE: If kserve is enabled, install cert-manager through kserve because
+      # kserve requires cert-manager to be installed first
+      # certManagerBase:
+      #   enabled: false
       cert-manager:
-        enabled: false
+        enabled: true
 
-routes:
+caraml-routes:
+  enabled: true
   certManagerBase:
     enabled: false
   cert-manager:
@@ -121,7 +125,7 @@ istiod:
     release: istiod
     namespace: "istio-system"
   hook:
-    weight: 0
+    weight: -3
   chartValues:
     deployInReleaseNs: false
     configValidation: true
@@ -276,5 +280,6 @@ certManagerBase:
 # #################################################################
 # Use hyphen so chart name can be used as part of resource name
 cert-manager:
+  # NOTE: disable certmanager if kserve needs to be installed
   fullnameOverride: cert-manager
-  enabled: true
+  enabled: false

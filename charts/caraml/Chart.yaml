@@ -40,10 +40,10 @@ dependencies:
     repository: https://charts.helm.sh/stable
     version: 7.0.0
     condition: postgresql.enabled
-  - name: routes
+  - name: caraml-routes
     repository: "https://caraml-dev.github.io/helm-charts"
     version: 0.1.0
-    condition: routes.enabled
+    condition: caraml-routes.enabled
   - name: common
     repository: "https://caraml-dev.github.io/helm-charts"
     version: 0.2.1
