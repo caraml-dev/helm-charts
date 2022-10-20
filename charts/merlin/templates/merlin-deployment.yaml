@@ -1,3 +1,9 @@
+{{- $globReactAppHomepage := include "common.get-component-value" (list .Values.global "merlin" (list "uiPrefix"))}}
+{{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix"))}}
+{{- $globMlpApi := include "common.get-component-value" (list .Values.global "mlp" (list "vsPrefix" "apiPrefix"))}}
+{{- $globMlpApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
+{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
+{{- $globFeastApiHost := (printf "%s://%s" .Values.global.protocol (include "common.get-external-hostname" .Values.global)) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -78,7 +84,7 @@ spec:
           - name: DATABASE_NAME
             value: {{ template "merlin-postgresql.database" . }}
           - name: REACT_APP_OAUTH_CLIENT_ID
-            value: "{{ .Values.ui.oauthClientID }}"
+            value: {{ include "common.set-value" (list .Values.ui.oauthClientID $globOauthClientID) | quote }}
           - name: REACT_APP_ENVIRONMENT
             value: "{{ .Values.environment }}"
           {{- if .Values.sentry.enabled }}
@@ -90,13 +96,13 @@ spec:
             value: {{ .Values.ui.docsURL | toJson | quote }}
           {{- end }}
           - name: REACT_APP_HOMEPAGE
-            value: "{{ .Values.ui.homepage }}"
+            value: {{ include "common.set-value" (list .Values.ui.homepage $globReactAppHomepage) | quote }}
           - name: REACT_APP_MERLIN_API
-            value: "{{ .Values.ui.apiHost }}"
+            value: {{ include "common.set-value" (list .Values.ui.apiHost $globMerlinApi) | quote }}
           - name: REACT_APP_MLP_API
-            value: "{{ .Values.ui.mlp.apiHost }}"
+            value: {{ include "common.set-value" (list .Values.ui.mlp.apiHost $globMlpApi) | quote }}
           - name: REACT_APP_FEAST_CORE_API
-            value: "{{ .Values.feastCoreApi.apiHost }}"
+            value: {{ include "common.set-value" (list .Values.feastCoreApi.apiHost $globFeastApiHost) }}
           - name: REACT_APP_DOCKER_REGISTRIES
             value: "{{ .Values.ui.dockerRegistries }}"
           - name: REACT_APP_MAX_ALLOWED_REPLICA
@@ -236,7 +242,7 @@ spec:
             value: "{{ .Values.alerts.warden.apiHost }}"
           {{- end }}
           - name: MLP_API_HOST
-            value: "{{ .Values.mlpApi.apiHost }}"
+            value: {{ include "common.set-value" (list .Values.mlpApi.apiHost $globMlpApiHost) }}
           - name: MLP_API_ENCRYPTION_KEY
             valueFrom:
               secretKeyRef:

@@ -38,3 +38,6 @@ dependencies:
     repository: "https://caraml-dev.github.io/helm-charts"
     alias: minio
     condition: minio.enabled
+  - name: common
+    version: 0.2.1
+    repository: "https://caraml-dev.github.io/helm-charts"

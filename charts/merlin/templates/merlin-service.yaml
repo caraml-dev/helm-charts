@@ -1,7 +1,9 @@
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "merlin" (list "serviceName")) }}
+{{- $globServicePort := include "common.get-component-value" (list .Values.global "merlin" (list "externalPort")) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "merlin.fullname" .}}
+  name: {{ include "common.set-value" (list (include "merlin.fullname" .) $globServiceName) }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "merlin.labels" . | nindent 4 }}
@@ -9,7 +11,7 @@ spec:
   type: ClusterIP
   ports:
     - name: http
-      port: {{ .Values.service.externalPort }}
+      port: {{ include "common.set-value" (list .Values.service.externalPort $globServicePort) }}
       targetPort: {{ .Values.service.internalPort }}
       protocol: TCP
   selector:

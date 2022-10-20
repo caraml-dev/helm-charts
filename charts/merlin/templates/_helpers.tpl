@@ -203,3 +203,26 @@ MLflow Postgres related
         {{- printf "postgresql-password" -}}
     {{- end -}}
 {{- end -}}
+
+
+{{- define "merlin.get-workload-host" }}
+{{- $global := index . 0}}
+{{- $relNs := index . 1}}
+{{- $key := index . 2}}
+{{- $values := get $global $key}}
+{{- if not (hasKey $global $key) }}
+  {{- printf "" }}
+{{- else }}
+  {{- $values := get $global $key}}
+  {{- $host := "" }}
+  {{- with $values }}
+    {{- if .useServiceFqdn }}
+      {{- $host = printf "http://%s.%s.svc.cluster.local:%s%s" .serviceName $relNs .externalPort .apiPrefix}}
+    {{- else }}
+      {{- $inClusterPrefix := printf "%s%s" .vsPrefix .apiPrefix }}
+      {{- $host = printf "%s://%s%s" $global.protocol (include "common.get-external-hostname" $global) $inClusterPrefix }}
+    {{- end }}
+    {{- end }}
+  {{- printf "%s" $host }}
+  {{- end }}
+{{- end }}
