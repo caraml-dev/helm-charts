@@ -29,7 +29,7 @@ spec:
 {{ toYaml .Values.mlflow.service.loadBalancerSourceRanges | indent 2 }}
 {{- end }}
   ports:
-  - port: {{ include "common.set-value" (list .Values.mlflow.service.externalPort $globServicePort)  }}
+  - port: {{ include "common.set-value" (list (.Values.mlflow.service.externalPort | toString) $globServicePort) | atoi }}
     targetPort: {{ .Values.mlflow.service.internalPort }}
     protocol: TCP
     name: http

@@ -11,7 +11,7 @@ spec:
   type: ClusterIP
   ports:
     - name: http
-      port: {{ include "common.set-value" (list .Values.service.externalPort $globServicePort) }}
+      port: {{ include "common.set-value" (list (.Values.service.externalPort | toString) $globServicePort) | atoi }}
       targetPort: {{ .Values.service.internalPort }}
       protocol: TCP
   selector:
