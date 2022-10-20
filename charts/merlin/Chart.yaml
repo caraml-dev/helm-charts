@@ -1,8 +1,8 @@
 apiVersion: v2
 description: Kubernetes-friendly ML model management, deployment, and serving.
 name: merlin
-version: 0.8.1
-appVersion: 0.22.0
+version: 0.8.2
+appVersion: 0.23.0
 
 maintainers:
   - name: caraml-dev
