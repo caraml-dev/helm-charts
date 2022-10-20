@@ -7,15 +7,15 @@ dependencies:
   version: 7.0.0
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.0
+  version: 0.1.1
 - name: mlp
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.0
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.0
+  version: 0.1.1
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.0
-digest: sha256:a5f7470fc091eee40c160d9a75a14a133a44ac8a680f98795432bff4cd701b37
-generated: "2022-10-17T11:43:31.360634+05:30"
+  version: 0.1.1
+digest: sha256:a77844658c3f62fdb544ac62b4965e6bf1a2c02add3f91a57aecc9aab231ccf5
+generated: "2022-10-19T11:38:16.411365+05:30"
