@@ -1,4 +1,5 @@
 {{ $globServiceName := include "common.get-component-value" (list .Values.global "mlp" (list "serviceName")) }}
+{{- $globServicePort := include "common.get-component-value" (list .Values.global "mlp" (list "externalPort")) }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,7 +10,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.service.externalPort }}
+    - port: {{ include "common.set-value" (list .Values.service.externalPort $globServicePort)  }}
       targetPort: {{ .Values.service.internalPort }}
       name: http
       protocol: TCP
