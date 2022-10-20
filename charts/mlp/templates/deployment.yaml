@@ -1,3 +1,4 @@
+{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
 {{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix" "apiPrefix")) }}
 {{- $globFeastApi := include "common.get-component-value" (list .Values.global "feast" (list "vsPrefix" "apiPrefix")) }}
 {{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix")) }}
@@ -99,7 +100,7 @@ spec:
               value: "{{ .Values.deployment.authorization.serverUrl }}"
             {{- end }}
             - name: OAUTH_CLIENT_ID
-              value: {{ include "common.get-oauth-client" (list .Values.global .Values.deployment.oauthClientID) | quote }}
+              value: {{ include "common.set-value" (list .Values.deployment.oauthClientID $globOauthClientID) | quote }}
             - name: SENTRY_DSN
               value: "{{ .Values.deployment.sentryDSN }}"
             - name: TEAM_LIST
