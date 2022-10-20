@@ -3,7 +3,7 @@
 {{- $globMlpApi := include "common.get-component-value" (list .Values.global "mlp" (list "vsPrefix" "apiPrefix"))}}
 {{- $globMlpApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
 {{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
-{{- $globFeastApiHost := (printf "%s://%s" .Values.global.protocol (include "common.get-external-hostname" .Values.global)) }}
+{{- $globFeastApiHost := (printf "%s://%s" (default "http" (get .Values.global "protocol")) (include "common.get-external-hostname" .Values.global)) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
