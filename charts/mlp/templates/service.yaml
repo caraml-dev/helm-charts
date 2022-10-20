@@ -1,16 +1,18 @@
 {{- $globServiceName := include "common.get-component-value" (list .Values.global "mlp" (list "serviceName")) }}
+{{- $serviceName := include "common.set-value" (list (include "mlp.fullname" .) $globServiceName) }}
 {{- $globServicePort := include "common.get-component-value" (list .Values.global "mlp" (list "externalPort")) }}
+{{- $servicePort := include "common.set-value" (list (.Values.service.externalPort | toString) $globServicePort) | atoi }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "common.set-value" (list (include "mlp.fullname" .) $globServiceName) }}
+  name: {{ $serviceName }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "mlp.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
-    - port: {{ include "common.set-value" (list (.Values.service.externalPort | toString) $globServicePort) | atoi }}
+    - port: {{ $servicePort }}
       targetPort: {{ .Values.service.internalPort }}
       name: http
       protocol: TCP
