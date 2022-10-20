@@ -48,7 +48,7 @@ dependencies:
     condition: istioIngressGateway.global.enabled
   - name: cert-manager-base
     version: 1.8.1
-    repository: "file://../cert-manager-base"
+    repository: "https://caraml-dev.github.io/helm-charts"
     alias: certManagerBase
     condition: certManagerBase.enabled
   - name: cert-manager
@@ -56,6 +56,6 @@ dependencies:
     version: 1.8.1
     condition: cert-manager.enabled
   - name: common
-    repository: "file://../common"
+    repository: "https://caraml-dev.github.io/helm-charts"
     condition: common.enabled
-    version: 0.1.0
+    version: 0.2.1
