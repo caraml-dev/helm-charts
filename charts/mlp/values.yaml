@@ -22,7 +22,7 @@ deployment:
   readinessProbe:
     path: "/v1/internal/ready"
 
-  apiHost: ""
+  apiHost: "http://mlp/v1"
   mlflowTrackingUrl: "http://mlflow.mlp"
   environment: "production"
 
@@ -60,15 +60,14 @@ deployment:
     ]
 
   ui:
-    # Setting fields here will overwrite fields in global
-    feastCoreApi: ""
-    merlinApi: ""
-    turingApi: ""
+    feastCoreApi: "http://feast.dev/v1"
+    merlinApi: "http://merlin.dev/v1"
+    turingApi: "http://turing.dev/v1"
     clockworkHomepage: "http://clockwork.dev"
-    feastHomepage: ""
+    feastHomepage: "http://feast.dev"
     kubeflowHomepage: "http://kubeflow.org"
-    merlinHomepage: ""
-    turingHomepage: ""
+    merlinHomepage: "http://merlin.dev"
+    turingHomepage: "http://turing.dev"
 
   # -- OAuth client id for login
   oauthClientID: ""

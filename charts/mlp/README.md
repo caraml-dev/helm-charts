@@ -21,7 +21,7 @@ MLP API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| deployment.apiHost | string | `""` |  |
+| deployment.apiHost | string | `"http://mlp/v1"` |  |
 | deployment.authorization.enabled | bool | `false` |  |
 | deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components, Added as part of env variables. |
@@ -37,13 +37,13 @@ MLP API
 | deployment.streams | list | `["promotion-marketing","operation-strategy","business-analyst"]` | Streams list |
 | deployment.teams | list | `["marketing","operation","business"]` | teams list |
 | deployment.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
-| deployment.ui.feastCoreApi | string | `""` |  |
-| deployment.ui.feastHomepage | string | `""` |  |
+| deployment.ui.feastCoreApi | string | `"http://feast.dev/v1"` |  |
+| deployment.ui.feastHomepage | string | `"http://feast.dev"` |  |
 | deployment.ui.kubeflowHomepage | string | `"http://kubeflow.org"` |  |
-| deployment.ui.merlinApi | string | `""` |  |
-| deployment.ui.merlinHomepage | string | `""` |  |
-| deployment.ui.turingApi | string | `""` |  |
-| deployment.ui.turingHomepage | string | `""` |  |
+| deployment.ui.merlinApi | string | `"http://merlin.dev/v1"` |  |
+| deployment.ui.merlinHomepage | string | `"http://merlin.dev"` |  |
+| deployment.ui.turingApi | string | `"http://turing.dev/v1"` |  |
+| deployment.ui.turingHomepage | string | `"http://turing.dev"` |  |
 | encryption.key | string | `"example-key-here"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | externalPostgresql.database | string | `"mlp"` | External postgres database schema |
