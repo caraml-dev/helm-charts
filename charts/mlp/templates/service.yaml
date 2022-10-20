@@ -1,7 +1,8 @@
+{{ $globServiceName := include "common.get-component-value" (list .Values.global "mlp" (list "serviceName")) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "mlp.fullname" .}}
+  name: {{ include "common.set-value" (list (include "mlp.fullname" .) $globServiceName) }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "mlp.labels" . | nindent 4 }}
