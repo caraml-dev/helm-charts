@@ -74,6 +74,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | environmentConfigs[0].queue_resource_percentage | string | `"20"` |  |
 | environmentConfigs[0].region | string | `"id"` |  |
 | feastCoreApi.apiHost | string | `"http://feast-core.mlp:8080/v1"` |  |
+| global.protocol | string | `"http"` |  |
 | imageBuilder.baseImages."3.7.*".buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
 | imageBuilder.baseImages."3.7.*".dockerfilePath | string | `"docker/Dockerfile"` |  |
 | imageBuilder.baseImages."3.7.*".imageName | string | `"pyfunc-py37:v0.1.0"` |  |

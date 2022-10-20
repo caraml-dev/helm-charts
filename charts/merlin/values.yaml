@@ -1,3 +1,6 @@
+global:
+  protocol: http
+
 deployment:
   image:
     pullPolicy: IfNotPresent
