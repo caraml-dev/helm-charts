@@ -45,16 +45,21 @@ main() {
   # read extra values from  env file, decode it
   echo $CHART_VALUES | base64 -d > $VALUES_FILE_PATH
   helm repo add $REPO_NAME $REPO
-  helm template $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --version $VERSION --values $VALUES_FILE_PATH > /tmp/manifests.yaml
+  helm template $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --create-namespace --version $VERSION --values $VALUES_FILE_PATH > /tmp/manifests.yaml
   if [[ $ACTION == "upgrade-install" ]]; then
-    helm upgrade --install $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --version $VERSION --atomic --debug --values $VALUES_FILE_PATH
+    helm upgrade --install $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --create-namespace --version $VERSION --atomic --debug --values $VALUES_FILE_PATH
     # kubectl apply -f /tmp/manifests.yaml
     # kubectl wait pods --all -n $NAMESPACE --for=condition=Ready --timeout=180s
   elif [[ $ACTION == "delete" ]]; then
-    helm uninstall $RELEASE_NAME --namespace $NAMESPACE --debug --wait --timeout=180s
+    release_found= $(helm list --namespace $NAMESPACE 2> /dev/null | tail +2 | grep $RELEASE_NAME | wc -l )
+    if [ $release_found -gt 0 ]; then
+      helm uninstall $RELEASE_NAME --namespace $NAMESPACE --debug --wait --timeout=180s
+    else
+      echo "Release not found, Skipping uninstall for release: $RELEASE_NAME in namespace: $NAMESPACE"
+    fi
     # kubectl delete -f /tmp/manifests.yaml --ignore-not-found
     # kubectl wait -f /tmp/manifests.yaml --for=delete --timeout=180s
-    kubectl delete ns $NAMESPACE --ignore-not-found
+    # kubectl delete ns $NAMESPACE --ignore-not-found
   fi
 }
 
