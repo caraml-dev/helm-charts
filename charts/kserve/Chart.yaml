@@ -2,14 +2,14 @@ apiVersion: v2
 name: kserve
 description: A Helm chart for installing Kserve
 type: application
-version: 0.8.5
+version: 0.8.6
 appVersion: 0.8.0
 maintainers:
   - name: caraml-dev
     email: caraml-dev@caraml.dev
 dependencies:
   - name: generic-dep-installer
-    version: 0.1.1
+    version: 0.2.0
     repository: "https://caraml-dev.github.io/helm-charts"
     alias: knativeServingIstio
     condition: knativeServingIstio.enabled
