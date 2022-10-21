@@ -19,18 +19,18 @@ dependencies:
   version: 1.13.4
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.1
+  version: 0.2.0
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.1
+  version: 0.2.0
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.1
+  version: 0.2.0
 - name: cert-manager-base
   repository: https://caraml-dev.github.io/helm-charts
   version: 1.8.1
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.8.1
-digest: sha256:8d5eba63983ca70bf2088f9dda7e971f40b9dafe2022c2a2cc9e875615d77222
-generated: "2022-10-20T14:52:56.265942+05:30"
+digest: sha256:30aafaacaf67cf13d8e06e2d2898e31d1ca8b366275fbf8eaa20415f27f35754
+generated: "2022-10-21T11:01:20.957802+05:30"

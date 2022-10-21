@@ -48,7 +48,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | encryption.key | string | `"password"` |  |
 | environment | string | `"dev"` |  |
-| environmentConfigs[0].cluster | string | `"caraml-test"` |  |
+| environmentConfigs[0].cluster | string | `"test"` |  |
 | environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
 | environmentConfigs[0].default_deployment_config.max_replica | int | `1` |  |
 | environmentConfigs[0].default_deployment_config.memory_request | string | `"500Mi"` |  |
@@ -99,7 +99,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | kserve.helmChart.namespace | string | `"kserve"` |  |
 | kserve.helmChart.release | string | `"kserve"` |  |
 | kserve.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| kserve.helmChart.version | string | `"0.8.5"` |  |
+| kserve.helmChart.version | string | `"0.8.6"` |  |
 | kserve.hook.weight | string | `"-2"` |  |
 | loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
