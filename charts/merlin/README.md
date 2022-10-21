@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
+![Version: 0.9.2](https://img.shields.io/badge/Version-0.9.2-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -179,6 +179,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflowExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | mlflowExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
+| mlp.enabled | bool | `true` |  |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
 | mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
 | monitoring.enabled | bool | `false` |  |
