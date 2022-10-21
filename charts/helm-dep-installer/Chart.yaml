@@ -7,7 +7,7 @@ description: |
   Container image used by job requires helm and kubectl binary to be present, and thus should be set accordingly based on the version of K8s being used.
   See https://helm.sh/docs/topics/version_skew/ for more info on which helm version to use.
 type: application
-version: 0.1.2
+version: 0.2.0
 appVersion: "v0.1.0"
 maintainers:
   - name: caraml-dev
