@@ -2,7 +2,7 @@ apiVersion: v2
 name: knative-serving-istio
 description: Installs Knative-serving for Istio
 type: application
-version: 1.0.4
+version: 1.0.5
 appVersion: "v1.0.0"
 maintainers:
   - name: caraml-dev
@@ -15,7 +15,7 @@ dependencies:
     condition: knativeServingCore.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.1.1
+    version: 0.2.0
     alias: istiod
     condition: istiod.enabled
   - name: base
@@ -25,11 +25,11 @@ dependencies:
     condition: base.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.1.1
+    version: 0.2.0
     alias: istioIngressGateway
     condition: istioIngressGateway.global.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.1.1
+    version: 0.2.0
     alias: clusterLocalGateway
     condition: clusterLocalGateway.global.enabled
