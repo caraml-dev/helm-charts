@@ -259,6 +259,26 @@ entries:
   generic-dep-installer:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2022-10-21T06:04:38.047816356Z"
+    description: 'This helm chart is used to control the order of installation of
+      helm chart dependencies through the use of pre-install hooks and hook weights.
+      It creates a K8s Job that performs that applies a rendered helm chart to a cluster,
+      while exposing the `.Values.hook.weight` to users to configure which dependency
+      should be installed first. Container image used by job requires helm and kubectl
+      binary to be present, and thus should be set accordingly based on the version
+      of K8s being used. See https://helm.sh/docs/topics/version_skew/ for more info
+      on which helm version to use. '
+    digest: 49007fbef8e99ebe3e001b3bb9dbb36188a072c84a022564f65e1136bf3d5d0f
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: generic-dep-installer
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/generic-dep-installer-0.2.1/generic-dep-installer-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2022-10-21T04:08:32.848854696Z"
     description: 'This helm chart is used to control the order of installation of
       helm chart dependencies through the use of pre-install hooks and hook weights.
@@ -830,4 +850,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2022-10-21T05:14:44.899031886Z"
+generated: "2022-10-21T06:04:38.047847835Z"
