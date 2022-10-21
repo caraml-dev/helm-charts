@@ -1,6 +1,7 @@
 global:
   ingressIP: ""
   oauthclient: "test-client-123"
+  protocol: "https"
   # -- istioIngressIP takes precedence over domain. Used for local deployment
   istioLookUp:
     namespace: istio-system

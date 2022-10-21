@@ -83,6 +83,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.pipeline.externalPort | string | `"8080"` |  |
 | global.pipeline.serviceName | string | `"pipeline-ui"` |  |
 | global.pipeline.uiPrefix | string | `"/pipeline"` |  |
+| global.protocol | string | `"https"` |  |
 | global.turing.apiPrefix | string | `"/v1"` |  |
 | global.turing.externalPort | string | `"8080"` |  |
 | global.turing.serviceName | string | `"turing"` |  |
