@@ -51,7 +51,7 @@ main() {
     # kubectl apply -f /tmp/manifests.yaml
     # kubectl wait pods --all -n $NAMESPACE --for=condition=Ready --timeout=180s
   elif [[ $ACTION == "delete" ]]; then
-    release_found= $(helm list --namespace $NAMESPACE 2> /dev/null | tail +2 | grep $RELEASE_NAME | wc -l )
+    release_found=$(helm list --namespace $NAMESPACE 2> /dev/null | tail +2 | grep $RELEASE_NAME | wc -l )
     if [ $release_found -gt 0 ]; then
       helm uninstall $RELEASE_NAME --namespace $NAMESPACE --debug --wait --timeout=180s
     else

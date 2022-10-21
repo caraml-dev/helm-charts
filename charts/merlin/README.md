@@ -14,9 +14,9 @@ Kubernetes-friendly ML model management, deployment, and serving.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | vault(generic-dep-installer) | 0.2.0 |
-| https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.0 |
-| https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.0 |
+| https://caraml-dev.github.io/helm-charts | vault(generic-dep-installer) | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.2.0 |
 | https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.0 |
 | https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.0 |
@@ -99,7 +99,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | kserve.helmChart.namespace | string | `"kserve"` |  |
 | kserve.helmChart.release | string | `"kserve"` |  |
 | kserve.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| kserve.helmChart.version | string | `"0.8.6"` |  |
+| kserve.helmChart.version | string | `"0.8.8"` |  |
 | kserve.hook.weight | string | `"-2"` |  |
 | loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
