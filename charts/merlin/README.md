@@ -181,6 +181,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflowExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | mlflowExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
+| mlp.enabled | bool | `true` |  |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
 | mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
 | monitoring.enabled | bool | `false` |  |

@@ -258,9 +258,6 @@ merlin-postgresql:
       cpu: 100m
       memory: 512Mi
 
-  persistence:
-    size: 10Gi
-
   # metrics:
   #   enabled: true
   #   serviceMonitor:
@@ -278,6 +275,12 @@ merlin-postgresql:
   #   numSynchronousReplicas: 2
   #   Replication Cluster application name. Useful for defining multiple replication policies
   #   applicationName: merlin
+
+  persistence:
+    size: 10Gi
+
+mlp:
+  enabled: true
 
 mlflow:
   # This should be the actual DNS registered
@@ -376,9 +379,9 @@ mlflow:
 
   # Add the following configs when you wish to point to an actual S3 for mlflow to store its artifacts
   extraEnvs:
-  #   AWS_ACCESS_KEY_ID: YOURACCESSKEY
-  #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
-  #   AWS_DEFAULT_REGION: ap-southeast-2
+    #   AWS_ACCESS_KEY_ID: YOURACCESSKEY
+    #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
+    #   AWS_DEFAULT_REGION: ap-southeast-2
     MLFLOW_S3_ENDPOINT_URL: http://minio.minio.svc.cluster.local:9000
 
 # If you would like to use an external postgres database for MLflow, you can connect using these credentials
