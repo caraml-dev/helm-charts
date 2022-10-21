@@ -33,7 +33,7 @@ dependencies:
     version: 0.2.0
     condition: mlp.enabled
   - name: merlin
-    repository: "file://../merlin"
+    repository: "https://caraml-dev.github.io/helm-charts"
     version: 0.9.1
     condition: merlin.enabled
   - name: postgresql
@@ -54,17 +54,17 @@ dependencies:
     condition: base.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.2.0
+    version: 0.2.1
     alias: istiod
     condition: istiod.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.2.0
+    version: 0.2.1
     alias: istioIngressGateway
     condition: istioIngressGateway.global.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.2.0
+    version: 0.2.1
     alias: clusterLocalGateway
     condition: clusterLocalGateway.global.enabled
   - name: cert-manager-base
