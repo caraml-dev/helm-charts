@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
+![Version: 0.9.2](https://img.shields.io/badge/Version-0.9.2-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -14,6 +14,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://caraml-dev.github.io/helm-charts | common | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | vault(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
