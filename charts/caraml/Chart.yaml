@@ -54,17 +54,17 @@ dependencies:
     condition: base.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.1.1
+    version: 0.2.0
     alias: istiod
     condition: istiod.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.1.1
+    version: 0.2.0
     alias: istioIngressGateway
     condition: istioIngressGateway.global.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.1.1
+    version: 0.2.0
     alias: clusterLocalGateway
     condition: clusterLocalGateway.global.enabled
   - name: cert-manager-base

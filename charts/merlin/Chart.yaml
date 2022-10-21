@@ -20,8 +20,8 @@ dependencies:
     alias: mlflow-postgresql
     condition: mlflow-postgresql.enabled
   - name: generic-dep-installer
-    version: 0.1.1
     repository: "https://caraml-dev.github.io/helm-charts"
+    version: 0.2.0
     alias: vault
     condition: vault.enabled
   - name: mlp
@@ -29,12 +29,12 @@ dependencies:
     version: 0.2.0
     condition: mlp.enabled
   - name: generic-dep-installer
-    version: 0.1.1
     repository: "https://caraml-dev.github.io/helm-charts"
+    version: 0.2.0
     alias: kserve
     condition: kserve.enabled
   - name: generic-dep-installer
-    version: 0.1.1
     repository: "https://caraml-dev.github.io/helm-charts"
+    version: 0.2.0
     alias: minio
     condition: minio.enabled
