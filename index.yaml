@@ -334,6 +334,45 @@ entries:
   knative-serving-istio:
   - apiVersion: v2
     appVersion: v1.0.0
+    created: "2022-10-21T04:37:53.554052821Z"
+    dependencies:
+    - alias: knativeServingCore
+      condition: knativeServingCore.enabled
+      name: knative-serving-core
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.1.0
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.0
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.4
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.0
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.0
+    description: Installs Knative-serving for Istio
+    digest: 168a970001858ecbf76e76d0cce817d7700936e6a5f50dcae176d90b200d1d59
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: knative-serving-istio
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-istio-1.0.5/knative-serving-istio-1.0.5.tgz
+    version: 1.0.5
+  - apiVersion: v2
+    appVersion: v1.0.0
     created: "2022-10-19T05:09:24.105003806Z"
     dependencies:
     - alias: knativeServingCore
@@ -763,4 +802,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2022-10-21T04:08:32.848900599Z"
+generated: "2022-10-21T04:37:53.554105421Z"
