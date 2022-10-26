@@ -1,3 +1,14 @@
+mlp:
+  deployment:
+    replicaCount: "1"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
+
 merlin:
   deployment:
     replicaCount: "1"
@@ -119,7 +130,6 @@ postgresql:
     size: 5Gi
 
 istiod:
-  enabled: false
   chartValues:
     resources:
       requests:
@@ -130,7 +140,6 @@ istiod:
         memory: 1024Mi
 
 istioIngressGateway:
-  enabled: false
   chartValues:
     resources:
       requests:
@@ -138,7 +147,6 @@ istioIngressGateway:
         memory: 128Mi
 
 clusterLocalGateway:
-  enabled: false
   chartValues:
     resources:
       requests:
