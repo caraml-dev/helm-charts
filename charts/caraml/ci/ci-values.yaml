@@ -107,6 +107,7 @@ merlin:
       size: 5Gi
 
   minio:
+    enabled: false
     resources:
       requests:
         cpu: 25m
