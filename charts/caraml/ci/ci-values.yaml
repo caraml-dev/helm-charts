@@ -40,7 +40,7 @@ merlin:
         tolerations: null
 
   environmentConfigs:
-    - name: "id-dev"
+    - name: "chart-testing"
       is_default: true
       cluster: "chart-testing"
       region: "id"
@@ -119,6 +119,7 @@ postgresql:
     size: 5Gi
 
 istiod:
+  enabled: false
   chartValues:
     resources:
       requests:
@@ -129,6 +130,7 @@ istiod:
         memory: 1024Mi
 
 istioIngressGateway:
+  enabled: false
   chartValues:
     resources:
       requests:
@@ -136,6 +138,7 @@ istioIngressGateway:
         memory: 128Mi
 
 clusterLocalGateway:
+  enabled: false
   chartValues:
     resources:
       requests:
