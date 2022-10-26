@@ -120,13 +120,13 @@ postgresql:
 
 istiod:
   chartValues:
-      resources:
-        requests:
-          cpu: 250m
-          memory: 512Mi
-        limits:
-          cpu: 1
-          memory: 1024Mi
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: 1
+        memory: 1024Mi
 
 istioIngressGateway:
   chartValues:
