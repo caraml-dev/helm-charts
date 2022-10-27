@@ -102,7 +102,7 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | monitoring.allNamespaces | bool | `true` |  |
 | monitoring.enabled | bool | `false` |  |
 | monitoring.podMonitor.metricRelabelings | object | `{}` |  |
-| monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.knative.serving.selectorKey }}"` |  |
+| monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.monitoring.selectorKey }}"` |  |
 | monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
 | monitoring.podMonitor.userMetricPortName | string | `"http-usermetric"` |  |
 | monitoring.podMonitor.userPortName | string | `"user-port"` |  |
