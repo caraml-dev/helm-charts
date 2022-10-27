@@ -230,7 +230,7 @@ monitoring:
     userPortName: user-port
     selector:
       matchExpressions:
-        - key: "{{ .Values.knative.serving.selectorKey }}"
+        - key: "{{ .Values.monitoring.selectorKey }}"
           operator: Exists
     metricRelabelings: {}
   selectorKey: serving.knative.dev/revision
