@@ -146,6 +146,7 @@ postgresql:
     size: 5Gi
 
 istiod:
+  enabled: false
   chartValues:
     resources:
       requests:
@@ -156,6 +157,7 @@ istiod:
         memory: 512Mi
 
 istioIngressGateway:
+  enabled: false
   chartValues:
     resources:
       requests:
@@ -166,6 +168,7 @@ istioIngressGateway:
         memory: 512Mi
 
 clusterLocalGateway:
+  enabled: false
   chartValues:
     resources:
       requests:
