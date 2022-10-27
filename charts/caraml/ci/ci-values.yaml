@@ -6,7 +6,7 @@ mlp:
         cpu: 100m
         memory: 256Mi
       limits:
-        cpu: "500m"
+        cpu: "250m"
         memory: 512Mi
 
 merlin:
@@ -17,7 +17,7 @@ merlin:
         cpu: 100m
         memory: 256Mi
       limits:
-        cpu: "500m"
+        cpu: "250m"
         memory: 512Mi
 
   imageBuilder:
@@ -47,6 +47,9 @@ merlin:
           requests:
             cpu: 25m
             memory: 64Mi
+          limits:
+            cpu: 50m
+            memory: 128Mi
         affinity: null
         tolerations: null
 
@@ -85,6 +88,9 @@ merlin:
       requests:
         cpu: 100m
         memory: 256Mi
+      limits:
+        cpu: "250m"
+        memory: "512Mi"
     persistence:
       size: 5Gi
 
@@ -94,7 +100,7 @@ merlin:
         cpu: "100m"
         memory: "256Mi"
       limits:
-        cpu: "500m"
+        cpu: "250m"
         memory: "512Mi"
 
   mlflow-postgresql:
@@ -102,6 +108,9 @@ merlin:
       requests:
         cpu: 100m
         memory: 256Mi
+      limits:
+        cpu: "250m"
+        memory: "512Mi"
     persistence:
       enabled: true
       size: 5Gi
@@ -112,6 +121,9 @@ merlin:
       requests:
         cpu: 25m
         memory: 64Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
 
   setupScript:
     # -- Image used to for setup scripts job
@@ -126,6 +138,9 @@ postgresql:
     requests:
       cpu: 100m
       memory: 256Mi
+    limits:
+      cpu: "250m"
+      memory: "512Mi"
   persistence:
     enabled: true
     size: 5Gi
@@ -137,8 +152,8 @@ istiod:
         cpu: 250m
         memory: 512Mi
       limits:
-        cpu: 1
-        memory: 1024Mi
+        cpu: 250m
+        memory: 512Mi
 
 istioIngressGateway:
   chartValues:
@@ -146,6 +161,9 @@ istioIngressGateway:
       requests:
         cpu: 100m
         memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 512Mi
 
 clusterLocalGateway:
   chartValues:
@@ -153,3 +171,6 @@ clusterLocalGateway:
       requests:
         cpu: 100m
         memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 512Mi
