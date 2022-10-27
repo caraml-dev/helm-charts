@@ -1,0 +1,27 @@
+{{- $hosts := (concat (get $.Values.global.hosts "mlp") (get $.Values.global.hosts "mlpdocs") (get $.Values.global.hosts "mlflow") )}}
+{{- if and .Values.https.enabled }}
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "issuer" }}
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-tls-cert" }}
+  # NOTE: certificate secret needs to be in same namespace as istiod
+  namespace: {{ .Values.global.istioLookUp.namespace }}
+spec:
+  secretName: {{ include "caraml-routes.tls-cert-name" . }}
+  issuerRef:
+    name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "issuer" }}
+    kind: ClusterIssuer
+    group: cert-manager.io
+  dnsNames:
+    {{- range $hosts }}
+    - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global)) }}
+    {{- end }}
+{{- end }}

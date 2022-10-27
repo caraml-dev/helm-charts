@@ -1,0 +1,273 @@
+# -- istioIngressIP takes precedence over domain. Used for local deployment
+istioLookUp:
+  namespace: istio-system
+  name: istio-ingressgateway
+
+# -- Domain used to configure gateway and virtual service
+domain: ""
+
+# -- Configuration for turing
+turing:
+  enabled: true
+  # -- Config to route requests to turing api
+  api:
+    appName: "turing"
+    prefixMatch: "/api/turing/"
+    rewriteUri: "/"
+    destHost: "turing"
+    # set authHeader to true to require Bearer token to be present before routing requests
+    authHeader: false
+  # -- Config to route requests to turing docs
+  docs:
+    app: turing
+    redirectMatch: /turing/rest-api
+    rewriteUri: "/api-docs"
+    destHost: turing
+    destPort: 8080
+  # -- Config to route requests to turing UI
+  turingUI:
+    match:
+      - uri:
+          prefix: /turing
+    route:
+      - destination:
+          host: turing
+          port:
+            number: 8080
+
+# -- Configuration for merlin
+merlin:
+  enabled: true
+  # -- Config to route requests to merlin api
+  api:
+    appName: "merlin"
+    prefixMatch: "/api/merlin/"
+    rewriteUri: "/"
+    destHost: "merlin"
+    # set authHeader to true to require Bearer token to be present before routing requests
+    authHeader: false
+  # -- Config to route requests to merlin docs
+  docs:
+    app: merlin
+    redirectMatch: /merlin/rest-api
+    rewriteUri: "/"
+    destHost: merlin-swagger
+    destPort: 8080
+  # -- Config to route requests to merlin UI
+  merlinUI:
+    match:
+      - uri:
+          prefix: /merlin
+    route:
+      - destination:
+          host: merlin
+          port:
+            number: 8080
+
+# -- Configuration for pipeline
+pipeline:
+  enabled: true
+  # -- Config to route requests to pipeline UI
+  pipelineUI:
+    match:
+      - uri:
+          prefix: /pipeline
+    route:
+      - destination:
+          host: pipeline-ui
+          port:
+            number: 8080
+
+# -- Configuration for xp
+xp:
+  enabled: true
+  # -- Config to route requests to xp api
+  api:
+    appName: "xp"
+    prefixMatch: "/api/xp/"
+    rewriteUri: "/"
+    destHost: "xp-management"
+    # set authHeader to true to require Bearer token to be present before routing requests
+    authHeader: false
+  # -- Config to route requests to xp management docs
+  managementDocs:
+    app: xp-management
+    redirectMatch: /xp/rest-api
+    rewriteUri: "/"
+    destHost: xp-management-swagger
+    destPort: 8080
+  # -- Config to route requests to xp treatment docs
+  treatmentDocs:
+    app: xp-treatment
+    redirectMatch: /xp/treatment-api
+    rewriteUri: "/"
+    destHost: xp-treatment-swagger
+    destPort: 8080
+  # -- Config to route requests to xp UI
+  turingXpUI:
+    match:
+      - uri:
+          prefix: /xp
+    route:
+      - destination:
+          host: xp-management
+          port:
+            number: 8080
+
+# -- Configuration for feast
+feast:
+  enabled: true
+  feastUIBackend:
+    rewrite:
+      uri: /api/
+    match:
+      - uri:
+          prefix: /feast/api/
+      - uri:
+          prefix: /feast/api
+    route:
+      - destination:
+          host: feast-ui
+          port:
+            number: 8080
+
+  feastUIRedirect:
+    redirect: /feast/
+    match:
+      - uri:
+          prefix: /feast
+  feastUI:
+    match:
+      - uri:
+          prefix: /feast/
+    route:
+      - destination:
+          host: feast-ui
+          port:
+            number: 8080
+
+# -- Configuration for mlpDocs hosts
+mlpDocs:
+  vs:
+    hosts:
+      - "docs"
+
+# -- Configuration for mlflow
+mlflow:
+  enabled: true
+  vs:
+    hosts:
+      - "mlflow"
+    route:
+      destination: merlin-mlflow
+      port: 80
+
+# -- Configuration for mlp
+mlp:
+  enabled: true
+  vs:
+    hosts:
+      - "console"
+  api:
+    appName: "mlp"
+    prefixMatch: "/api/"
+    rewriteUri: "/"
+    destHost: "mlp"
+    authHeader: false
+  mlpUIConsole:
+    route:
+      - destination:
+          host: mlp
+          port:
+            number: 8080
+https:
+  # NOTE: Set https to false by default, enable from parent chart
+  enabled: true
+  tls:
+    mode: SIMPLE
+    credentialName: mlp-tls-cert
+
+
+# -- Configuration for mlp
+mlpGateway:
+  name: mlp-gateway
+  selector:
+    istio: ingressgateway
+  # -- hosts will be concatenated with domain or ingress IP address
+  hosts:
+    - console
+    - docs
+    - mlflow
+
+############################################################
+# Istio Base
+############################################################
+base:
+  # -- Set to false if there is an existing istio deployment
+  enabled: true
+  validationURL: ""
+  global:
+    istioNamespace: "istio-system"
+
+############################################################
+# Istiod - installed using helm-dep-installer chart
+############################################################
+istiod:
+  # -- Set to false if there is an existing istio deployment
+  enabled: true
+  helmChart:
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    chart: istiod
+    version: 1.13.4
+    release: istiod
+    namespace: "istio-system"
+  hook:
+    weight: 0
+  chartValues:
+    deployInReleaseNs: false
+    configValidation: true
+    global:
+      istioNamespace: "istio-system"
+      configValidation: true
+    pilot:
+      autoscaleEnabled: false
+      # -- Set accordingly based on environment
+      # autoscaleMin: 1
+      # autoscaleMax: 5
+      # rollingMaxSurge: 100%
+      # rollingMaxUnavailable: 25%
+
+    meshConfig:
+      enableTracing: false
+
+############################################################
+# istioIngressGateway - installed using helm-dep-installer chart
+############################################################
+istioIngressGateway:
+  global:
+    enabled: true
+  helmChart:
+    repository: "https://istio-release.storage.googleapis.com/charts"
+    chart: gateway
+    version: 1.13.4
+    release: istio-ingress-gateway
+    namespace: "istio-system"
+    createNamespace: false
+  hook:
+    weight: 1
+  chartValues:
+    # -- Specify name here so each gateway installation has its own unique name
+    name: istio-ingressgateway
+    autoscaling:
+      enabled: false
+      # # -- Set accordingly based on environment
+      # minReplicas: 1
+      # maxReplicas: 4
+      # targetCPUUtilizationPercentage: 80
+
+    serviceAccount:
+      # If set, a service account will be created. Otherwise, the default is used
+      create: true
+      # The name of the service account to use.
+      # If not set, the release name is used
+      name: "istio-ingressgateway"

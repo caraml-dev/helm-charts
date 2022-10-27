@@ -1,0 +1,19 @@
+{{- if .Values.swagger.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "merlin.swagger-name" .}}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "merlin.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.swagger.service.externalPort }}
+      targetPort: {{ .Values.swagger.service.internalPort }}
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "merlin.name" . }}
+    release: {{ .Release.Name }}
+{{- end }}

@@ -1,0 +1,19 @@
+CaraML Routes Notes:
+{{ $console := list }}
+{{- range .Values.global.hosts.mlp }}
+{{- $console = append $console (include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global ))) }}
+{{- end }}
+* Console UI can be accessed at {{ $console }}
+{{ $docs := list }}
+{{ $docsPath := list .Values.turing.docs.redirectMatch .Values.merlin.docs.redirectMatch .Values.xp.managementDocs.redirectMatch .Values.xp.treatmentDocs.redirectMatch }}
+{{- range .Values.global.hosts.mlpdocs }}
+{{- $host := . }}
+{{- range $docsPath }}
+{{- $domain := include "common.localiseDomain" (list $host (include "common.get-external-hostname" $.Values.global )) }}
+{{- $docs = append $docs (printf "%s%s" $domain . )}}
+{{- end }}
+{{- end }}
+* Docs can be accessed at:
+{{- range $docs}}
+- {{ . }}
+{{- end }}

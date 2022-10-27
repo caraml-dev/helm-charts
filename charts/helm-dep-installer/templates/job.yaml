@@ -37,7 +37,7 @@ spec:
             - name: CHART_VALUES
               value: {{ .Values.chartValues | toYaml | b64enc | quote }}
       restartPolicy: Never
-  backoffLimit: 10
+  backoffLimit: 2
 
 {{- if .Values.deleteJob.enabled }}
 ---
@@ -76,5 +76,5 @@ spec:
             - name: CHART_VALUES
               value: {{ .Values.chartValues | toYaml | b64enc | quote }}
       restartPolicy: Never
-  backoffLimit: 10
+  backoffLimit: 2
 {{- end }}

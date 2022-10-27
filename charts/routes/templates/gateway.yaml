@@ -1,0 +1,35 @@
+{{- $hosts := (concat (get $.Values.global.hosts "mlp") (get $.Values.global.hosts "mlpdocs") (get $.Values.global.hosts "mlflow") )}}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{ include "caraml-routes.mlp-gateway" . }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+{{- with .Values.mlpGateway }}
+  selector:
+    {{- toYaml .selector | nindent 6}}
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        {{- range $hosts }}
+        - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global) ) }}
+        {{- end }}
+{{- end }}
+    {{- if .Values.https.enabled }}
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        mode: {{ .Values.https.tls.mode }}
+        credentialName: {{ include "caraml-routes.tls-cert-name" . }}
+      hosts:
+        {{- range $hosts }}
+        - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global) ) }}
+        {{- end }}
+    {{- end }}
