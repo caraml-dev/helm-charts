@@ -225,6 +225,16 @@ queueProxy:
 
 monitoring:
   enabled: false
+  podMonitor:
+    userMetricPortName: http-usermetric
+    userPortName: user-port
+    selector:
+      matchExpressions:
+        - key: "{{ .Values.monitoring.selectorKey }}"
+          operator: Exists
+    metricRelabelings: {}
+  selectorKey: serving.knative.dev/revision
+  allNamespaces: true
 
 autoscalerHpa:
   enabled: true

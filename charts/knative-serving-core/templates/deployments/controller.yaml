@@ -32,7 +32,7 @@ spec:
         app: controller
         app.kubernetes.io/name: controller
         {{- include "knative-serving-core.labels" . | nindent 8 }}
-      {{- if .Values.config.defaults }}
+      {{- if .Values.global.extraPodLabels }}
         {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
       {{- end }}
     spec:
