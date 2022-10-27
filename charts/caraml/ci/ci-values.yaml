@@ -146,7 +146,7 @@ postgresql:
     size: 5Gi
 
 istiod:
-  enabled: false
+  enabled: true
   chartValues:
     resources:
       requests:
