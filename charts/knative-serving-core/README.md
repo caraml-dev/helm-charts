@@ -1,7 +1,7 @@
 # knative-serving-core
 
 ---
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square)
+![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square)
 ![AppVersion: v1.0.1](https://img.shields.io/badge/AppVersion-v1.0.1-informational?style=flat-square)
 
 Installs Knative Serving core and CRDs.
@@ -99,7 +99,14 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
+| monitoring.allNamespaces | bool | `true` |  |
 | monitoring.enabled | bool | `false` |  |
+| monitoring.podMonitor.metricRelabelings | object | `{}` |  |
+| monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.monitoring.selectorKey }}"` |  |
+| monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
+| monitoring.podMonitor.userMetricPortName | string | `"http-usermetric"` |  |
+| monitoring.podMonitor.userPortName | string | `"user-port"` |  |
+| monitoring.selectorKey | string | `"serving.knative.dev/revision"` |  |
 | queueProxy.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/queue"` | Repository of the queue proxy image |
 | queueProxy.image.sha | string | `"80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"` | SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
 | queueProxy.image.tag | string | `""` | Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
