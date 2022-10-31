@@ -1,3 +1,11 @@
+{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
+{{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix" "apiPrefix")) }}
+{{- $globFeastApi := include "common.get-component-value" (list .Values.global "feast" (list "vsPrefix" "apiPrefix")) }}
+{{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix")) }}
+{{- $globTuringApi := include "common.get-component-value" (list .Values.global "turing" (list "vsPrefix" "apiPrefix")) }}
+{{- $globFeastUI := include "common.get-component-value" (list .Values.global "feast" (list "uiPrefix")) }}
+{{- $globMerlinUI := include "common.get-component-value" (list .Values.global "merlin" (list "uiPrefix")) }}
+{{- $globTuringUI := include "common.get-component-value" (list .Values.global "turing" (list "uiPrefix")) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -64,7 +72,7 @@ spec:
             - name: ENVIRONMENT
               value: "{{ .Values.deployment.environment }}"
             - name: API_HOST
-              value: "{{ .Values.deployment.apiHost }}"
+              value: {{ include "common.set-value" (list .Values.deployment.apiHost $globApiHost) | quote }}
             - name: PORT
               value: "{{ .Values.service.internalPort }}"
             - name: DATABASE_HOST
@@ -92,7 +100,7 @@ spec:
               value: "{{ .Values.deployment.authorization.serverUrl }}"
             {{- end }}
             - name: OAUTH_CLIENT_ID
-              value: "{{ .Values.deployment.oauthClientID }}"
+              value: {{ include "common.set-value" (list .Values.deployment.oauthClientID $globOauthClientID) | quote }}
             - name: SENTRY_DSN
               value: "{{ .Values.deployment.sentryDSN }}"
             - name: TEAM_LIST
@@ -104,21 +112,21 @@ spec:
               value: {{ .Values.deployment.docs | toJson | quote  }}
             {{- end }}
             - name: REACT_APP_FEAST_CORE_API
-              value: "{{ .Values.deployment.ui.feastCoreApi }}"
+              value: {{ include "common.set-value" (list .Values.deployment.ui.feastCoreApi $globFeastApi) | quote }}
             - name: REACT_APP_MERLIN_API
-              value: "{{ .Values.deployment.ui.merlinApi }}"
+              value: {{ include "common.set-value" (list .Values.deployment.ui.merlinApi $globMerlinApi) | quote }}
             - name: REACT_APP_TURING_API
-              value: "{{ .Values.deployment.ui.turingApi }}"
+              value: {{ include "common.set-value" (list .Values.deployment.ui.turingApi $globTuringApi) | quote }}
             - name: REACT_APP_CLOCKWORK_UI_HOMEPAGE
               value: "{{ .Values.deployment.ui.clockworkHomepage }}"
             - name: REACT_APP_FEAST_UI_HOMEPAGE
-              value: "{{ .Values.deployment.ui.feastHomepage }}"
+              value: {{ include "common.set-value" (list .Values.deployment.ui.feastHomepage $globFeastUI) | quote }}
             - name: REACT_APP_KUBEFLOW_UI_HOMEPAGE
               value: "{{ .Values.deployment.ui.kubeflowHomepage }}"
             - name: REACT_APP_MERLIN_UI_HOMEPAGE
-              value: "{{ .Values.deployment.ui.merlinHomepage }}"
+              value: {{ include "common.set-value" (list .Values.deployment.ui.merlinHomepage $globMerlinUI) | quote }}
             - name: REACT_APP_TURING_UI_HOMEPAGE
-              value: "{{ .Values.deployment.ui.turingHomepage }}"
+              value: {{ include "common.set-value" (list .Values.deployment.ui.turingHomepage $globTuringUI) | quote }}
 {{- if .Values.deployment.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.deployment.imagePullSecrets | indent 6 }}
