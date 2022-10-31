@@ -9,11 +9,11 @@ If both are unset, will try to lookup ingress IP address using istio's loadbalan
 {{- define "common.get-external-hostname" }}
 {{- if .domain }}
 {{- printf "%s" .domain }}
-{{- else if ne .ingressIP "" }}
+{{- else if .ingressIP }}
 {{- printf "%s.nip.io" .ingressIP }}
 {{- else }}
 {{- $istioIp := include "common.istio-lookup" . }}
-{{- ternary (printf "%s.nip.io" $istioIp) ("example.nip.io") (ne $istioIp "")}}
+{{- ternary (printf "%s.nip.io" $istioIp) ("") (ne $istioIp "")}}
 {{- end }}
 {{- end }}
 
@@ -29,7 +29,12 @@ subdomain, domain
 {{- end }}
 
 {{- define "common.istio-lookup" }}
-{{- $istioLookupResult := (lookup "v1" "Service" .istioLookUp.namespace .istioLookUp.name ) }}
+{{- $istioLookupResult := "" }}
+{{- $outer := .istioLookUp | default dict -}}
+{{- $inner := $outer.inner | default dict -}}
+{{- if and (hasKey $inner "namespace") (hasKey $inner "name") }}
+{{- $istioLookupResult = (lookup "v1" "Service" .istioLookUp.namespace .istioLookUp.name ) }}
+{{- end }}
 {{- if $istioLookupResult }}
 {{- printf "%s" (index $istioLookupResult.status.loadBalancer.ingress 0).ip }}
 {{- else }}

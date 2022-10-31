@@ -6,7 +6,7 @@ Returns store if value supplied is ""
 {{- define "common.set-value"}}
 {{- $store := index . 0 }}
 {{- $value := index . 1 }}
-{{- printf "%s" (ternary $value $store (ne $value ""))}}
+{{- printf "%s" (ternary $value $store (and (ne $value "") (not (kindIs "invalid" $value))))}}
 {{- end }}
 
 
@@ -37,7 +37,7 @@ Pass in is global map object
 */}}
 {{- define "common.get-oauth-client" }}
 {{- $store := . }}
-{{- if ne $store.oauthclient "" }}
+{{- if and (ne $store.oauthclient "") (not (kindIs "invalid" $store.oauthclient)) }}
 {{- printf "%s" $store.oauthclient }}
 {{- else }}
 {{- printf "" }}
