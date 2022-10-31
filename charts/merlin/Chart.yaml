@@ -1,7 +1,7 @@
 apiVersion: v2
 description: Kubernetes-friendly ML model management, deployment, and serving.
 name: merlin
-version: 0.9.2
+version: 0.9.3
 appVersion: 0.24.0
 
 maintainers:
@@ -38,3 +38,6 @@ dependencies:
     repository: "https://caraml-dev.github.io/helm-charts"
     alias: minio
     condition: minio.enabled
+  - name: common
+    version: 0.2.1
+    repository: "https://caraml-dev.github.io/helm-charts"

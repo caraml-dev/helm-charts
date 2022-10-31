@@ -1,7 +1,9 @@
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "mlflow" (list "serviceName")) }}
+{{- $globServicePort := include "common.get-component-value" (list .Values.global "mlflow" (list "externalPort")) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "mlflow.fullname" . }}
+  name: {{ include "common.set-value" (list (include "mlflow.fullname" .) $globServiceName) }}
   namespace: {{ .Release.Namespace }}
 {{- if .Values.mlflow.service.annotations }}
   annotations:
@@ -27,7 +29,7 @@ spec:
 {{ toYaml .Values.mlflow.service.loadBalancerSourceRanges | indent 2 }}
 {{- end }}
   ports:
-  - port: {{ .Values.mlflow.service.externalPort }}
+  - port: {{ include "common.set-value" (list (.Values.mlflow.service.externalPort | toString) $globServicePort) | atoi }}
     targetPort: {{ .Values.mlflow.service.internalPort }}
     protocol: TCP
     name: http

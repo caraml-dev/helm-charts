@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.2](https://img.shields.io/badge/Version-0.9.2-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
+![Version: 0.9.3](https://img.shields.io/badge/Version-0.9.3-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -14,12 +14,13 @@ Kubernetes-friendly ML model management, deployment, and serving.
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://caraml-dev.github.io/helm-charts | common | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | vault(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.2.0 |
-| https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.0 |
 | https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.0 |
+| https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.0 |
 
 ## Values
 
@@ -74,6 +75,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | environmentConfigs[0].queue_resource_percentage | string | `"20"` |  |
 | environmentConfigs[0].region | string | `"id"` |  |
 | feastCoreApi.apiHost | string | `"http://feast-core.mlp:8080/v1"` |  |
+| global.protocol | string | `"http"` |  |
 | imageBuilder.baseImages."3.7.*".buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
 | imageBuilder.baseImages."3.7.*".dockerfilePath | string | `"docker/Dockerfile"` |  |
 | imageBuilder.baseImages."3.7.*".imageName | string | `"pyfunc-py37:v0.1.0"` |  |
