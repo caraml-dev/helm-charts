@@ -54,12 +54,13 @@ helm install merlin caraml/merlin \
 
 ```bash
 kubectl get po
-NAME                             READY   STATUS    RESTARTS   AGE
-merlin-64c9c75dfc-djs4t          1/1     Running   0          12m
-merlin-mlflow-5c7dd6d9df-g2s6v   1/1     Running   0          12m
-merlin-postgresql-0              1/1     Running   0          12m
-mlp-6877d8567-msqg9              1/1     Running   0          15m
-mlp-postgresql-0                 1/1     Running   0          15m
+NAME                                          READY   STATUS      RESTARTS     AGE
+caraml-postgresql-0                           1/1     Running     0            17m
+merlin-0-24-0-caraml-59f5cddf69-t56vs         2/2     Running     4            15m
+merlin-0-24-0-caraml-59f5cddf69-zrrqd         2/2     Running     4            15m
+merlin-0-24-0-caraml-mlflow-fc54b7f88-hnwwt   1/1     Running     3            15m
+merlin-0-24-0-setup-job-mshn8                 0/1     Completed   0            15m
+mlp-0-2-0-caraml-d44699777-7xlr7              1/1     Running     4            15m
 ```
 
 Once everything is Running, you can open Merlin in <http://merlin.mlp.${INGRESS_HOST}.nip.io/merlin>. From here, you can run Jupyter notebook examples by setting `merlin.set_url("merlin.mlp.${INGRESS_HOST}.nip.io")`.
