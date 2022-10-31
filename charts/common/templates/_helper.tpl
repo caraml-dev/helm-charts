@@ -17,7 +17,7 @@ Takes 3 arguments:
 3) list of fields in global.key to use
 */}}
 {{- define "common.get-component-value" }}
-{{- $store := index . 0 }}
+{{- $store := default (dict) (index . 0) }}
 {{- $key := index . 1 }}
 {{- $fields := index . 2}}
 {{- if and $store (hasKey $store $key) }}
@@ -36,9 +36,9 @@ Takes 3 arguments:
 Pass in is global map object
 */}}
 {{- define "common.get-oauth-client" }}
-{{- $store := . }}
-{{- if and (ne $store.oauthclient "") (not (kindIs "invalid" $store.oauthclient)) }}
-{{- printf "%s" $store.oauthclient }}
+{{- $store := default (dict) . }}
+{{- if and (ne $store.oAuthClient "") (not (kindIs "invalid" $store.oAuthClient)) }}
+{{- printf "%s" $store.oAuthClient }}
 {{- else }}
 {{- printf "" }}
 {{- end }}

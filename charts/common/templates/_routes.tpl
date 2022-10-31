@@ -44,19 +44,10 @@ subdomain, domain
 
 
 {{- define "common.get-prefix-match" }}
-{{- printf "%s/" .vsPrefix }}
-{{- end }}
-
-{{- define "common.get-workload-host" }}
-{{- $relNs := index . 1}}
-{{- $values := index . 0}}
-{{- with $values }}
-{{- $inClusterPrefix := printf "%s%s" .vsPrefix .apiPrefix }}
-{{- $host := "" }}
-{{- if .useServiceFqdn }}
-{{- $host = printf "%s.%s.svc.cluster.local%s" .serviceName $relNs .apiPrefix}}
+{{- $value := default (dict) . }}
+{{- if hasKey $value "vsPrefix"}}
+{{- printf "%s/" $value.vsPrefix }}
 {{- else }}
-{{- $host = printf "%s%s" (include "common.get-external-hostname" $) $inClusterPrefix }}
-{{- end }}
+{{- printf "" }}
 {{- end }}
 {{- end }}
