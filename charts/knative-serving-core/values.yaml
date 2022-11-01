@@ -221,9 +221,9 @@ autoscalerHpa:
   # according to your cluster capacity and service level objectives.
   # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources:
-    limits:
-      cpu: 1
-      memory: 128Mi
     requests:
       cpu: 500m
       memory: 128Mi
+    limits:
+      cpu: 1000m
+      memory: 256Mi
