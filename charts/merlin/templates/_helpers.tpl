@@ -226,3 +226,14 @@ MLflow Postgres related
   {{- printf "%s" $host }}
   {{- end }}
 {{- end }}
+
+
+{{- define "merlin.get-feast-api-host"}}
+{{- $protocol := (default "http" (get . "protocol")) }}
+{{- $hostname := include "common.get-external-hostname" . }}
+{{- if $hostname }}
+{{- printf "%s://%s" $protocol $hostname}}
+{{- else }}
+{{- printf ""}}
+{{- end }}
+{{- end }}
