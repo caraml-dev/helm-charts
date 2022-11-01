@@ -1,0 +1,64 @@
+
+activator:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 100Mi
+    limits:
+      cpu: 1000m
+      memory: 600Mi
+
+autoscaler:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 1000m
+      memory: 1000Mi
+
+controller:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 1000m
+      memory: 1000Mi
+
+domainMapping:
+  resources:
+    requests:
+      cpu: 30m
+      memory: 40Mi
+    limits:
+      cpu: 300m
+      memory: 400Mi
+
+domainMappingWebhook:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
+
+webhook:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 200m
+      memory: 500Mi
+
+
+autoscalerHpa:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 128Mi
+    limits:
+      cpu: 1000m
+      memory: 256Mi
