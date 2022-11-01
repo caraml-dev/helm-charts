@@ -4,7 +4,7 @@ activator:
       cpu: 250m
       memory: 100Mi
     limits:
-      cpu: 1000m
+      cpu: 300m
       memory: 600Mi
 
 autoscaler:
@@ -13,7 +13,7 @@ autoscaler:
       cpu: 250m
       memory: 500Mi
     limits:
-      cpu: 1000m
+      cpu: 300m
       memory: 1000Mi
 
 controller:
@@ -22,7 +22,7 @@ controller:
       cpu: 250m
       memory: 500Mi
     limits:
-      cpu: 1000m
+      cpu: 300m
       memory: 1000Mi
 
 domainMapping:
@@ -40,7 +40,7 @@ domainMappingWebhook:
       cpu: 100m
       memory: 100Mi
     limits:
-      cpu: 500m
+      cpu: 300m
       memory: 500Mi
 
 webhook:
@@ -58,5 +58,5 @@ autoscalerHpa:
       cpu: 250m
       memory: 128Mi
     limits:
-      cpu: 1000m
+      cpu: 300m
       memory: 256Mi
