@@ -79,7 +79,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.mlp.uiServiceName | string | `"mlp"` |  |
 | global.mlp.useServiceFqdn | bool | `false` |  |
 | global.mlp.vsPrefix | string | `"/api"` |  |
-| global.oauthclient | string | `"test-client-123"` |  |
+| global.oAuthClient | string | `"test-client-123"` |  |
 | global.pipeline.externalPort | string | `"8080"` |  |
 | global.pipeline.serviceName | string | `"pipeline-ui"` |  |
 | global.pipeline.uiPrefix | string | `"/pipeline"` |  |
