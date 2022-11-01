@@ -2,7 +2,7 @@ apiVersion: v2
 name: knative-serving-istio
 description: Installs Knative-serving for Istio
 type: application
-version: 1.0.6
+version: 1.0.7
 appVersion: "v1.0.0"
 maintainers:
   - name: caraml-dev

@@ -1,7 +1,7 @@
 # knative-serving-istio
 
 ---
-![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square)
+![Version: 1.0.7](https://img.shields.io/badge/Version-1.0.7-informational?style=flat-square)
 ![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
 
 Installs Knative-serving for Istio
@@ -69,7 +69,10 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | clusterLocalGateway.chartValues.labels.app | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.chartValues.labels.istio | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.chartValues.name | string | `"cluster-local-gateway"` | Specify name here so each gateway installation has its own unique name |
-| clusterLocalGateway.chartValues.resources | object | `{}` |  |
+| clusterLocalGateway.chartValues.resources.limits.cpu | string | `"2"` |  |
+| clusterLocalGateway.chartValues.resources.limits.memory | string | `"1Gi"` |  |
+| clusterLocalGateway.chartValues.resources.requests.cpu | string | `"1"` |  |
+| clusterLocalGateway.chartValues.resources.requests.memory | string | `"1Gi"` |  |
 | clusterLocalGateway.chartValues.service.ports[0].name | string | `"http2"` |  |
 | clusterLocalGateway.chartValues.service.ports[0].port | int | `80` |  |
 | clusterLocalGateway.chartValues.service.ports[0].targetPort | int | `80` |  |
@@ -93,7 +96,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | controller.image.sha | string | `"1ef74af101cc89d86a2e6b37b9a74545bfd9892d48b1b036d419a635a19c0081"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.image.tag | string | `""` | Tag of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.replicaCount | int | `1` | Number of replicas for the net-istio-controller deployment. |
-| controller.resources | object | `{}` | Resources requests and limits for net-istio-controller. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| controller.resources | object | `{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"500m","memory":"512Mi"}}` | Resources requests and limits for net-istio-controller. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | global.affinity | object | `{}` | Assign custom affinity rules to the prometheus operator ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/ |
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
@@ -102,7 +105,10 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istioIngressGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | istioIngressGateway.chartValues.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |
 | istioIngressGateway.chartValues.name | string | `"istio-ingressgateway"` | Specify name here so each gateway installation has its own unique name |
-| istioIngressGateway.chartValues.resources | object | `{}` |  |
+| istioIngressGateway.chartValues.resources.limits.cpu | string | `"2"` |  |
+| istioIngressGateway.chartValues.resources.limits.memory | string | `"1Gi"` |  |
+| istioIngressGateway.chartValues.resources.requests.cpu | string | `"1"` |  |
+| istioIngressGateway.chartValues.resources.requests.memory | string | `"1Gi"` |  |
 | istioIngressGateway.chartValues.serviceAccount.create | bool | `true` |  |
 | istioIngressGateway.chartValues.serviceAccount.name | string | `"istio-ingressgateway"` |  |
 | istioIngressGateway.global.enabled | bool | `true` | Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment |
@@ -136,35 +142,35 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | knativeServingCore.activator.image.sha | string | `"ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"` | SHA256 of the activator image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.activator.image.tag | string | `""` | Tag of the activator image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.activator.replicaCount | int | `1` | Number of replicas for the activator deployment. |
-| knativeServingCore.activator.resources | object | `{}` | Resources requests and limits for activator. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| knativeServingCore.activator.resources | object | `{"limits":{"cpu":"1000m","memory":"600Mi"},"requests":{"cpu":"300m","memory":"100Mi"}}` | Resources requests and limits for activator. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | knativeServingCore.autoscaler.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler"` | Repository of the autoscaler image |
 | knativeServingCore.autoscaler.image.sha | string | `"31aed8b5b241147585cb0e48366451a96354fc6036d6a5667997237c1d302d98"` | SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.autoscaler.image.tag | string | `""` | Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.autoscaler.replicaCount | int | `1` | Number of replicas for the autoscaler deployment. |
-| knativeServingCore.autoscaler.resources | object | `{}` | Resources requests and limits for autoscaler. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| knativeServingCore.autoscaler.resources | object | `{"limits":{"cpu":"1000m","memory":"1000Mi"},"requests":{"cpu":"500m","memory":"500Mi"}}` | Resources requests and limits for autoscaler. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | knativeServingCore.autoscalerHpa.enabled | bool | `true` |  |
 | knativeServingCore.autoscalerHpa.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler-hpa"` | Repository of the autoscaler image |
 | knativeServingCore.autoscalerHpa.image.sha | string | `"c7020d14b51862fae8e92da7b0442aa7843eb81c32699d158a3b24c19d5af8d4"` | SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.autoscalerHpa.image.tag | string | `""` | Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.autoscalerHpa.replicaCount | int | `1` | Number of replicas for the autoscaler deployment. |
-| knativeServingCore.autoscalerHpa.resources | object | `{}` | Resources requests and limits for autoscaler. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| knativeServingCore.autoscalerHpa.resources | object | `{"limits":{"cpu":"1000m","memory":"128Mi"},"requests":{"cpu":"500m","memory":"128Mi"}}` | Resources requests and limits for autoscaler. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | knativeServingCore.config | object | `{"autoscaler":{},"buckets":"1","defaults":{},"deployment":{"queueSidecarImage":"gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"},"domain":{},"features":{},"gc":{},"leaderElection":{"lease-duration":"15s","renew-deadline":"10s","retry-period":"2s"},"logging":{"logging.request-log-template":""},"network":{},"observability":{},"tracing":{}}` | Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml |
 | knativeServingCore.controller.autoscaling.enabled | bool | `false` | Enables autoscaling for controller deployment. |
 | knativeServingCore.controller.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/controller"` | Repository of the controller image |
 | knativeServingCore.controller.image.sha | string | `"c5a77d5642065ff3452d9b043a7226b85bfc81dc068f8dded905abf88d917a4d"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.controller.image.tag | string | `""` | Tag of the controller image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.controller.replicaCount | int | `1` | Number of replicas for the controller deployment. |
-| knativeServingCore.controller.resources | object | `{}` | Resources requests and limits for controller. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| knativeServingCore.controller.resources | object | `{"limits":{"cpu":"1000m","memory":"1000Mi"},"requests":{"cpu":"500m","memory":"500Mi"}}` | Resources requests and limits for controller. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | knativeServingCore.domainMapping.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping"` | Repository of the domain mapping image |
 | knativeServingCore.domainMapping.image.sha | string | `"6b5356cf3a2b64d52cbbf1bc0de376b816c4d3f610ccc8ff2dabf3d259c0996b"` | SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.domainMapping.image.tag | string | `""` | Tag of the domain mapping image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.domainMapping.replicaCount | int | `1` | Number of replicas for the domain mapping deployment. |
-| knativeServingCore.domainMapping.resources | object | `{}` | Resources requests and limits for domain mapping. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| knativeServingCore.domainMapping.resources | object | `{"limits":{"cpu":"300m","memory":"400Mi"},"requests":{"cpu":"30m","memory":"40Mi"}}` | Resources requests and limits for domain mapping. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | knativeServingCore.domainMappingWebhook.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping-webhook"` | Repository of the domain mapping webhook image |
 | knativeServingCore.domainMappingWebhook.image.sha | string | `"d0cc86f2002660c4804f6e0aed8218d39384c73a8b5006c9ac558becd8f48aa6"` | SHA256 of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.domainMappingWebhook.image.tag | string | `""` | Tag of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.domainMappingWebhook.replicaCount | int | `1` | Number of replicas for the domain mapping webhook deployment. |
-| knativeServingCore.domainMappingWebhook.resources | object | `{}` | Resources requests and limits for domain mapping webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| knativeServingCore.domainMappingWebhook.resources | object | `{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for domain mapping webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | knativeServingCore.enabled | bool | `true` |  |
 | knativeServingCore.global.affinity | object | `{}` | Assign custom affinity rules to the prometheus operator ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/ |
 | knativeServingCore.global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
@@ -179,10 +185,10 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | knativeServingCore.webhook.image.sha | string | `"bd954ec8ced56e359bd4f60ee1886b20000df14126688c796383a3ae40cfffc0"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.webhook.replicaCount | int | `1` | Number of replicas for the webhook deployment. |
-| knativeServingCore.webhook.resources | object | `{}` | Resources requests and limits for webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| knativeServingCore.webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | revision | string | `""` |  |
 | webhook.image.repository | string | `"gcr.io/knative-releases/knative.dev/net-istio/cmd/webhook"` | Repository of the webhook image |
 | webhook.image.sha | string | `"ab3dfcf1574780448b3453cc717d6eb2bc33e794d36c090eff1076aa65f05ca0"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.replicaCount | int | `1` | Number of replicas for the net-istio-webhook deployment. |
-| webhook.resources | object | `{}` | Resources requests and limits for net-istio-webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for net-istio-webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
