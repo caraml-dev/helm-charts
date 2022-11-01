@@ -1,7 +1,7 @@
 activator:
   resources:
     requests:
-      cpu: 250m
+      cpu: 100m
       memory: 500Mi
     limits:
       cpu: 250m
@@ -10,7 +10,7 @@ activator:
 autoscaler:
   resources:
     requests:
-      cpu: 250m
+      cpu: 100m
       memory: 500Mi
     limits:
       cpu: 250m
@@ -19,7 +19,7 @@ autoscaler:
 controller:
   resources:
     requests:
-      cpu: 250m
+      cpu: 100m
       memory: 500Mi
     limits:
       cpu: 250m
@@ -55,7 +55,7 @@ webhook:
 autoscalerHpa:
   resources:
     requests:
-      cpu: 250m
+      cpu: 100m
       memory: 128Mi
     limits:
       cpu: 250m
