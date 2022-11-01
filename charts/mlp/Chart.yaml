@@ -1,7 +1,7 @@
 apiVersion: v2
 description: "MLP API"
 name: mlp
-version: 0.2.2
+version: 0.2.3
 appVersion: 1.7.1
 
 maintainers:
@@ -15,4 +15,4 @@ dependencies:
     condition: postgresql.enabled
   - name: common
     repository: https://caraml-dev.github.io/helm-charts
-    version: 0.2.1
+    version: 0.2.2
