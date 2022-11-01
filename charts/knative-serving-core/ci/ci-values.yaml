@@ -1,4 +1,3 @@
-
 activator:
   resources:
     requests:
@@ -52,7 +51,6 @@ webhook:
     limits:
       cpu: 200m
       memory: 500Mi
-
 
 autoscalerHpa:
   resources:
