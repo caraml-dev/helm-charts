@@ -262,10 +262,10 @@ The following table lists the configurable parameters of the Kserve chart and th
 | logger.image.registry | string | `""` |  |
 | logger.image.repository | string | `"kserve/agent"` |  |
 | logger.image.tag | string | `"v0.8.0"` |  |
-| logger.resources.limits.cpu | string | `"100m"` |  |
-| logger.resources.limits.memory | string | `"100Mi"` |  |
-| logger.resources.requests.cpu | string | `"1000m"` |  |
-| logger.resources.requests.memory | string | `"1Gi"` |  |
+| logger.resources.limits.cpu | string | `"1000m"` |  |
+| logger.resources.limits.memory | string | `"1Gi"` |  |
+| logger.resources.requests.cpu | string | `"100m"` |  |
+| logger.resources.requests.memory | string | `"100Mi"` |  |
 | predictors.lightgbm.defaultImageVersion | string | `"v0.8.0"` |  |
 | predictors.lightgbm.image | string | `"kserve/lgbserver"` |  |
 | predictors.lightgbm.multiModelServer | bool | `false` |  |
