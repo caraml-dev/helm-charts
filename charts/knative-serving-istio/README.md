@@ -69,10 +69,10 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | clusterLocalGateway.chartValues.labels.app | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.chartValues.labels.istio | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.chartValues.name | string | `"cluster-local-gateway"` | Specify name here so each gateway installation has its own unique name |
-| clusterLocalGateway.chartValues.resources.limits.cpu | string | `"2"` |  |
-| clusterLocalGateway.chartValues.resources.limits.memory | string | `"1Gi"` |  |
-| clusterLocalGateway.chartValues.resources.requests.cpu | string | `"1"` |  |
-| clusterLocalGateway.chartValues.resources.requests.memory | string | `"1Gi"` |  |
+| clusterLocalGateway.chartValues.resources.limits.cpu | string | `"2000m"` |  |
+| clusterLocalGateway.chartValues.resources.limits.memory | string | `"2048Mi"` |  |
+| clusterLocalGateway.chartValues.resources.requests.cpu | string | `"1000m"` |  |
+| clusterLocalGateway.chartValues.resources.requests.memory | string | `"1024Mi"` |  |
 | clusterLocalGateway.chartValues.service.ports[0].name | string | `"http2"` |  |
 | clusterLocalGateway.chartValues.service.ports[0].port | int | `80` |  |
 | clusterLocalGateway.chartValues.service.ports[0].targetPort | int | `80` |  |
@@ -105,10 +105,10 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istioIngressGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | istioIngressGateway.chartValues.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |
 | istioIngressGateway.chartValues.name | string | `"istio-ingressgateway"` | Specify name here so each gateway installation has its own unique name |
-| istioIngressGateway.chartValues.resources.limits.cpu | string | `"2"` |  |
-| istioIngressGateway.chartValues.resources.limits.memory | string | `"1Gi"` |  |
-| istioIngressGateway.chartValues.resources.requests.cpu | string | `"1"` |  |
-| istioIngressGateway.chartValues.resources.requests.memory | string | `"1Gi"` |  |
+| istioIngressGateway.chartValues.resources.limits.cpu | string | `"2000m"` |  |
+| istioIngressGateway.chartValues.resources.limits.memory | string | `"2048Mi"` |  |
+| istioIngressGateway.chartValues.resources.requests.cpu | string | `"1000m"` |  |
+| istioIngressGateway.chartValues.resources.requests.memory | string | `"1024Mi"` |  |
 | istioIngressGateway.chartValues.serviceAccount.create | bool | `true` |  |
 | istioIngressGateway.chartValues.serviceAccount.name | string | `"istio-ingressgateway"` |  |
 | istioIngressGateway.global.enabled | bool | `true` | Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment |
@@ -126,7 +126,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istiod.chartValues.meshConfig.enableTracing | bool | `false` |  |
 | istiod.chartValues.pilot.autoscaleEnabled | bool | `false` |  |
 | istiod.chartValues.pilot.cpu.targetAverageUtilization | int | `80` |  |
-| istiod.chartValues.pilot.resources.limits.cpu | int | `1` |  |
+| istiod.chartValues.pilot.resources.limits.cpu | string | `"1000m"` |  |
 | istiod.chartValues.pilot.resources.limits.memory | string | `"1024Mi"` |  |
 | istiod.chartValues.pilot.resources.requests.cpu | string | `"500m"` |  |
 | istiod.chartValues.pilot.resources.requests.memory | string | `"512Mi"` |  |

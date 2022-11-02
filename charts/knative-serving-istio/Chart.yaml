@@ -10,12 +10,12 @@ maintainers:
 dependencies:
   - name: knative-serving-core
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 1.1.0
+    version: ~1.1.0
     alias: knativeServingCore
     condition: knativeServingCore.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.2.1
+    version: ~0.2.1
     alias: istiod
     condition: istiod.enabled
   - name: base
@@ -25,11 +25,11 @@ dependencies:
     condition: base.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.2.1
+    version: ~0.2.1
     alias: istioIngressGateway
     condition: istioIngressGateway.global.enabled
   - name: generic-dep-installer
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.2.1
+    version: ~0.2.1
     alias: clusterLocalGateway
     condition: clusterLocalGateway.global.enabled

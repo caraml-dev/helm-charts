@@ -1,0 +1,106 @@
+
+webhook:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 200m
+      memory: 500Mi
+
+
+knativeServingCore:
+  activator:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+      limits:
+        cpu: 250m
+        memory: 500Mi
+
+  autoscaler:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+      limits:
+        cpu: 250m
+        memory: 500Mi
+
+  controller:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+      limits:
+        cpu: 250m
+        memory: 500Mi
+
+  domainMapping:
+    resources:
+      requests:
+        cpu: 30m
+        memory: 40Mi
+      limits:
+        cpu: 50m
+        memory: 100Mi
+
+  domainMappingWebhook:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        cpu: 250m
+        memory: 500Mi
+
+  webhook:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        cpu: 250m
+        memory: 500Mi
+
+  autoscalerHpa:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 500Mi
+
+
+istiod:
+  chartValues:
+    pilot:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          cpu: 200m
+          memory: 1024Mi
+
+istioIngressGateway:
+  chartValues:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 512Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+
+clusterLocalGateway:
+  chartValues:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 512Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
