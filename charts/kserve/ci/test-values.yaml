@@ -49,10 +49,10 @@ logger:
     repository: kserve/agent
     tag: v0.8.0
   resources:
-    limits:
+    requests:
       cpu: 50m
       memory: 100Mi
-    requests:
+    limits:
       cpu: 1
       memory: 1Gi
   defaultUrl: http://default-broker
@@ -63,12 +63,13 @@ agent:
     repository: kserve/agent
     tag: v0.8.0
   resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
     requests:
       cpu: 50m
       memory: 100Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+
 
 batcher:
   image:
@@ -76,11 +77,11 @@ batcher:
     repository: kserve/agent
     tag: v0.8.0
   resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
     requests:
       cpu: 50m
+      memory: 1Gi
+    limits:
+      cpu: 1
       memory: 1Gi
 
 storageInitializer:
@@ -89,12 +90,12 @@ storageInitializer:
     repository: kserve/storage-initializer
     tag: v0.8.0
   resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
     requests:
       cpu: 50m
       memory: 100Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
 
 predictors:
   tensorflow:
