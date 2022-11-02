@@ -1,4 +1,3 @@
-
 webhook:
   resources:
     requests:
@@ -7,7 +6,6 @@ webhook:
     limits:
       cpu: 200m
       memory: 500Mi
-
 
 knativeServingCore:
   activator:
@@ -72,7 +70,6 @@ knativeServingCore:
       limits:
         cpu: 250m
         memory: 500Mi
-
 
 istiod:
   chartValues:
