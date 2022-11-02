@@ -1,7 +1,6 @@
 # See https://github.com/helm/chart-testing/blob/main/doc/ct_install.md#synopsis
 # This file is picked up by ct testing tool
 
-
 # Default values for kserve PURELY FOR github action tests
 # Memory and CPU resources for ClusterServingRuntimes
 # scaled down drastically, DO NOT USE for production!
@@ -102,41 +101,41 @@ predictors:
     image: tensorflow/serving
     defaultImageVersion: 2.6.2
     defaultGpuImageVersion: 2.6.2-gpu
-    defaultTimeout: '60'
+    defaultTimeout: "60"
     supportedFrameworks:
-    - tensorflow
+      - tensorflow
     multiModelServer: false
   onnx:
     image: mcr.microsoft.com/onnxruntime/server
     defaultImageVersion: v1.0.0
     supportedFrameworks:
-    - onnx
+      - onnx
     multiModelServer: false
   sklearn:
     v1:
       image: kserve/sklearnserver
       defaultImageVersion: v0.8.0
       supportedFrameworks:
-      - sklearn
+        - sklearn
       multiModelServer: true
     v2:
       image: docker.io/seldonio/mlserver
       defaultImageVersion: 0.5.3
       supportedFrameworks:
-      - sklearn
+        - sklearn
       multiModelServer: true
   xgboost:
     v1:
       image: kserve/xgbserver
       defaultImageVersion: v0.8.0
       supportedFrameworks:
-      - xgboost
+        - xgboost
       multiModelServer: true
     v2:
       image: docker.io/seldonio/mlserver
       defaultImageVersion: 0.5.3
       supportedFrameworks:
-      - xgboost
+        - xgboost
       multiModelServer: true
   pytorch:
     v1:
@@ -144,267 +143,265 @@ predictors:
       defaultImageVersion: 0.5.3
       defaultGpuImageVersion: 0.5.3-gpu
       supportedFrameworks:
-      - pytorch
+        - pytorch
       multiModelServer: false
     v2:
       image: kserve/torchserve-kfs
       defaultImageVersion: 0.5.3
       defaultGpuImageVersion: 0.5.3-gpu
       supportedFrameworks:
-      - pytorch
+        - pytorch
       multiModelServer: false
   triton:
     image: nvcr.io/nvidia/tritonserver
     defaultImageVersion: 21.09-py3
     supportedFrameworks:
-    - tensorrt
-    - tensorflow
-    - onnx
-    - pytorch
+      - tensorrt
+      - tensorflow
+      - onnx
+      - pytorch
     multiModelServer: true
   pmml:
     image: kserve/pmmlserver
     defaultImageVersion: v0.8.0
     supportedFrameworks:
-    - pmml
+      - pmml
     multiModelServer: false
   lightgbm:
     image: kserve/lgbserver
     defaultImageVersion: v0.8.0
     supportedFrameworks:
-    - lightgbm
+      - lightgbm
     multiModelServer: false
   paddle:
     image: kserve/paddleserver
     defaultImageVersion: v0.8.0
     supportedFrameworks:
-    - paddle
+      - paddle
     multiModelServer: false
-
 
 clusterServingRuntimes:
   - name: kserve-lgbserver
     spec:
       containers:
-      - args:
-        - --model_name={{.Name}}
-        - --model_dir=/mnt/models
-        - --http_port=8080
-        - --nthread=1
-        image: kserve/lgbserver:v0.8.0
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - args:
+            - --model_name={{.Name}}
+            - --model_dir=/mnt/models
+            - --http_port=8080
+            - --nthread=1
+          image: kserve/lgbserver:v0.8.0
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - autoSelect: true
-        name: lightgbm
-        version: "2"
+        - autoSelect: true
+          name: lightgbm
+          version: "2"
   - name: kserve-mlserver
     spec:
       containers:
-      - env:
-        - name: MLSERVER_MODEL_IMPLEMENTATION
-          value: '{{.Labels.modelClass}}'
-        - name: MLSERVER_HTTP_PORT
-          value: "8080"
-        - name: MLSERVER_GRPC_PORT
-          value: "9000"
-        - name: MODELS_DIR
-          value: /mnt/models
-        image: docker.io/seldonio/mlserver:0.5.3
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - env:
+            - name: MLSERVER_MODEL_IMPLEMENTATION
+              value: "{{.Labels.modelClass}}"
+            - name: MLSERVER_HTTP_PORT
+              value: "8080"
+            - name: MLSERVER_GRPC_PORT
+              value: "9000"
+            - name: MODELS_DIR
+              value: /mnt/models
+          image: docker.io/seldonio/mlserver:0.5.3
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - name: sklearn
-        version: "0"
-      - name: xgboost
-        version: "1"
-      - name: lightgbm
-        version: "3"
-      - autoSelect: true
-        name: mlflow
-        version: "1"
+        - name: sklearn
+          version: "0"
+        - name: xgboost
+          version: "1"
+        - name: lightgbm
+          version: "3"
+        - autoSelect: true
+          name: mlflow
+          version: "1"
   - name: kserve-paddleserver
     spec:
       containers:
-      - args:
-        - --model_name={{.Name}}
-        - --model_dir=/mnt/models
-        - --http_port=8080
-        image: kserve/paddleserver:v0.8.0
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - args:
+            - --model_name={{.Name}}
+            - --model_dir=/mnt/models
+            - --http_port=8080
+          image: kserve/paddleserver:v0.8.0
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - autoSelect: true
-        name: paddle
-        version: "2"
+        - autoSelect: true
+          name: paddle
+          version: "2"
   - name: kserve-pmmlserver
     spec:
       containers:
-      - args:
-        - --model_name={{.Name}}
-        - --model_dir=/mnt/models
-        - --http_port=8080
-        image: kserve/pmmlserver:v0.8.0
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - args:
+            - --model_name={{.Name}}
+            - --model_dir=/mnt/models
+            - --http_port=8080
+          image: kserve/pmmlserver:v0.8.0
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - autoSelect: true
-        name: pmml
-        version: "3"
-      - autoSelect: true
-        name: pmml
-        version: "4"
+        - autoSelect: true
+          name: pmml
+          version: "3"
+        - autoSelect: true
+          name: pmml
+          version: "4"
   - name: kserve-sklearnserver
     spec:
       containers:
-      - args:
-        - --model_name={{.Name}}
-        - --model_dir=/mnt/models
-        - --http_port=8080
-        image: kserve/sklearnserver:v0.8.0
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - args:
+            - --model_name={{.Name}}
+            - --model_dir=/mnt/models
+            - --http_port=8080
+          image: kserve/sklearnserver:v0.8.0
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - autoSelect: true
-        name: sklearn
-        version: "1"
+        - autoSelect: true
+          name: sklearn
+          version: "1"
   - name: kserve-tensorflow-serving
     spec:
       containers:
-      - args:
-        - --model_name={{.Name}}
-        - --port=9000
-        - --rest_api_port=8080
-        - --model_base_path=/mnt/models
-        - --rest_api_timeout_in_ms=60000
-        command:
-        - /usr/bin/tensorflow_model_server
-        image: tensorflow/serving:2.6.2
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - args:
+            - --model_name={{.Name}}
+            - --port=9000
+            - --rest_api_port=8080
+            - --model_base_path=/mnt/models
+            - --rest_api_timeout_in_ms=60000
+          command:
+            - /usr/bin/tensorflow_model_server
+          image: tensorflow/serving:2.6.2
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - autoSelect: true
-        name: tensorflow
-        version: "1"
-      - autoSelect: true
-        name: tensorflow
-        version: "2"
+        - autoSelect: true
+          name: tensorflow
+          version: "1"
+        - autoSelect: true
+          name: tensorflow
+          version: "2"
   - name: kserve-torchserve
     spec:
       containers:
-      - args:
-        - torchserve
-        - --start
-        - --model-store=/mnt/models/model-store
-        - --ts-config=/mnt/models/config/config.properties
-        env:
-        - name: TS_SERVICE_ENVELOPE
-          value: '{{.Labels.serviceEnvelope}}'
-        image: kserve/torchserve-kfs:0.5.3
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - args:
+            - torchserve
+            - --start
+            - --model-store=/mnt/models/model-store
+            - --ts-config=/mnt/models/config/config.properties
+          env:
+            - name: TS_SERVICE_ENVELOPE
+              value: "{{.Labels.serviceEnvelope}}"
+          image: kserve/torchserve-kfs:0.5.3
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - autoSelect: true
-        name: pytorch
-        version: "1"
+        - autoSelect: true
+          name: pytorch
+          version: "1"
   - name: kserve-tritonserver
     spec:
       containers:
-      - args:
-        - tritonserver
-        - --model-store=/mnt/models
-        - --grpc-port=9000
-        - --http-port=8080
-        - --allow-grpc=true
-        - --allow-http=true
-        image: nvcr.io/nvidia/tritonserver:21.09-py3
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - args:
+            - tritonserver
+            - --model-store=/mnt/models
+            - --grpc-port=9000
+            - --http-port=8080
+            - --allow-grpc=true
+            - --allow-http=true
+          image: nvcr.io/nvidia/tritonserver:21.09-py3
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - name: tensorrt
-        version: "8"
-      - name: tensorflow
-        version: "1"
-      - name: tensorflow
-        version: "2"
-      - autoSelect: true
-        name: onnx
-        version: "1"
-      - name: pytorch
-        version: "1"
-      - autoSelect: true
-        name: triton
-        version: "2"
+        - name: tensorrt
+          version: "8"
+        - name: tensorflow
+          version: "1"
+        - name: tensorflow
+          version: "2"
+        - autoSelect: true
+          name: onnx
+          version: "1"
+        - name: pytorch
+          version: "1"
+        - autoSelect: true
+          name: triton
+          version: "2"
   - name: kserve-xgbserver
     spec:
       containers:
-      - args:
-        - --model_name={{.Name}}
-        - --model_dir=/mnt/models
-        - --http_port=8080
-        - --nthread=1
-        image: kserve/xgbserver:v0.8.0
-        name: kserve-container
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - args:
+            - --model_name={{.Name}}
+            - --model_dir=/mnt/models
+            - --http_port=8080
+            - --nthread=1
+          image: kserve/xgbserver:v0.8.0
+          name: kserve-container
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
       supportedModelFormats:
-      - autoSelect: true
-        name: xgboost
-        version: "1"
-
+        - autoSelect: true
+          name: xgboost
+          version: "1"
 
 ###################################################################
 # knativeServingIstio dependency configuration
@@ -418,7 +415,119 @@ knativeServingIstio:
     release: knative-serving
     namespace: knative-serving
     createNamespace: true
+  chartValues:
+    controller:
+      resources:
+        requests:
+          cpu: 50m
+          memory: 512Mi
+        limits:
+          cpu: 100m
+          memory: 512Mi
 
+    webhook:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+        limits:
+          cpu: 200m
+          memory: 500Mi
+
+    knativeServingCore:
+      activator:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500Mi
+          limits:
+            cpu: 250m
+            memory: 500Mi
+
+      autoscaler:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500Mi
+          limits:
+            cpu: 250m
+            memory: 500Mi
+
+      controller:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500Mi
+          limits:
+            cpu: 250m
+            memory: 500Mi
+
+      domainMapping:
+        resources:
+          requests:
+            cpu: 30m
+            memory: 40Mi
+          limits:
+            cpu: 50m
+            memory: 100Mi
+
+      domainMappingWebhook:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 250m
+            memory: 500Mi
+
+      webhook:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 250m
+            memory: 500Mi
+
+      autoscalerHpa:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 500Mi
+
+    istiod:
+      chartValues:
+        pilot:
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 200m
+              memory: 1024Mi
+
+    istioIngressGateway:
+      chartValues:
+        resources:
+          requests:
+            cpu: 50m
+            memory: 512Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+
+    clusterLocalGateway:
+      chartValues:
+        resources:
+          requests:
+            cpu: 50m
+            memory: 512Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
 
 ###################################################################
 # Cert manager Base for Cert Manager CRDs

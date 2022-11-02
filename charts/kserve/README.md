@@ -1,7 +1,7 @@
 # kserve
 
 ---
-![Version: 0.8.8](https://img.shields.io/badge/Version-0.8.8-informational?style=flat-square)
+![Version: 0.8.9](https://img.shields.io/badge/Version-0.8.9-informational?style=flat-square)
 ![AppVersion: 0.8.0](https://img.shields.io/badge/AppVersion-0.8.0-informational?style=flat-square)
 
 A Helm chart for installing Kserve
@@ -65,16 +65,16 @@ The following table lists the configurable parameters of the Kserve chart and th
 | agent.image.registry | string | `""` |  |
 | agent.image.repository | string | `"kserve/agent"` |  |
 | agent.image.tag | string | `"v0.8.0"` |  |
-| agent.resources.limits.cpu | int | `1` |  |
+| agent.resources.limits.cpu | string | `"1000m"` |  |
 | agent.resources.limits.memory | string | `"1Gi"` |  |
 | agent.resources.requests.cpu | string | `"100m"` |  |
 | agent.resources.requests.memory | string | `"100Mi"` |  |
 | batcher.image.registry | string | `""` |  |
 | batcher.image.repository | string | `"kserve/agent"` |  |
 | batcher.image.tag | string | `"v0.8.0"` |  |
-| batcher.resources.limits.cpu | int | `1` |  |
+| batcher.resources.limits.cpu | string | `"1000m"` |  |
 | batcher.resources.limits.memory | string | `"1Gi"` |  |
-| batcher.resources.requests.cpu | int | `1` |  |
+| batcher.resources.requests.cpu | string | `"1000m"` |  |
 | batcher.resources.requests.memory | string | `"1Gi"` |  |
 | cert-manager.enabled | bool | `true` |  |
 | cert-manager.fullnameOverride | string | `"cert-manager"` |  |
@@ -241,7 +241,7 @@ The following table lists the configurable parameters of the Kserve chart and th
 | controller.image.repository | string | `"kserve/kserve-controller"` |  |
 | controller.image.tag | string | `"v0.8.0"` |  |
 | controller.nodeSelector | object | `{}` |  |
-| controller.resources | object | `{"limits":{"cpu":"100m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | These are example resource values set for the controller, please override accordingly |
+| controller.resources | object | `{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"500m","memory":"512Mi"}}` | These are example resource values set for the controller, please override accordingly |
 | controller.tolerations | list | `[]` |  |
 | defaultDeploymentMode | string | `"Serverless"` | Specify how inference service is deployed: - Serverless, use Knative - RawDeployment, use K8S Deployment |
 | ingress | object | `{"domainTemplate":"{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }}","ingressClassName":"istio","ingressDomain":"example.com","ingressGateway":"knative-serving/knative-ingress-gateway","ingressService":"istio-ingressgateway.istio-system.svc.cluster.local","localGateway":"knative-serving/knative-local-gateway","localGatewayService":"cluster-local-gateway.istio-system.svc.cluster.local"}` | Ingress configuration |
@@ -264,7 +264,7 @@ The following table lists the configurable parameters of the Kserve chart and th
 | logger.image.tag | string | `"v0.8.0"` |  |
 | logger.resources.limits.cpu | string | `"100m"` |  |
 | logger.resources.limits.memory | string | `"100Mi"` |  |
-| logger.resources.requests.cpu | int | `1` |  |
+| logger.resources.requests.cpu | string | `"1000m"` |  |
 | logger.resources.requests.memory | string | `"1Gi"` |  |
 | predictors.lightgbm.defaultImageVersion | string | `"v0.8.0"` |  |
 | predictors.lightgbm.image | string | `"kserve/lgbserver"` |  |
@@ -324,7 +324,7 @@ The following table lists the configurable parameters of the Kserve chart and th
 | storageInitializer.image.registry | string | `""` |  |
 | storageInitializer.image.repository | string | `"kserve/storage-initializer"` |  |
 | storageInitializer.image.tag | string | `"v0.8.0"` |  |
-| storageInitializer.resources.limits.cpu | int | `1` |  |
+| storageInitializer.resources.limits.cpu | string | `"1000m"` |  |
 | storageInitializer.resources.limits.memory | string | `"1Gi"` |  |
 | storageInitializer.resources.requests.cpu | string | `"100m"` |  |
 | storageInitializer.resources.requests.memory | string | `"100Mi"` |  |
