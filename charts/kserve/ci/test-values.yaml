@@ -24,7 +24,7 @@ controller:
 
   resources:
     limits:
-      cpu: 100m
+      cpu: 50m
       memory: 128Mi
     requests:
       cpu: 100m
@@ -50,7 +50,7 @@ logger:
     tag: v0.8.0
   resources:
     limits:
-      cpu: 100m
+      cpu: 50m
       memory: 100Mi
     requests:
       cpu: 1
@@ -67,7 +67,7 @@ agent:
       cpu: 1
       memory: 1Gi
     requests:
-      cpu: 100m
+      cpu: 50m
       memory: 100Mi
 
 batcher:
@@ -80,7 +80,7 @@ batcher:
       cpu: 1
       memory: 1Gi
     requests:
-      cpu: 1
+      cpu: 50m
       memory: 1Gi
 
 storageInitializer:
@@ -93,7 +93,7 @@ storageInitializer:
       cpu: 1
       memory: 1Gi
     requests:
-      cpu: 100m
+      cpu: 50m
       memory: 100Mi
 
 predictors:
@@ -428,7 +428,7 @@ knativeServingIstio:
     webhook:
       resources:
         requests:
-          cpu: 100m
+          cpu: 50m
           memory: 100Mi
         limits:
           cpu: 200m
@@ -438,7 +438,7 @@ knativeServingIstio:
       activator:
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 500Mi
           limits:
             cpu: 250m
@@ -447,7 +447,7 @@ knativeServingIstio:
       autoscaler:
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 500Mi
           limits:
             cpu: 250m
@@ -456,7 +456,7 @@ knativeServingIstio:
       controller:
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 500Mi
           limits:
             cpu: 250m
@@ -474,7 +474,7 @@ knativeServingIstio:
       domainMappingWebhook:
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 100Mi
           limits:
             cpu: 250m
@@ -483,7 +483,7 @@ knativeServingIstio:
       webhook:
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 100Mi
           limits:
             cpu: 250m
@@ -492,7 +492,7 @@ knativeServingIstio:
       autoscalerHpa:
         resources:
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 128Mi
           limits:
             cpu: 250m
@@ -503,7 +503,7 @@ knativeServingIstio:
         pilot:
           resources:
             requests:
-              cpu: 100m
+              cpu: 50m
               memory: 512Mi
             limits:
               cpu: 200m
