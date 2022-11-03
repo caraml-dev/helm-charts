@@ -1,7 +1,7 @@
 # caraml-routes
 
 ---
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square)
 ![AppVersion: 0.1.2](https://img.shields.io/badge/AppVersion-0.1.2-informational?style=flat-square)
 
 A Helm chart for deploying CaraML networking resources
@@ -79,7 +79,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.mlp.uiServiceName | string | `"mlp"` |  |
 | global.mlp.useServiceFqdn | bool | `false` |  |
 | global.mlp.vsPrefix | string | `"/api"` |  |
-| global.oauthclient | string | `"test-client-123"` |  |
+| global.oauthClientID | string | `"test-client-123"` |  |
 | global.pipeline.externalPort | string | `"8080"` |  |
 | global.pipeline.serviceName | string | `"pipeline-ui"` |  |
 | global.pipeline.uiPrefix | string | `"/pipeline"` |  |
