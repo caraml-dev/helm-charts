@@ -1,3 +1,4 @@
+global: {}
 deployment:
   # -- mlp image related configs
   image:

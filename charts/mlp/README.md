@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
 
 MLP API
 
@@ -14,7 +14,7 @@ MLP API
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | common | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | common | 0.2.2 |
 | https://charts.helm.sh/stable | postgresql | 7.0.0 |
 
 ## Values
@@ -52,6 +52,7 @@ MLP API
 | externalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Valut)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | externalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Valut)., mention the secret name here |
 | externalPostgresql.username | string | `"mlp"` | External postgres database user |
+| global | object | `{}` |  |
 | ingress.enabled | bool | `false` |  |
 | postgresql.enabled | bool | `true` | Enable creating mlp specific postgres instance |
 | postgresql.nameOverride | string | `"mlp-postgresql"` | override the name here so that db gets created like <release_name>-mlp-postgresql |
