@@ -42,13 +42,6 @@ sources:
             version: "{version}"
 conditions: {{}}
 targets:
-    chart:
-        name: Bump Chart version
-        kind: helmChart
-        spec:
-            Name: "{chart_path}"
-            file: "Chart.yaml"
-            versionIncrement: "patch"
     chartValues:
         name: Bump Chart dependencies
         kind: helmChart
