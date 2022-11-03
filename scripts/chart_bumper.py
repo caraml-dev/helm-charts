@@ -48,7 +48,7 @@ targets:
         spec:
             Name: "{chart_path}"
             file: "values.yaml"
-            key: "{chart_values[dependency["alias"]]}.helmChart.version"
+            key: "{dependency["alias"]}.helmChart.version"
             versionIncrement: "patch"
 """
 
