@@ -4,6 +4,6 @@ dependencies:
   version: 7.0.0
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.1
-digest: sha256:6ef27499f5ef66b7746aea1c184f59d50c135c51d5cc08c5acbf56620feefff7
-generated: "2022-10-20T13:44:26.251926+08:00"
+  version: 0.2.2
+digest: sha256:db569fae2e31caaf96494f1878c7af507c39f0a94835eaf4ad55c33510c6ffb7
+generated: "2022-11-01T12:33:57.075604+08:00"

@@ -22,12 +22,12 @@ controller:
 
   # -- These are example resource values set for the controller, please override accordingly
   resources:
-    limits:
-      cpu: 100m
-      memory: 128Mi
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 512Mi
 
   nodeSelector: {}
   tolerations: []
@@ -67,11 +67,11 @@ logger:
     repository: kserve/agent
     tag: v0.8.0
   resources:
-    limits:
+    requests:
       cpu: 100m
       memory: 100Mi
-    requests:
-      cpu: 1
+    limits:
+      cpu: 1000m
       memory: 1Gi
   defaultUrl: http://default-broker
 
@@ -81,12 +81,12 @@ agent:
     repository: kserve/agent
     tag: v0.8.0
   resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
     requests:
       cpu: 100m
       memory: 100Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
 
 batcher:
   image:
@@ -94,11 +94,11 @@ batcher:
     repository: kserve/agent
     tag: v0.8.0
   resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
     requests:
-      cpu: 1
+      cpu: 1000m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
       memory: 1Gi
 
 # storageInitializer container specs if enabled
@@ -108,12 +108,12 @@ storageInitializer:
     repository: kserve/storage-initializer
     tag: v0.8.0
   resources:
-    limits:
-      cpu: 1
-      memory: 1Gi
     requests:
       cpu: 100m
       memory: 100Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
 
 # predictor spec configs for inferenceservices
 predictors:

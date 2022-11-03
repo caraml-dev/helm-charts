@@ -33,8 +33,8 @@ jobs:
         run: |
           changed=$(ct list-changed --config .github/config/ct.yaml | tr '\n' ' ')
           if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-            echo "::set-output name=charts_changed::$changed"
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "charts_changed=$changed" >> $GITHUB_OUTPUT
           fi
 
       - name: Add dependency chart repos

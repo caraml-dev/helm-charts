@@ -1,7 +1,7 @@
 dependencies:
 - name: knative-serving-core
   repository: https://caraml-dev.github.io/helm-charts
-  version: 1.1.0
+  version: 1.1.2
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.1
@@ -14,5 +14,5 @@ dependencies:
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.1
-digest: sha256:7a53806de8775e437cc6d0c809b5eae30cce1564333125cc20b8a99807833794
-generated: "2022-10-21T11:37:17.724738+05:30"
+digest: sha256:101b301b8f7aef771e1bf1217974c594b41a723704612919ae1e573a089b9c98
+generated: "2022-11-02T09:52:11.691203+05:30"
