@@ -14,14 +14,14 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | caraml-routes | ~0.1.0 |
-| https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | ~1.8.1 |
-| https://caraml-dev.github.io/helm-charts | common | ~0.2.1 |
-| https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | ~0.2.1 |
-| https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | ~0.2.1 |
-| https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | ~0.2.1 |
-| https://caraml-dev.github.io/helm-charts | merlin | ~0.9.3 |
-| https://caraml-dev.github.io/helm-charts | mlp | ~0.2.2 |
+| https://caraml-dev.github.io/helm-charts | caraml-routes | 0.1.3 |
+| https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
+| https://caraml-dev.github.io/helm-charts | common | 0.2.4 |
+| https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | merlin | 0.9.4 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.3.2 |
 | https://charts.helm.sh/stable | postgresql | 7.0.0 |
 | https://charts.jetstack.io | cert-manager | 1.8.1 |
 | https://istio-release.storage.googleapis.com/charts | base(base) | 1.13.4 |
