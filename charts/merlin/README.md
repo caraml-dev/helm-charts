@@ -18,7 +18,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | https://caraml-dev.github.io/helm-charts | vault(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.2.2 |
+| https://caraml-dev.github.io/helm-charts | mlp | ~0.2.3 |
 | https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.0 |
 | https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.0 |
 

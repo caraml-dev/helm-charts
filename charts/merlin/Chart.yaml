@@ -26,7 +26,7 @@ dependencies:
     condition: vault.enabled
   - name: mlp
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.2.2
+    version: ~0.2.3
     condition: mlp.enabled
   - name: generic-dep-installer
     version: 0.2.1
