@@ -22,7 +22,7 @@ BUMP_MAJOR = os.environ.get("BUMP_MAJOR") == "true"
 BUMP_MINOR = os.environ.get("BUMP_MINOR") == "true"
 
 
-def update_gdi_dependency(chart_path : str, dependency: dict):
+def update_gdi_dependency(chart_path: str, dependency: dict):
     with open(chart_path + "/values.yaml") as f:
         text = f.read()
     chart_values: dict = yaml.safe_load(text)
@@ -62,9 +62,7 @@ targets:
     with open("manifest_gdi_dependant.yaml", "w") as f:
         f.write(manifest)
     subprocess.check_output(
-            "updatecli apply --config manifest_gdi_dependant.yaml".split(" "))
-
-    os.remove("manifest_gdi_dependant.yaml")
+        "updatecli apply --config manifest_gdi_dependant.yaml".split(" "))
 
 
 def update_chart(chart_path: str):
@@ -124,6 +122,7 @@ targets:
     print(f"Updating helm dependencies for chart: {chart_path}")
     subprocess.check_output(
         f"helm dep update {chart_path}".split(" "))
+
 
 if __name__ == "__main__":
 
