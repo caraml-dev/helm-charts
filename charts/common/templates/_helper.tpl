@@ -37,7 +37,7 @@ Pass in is global map object
 */}}
 {{- define "common.get-oauth-client" }}
 {{- $store := default (dict) . }}
-{{- if and (ne $store.oAuthClient "") (not (kindIs "invalid" $store.oAuthClient)) }}
+{{- if and (ne $store.oauthClientID "") (not (kindIs "invalid" $store.oauthClientID)) }}
 {{- printf "%s" $store.oAuthClient }}
 {{- else }}
 {{- printf "" }}
