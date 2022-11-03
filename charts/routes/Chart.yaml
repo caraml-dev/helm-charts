@@ -58,4 +58,4 @@ dependencies:
   - name: common
     repository: "https://caraml-dev.github.io/helm-charts"
     condition: common.enabled
-    version: 0.2.2
+    version: 0.2.3
