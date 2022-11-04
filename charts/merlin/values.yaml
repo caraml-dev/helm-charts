@@ -1,21 +1,16 @@
 global:
   protocol: http
-
 deployment:
   image:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
     tag: 0.24.0-rc1
-
   replicaCount: "2"
-
   # Additional labels to apply to the deployment
   labels: {}
-
   # Additional labels to apply to the merlin pods
   podLabels: {}
-
   resources:
     requests:
       cpu: "500m"
@@ -23,22 +18,16 @@ deployment:
     limits:
       cpu: "1"
       memory: 1Gi
-
 environment: dev
-
 loggerDestinationURL: "http://yourDestinationLogger"
-
 queue:
   numOfWorkers: 1
-
 mlpApi:
   apiHost: http://mlp.mlp:8080/v1
   # encryptionKey must be specified using --set flag.
   encryptionKey: secret-encyrption
-
 feastCoreApi:
   apiHost: http://feast-core.mlp:8080/v1
-
 imageBuilder:
   clusterName: "test"
   baseImages:
@@ -62,11 +51,9 @@ imageBuilder:
   tolerations: []
   nodeSelectors: {}
   maxRetry: 3
-
 alerts:
   # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
   enabled: false
-
   # -- Repository platform where the created Alerts and Dashboards need to be pushed. Platforms supported as of now: Gitlab
   alertsRepoPlatform: gitlab
   baseURL: https://gitlab.com/
@@ -76,36 +63,19 @@ alerts:
   dashboardBranch: master
   alertRepository: lens/artillery/datascience
   alertBranch: master
-
   warden:
     apiHost: ""
-
 monitoring:
   enabled: false
   # baseURL: ""
   # jobBaseURL: ""
-
 transformer:
   simulation:
     feastRedisServingURL: online-serving-redis.feast.dev
     feastBigtableServingURL: online-serving-bt.feast.dev
   feast:
     defaultServingURL: online-serving-redis.feast.dev
-    servingURLs:
-      [
-        {
-          host: "online-serving-redis.feast.dev",
-          label: "Online Serving with Redis",
-          source_type: "REDIS",
-          icon: "redis",
-        },
-        {
-          host: "online-serving-bigtable.feast.dev",
-          label: "Online Serving with BigTable",
-          source_type: "BIGTABLE",
-          icon: "bigtable",
-        },
-      ]
+    servingURLs: [{host: "online-serving-redis.feast.dev", label: "Online Serving with Redis", source_type: "REDIS", icon: "redis"}, {host: "online-serving-bigtable.feast.dev", label: "Online Serving with BigTable", source_type: "BIGTABLE", icon: "bigtable"}]
     ## Redis storage configuration for feast retrieval
     ##
     # redisStorage:
@@ -132,7 +102,6 @@ transformer:
     #   pool_size: 5
     #   keep_alive_interval: "2m"
     #   keep_alive_timeout: "1m"
-
     defaultFeastSource: BIGTABLE
     bigtableCredential:
     coreURL: core.feast.dev
@@ -145,13 +114,11 @@ transformer:
     samplerType: const
     samplerParam: 1
     disabled: false
-
 # Google service account used to access GCP's resources.
 #
 # gcpServiceAccount:
 #   secretName: merlin-secret
 #   secretKey: service-account.json
-
 environmentConfigs:
   - name: "id-dev"
     is_default: true
@@ -181,53 +148,33 @@ environmentConfigs:
       max_replica: 1
       cpu_request: "500m"
       memory_request: "500Mi"
-
 sentry:
   enabled: false
   dsn: ""
-
 newrelic:
   enabled: false
   appname: "merlin-api-dev"
   licenseSecretName: "newrelic-license-secret"
-
 authorization:
   enabled: true
   serverUrl: http://mlp-authorization-keto
-
 encryption:
   key: "password"
-
 ui:
   oauthClientID: ""
-
   homepage: /merlin
-
   apiHost: /api/merlin/v1
-
   mlp:
     apiHost: /api/v1
-
-  docsURL:
-    [
-      {
-        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
-        "label": "Getting Started with Merlin",
-      },
-    ]
-
+  docsURL: [{"href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md", "label": "Getting Started with Merlin"}]
   # Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
-
   maxAllowedReplica: 20
-
 service:
   externalPort: 8080
   internalPort: 8080
-
 ingress:
   enabled: false
-
 # If you would like to use an external postgres database for Merlin, you can connect using these credentials
 merlinExternalPostgresql:
   # -- If you would like to use an external postgres database, enable it here using this
@@ -244,10 +191,8 @@ merlinExternalPostgresql:
   secretName: ""
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
   secretKey: ""
-
 merlin-postgresql:
   enabled: true
-
   postgresqlUsername: merlin
   postgresqlDatabase: merlin
   # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
@@ -257,7 +202,6 @@ merlin-postgresql:
     requests:
       cpu: 100m
       memory: 512Mi
-
   # metrics:
   #   enabled: true
   #   serviceMonitor:
@@ -275,39 +219,29 @@ merlin-postgresql:
   #   numSynchronousReplicas: 2
   #   Replication Cluster application name. Useful for defining multiple replication policies
   #   applicationName: merlin
-
   persistence:
     size: 10Gi
-
 mlp:
   enabled: true
-
 mlflow:
   # This should be the actual DNS registered
   trackingURL: "http://www.example.com"
-
   ## mlflow container name
   ##
   name: mlflow
-
   # Additional labels to apply to the mlflow deployment
   deploymentLabels: {}
-
   # Additional labels to apply to the mlflow pods
   podLabels: {}
-
   image:
     registry: ghcr.io
     repository: gojek/mlflow
     tag: 1.3.0
     pullPolicy: Always
-
   replicaCount: 1
-
   rollingUpdate:
     maxSurge: 1
     maxUnavailable: 0
-
   livenessProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
@@ -318,14 +252,12 @@ mlflow:
     periodSeconds: 10
     successThreshold: 1
     timeoutSeconds: 30
-
   resources:
     requests:
       cpu: "500m"
       memory: "512Mi"
     limits:
       memory: "2048Mi"
-
   ## The backend store is where MLflow server stores experiment
   ## and run metadata as well as params, metrics, and tags for runs.
   ## MLflow supports two types of backend stores: file store and database-backed store.
@@ -337,7 +269,6 @@ mlflow:
   ## does not impact already-created experiments.
   #
   artifactRoot: "/data/artifacts"
-
   ## Use this field to add environment variables relevant to MLflow server.
   ## These fields will be passed on to MLflow container(s) when Chart is deployed.
   #
@@ -350,23 +281,19 @@ mlflow:
   ## server from other machines.
   #
   host: "0.0.0.0"
-
   ## Update strategy, can be set to RollingUpdate or onDelete by default.
   ## https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#updating-statefulsets
   #
   statefulset:
     updateStrategy: RollingUpdate
-
   service:
     type: ClusterIP
     externalPort: 80
     internalPort: 5000
-
   ingress:
     enabled: false
     class: "nginx"
     # host:
-
   # These labels help us to account for the usage and cost of each deployment used in all environments and also the teams using them.
   # For the `app` label, there will be problems relabelling them since the replication controller uses the old values.
   # Feel free to put other podLabels as you deem fit.
@@ -383,7 +310,6 @@ mlflow:
     #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
     #   AWS_DEFAULT_REGION: ap-southeast-2
     MLFLOW_S3_ENDPOINT_URL: http://minio.minio.svc.cluster.local:9000
-
 # If you would like to use an external postgres database for MLflow, you can connect using these credentials
 mlflowExternalPostgresql:
   # -- If you would like to use an external postgres database, enable it here using this
@@ -400,26 +326,21 @@ mlflowExternalPostgresql:
   secretName: ""
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
   secretKey: ""
-
 mlflow-postgresql:
   enabled: true
-
   postgresqlUsername: mlflow
   postgresqlDatabase: mlflow
   # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
   # postgresqlPassword: mlflow
 
   replicaCount: 1
-
   resources:
     requests:
       cpu: 500m
       memory: 512Mi
-
   persistence:
     enabled: true
     size: 10Gi
-
 swagger:
   enabled: true
   image:
@@ -429,7 +350,6 @@ swagger:
   service:
     internalPort: 8081
     externalPort: 8080
-
 minio:
   enabled: true
   hook:
@@ -437,7 +357,7 @@ minio:
   helmChart:
     chart: minio
     repository: "https://helm.min.io/"
-    version: 7.0.2
+    version: 7.0.4
     release: minio
     namespace: minio
     createNamespace: true
@@ -459,20 +379,16 @@ minio:
       annotations:
         kubernetes.io/ingress.class: istio
       path: /*
-
 setupScript:
   enabled: true
   # -- Image used to for setup scripts job
   image: bitnami/kubectl:latest
   clusterType: kind
-
 vault:
   enabled: true
   secretName: "vault-secret"
-
   hook:
     weight: "-2"
-
   helmChart:
     chart: vault
     repository: https://helm.releases.hashicorp.com
@@ -480,7 +396,6 @@ vault:
     release: vault
     namespace: vault
     createNamespace: true
-
   chartValues:
     injector:
       enabled: false
@@ -496,7 +411,6 @@ vault:
           memory: 64Mi
       affinity: null
       tolerations: null
-
 kserve:
   enabled: true
   hook:
@@ -504,7 +418,7 @@ kserve:
   helmChart:
     chart: kserve
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.8.8
+    version: 0.8.9
     release: kserve
     namespace: kserve
     createNamespace: true
