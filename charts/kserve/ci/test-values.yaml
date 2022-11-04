@@ -417,6 +417,13 @@ knativeServingIstio:
     namespace: knative-serving
     createNamespace: true
   chartValues:
+
+    config:
+      istio:
+        # NOTE: assumes istio edge proxies (*-gateway deployments) are deployed in istio-system-knative-serving-istio namespace
+        gateway.{{ .Release.Namespace }}.knative-ingress-gateway: "istio-ingressgateway.istio-system-kserve.svc.cluster.local"
+        local-gateway.{{ .Release.Namespace }}.knative-local-gateway: "cluster-local-gateway.istio-system-kserve.svc.cluster.local"
+
     controller:
       resources:
         requests:
@@ -499,8 +506,16 @@ knativeServingIstio:
             cpu: 250m
             memory: 500Mi
 
+    base:
+      global:
+        istioNamespace: "istio-system-kserve"
+
     istiod:
+      helmChart:
+        namespace: "istio-system-kserve"
       chartValues:
+        global:
+          istioNamespace: "istio-system-kserve"
         pilot:
           resources:
             requests:
@@ -511,7 +526,11 @@ knativeServingIstio:
               memory: 1024Mi
 
     istioIngressGateway:
+      helmChart:
+        namespace: "istio-system-kserve"
       chartValues:
+        global:
+          istioNamespace: "istio-system-kserve"
         resources:
           requests:
             cpu: 50m
@@ -521,7 +540,11 @@ knativeServingIstio:
             memory: 512Mi
 
     clusterLocalGateway:
+      helmChart:
+        namespace: "istio-system-kserve"
       chartValues:
+        global:
+          istioNamespace: "istio-system-kserve"
         resources:
           requests:
             cpu: 50m
