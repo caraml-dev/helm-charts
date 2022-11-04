@@ -17,6 +17,7 @@ kind: ConfigMap
 metadata:
   name: config-observability
   labels:
+    app.kubernetes.io/component: observability
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
     knative.dev/example-checksum: "fed4756e"

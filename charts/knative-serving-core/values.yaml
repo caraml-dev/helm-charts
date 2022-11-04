@@ -16,14 +16,14 @@ config:
   autoscaler: {}
   defaults: {}
   deployment:
-    queueSidecarImage: gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe
+    queueSidecarImage: gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:2249dc873059c0dfc0783bce5f614a0d8ada3d4499d63aa1dffd19f2788ba64b
   domain: {}
   features: {}
   gc: {}
   leaderElection:
-    lease-duration: "15s"
-    renew-deadline: "10s"
-    retry-period: "2s"
+    lease-duration: "60s"
+    renew-deadline: "40s"
+    retry-period: "10s"
   buckets: "1"
   logging:
     logging.request-log-template: ""
@@ -47,7 +47,7 @@ activator:
     # -- Tag of the activator image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the activator image, either provide tag or SHA (SHA will be given priority)
-    sha: "ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"
+    sha: "01270196a1eba7e5fd5fe34b877c82a7e8c93861de535a82342717d28f81d671"
   # -- Number of replicas for the activator deployment.
   replicaCount: 1
   # -- Resources requests and limits for activator. This should be set
@@ -68,7 +68,7 @@ autoscaler:
     # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
-    sha: "31aed8b5b241147585cb0e48366451a96354fc6036d6a5667997237c1d302d98"
+    sha: "c5a03a236bfe2abdc7d40203d787668c8accaaf39062a86e68b4d403077835e2"
   # -- Number of replicas for the autoscaler deployment.
   replicaCount: 1
   # -- Resources requests and limits for autoscaler. This should be set
@@ -98,7 +98,7 @@ controller:
     # -- Tag of the controller image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the controller image, either provide tag or SHA (SHA will be given priority)
-    sha: "c5a77d5642065ff3452d9b043a7226b85bfc81dc068f8dded905abf88d917a4d"
+    sha: "cc33e6392485e9d015886d4443324b9a41c17f6ce98b31ef4b19e47325a9a7e8"
   # -- Number of replicas for the controller deployment.
   replicaCount: 1
   # -- Resources requests and limits for controller. This should be set
@@ -119,7 +119,7 @@ domainMapping:
     # -- Tag of the domain mapping image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority)
-    sha: "6b5356cf3a2b64d52cbbf1bc0de376b816c4d3f610ccc8ff2dabf3d259c0996b"
+    sha: "00a26f25ef119952b0ecf890f9f9dcb877b5f5d496f43c44756b93343d71b66e"
   # -- Number of replicas for the domain mapping deployment.
   replicaCount: 1
   # -- Resources requests and limits for domain mapping. This should be set
@@ -140,7 +140,7 @@ domainMappingWebhook:
     # -- Tag of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority)
-    sha: "d0cc86f2002660c4804f6e0aed8218d39384c73a8b5006c9ac558becd8f48aa6"
+    sha: "f8f09d3a509b0c25d50be7532d4337a30df4ec5f51b9ed23ad9f21b3940c16ca"
   # -- Number of replicas for the domain mapping webhook deployment.
   replicaCount: 1
   # -- Resources requests and limits for domain mapping webhook. This should be set
@@ -170,7 +170,7 @@ webhook:
     # -- Tag of the webhook image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority)
-    sha: "bd954ec8ced56e359bd4f60ee1886b20000df14126688c796383a3ae40cfffc0"
+    sha: "b001a58cb7eac7fbae4d83d8a111fa0f6726d36e86844d5b1dc3c9b8fdd5710a"
   # -- Number of replicas for the webhook deployment.
   replicaCount: 1
   # -- Resources requests and limits for webhook. This should be set
@@ -191,7 +191,7 @@ queueProxy:
     # -- Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority)
-    sha: "80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"
+    sha: "2249dc873059c0dfc0783bce5f614a0d8ada3d4499d63aa1dffd19f2788ba64b"
 
 monitoring:
   enabled: false
@@ -214,7 +214,7 @@ autoscalerHpa:
     # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
-    sha: "c7020d14b51862fae8e92da7b0442aa7843eb81c32699d158a3b24c19d5af8d4"
+    sha: "256373054915e035d3f5df214ca80eea7a235526c93348933f42acf0437bb1a2"
   # -- Number of replicas for the autoscaler deployment.
   replicaCount: 1
   # -- Resources requests and limits for autoscaler. This should be set

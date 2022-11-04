@@ -17,7 +17,7 @@ kind: ServiceAccount
 metadata:
   name: controller
   labels:
-    app.kubernetes.io/name: controller
+    app.kubernetes.io/component: controller
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 ---
 kind: ClusterRole
@@ -38,7 +38,7 @@ kind: ClusterRoleBinding
 metadata:
   name: knative-serving-controller-admin
   labels:
-    app.kubernetes.io/name: controller
+    app.kubernetes.io/component: controller
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
     {{- include "knative-serving-core.annotations" . | nindent 4 }}
@@ -56,7 +56,7 @@ kind: ClusterRoleBinding
 metadata:
   name: knative-serving-controller-addressable-resolver
   labels:
-    app.kubernetes.io/name: controller
+    app.kubernetes.io/component: controller
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
     {{- include "knative-serving-core.annotations" . | nindent 4 }}

@@ -17,7 +17,7 @@ kind: Deployment
 metadata:
   name: activator
   labels:
-    app.kubernetes.io/name: activator
+    app.kubernetes.io/component: activator
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.activator.replicaCount }}
@@ -32,7 +32,7 @@ spec:
       labels:
         app: activator
         role: activator
-        app.kubernetes.io/name: activator
+        app.kubernetes.io/component: activator
         {{- include "knative-serving-core.labels" . | nindent 8 }}
       {{- if .Values.global.extraPodLabels }}
         {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
@@ -106,14 +106,16 @@ spec:
               port: 8012
               httpHeaders:
                 - name: k-kubelet-probe
-                  value: "activator"
-            failureThreshold: 12
+                  value: "activator"	
+            periodSeconds: 5	
+            failureThreshold: 5
           livenessProbe:
             httpGet:
               port: 8012
               httpHeaders:
                 - name: k-kubelet-probe
-                  value: "activator"
+                  value: "activator"	
+            periodSeconds: 10
             failureThreshold: 12
             initialDelaySeconds: 15
       # The activator (often) sits on the dataplane, and may proxy long (e.g.

@@ -17,7 +17,7 @@ kind: Service
 metadata:
   labels:
     role: domainmapping-webhook
-    app.kubernetes.io/name: domainmapping-webhook
+    app.kubernetes.io/component: domainmapping-webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   name: domainmapping-webhook
 spec:

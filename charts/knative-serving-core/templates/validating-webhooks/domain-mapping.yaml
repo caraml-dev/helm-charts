@@ -17,7 +17,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: validation.webhook.domainmapping.serving.knative.dev
   labels:
-    app.kubernetes.io/name: domainmapping-webhook
+    app.kubernetes.io/component: domainmapping-webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 webhooks:
   - admissionReviewVersions: ["v1", "v1beta1"]

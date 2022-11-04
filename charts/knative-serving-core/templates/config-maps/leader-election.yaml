@@ -17,9 +17,10 @@ kind: ConfigMap
 metadata:
   name: config-leader-election
   labels:
+    app.kubernetes.io/component: controller
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
-    knative.dev/example-checksum: "f7948630"
+    knative.dev/example-checksum: "f4b71f57"
 data:
 {{- if .Values.config.leaderElection }}
   {{- toYaml .Values.config.leaderElection | nindent 2 }}

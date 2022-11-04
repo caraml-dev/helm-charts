@@ -17,10 +17,10 @@ kind: ConfigMap
 metadata:
   name: config-autoscaler
   labels:
-    app.kubernetes.io/name: autoscaler
+    app.kubernetes.io/component: autoscaler
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
-    knative.dev/example-checksum: "604cb513"
+    knative.dev/example-checksum: "16af78ce"
 data:
 {{- if .Values.config.autoscaler }}
   {{- toYaml .Values.config.autoscaler | nindent 2 }}

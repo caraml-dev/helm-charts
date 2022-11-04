@@ -17,6 +17,7 @@ kind: MutatingWebhookConfiguration
 metadata:
   name: webhook.domainmapping.serving.knative.dev
   labels:
+    app.kubernetes.io/component: webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 webhooks:
   - admissionReviewVersions: ["v1", "v1beta1"]

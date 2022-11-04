@@ -19,7 +19,7 @@ metadata:
   name: autoscaler-hpa
   labels:
     autoscaling.knative.dev/autoscaler-provider: hpa
-    app.kubernetes.io/name: autoscaler-hpa
+    app.kubernetes.io/component: autoscaler-hpa
     {{- include "knative-serving-hpa.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.autoscalerHpa.replicaCount }}
@@ -32,7 +32,7 @@ spec:
         cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
       labels:
         app: autoscaler-hpa
-        app.kubernetes.io/name: autoscaler-hpa
+        app.kubernetes.io/component: autoscaler-hpa
         {{- include "knative-serving-hpa.labels" . | nindent 8 }}
       {{- if .Values.global.extraPodLabels }}
         {{- toYaml .Values.global.extraPodLabels | nindent 8 }}

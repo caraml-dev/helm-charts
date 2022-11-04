@@ -17,9 +17,10 @@ kind: ConfigMap
 metadata:
   name: config-features
   labels:
+    app.kubernetes.io/component: controller
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
-    knative.dev/example-checksum: "2897f625"
+    knative.dev/example-checksum: "d9e300ba"
 data:
 {{- if .Values.config.features }}
   {{- toYaml .Values.config.features | nindent 2 }}

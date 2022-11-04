@@ -17,7 +17,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: config.webhook.serving.knative.dev
   labels:
-    app.kubernetes.io/name: configmap-validation-webhook
+    app.kubernetes.io/component: configmap-validation-webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 webhooks:
   - admissionReviewVersions: ["v1", "v1beta1"]
@@ -28,8 +28,12 @@ webhooks:
     failurePolicy: Fail
     sideEffects: None
     name: config.webhook.serving.knative.dev
-    namespaceSelector:
+    objectSelector:
       matchExpressions:
-        - key: serving.knative.dev/release
-          operator: Exists
+        - key: app.kubernetes.io/name	
+          operator: In	
+          values: ["knative-serving"]	
+        - key: app.kubernetes.io/component	
+          operator: In	
+          values: ["autoscaler", "controller", "logging", "networking", "observability", "tracing"]
     timeoutSeconds: 10

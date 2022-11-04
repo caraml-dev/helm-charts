@@ -18,7 +18,7 @@ kind: Service
 metadata:
   labels:
     app: autoscaler-hpa
-    app.kubernetes.io/name: autoscaler-hpa
+    app.kubernetes.io/component: autoscaler-hpa
     autoscaling.knative.dev/autoscaler-provider: hpa
     {{- include "knative-serving-hpa.labels" . | nindent 4 }}
   name: autoscaler-hpa
