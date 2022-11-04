@@ -1,8 +1,8 @@
 # knative-serving-istio
 
 ---
-![Version: 1.0.7](https://img.shields.io/badge/Version-1.0.7-informational?style=flat-square)
-![AppVersion: v1.0.0](https://img.shields.io/badge/AppVersion-v1.0.0-informational?style=flat-square)
+![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square)
+![AppVersion: v1.3.0](https://img.shields.io/badge/AppVersion-v1.3.0-informational?style=flat-square)
 
 Installs Knative-serving for Istio
 
@@ -93,7 +93,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | config | object | `{"istio":{"enable-virtualservice-status":"false","gateway.{{ .Release.Namespace }}.knative-ingress-gateway":"istio-ingressgateway.istio-system.svc.cluster.local","local-gateway.mesh":"mesh","local-gateway.{{ .Release.Namespace }}.knative-local-gateway":"cluster-local-gateway.istio-system.svc.cluster.local"}}` | Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml |
 | controller.autoscaling.enabled | bool | `false` | Enables autoscaling for net-istio-controller deployment. |
 | controller.image.repository | string | `"gcr.io/knative-releases/knative.dev/net-istio/cmd/controller"` | Repository of the controller image |
-| controller.image.sha | string | `"1ef74af101cc89d86a2e6b37b9a74545bfd9892d48b1b036d419a635a19c0081"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
+| controller.image.sha | string | `"7f17fb47568a74de3f82bb512422a174017b7c06643a330557bc3445c8869932"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.image.tag | string | `""` | Tag of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.replicaCount | int | `1` | Number of replicas for the net-istio-controller deployment. |
 | controller.resources | object | `{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"500m","memory":"512Mi"}}` | Resources requests and limits for net-istio-controller. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
@@ -188,7 +188,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | knativeServingCore.webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | revision | string | `""` |  |
 | webhook.image.repository | string | `"gcr.io/knative-releases/knative.dev/net-istio/cmd/webhook"` | Repository of the webhook image |
-| webhook.image.sha | string | `"ab3dfcf1574780448b3453cc717d6eb2bc33e794d36c090eff1076aa65f05ca0"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
+| webhook.image.sha | string | `"75d502bdff93e9c0e4611c2747d868b8d471f8d3a0402394de76ec2d98b89ce3"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.replicaCount | int | `1` | Number of replicas for the net-istio-webhook deployment. |
 | webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for net-istio-webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
