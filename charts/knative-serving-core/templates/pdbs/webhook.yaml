@@ -17,7 +17,7 @@ kind: PodDisruptionBudget
 metadata:
   name: webhook-pdb
   labels:
-    app.kubernetes.io/name: webhook
+    app.kubernetes.io/component: webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
   minAvailable: 80%

@@ -17,9 +17,10 @@ kind: ConfigMap
 metadata:
   name: config-logging
   labels:
+    app.kubernetes.io/component: logging
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
-    knative.dev/example-checksum: "be93ff10"
+    knative.dev/example-checksum: "b0f3c6f2"
 data:
 {{- if .Values.config.logging }}
   {{- toYaml .Values.config.logging | nindent 2 }}

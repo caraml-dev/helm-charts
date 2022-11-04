@@ -17,6 +17,7 @@ kind: ConfigMap
 metadata:
   name: config-deployment
   labels:
+    app.kubernetes.io/component: controller
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
     knative.dev/example-checksum: "dd7ee769"

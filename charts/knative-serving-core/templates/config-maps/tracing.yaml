@@ -17,6 +17,7 @@ kind: ConfigMap
 metadata:
   name: config-tracing
   labels:
+    app.kubernetes.io/component: tracing
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
     knative.dev/example-checksum: "26614636"

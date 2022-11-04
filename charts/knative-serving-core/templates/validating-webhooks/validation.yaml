@@ -17,7 +17,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: validation.webhook.serving.knative.dev
   labels:
-    app.kubernetes.io/name: validating-webhook
+    app.kubernetes.io/component: validating-webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 webhooks:
   - admissionReviewVersions: ["v1", "v1beta1"]

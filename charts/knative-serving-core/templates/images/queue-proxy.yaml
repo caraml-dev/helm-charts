@@ -17,7 +17,7 @@ kind: Image
 metadata:
   name: queue-proxy
   labels:
-    app.kubernetes.io/name: queue-proxy
+    app.kubernetes.io/component: queue-proxy
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
   {{- if .Values.queueProxy.image.sha }}

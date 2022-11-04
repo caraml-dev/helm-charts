@@ -18,7 +18,7 @@ metadata:
   name: activator-service
   labels:
     app: activator
-    app.kubernetes.io/name: activator
+    app.kubernetes.io/component: activator
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
   selector:

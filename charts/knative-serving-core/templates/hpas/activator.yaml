@@ -17,7 +17,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: activator
   labels:
-    app.kubernetes.io/name: activator
+    app.kubernetes.io/component: activator
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
   minReplicas: {{ .Values.activator.autoscaling.minReplicas }}

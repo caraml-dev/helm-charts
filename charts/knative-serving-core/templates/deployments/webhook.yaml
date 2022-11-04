@@ -17,7 +17,7 @@ kind: Deployment
 metadata:
   name: webhook
   labels:
-    app.kubernetes.io/name: webhook
+    app.kubernetes.io/component: webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.webhook.replicaCount }}
@@ -32,7 +32,7 @@ spec:
       labels:
         app: webhook
         role: webhook
-        app.kubernetes.io/name: webhook
+        app.kubernetes.io/component: webhook
         {{- include "knative-serving-core.labels" . | nindent 8 }}
       {{- if .Values.global.extraPodLabels }}
         {{- toYaml .Values.global.extraPodLabels | nindent 8 }}

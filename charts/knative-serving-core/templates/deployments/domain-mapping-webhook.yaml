@@ -17,7 +17,7 @@ kind: Deployment
 metadata:
   name: domainmapping-webhook
   labels:
-    app.kubernetes.io/name: domainmapping-webhook
+    app.kubernetes.io/component: domainmapping-webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.domainMappingWebhook.replicaCount }}
@@ -31,7 +31,7 @@ spec:
         cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
       labels:
         app: domainmapping-webhook
-        app.kubernetes.io/name: domainmapping-webhook
+        app.kubernetes.io/component: domainmapping-webhook
         role: domainmapping-webhook
         {{- include "knative-serving-core.labels" . | nindent 8 }}
       {{- if .Values.global.extraPodLabels }}

@@ -17,9 +17,10 @@ kind: ConfigMap
 metadata:
   name: config-network
   labels:
+    app.kubernetes.io/component: networking
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
-    knative.dev/example-checksum: "6e2033e0"
+    knative.dev/example-checksum: "ddc3250f"
 data:
 {{- if .Values.config.network }}
   {{- toYaml .Values.config.network | nindent 2 }}

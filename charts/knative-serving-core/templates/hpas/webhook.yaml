@@ -18,7 +18,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: webhook
   labels:
-    app.kubernetes.io/name: webhook
+    app.kubernetes.io/component: webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
   minReplicas: {{ .Values.webhook.autoscaling.minReplicas }}
