@@ -1,6 +1,6 @@
 # -- istioIngressIP takes precedence over domain. Used for local deployment
 istioLookUp:
-  namespace: istio-system
+  namespace: istio-system-routes
   name: istio-ingressgateway
 
 # -- Domain used to configure gateway and virtual service
@@ -207,7 +207,7 @@ base:
   enabled: true
   validationURL: ""
   global:
-    istioNamespace: "istio-system"
+    istioNamespace: "istio-system-routes"
 
 ############################################################
 # Istiod - installed using helm-dep-installer chart
@@ -220,14 +220,14 @@ istiod:
     chart: istiod
     version: 1.13.4
     release: istiod
-    namespace: "istio-system"
+    namespace: "istio-system-routes"
   hook:
     weight: 0
   chartValues:
     deployInReleaseNs: false
     configValidation: true
     global:
-      istioNamespace: "istio-system"
+      istioNamespace: "istio-system-routes"
       configValidation: true
     pilot:
       autoscaleEnabled: false
@@ -251,13 +251,15 @@ istioIngressGateway:
     chart: gateway
     version: 1.13.4
     release: istio-ingress-gateway
-    namespace: "istio-system"
+    namespace: "istio-system-routes"
     createNamespace: false
   hook:
     weight: 1
   chartValues:
     # -- Specify name here so each gateway installation has its own unique name
     name: istio-ingressgateway
+    global:
+      istioNamespace: "istio-system-routes"
     autoscaling:
       enabled: false
       # # -- Set accordingly based on environment
