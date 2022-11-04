@@ -29,7 +29,7 @@ webhooks:
     failurePolicy: Fail
     sideEffects: None
     name: config.webhook.istio.networking.internal.knative.dev
-    namespaceSelector:
-      matchExpressions:
-        - key: serving.knative.dev/release
-          operator: Exists
+    objectSelector:
+      matchLabels:
+        app.kubernetes.io/name: knative-serving
+        app.kubernetes.io/component: net-istio

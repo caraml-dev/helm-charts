@@ -10,7 +10,8 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 serving.knative.dev/release: {{ .Chart.AppVersion }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/part-of: knative-serving
+app.kubernetes.io/name: knative-serving
+app.kubernetes.io/component: net-istio
 networking.knative.dev/ingress-provider: istio
 {{- end }}
 
