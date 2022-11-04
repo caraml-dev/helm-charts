@@ -1,7 +1,8 @@
-# -- istioIngressIP takes precedence over domain. Used for local deployment
-istioLookUp:
-  namespace: istio-system-routes
-  name: istio-ingressgateway
+global:
+  # -- istioIngressIP takes precedence over domain. Used for local deployment
+  istioLookUp:
+    namespace: istio-system-routes
+    name: istio-ingressgateway
 
 # -- Domain used to configure gateway and virtual service
 domain: ""
@@ -186,7 +187,6 @@ https:
   tls:
     mode: SIMPLE
     credentialName: mlp-tls-cert
-
 
 # -- Configuration for mlp
 mlpGateway:
