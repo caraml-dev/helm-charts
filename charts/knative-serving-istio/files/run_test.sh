@@ -3,6 +3,8 @@ set -ex
 
 which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
 
+ISTIO_NAMESPACE="$1"
+
 cat << EOF > /tmp/knative_service.yaml
 apiVersion: serving.knative.dev/v1
 kind: Service
@@ -25,7 +27,7 @@ kubectl apply -f /tmp/knative_service.yaml
 kubectl wait ksvc/hello --for=condition=Ready --timeout=60s
 
 HOSTNAME=$(kubectl get ksvc hello -o jsonpath='{.status.url}' | awk -F '//' '{print $2}')
-LOAD_BALANCER_IP=$(kubectl get services -n istio-system istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+LOAD_BALANCER_IP=$(kubectl get services -n $ISTIO_NAMESPACE istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
 output=$(curl $LOAD_BALANCER_IP -o /dev/null -w "%{http_code}" -H "Host: $HOSTNAME")
 

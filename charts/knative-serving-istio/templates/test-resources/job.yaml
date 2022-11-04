@@ -2,6 +2,7 @@
 {{- $serviceAccountName := "knative-net-istio-test-sa" }}
 {{- $resourceName := "knative-net-istio-test-job" }}
 {{- $configMap := "knative-net-istio-test-cm" }}
+{{- $istioNamespace := .Values.istioIngressGateway.helmChart.namespace }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -29,6 +30,8 @@ spec:
             - name: run-script
               mountPath: /scripts
           command: ["/scripts/run_test.sh"]
+          args:
+            - {{  $istioNamespace }}
       restartPolicy: Never
   backoffLimit: 10
 ---
