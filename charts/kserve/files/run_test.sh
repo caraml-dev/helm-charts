@@ -3,6 +3,8 @@ set -ex
 
 which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
 
+ISTIO_NAMESPACE="$1"
+
 MODEL_NAME=sklearn-iris
 cat << EOF > /tmp/kserve.yaml
 apiVersion: "serving.kserve.io/v1beta1"
@@ -23,7 +25,7 @@ INPUT_PATH=input.json
 curl https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/sklearn/v1/iris-input.json -o ${INPUT_PATH}
 INPUT_PATH=@./${INPUT_PATH}
 HOSTNAME=$(kubectl get isvc ${MODEL_NAME} -o jsonpath='{.status.url}' | awk -F '//' '{print $2}')
-LOAD_BALANCER_IP=$(kubectl get services -n istio-system istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+LOAD_BALANCER_IP=$(kubectl get services -n $ISTIO_NAMESPACE istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
 output=$(curl -X POST -vv -H "content-type: application/json" ${LOAD_BALANCER_IP}/v1/models/${MODEL_NAME}:predict -d $INPUT_PATH -o /tmp/output.json -w "%{http_code}" -H "Host: $HOSTNAME")
 

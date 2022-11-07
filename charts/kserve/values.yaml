@@ -5,12 +5,10 @@
 # -- For release specific common labels
 labels:
   common: {}
-
 # -- Specify how inference service is deployed:
 # - Serverless, use Knative
 # - RawDeployment, use K8S Deployment
 defaultDeploymentMode: Serverless
-
 # controller deployment configuration
 controller:
   image:
@@ -19,7 +17,6 @@ controller:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "v0.8.0"
-
   # -- These are example resource values set for the controller, please override accordingly
   resources:
     requests:
@@ -28,39 +25,30 @@ controller:
     limits:
       cpu: 1000m
       memory: 512Mi
-
   nodeSelector: {}
   tolerations: []
   affinity: {}
-
 # -- Ingress configuration
 ingress:
   # -- ingressGateway refers to the Istio Gateway resource name. Assumed
   # to be in knative-serving namespace by default.
   ingressGateway: knative-serving/knative-ingress-gateway
-
   # -- ingressService refers to the ingressgateway service name. Assumed to be in istio-system
   # namespace by default.
   ingressService: istio-ingressgateway.istio-system.svc.cluster.local
-
   # -- localGateway refers to the Istio Gateway resource name. Assumed to in
   # knative-serving namespace by default.
   localGateway: knative-serving/knative-local-gateway
-
   # -- ingressService refers to the local ingressgateway service name. Assumed to be in istio-system
   # namespace by default and called cluster-local-gateway.
   localGatewayService: cluster-local-gateway.istio-system.svc.cluster.local
-
   # -- domain used for inferenceservice deployments
   ingressDomain: example.com
   ingressClassName: istio
-
   # Format of deployments
   domainTemplate: "{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }}"
-
   # -- Set default scheme of inferenceservice url, defaults to http if unset
   # urlScheme: "http"
-
 logger:
   image:
     registry: ""
@@ -74,7 +62,6 @@ logger:
       cpu: 1000m
       memory: 1Gi
   defaultUrl: http://default-broker
-
 agent:
   image:
     registry: ""
@@ -87,7 +74,6 @@ agent:
     limits:
       cpu: 1000m
       memory: 1Gi
-
 batcher:
   image:
     registry: ""
@@ -100,7 +86,6 @@ batcher:
     limits:
       cpu: 1000m
       memory: 1Gi
-
 # storageInitializer container specs if enabled
 storageInitializer:
   image:
@@ -114,7 +99,6 @@ storageInitializer:
     limits:
       cpu: 1000m
       memory: 1Gi
-
 # predictor spec configs for inferenceservices
 predictors:
   tensorflow:
@@ -199,7 +183,6 @@ predictors:
     supportedFrameworks:
       - paddle
     multiModelServer: false
-
 # clusterServingRuntimes contains specs for each predictor in predictors above
 clusterServingRuntimes:
   - name: kserve-lgbserver
@@ -423,7 +406,6 @@ clusterServingRuntimes:
         - autoSelect: true
           name: xgboost
           version: "1"
-
 ###################################################################
 # knativeServingIstio dependency configuration
 # #################################################################
@@ -431,18 +413,16 @@ knativeServingIstio:
   enabled: true
   helmChart:
     chart: knative-serving-istio
-    version: 1.0.6
+    version: 1.3.8
     repository: "https://caraml-dev.github.io/helm-charts"
     release: knative-serving
     namespace: knative-serving
     createNamespace: true
-
 ###################################################################
 # Cert manager Base for Cert Manager CRDs
 # #################################################################
 certManagerBase:
   enabled: true
-
 ###################################################################
 # Cert manager dependency
 # #################################################################
@@ -451,5 +431,5 @@ cert-manager:
   fullnameOverride: cert-manager
   enabled: true
 
-  # NOTE: We do not enable crds because the crds are installed in separate helm chart
-  # installCRDs: true
+# NOTE: We do not enable crds because the crds are installed in separate helm chart
+# installCRDs: true

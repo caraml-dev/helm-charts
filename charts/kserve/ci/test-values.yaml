@@ -36,9 +36,9 @@ controller:
 
 ingress:
   ingressGateway: knative-serving/knative-ingress-gateway
-  ingressService: istio-ingressgateway.istio-system.svc.cluster.local
+  ingressService: istio-ingressgateway.istio-system-kserve.svc.cluster.local
   localGateway: knative-serving/knative-local-gateway
-  localGatewayService: cluster-local-gateway.istio-system.svc.cluster.local
+  localGatewayService: cluster-local-gateway.istio-system-kserve.svc.cluster.local
   ingressDomain: example.com
   ingressClassName: istio
   domainTemplate: "{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }}"
@@ -411,12 +411,19 @@ knativeServingIstio:
   enabled: true
   helmChart:
     chart: knative-serving-istio
-    version: 1.0.2
+    version: 1.3.8
     repository: "https://caraml-dev.github.io/helm-charts"
     release: knative-serving
     namespace: knative-serving
     createNamespace: true
   chartValues:
+
+    config:
+      istio:
+        # NOTE: assumes istio edge proxies (*-gateway deployments) are deployed in istio-system-knative-serving-istio namespace
+        gateway.{{ .Release.Namespace }}.knative-ingress-gateway: "istio-ingressgateway.istio-system-kserve.svc.cluster.local"
+        local-gateway.{{ .Release.Namespace }}.knative-local-gateway: "cluster-local-gateway.istio-system-kserve.svc.cluster.local"
+
     controller:
       resources:
         requests:
@@ -499,8 +506,16 @@ knativeServingIstio:
             cpu: 250m
             memory: 500Mi
 
+    base:
+      global:
+        istioNamespace: "istio-system-kserve"
+
     istiod:
+      helmChart:
+        namespace: "istio-system-kserve"
       chartValues:
+        global:
+          istioNamespace: "istio-system-kserve"
         pilot:
           resources:
             requests:
@@ -511,7 +526,11 @@ knativeServingIstio:
               memory: 1024Mi
 
     istioIngressGateway:
+      helmChart:
+        namespace: "istio-system-kserve"
       chartValues:
+        global:
+          istioNamespace: "istio-system-kserve"
         resources:
           requests:
             cpu: 50m
@@ -521,7 +540,11 @@ knativeServingIstio:
             memory: 512Mi
 
     clusterLocalGateway:
+      helmChart:
+        namespace: "istio-system-kserve"
       chartValues:
+        global:
+          istioNamespace: "istio-system-kserve"
         resources:
           requests:
             cpu: 50m

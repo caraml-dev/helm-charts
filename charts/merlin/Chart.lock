@@ -1,16 +1,16 @@
 dependencies:
 - name: postgresql
   repository: https://charts.helm.sh/stable
-  version: 7.0.0
+  version: 7.0.2
 - name: postgresql
   repository: https://charts.helm.sh/stable
-  version: 7.0.0
+  version: 7.0.2
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.1
 - name: mlp
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.3.1
+  version: 0.3.2
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.1
@@ -20,5 +20,5 @@ dependencies:
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.4
-digest: sha256:5e127604ae5c29fe998f05c66aaef72d4b8b01100a16fc192e55543d4f408da4
-generated: "2022-11-03T15:29:29.867027+08:00"
+digest: sha256:4901088221cd0c7cee0c20791db90e8a2a7bd8507111163defb71d56f4c8c903
+generated: "2022-11-04T04:43:03.150788722Z"

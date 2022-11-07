@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.3.8](https://img.shields.io/badge/Version-0.3.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -22,9 +22,9 @@ A Helm chart for deploying CaraML components
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | merlin | 0.9.4 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.3.2 |
-| https://charts.helm.sh/stable | postgresql | 7.0.0 |
-| https://charts.jetstack.io | cert-manager | 1.8.1 |
-| https://istio-release.storage.googleapis.com/charts | base(base) | 1.13.4 |
+| https://charts.helm.sh/stable | postgresql | 7.0.2 |
+| https://charts.jetstack.io | cert-manager | v1.8.2 |
+| https://istio-release.storage.googleapis.com/charts | base(base) | 1.13.9 |
 
 ## Values
 
@@ -60,7 +60,7 @@ A Helm chart for deploying CaraML components
 | clusterLocalGateway.helmChart.namespace | string | `"istio-system"` |  |
 | clusterLocalGateway.helmChart.release | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
-| clusterLocalGateway.helmChart.version | string | `"1.13.4"` |  |
+| clusterLocalGateway.helmChart.version | string | `"1.13.9"` |  |
 | clusterLocalGateway.hook.weight | int | `1` |  |
 | global.merlin.mlflow.postgresqlDatabase | string | `"mlflow"` |  |
 | global.merlin.postgresqlDatabase | string | `"merlin"` |  |
@@ -80,7 +80,7 @@ A Helm chart for deploying CaraML components
 | istioIngressGateway.helmChart.namespace | string | `"istio-system"` |  |
 | istioIngressGateway.helmChart.release | string | `"istio-ingress-gateway"` |  |
 | istioIngressGateway.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
-| istioIngressGateway.helmChart.version | string | `"1.13.4"` |  |
+| istioIngressGateway.helmChart.version | string | `"1.13.9"` |  |
 | istioIngressGateway.hook.weight | int | `1` |  |
 | istiod.chartValues.configValidation | bool | `true` |  |
 | istiod.chartValues.deployInReleaseNs | bool | `false` |  |
@@ -98,7 +98,7 @@ A Helm chart for deploying CaraML components
 | istiod.helmChart.namespace | string | `"istio-system"` |  |
 | istiod.helmChart.release | string | `"istiod"` |  |
 | istiod.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
-| istiod.helmChart.version | string | `"1.13.4"` |  |
+| istiod.helmChart.version | string | `"1.13.9"` |  |
 | istiod.hook.weight | int | `-3` |  |
 | merlin.enabled | bool | `true` | To enable/disable merlin chart installation. |
 | merlin.kserve.chartValues.cert-manager.enabled | bool | `true` |  |

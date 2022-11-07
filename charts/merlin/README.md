@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.4](https://img.shields.io/badge/Version-0.9.4-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
+![Version: 0.9.9](https://img.shields.io/badge/Version-0.9.9-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -18,9 +18,9 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | https://caraml-dev.github.io/helm-charts | vault(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.3.1 |
-| https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.0 |
-| https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.0 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.3.2 |
+| https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.2 |
+| https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.2 |
 
 ## Values
 
@@ -101,7 +101,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | kserve.helmChart.namespace | string | `"kserve"` |  |
 | kserve.helmChart.release | string | `"kserve"` |  |
 | kserve.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| kserve.helmChart.version | string | `"0.8.8"` |  |
+| kserve.helmChart.version | string | `"0.8.9"` |  |
 | kserve.hook.weight | string | `"-2"` |  |
 | loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
@@ -133,7 +133,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | minio.helmChart.namespace | string | `"minio"` |  |
 | minio.helmChart.release | string | `"minio"` |  |
 | minio.helmChart.repository | string | `"https://helm.min.io/"` |  |
-| minio.helmChart.version | string | `"7.0.2"` |  |
+| minio.helmChart.version | string | `"7.0.4"` |  |
 | minio.hook.weight | string | `"-2"` |  |
 | mlflow-postgresql.enabled | bool | `true` |  |
 | mlflow-postgresql.persistence.enabled | bool | `true` |  |

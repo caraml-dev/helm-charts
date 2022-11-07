@@ -1,43 +1,41 @@
 apiVersion: v2
-description: Kubernetes-friendly ML model management, deployment, and serving.
-name: merlin
-version: 0.9.4
 appVersion: 0.24.0
-
-maintainers:
-  - name: caraml-dev
-    email: caraml-dev@caraml.dev
-
 dependencies:
-  - name: postgresql
-    repository: https://charts.helm.sh/stable
-    version: 7.0.0
-    alias: merlin-postgresql
-    condition: merlin-postgresql.enabled
-  - name: postgresql
-    repository: https://charts.helm.sh/stable
-    version: 7.0.0
-    alias: mlflow-postgresql
-    condition: mlflow-postgresql.enabled
-  - name: generic-dep-installer
-    version: 0.2.1
-    repository: "https://caraml-dev.github.io/helm-charts"
-    alias: vault
-    condition: vault.enabled
-  - name: mlp
-    repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.3.1
-    condition: mlp.enabled
-  - name: generic-dep-installer
-    version: 0.2.1
-    repository: "https://caraml-dev.github.io/helm-charts"
-    alias: kserve
-    condition: kserve.enabled
-  - name: generic-dep-installer
-    version: 0.2.1
-    repository: "https://caraml-dev.github.io/helm-charts"
-    alias: minio
-    condition: minio.enabled
-  - name: common
-    version: 0.2.4
-    repository: "https://caraml-dev.github.io/helm-charts"
+- alias: merlin-postgresql
+  condition: merlin-postgresql.enabled
+  name: postgresql
+  repository: https://charts.helm.sh/stable
+  version: 7.0.2
+- alias: mlflow-postgresql
+  condition: mlflow-postgresql.enabled
+  name: postgresql
+  repository: https://charts.helm.sh/stable
+  version: 7.0.2
+- alias: vault
+  condition: vault.enabled
+  name: generic-dep-installer
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.1
+- condition: mlp.enabled
+  name: mlp
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.3.2
+- alias: kserve
+  condition: kserve.enabled
+  name: generic-dep-installer
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.1
+- alias: minio
+  condition: minio.enabled
+  name: generic-dep-installer
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.1
+- name: common
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.4
+description: Kubernetes-friendly ML model management, deployment, and serving.
+maintainers:
+- email: caraml-dev@caraml.dev
+  name: caraml-dev
+name: merlin
+version: 0.9.9
