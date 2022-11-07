@@ -418,7 +418,7 @@ kserve:
   helmChart:
     chart: kserve
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.8.9
+    version: 0.8.12
     release: kserve
     namespace: kserve
     createNamespace: true
