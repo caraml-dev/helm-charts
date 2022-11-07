@@ -1,14 +1,14 @@
 # knative-serving-istio
 
 ---
-![Version: 1.3.9](https://img.shields.io/badge/Version-1.3.9-informational?style=flat-square)
+![Version: 1.3.10](https://img.shields.io/badge/Version-1.3.9-informational?style=flat-square)
 ![AppVersion: v1.3.0](https://img.shields.io/badge/AppVersion-v1.3.0-informational?style=flat-square)
 
 Installs Knative-serving for Istio
 
 ## Introduction
 
-This Helm chart installs [Knative Serving Istio](https://knative.dev/docs/serving/) and it's CRDs.
+This Helm chart installs [Knative Serving Istio](https://knative.dev/docs/serving/) and it's CRDs. It is based off v1.3.0 of Knative Net Istio release.
 
 ## Prerequisites
 
