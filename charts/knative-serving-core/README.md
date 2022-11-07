@@ -8,7 +8,7 @@ Installs Knative Serving core and CRDs.
 
 ## Introduction
 
-This Helm chart installs [Knative Serving Core](https://knative.dev/docs/serving/) and it's CRDs. It is based off v1.3.2 of Knative serving release.
+This Helm chart installs [Knative Serving Core](https://knative.dev/docs/serving/) and it's CRDs.
 
 ## Prerequisites
 
