@@ -8,7 +8,7 @@ Installs Knative-serving for Istio
 
 ## Introduction
 
-This Helm chart installs [Knative Serving Istio](https://knative.dev/docs/serving/) and it's CRDs. It is based off v1.3.0 of Knative Net Istio release.
+This Helm chart installs [Knative Serving Istio](https://knative.dev/docs/serving/) and it's CRDs.
 
 ## Prerequisites
 
