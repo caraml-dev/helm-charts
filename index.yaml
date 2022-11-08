@@ -2177,6 +2177,26 @@ entries:
   mlp:
   - apiVersion: v2
     appVersion: 1.7.1
+    created: "2022-11-08T10:22:28.889202495Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.4
+    description: MLP API
+    digest: b2550a3b2e57a5a36ec23a1c563ac125ee699203ca8fad5ba8117d8a33c9b2fd
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: mlp
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.3.4/mlp-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v2
+    appVersion: 1.7.1
     created: "2022-11-07T06:28:00.575423601Z"
     dependencies:
     - condition: postgresql.enabled
@@ -2309,4 +2329,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2022-11-08T07:50:07.672617209Z"
+generated: "2022-11-08T10:22:28.889458997Z"
