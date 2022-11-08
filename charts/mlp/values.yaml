@@ -75,9 +75,11 @@ deployment:
 
 ingress:
   enabled: false
-  # class:
-  # host:
+  # class: "nginx"
+  # host: "localhost"
   # path: "/"
+  # Ref for pathTypes https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
+  # pathType: "Prefix"
 
 encryption:
   # encryption.key must be specified using --set flag.
