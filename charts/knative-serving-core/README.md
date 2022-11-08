@@ -100,7 +100,7 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 | monitoring.allNamespaces | bool | `true` |  |
-| monitoring.enabled | bool | `true` |  |
+| monitoring.enabled | bool | `false` |  |
 | monitoring.podMonitor.metricRelabelings | object | `{}` |  |
 | monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.monitoring.selectorKey }}"` |  |
 | monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
