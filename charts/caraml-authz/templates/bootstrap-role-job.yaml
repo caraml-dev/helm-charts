@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "keto.fullname" . }}-bootstrap-role
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "10"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: bootstrap-role
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args: ["engines", "acp", "ory", "roles", "import", "glob", "/etc/keto/bootstrap-role.json"]
+        env:
+        - name: KETO_URL
+          value: {{ printf "http://%s" ( include "keto.fullname" . )}}
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: bootstrap
+          mountPath: /etc/keto
+          readOnly: true
+      volumes:
+      - name: bootstrap
+        configMap:
+          name: {{ template "keto.fullname" . }}-bootstrap
+      restartPolicy: OnFailure

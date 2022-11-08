@@ -1,0 +1,53 @@
+# Default values for keto.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: oryd/keto
+  tag: v0.4.3
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  requests:
+   cpu: 250m
+   memory: 128Mi
+
+postgresql:
+  enabled: true
+  service:
+    port: 5432
+  postgresqlUsername: oryketo
+  postgresqlPassword: oryketo
+  postgresqlDatabase: oryketo
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+
+# roles and policies that will be created after successful installation/upgrade
+bootstrap:
+  roles:
+  # - id: role:admin
+  #   subjects: [alice]
+  # - id: role:member
+  #   subjects: [bob]
+  policies:
+  # - id: example-policy
+  #   subjects: [alice]
+  #   resources: ["blog_posts:my-first-blog-post"]
+  #   actions: [delete]
+  #   effect: allow
+  # - id: example-policy-2
+  #   subjects: [admin]
+  #   resources: ["blog_posts:my-first-blog-post-2"]
+  #   actions: [delete]
+  #   effect: allow

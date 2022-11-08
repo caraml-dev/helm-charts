@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "keto.fullname" . }}
+  labels:
+    app: {{ template "keto.name" . }}
+    chart: {{ template "keto.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "keto.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "keto.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      initContainers:
+      - name: {{ .Chart.Name }}-migration
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args: ["migrate", "sql", "-e"]
+        env:
+        - name: DSN
+          value: {{ template "keto.postgresql.dsn" . }}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 200Mi
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 4466
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /health/alive
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: http
+        env:
+        - name: DSN
+          value: {{ template "keto.postgresql.dsn" . }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

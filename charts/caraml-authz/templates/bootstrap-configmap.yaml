@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "keto.fullname" . }}-bootstrap
+data:
+  bootstrap-role.json: |-
+{{.Values.bootstrap.roles | toJson | indent 4}}
+  bootstrap-policy.json: |-
+{{.Values.bootstrap.policies | toJson | indent 4}}
