@@ -93,9 +93,9 @@ CaraML Authz Postgres related
 
 {{- define "caraml-authz-postgresql.password-secret-name" -}}
     {{- if index .Values "caraml-authz-postgresql" "enabled" -}}
-        {{- printf "%s-postgresql" .Release.Name -}}
+        {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
     {{- else if .Values.caramlAuthzExternalPostgresql.enabled -}}
-        {{- default (printf "%s-external-postgresql" .Release.Name) .Values.caramlAuthzExternalPostgresql.secretName -}}
+        {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name ) .Values.caramlAuthzExternalPostgresql.secretName -}}
     {{- else -}}
         {{- printf "%s-postgresql" .Release.Name -}}
     {{- end -}}

@@ -1,4 +1,4 @@
-# caraml-authz
+# authz
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: 0.4.3](https://img.shields.io/badge/AppVersion-0.4.3-informational?style=flat-square)
 
@@ -14,7 +14,7 @@ Helm chart for deploying Ory Keto
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.helm.sh/stable | postgresql | 8.0.0 |
+| https://charts.helm.sh/stable | caraml-authz-postgresql(postgresql) | 8.0.0 |
 
 ## Values
 
@@ -27,6 +27,7 @@ Helm chart for deploying Ory Keto
 | bootstrap.resources.requests.memory | string | `"50Mi"` |  |
 | bootstrap.roles | string | `nil` |  |
 | caraml-authz-postgresql.enabled | bool | `true` |  |
+| caraml-authz-postgresql.nameOverride | string | `"authz-postgresql"` |  |
 | caraml-authz-postgresql.persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | caraml-authz-postgresql.persistence.enabled | bool | `true` |  |
 | caraml-authz-postgresql.persistence.size | string | `"1Gi"` |  |
@@ -48,7 +49,7 @@ Helm chart for deploying Ory Keto
 | deployment.image.tag | string | `"v0.4.3"` |  |
 | deployment.initResources.requests.cpu | string | `"250m"` |  |
 | deployment.initResources.requests.memory | string | `"128Mi"` |  |
-| deployment.replicaCount | int | `2` |  |
+| deployment.replicaCount | int | `1` |  |
 | deployment.resources.requests.cpu | string | `"250m"` |  |
 | deployment.resources.requests.memory | string | `"128Mi"` |  |
 | deployment.service.port | int | `80` |  |

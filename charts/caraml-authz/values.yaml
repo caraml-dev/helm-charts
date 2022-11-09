@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 deployment:
-  replicaCount: 2
+  replicaCount: 1
 
   image:
     repository: oryd/keto
@@ -54,6 +54,9 @@ caraml-authz-postgresql:
     requests:
       cpu: 500m
       memory: 512Mi
+    # -- override the name here so that db gets created like <release_name>-caraml-authz-postgresql
+  nameOverride: authz-postgresql
+
   persistence:
     enabled: true
     size: 1Gi
