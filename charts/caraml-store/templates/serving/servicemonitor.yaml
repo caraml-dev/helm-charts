@@ -11,5 +11,5 @@ spec:
 {{- include "caraml-store.serving.selectorLabels" . | nindent 6 }}
   endpoints:
     - path: /actuator/prometheus
-    - targetPort: {{ .Values.serving.actuator.port }}
+      targetPort: {{ .Values.serving.actuator.port }}
 {{- end }}
