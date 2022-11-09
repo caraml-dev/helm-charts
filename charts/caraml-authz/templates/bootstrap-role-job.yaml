@@ -1,7 +1,8 @@
+{{- $configMapName := printf "%s-bootstrap-cm" (include "caraml-authz.resource-prefix" .) }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "keto.fullname" . }}-bootstrap-role
+  name: {{ template "caraml-authz.resource-prefix" . }}-bootstrap-role
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "10"
@@ -11,19 +12,14 @@ spec:
     spec:
       containers:
       - name: bootstrap-role
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         args: ["engines", "acp", "ory", "roles", "import", "glob", "/etc/keto/bootstrap-role.json"]
         env:
         - name: KETO_URL
-          value: {{ printf "http://%s" ( include "keto.fullname" . )}}
+          value: {{ printf "http://%s" ( include "caraml-authz.fullname" . )}}
         resources:
-          requests:
-            cpu: 10m
-            memory: 50Mi
-          limits:
-            cpu: 100m
-            memory: 200Mi
+{{- toYaml .Values.bootstrap.resources | nindent 10 }}
         volumeMounts:
         - name: bootstrap
           mountPath: /etc/keto
@@ -31,5 +27,5 @@ spec:
       volumes:
       - name: bootstrap
         configMap:
-          name: {{ template "keto.fullname" . }}-bootstrap
+          name: {{ $configMapName }}
       restartPolicy: OnFailure

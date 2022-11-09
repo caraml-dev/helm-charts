@@ -1,43 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "keto.fullname" . }}
+  name: {{ template "caraml-authz.fullname" . }}
   labels:
-    app: {{ template "keto.name" . }}
-    chart: {{ template "keto.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "caraml-authz.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "keto.name" . }}
+      app: {{ template "caraml-authz.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "keto.name" . }}
+        app: {{ template "caraml-authz.name" . }}
         release: {{ .Release.Name }}
     spec:
       initContainers:
-      - name: {{ .Chart.Name }}-migration
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+      - name: {{ template "caraml-authz.resource-prefix" . }}-migration
+        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         args: ["migrate", "sql", "-e"]
         env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "{{ template "caraml-authz-postgresql.password-secret-name" . }}"
+              key: "{{ template "caraml-authz-postgresql.password-secret-key" . }}"
         - name: DSN
-          value: {{ template "keto.postgresql.dsn" . }}
+          value: {{ template "caraml-authz.postgresql.dsn" . }}
         resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
-            cpu: 500m
-            memory: 200Mi
+{{- toYaml .Values.deployment.initResources | nindent 10 }}
       containers:
-      - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+      - name: {{ template "caraml-authz.resource-prefix" . }}
+        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         ports:
         - name: http
           containerPort: 4466
@@ -51,10 +48,15 @@ spec:
             path: /health/ready
             port: http
         env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "{{ template "caraml-authz-postgresql.password-secret-name" . }}"
+              key: "{{ template "caraml-authz-postgresql.password-secret-key" . }}"
         - name: DSN
-          value: {{ template "keto.postgresql.dsn" . }}
+          value: {{ template "caraml-authz.postgresql.dsn" . }}
         resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{- toYaml .Values.deployment.resources | nindent 10 }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

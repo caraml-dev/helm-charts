@@ -2,39 +2,72 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 2
+deployment:
+  replicaCount: 2
 
-image:
-  repository: oryd/keto
-  tag: v0.4.3
-  pullPolicy: IfNotPresent
+  image:
+    repository: oryd/keto
+    tag: v0.4.3
+    pullPolicy: IfNotPresent
 
-service:
-  type: ClusterIP
-  port: 80
-
-resources:
-  requests:
-   cpu: 250m
-   memory: 128Mi
-
-postgresql:
-  enabled: true
   service:
-    port: 5432
-  postgresqlUsername: oryketo
-  postgresqlPassword: oryketo
-  postgresqlDatabase: oryketo
-  persistence:
-    enabled: true
-    accessMode: ReadWriteOnce
+    type: ClusterIP
+    port: 80
+
   resources:
     requests:
-      memory: 256Mi
       cpu: 250m
+      memory: 128Mi
+
+  initResources:
+    requests:
+      cpu: 250m
+      memory: 128Mi
+
+# If you would like to use an external postgres database for Authz, you can connect using these credentials
+caramlAuthzExternalPostgresql:
+  # -- If you would like to use an external postgres database, enable it here using this
+  enabled: false
+  # -- External postgres database user
+  username: oryketo
+  # -- External postgres database schema
+  database: oryketo
+  # -- Set the External postgres db password using this value at runtime (using --set flag) to create a secret
+  password: password
+  # -- Host address for the External postgres
+  address: 127.0.0.1
+  # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
+  secretName: ""
+  # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
+  secretKey: ""
+
+caraml-authz-postgresql:
+  enabled: true
+  postgresqlUsername: oryketo
+  postgresqlDatabase: oryketo
+  # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
+  # postgresqlPassword: oryketo
+  service:
+    port: 5432
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  persistence:
+    enabled: true
+    size: 1Gi
+    accessMode: ReadWriteOnce
 
 # roles and policies that will be created after successful installation/upgrade
 bootstrap:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 50Mi
+    limits:
+      cpu: 100m
+      memory: 200Mi
   roles:
   # - id: role:admin
   #   subjects: [alice]
