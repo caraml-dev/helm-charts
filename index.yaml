@@ -781,6 +781,33 @@ entries:
   caraml-store:
   - apiVersion: v2
     appVersion: 0.1.3
+    created: "2022-11-09T04:12:58.244101794Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.9.13
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.3.8
+    description: 'CaraML store registry: Feature registry for CaraML store.'
+    digest: 40789eb383af3603a2fcb5a74a3285268301b8737d424d41b9201e275ef0bb75
+    home: https://github.com/caraml-dev/caraml-store
+    keywords:
+    - machine learning
+    - feature store
+    - big data
+    - mlops
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml-store
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-store-0.1.6/caraml-store-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 0.1.3
     created: "2022-11-08T07:50:07.672497608Z"
     dependencies:
     - condition: postgresql.enabled
@@ -2498,4 +2525,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2022-11-08T12:02:52.041702737Z"
+generated: "2022-11-09T04:12:58.244285202Z"
