@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "caraml-authz.fullname" . }}
+  labels:
+    {{- include "caraml-authz.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.deployment.service.type }}
+  ports:
+    - port: {{ .Values.deployment.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "caraml-authz.name" . }}
+    release: {{ .Release.Name }}

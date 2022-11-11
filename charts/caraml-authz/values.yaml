@@ -1,0 +1,89 @@
+# Default values for keto.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deployment:
+  replicaCount: 1
+
+  image:
+    repository: oryd/keto
+    tag: v0.4.3
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  resources:
+    requests:
+      cpu: 250m
+      memory: 128Mi
+
+  initResources:
+    requests:
+      cpu: 250m
+      memory: 128Mi
+
+# If you would like to use an external postgres database for Authz, you can connect using these credentials
+caramlAuthzExternalPostgresql:
+  # -- If you would like to use an external postgres database, enable it here using this
+  enabled: false
+  # -- External postgres database user
+  username: oryketo
+  # -- External postgres database schema
+  database: oryketo
+  # -- Set the External postgres db password using this value at runtime (using --set flag) to create a secret
+  password: password
+  # -- Host address for the External postgres
+  address: 127.0.0.1
+  # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
+  secretName: ""
+  # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
+  secretKey: ""
+
+caraml-authz-postgresql:
+  enabled: true
+  postgresqlUsername: oryketo
+  postgresqlDatabase: oryketo
+  # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
+  # postgresqlPassword: oryketo
+  service:
+    port: 5432
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    # -- override the name here so that db gets created like <release_name>-caraml-authz-postgresql
+  nameOverride: authz-postgresql
+
+  persistence:
+    enabled: true
+    size: 1Gi
+    accessMode: ReadWriteOnce
+
+# roles and policies that will be created after successful installation/upgrade
+bootstrap:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 50Mi
+    limits:
+      cpu: 100m
+      memory: 200Mi
+  roles:
+  # - id: role:admin
+  #   subjects: [alice]
+  # - id: role:member
+  #   subjects: [bob]
+  policies:
+  # - id: example-policy
+  #   subjects: [alice]
+  #   resources: ["blog_posts:my-first-blog-post"]
+  #   actions: [delete]
+  #   effect: allow
+  # - id: example-policy-2
+  #   subjects: [admin]
+  #   resources: ["blog_posts:my-first-blog-post-2"]
+  #   actions: [delete]
+  #   effect: allow

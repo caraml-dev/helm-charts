@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "caraml-authz.fullname" . }}
+  labels:
+    {{- include "caraml-authz.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "caraml-authz.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "caraml-authz.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      initContainers:
+      - name: {{ template "caraml-authz.resource-prefix" . }}-migration
+        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        args: ["migrate", "sql", "-e"]
+        env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "{{ template "caraml-authz-postgresql.password-secret-name" . }}"
+              key: "{{ template "caraml-authz-postgresql.password-secret-key" . }}"
+        - name: DSN
+          value: {{ template "caraml-authz.postgresql.dsn" . }}
+        resources:
+{{- toYaml .Values.deployment.initResources | nindent 10 }}
+      containers:
+      - name: {{ template "caraml-authz.resource-prefix" . }}
+        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 4466
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /health/alive
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: http
+        env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "{{ template "caraml-authz-postgresql.password-secret-name" . }}"
+              key: "{{ template "caraml-authz-postgresql.password-secret-key" . }}"
+        - name: DSN
+          value: {{ template "caraml-authz.postgresql.dsn" . }}
+        resources:
+{{- toYaml .Values.deployment.resources | nindent 10 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

@@ -1,0 +1,10 @@
+{{- $configMapName := printf "%s-bootstrap-cm" (include "caraml-authz.resource-prefix" .) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $configMapName }}
+data:
+  bootstrap-role.json: |-
+{{.Values.bootstrap.roles | toJson | indent 4}}
+  bootstrap-policy.json: |-
+{{.Values.bootstrap.policies | toJson | indent 4}}
