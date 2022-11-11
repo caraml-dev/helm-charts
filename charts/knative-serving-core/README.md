@@ -100,12 +100,11 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 | monitoring.allNamespaces | bool | `true` |  |
-| monitoring.enabled | bool | `false` |  |
+| monitoring.enabled | bool | `true` |  |
+| monitoring.podMonitor.metricPortName | string | `"metrics"` |  |
 | monitoring.podMonitor.metricRelabelings | object | `{}` |  |
 | monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.monitoring.selectorKey }}"` |  |
 | monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
-| monitoring.podMonitor.userMetricPortName | string | `"metrics"` |  |
-| monitoring.podMonitor.userPortName | string | `"user-port"` |  |
 | monitoring.selectorKey | string | `"serving.knative.dev/release"` |  |
 | queueProxy.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/queue"` | Repository of the queue proxy image |
 | queueProxy.image.sha | string | `"2249dc873059c0dfc0783bce5f614a0d8ada3d4499d63aa1dffd19f2788ba64b"` | SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority) |

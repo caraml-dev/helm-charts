@@ -194,10 +194,9 @@ queueProxy:
     sha: "2249dc873059c0dfc0783bce5f614a0d8ada3d4499d63aa1dffd19f2788ba64b"
 
 monitoring:
-  enabled: false
+  enabled: true
   podMonitor:
-    userMetricPortName: metrics
-    userPortName: user-port
+    metricPortName: metrics
     selector:
       matchExpressions:
         - key: "{{ .Values.monitoring.selectorKey }}"
