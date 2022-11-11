@@ -14,6 +14,7 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.0 |
 | https://caraml-dev.github.io/helm-charts | caraml-routes | 0.1.4 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.5 |
@@ -33,6 +34,8 @@ A Helm chart for deploying CaraML components
 | base.enabled | bool | `true` | Set to false if there is an existing istio deployment |
 | base.global.istioNamespace | string | `"istio-system"` |  |
 | base.validationURL | string | `""` |  |
+| caraml-authz.caraml-authz-postgresql.enabled | bool | `false` |  |
+| caraml-authz.enabled | bool | `true` |  |
 | caraml-routes.cert-manager.enabled | bool | `false` |  |
 | caraml-routes.certManagerBase.enabled | bool | `false` |  |
 | caraml-routes.enabled | bool | `true` |  |
@@ -62,6 +65,7 @@ A Helm chart for deploying CaraML components
 | clusterLocalGateway.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
 | clusterLocalGateway.helmChart.version | string | `"1.13.9"` |  |
 | clusterLocalGateway.hook.weight | int | `1` |  |
+| global.authz.postgresqlDatabase | string | `"authz"` |  |
 | global.merlin.mlflow.postgresqlDatabase | string | `"mlflow"` |  |
 | global.merlin.postgresqlDatabase | string | `"merlin"` |  |
 | global.mlp.postgresqlDatabase | string | `"mlp"` |  |
@@ -110,10 +114,12 @@ A Helm chart for deploying CaraML components
 | merlin.merlin-postgresql.enabled | bool | `false` | To enable/disable merlin specific postgres |
 | merlin.mlflow-postgresql.enabled | bool | `false` | To enable/disable mlflow specific postgres |
 | merlin.mlp.enabled | bool | `false` |  |
+| mlp.deployment.authorization.enabled | bool | `true` |  |
+| mlp.deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | mlp.enabled | bool | `true` | To enable/disable MLP chart installation. |
 | mlp.postgresql.enabled | bool | `false` | To enable/disable MLP specific postgres |
 | postgresql.enabled | bool | `true` | To enable/disable CaraML specific postgres |
-| postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\nCREATE DATABASE merlin;\nCREATE DATABASE mlflow;\n"` |  |
+| postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\nCREATE DATABASE merlin;\nCREATE DATABASE mlflow;\nCREATE DATABASE authz;\n"` |  |
 | postgresql.persistence.size | string | `"10Gi"` |  |
 | postgresql.postgresqlDatabase | string | `"caraml"` | To set the database schema name created in postgres |
 | postgresql.postgresqlUsername | string | `"caraml"` | To set the user name for the database instance |

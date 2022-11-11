@@ -5,6 +5,8 @@
 global:
   postgresqlUsername: caraml
   postgresqlDatabase: caraml
+  authz:
+    postgresqlDatabase: authz
   mlp:
     postgresqlDatabase: mlp
   merlin:
@@ -17,6 +19,10 @@ mlp:
   postgresql:
     # -- To enable/disable MLP specific postgres
     enabled: false
+  deployment:
+    authorization:
+      enabled: true
+      serverUrl: http://mlp-authorization-keto # TODO: Update this by adding a vs in caraml routes.
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
@@ -47,6 +53,10 @@ merlin:
       #   enabled: false
       cert-manager:
         enabled: true
+caraml-authz:
+  enabled: true
+  caraml-authz-postgresql:
+    enabled: false
 caraml-routes:
   enabled: true
   certManagerBase:
@@ -90,6 +100,7 @@ postgresql:
       CREATE DATABASE mlp;
       CREATE DATABASE merlin;
       CREATE DATABASE mlflow;
+      CREATE DATABASE authz;
 ############################################################
 # Istio Base
 ############################################################
