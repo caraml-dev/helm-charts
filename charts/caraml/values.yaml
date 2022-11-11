@@ -22,7 +22,7 @@ mlp:
   deployment:
     authorization:
       enabled: true
-      serverUrl: http://mlp-authorization-keto # TODO: Update this by adding a vs in caraml routes.
+      serverUrl: http://mlp-authorization-keto  # TODO: Update this by adding a vs in caraml routes.
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
