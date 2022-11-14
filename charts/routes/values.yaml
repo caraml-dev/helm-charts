@@ -146,6 +146,11 @@ feast:
 mlflow:
   enabled: true
 
+# Configuration for mlflow
+authz:
+  enabled: true
+
+
 # Configuration for mlp
 mlp:
   enabled: true

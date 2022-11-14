@@ -46,6 +46,7 @@ The following table lists the configurable parameters of the Routes chart and th
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| authz.enabled | bool | `true` |  |
 | base.enabled | bool | `false` |  |
 | cert-manager.enabled | bool | `true` |  |
 | certManagerBase.enabled | bool | `true` |  |
