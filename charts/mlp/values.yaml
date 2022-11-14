@@ -1,4 +1,5 @@
-global: {}
+global:
+  protocol: "http"
 deployment:
   # -- mlp image related configs
   image:

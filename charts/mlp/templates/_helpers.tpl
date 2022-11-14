@@ -116,3 +116,13 @@ Postgres related
         {{- printf "postgresql-password" -}}
     {{- end -}}
 {{- end -}}
+
+
+{{- define "authorization.server.url" -}}
+    {{- $protocol := (default "http" .Values.global.protocol ) }}
+    {{- $globalAuthzUrl := "" }}
+    {{- if and .Values.global (hasKey .Values.global "authz") }}
+        {{- $globalAuthzUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "authz" (list "serviceName")))) }}
+    {{- end }}
+    {{- printf "%s" (include "common.set-value" (list .Values.deployment.authorization.serverUrl $globalAuthzUrl)) -}}
+{{- end -}}

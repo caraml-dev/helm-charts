@@ -14,8 +14,9 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.0 |
-| https://caraml-dev.github.io/helm-charts | caraml-routes | 0.1.4 |
+| file://../caraml-authz | caraml-authz(authz) | 0.1.1 |
+| file://../mlp | mlp | 0.3.5 |
+| file://../routes | caraml-routes | 0.1.5 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.5 |
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
@@ -36,6 +37,7 @@ A Helm chart for deploying CaraML components
 | base.validationURL | string | `""` |  |
 | caraml-authz.caraml-authz-postgresql.enabled | bool | `false` |  |
 | caraml-authz.enabled | bool | `true` |  |
+| caraml-authz.policies | list | `[{"actions":["actions:**"],"description":"Administrator policy to gain access to all resources","effect":"allow","id":"policies:admin","resources":["resources:**"],"subjects":["roles:admin"]},{"actions":["actions:read"],"description":"Allow reading of all mlp projects","effect":"allow","id":"policies:allow-read-all-projects","resources":["resources:mlp:projects:**"],"subjects":["roles:project-reader"]},{"actions":["actions:read"],"description":"Allow all users to list merlin environment","effect":"allow","id":"policies:allow-all-list-environments","resources":["resources:mlp:environments"],"subjects":["roles:**","users:**"]},{"actions":["actions:read","actions:create"],"description":"Allow all users to list and create mlp project","effect":"allow","id":"policies:allow-all-list-create-projects","resources":["resources:mlp:projects"],"subjects":["roles:**","users:**"]},{"actions":["actions:read"],"description":"Allow all users to list applications","effect":"allow","id":"policies:allow-all-list-applications","resources":["resources:mlp:applications"],"subjects":["roles:**","users:**"]},{"actions":["actions:read"],"description":"Allow all users to access API related to the user","effect":"allow","id":"policies:allow-access-users-resources","resources":["resources:mlp:users","resources:mlp:users:**"],"subjects":["roles:**","users:**"]},{"actions":["actions:create"],"description":"Allow all users to simulate standard transformer","effect":"allow","id":"policies:allow-all-standard-transformer-simulate","resources":["resources:mlp:standard_transformer:simulate"],"subjects":["roles:**","users:**"]}]` | Following are the keto policies that are used in CaraML components. |
 | caraml-routes.cert-manager.enabled | bool | `false` |  |
 | caraml-routes.certManagerBase.enabled | bool | `false` |  |
 | caraml-routes.enabled | bool | `true` |  |
@@ -66,6 +68,7 @@ A Helm chart for deploying CaraML components
 | clusterLocalGateway.helmChart.version | string | `"1.13.9"` |  |
 | clusterLocalGateway.hook.weight | int | `1` |  |
 | global.authz.postgresqlDatabase | string | `"authz"` |  |
+| global.authz.serviceName | string | `"caraml-authz"` |  |
 | global.merlin.mlflow.postgresqlDatabase | string | `"mlflow"` |  |
 | global.merlin.postgresqlDatabase | string | `"merlin"` |  |
 | global.mlp.postgresqlDatabase | string | `"mlp"` |  |
@@ -115,7 +118,6 @@ A Helm chart for deploying CaraML components
 | merlin.mlflow-postgresql.enabled | bool | `false` | To enable/disable mlflow specific postgres |
 | merlin.mlp.enabled | bool | `false` |  |
 | mlp.deployment.authorization.enabled | bool | `true` |  |
-| mlp.deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | mlp.enabled | bool | `true` | To enable/disable MLP chart installation. |
 | mlp.postgresql.enabled | bool | `false` | To enable/disable MLP specific postgres |
 | postgresql.enabled | bool | `true` | To enable/disable CaraML specific postgres |
