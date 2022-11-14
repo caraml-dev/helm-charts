@@ -35,4 +35,4 @@ maintainers:
   name: caraml-dev
 name: caraml-routes
 type: application
-version: 0.1.4
+version: 0.1.5

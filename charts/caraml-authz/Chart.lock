@@ -2,5 +2,8 @@ dependencies:
 - name: postgresql
   repository: https://charts.helm.sh/stable
   version: 8.0.0
-digest: sha256:d96bec3dd8eccabdb4c0f6aaba0747d69499249bafd308a34bc9998f67bcf5de
-generated: "2022-11-09T12:09:51.49307+05:30"
+- name: common
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.4
+digest: sha256:20531b2a2259cfd1a963fe3d338492325dba98a6f338c9a416b3da55610dd2f1
+generated: "2022-11-14T11:55:30.304999+05:30"

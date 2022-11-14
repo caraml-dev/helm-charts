@@ -1,7 +1,7 @@
 # caraml-routes
 
 ---
-![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square)
+![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square)
 ![AppVersion: 0.1.2](https://img.shields.io/badge/AppVersion-0.1.2-informational?style=flat-square)
 
 A Helm chart for deploying CaraML networking resources
@@ -51,6 +51,8 @@ The following table lists the configurable parameters of the Routes chart and th
 | certManagerBase.enabled | bool | `true` |  |
 | common.enabled | bool | `true` |  |
 | feast.enabled | bool | `true` |  |
+| global.authz.externalPort | string | `"80"` |  |
+| global.authz.serviceName | string | `"caraml-authz"` |  |
 | global.domain | string | `""` |  |
 | global.feast.apiPrefix | string | `"/api"` |  |
 | global.feast.externalPort | string | `"8080"` |  |
@@ -58,6 +60,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.feast.uiServiceName | string | `"feast-ui"` |  |
 | global.feast.useServiceFqdn | bool | `true` |  |
 | global.feast.vsPrefix | string | `"/feast"` |  |
+| global.hosts.authz[0] | string | `"authz"` |  |
 | global.hosts.mlflow[0] | string | `"mlflow"` |  |
 | global.hosts.mlp[0] | string | `"console"` |  |
 | global.hosts.mlpdocs[0] | string | `"docs"` |  |

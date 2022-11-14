@@ -1,13 +1,18 @@
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "authz" (list "serviceName")) }}
+{{- $serviceName := include "common.set-value" (list (include "caraml-authz.fullname" .) $globServiceName) }}
+{{- $globServicePort := include "common.get-component-value" (list .Values.global "authz" (list "externalPort")) }}
+{{- $servicePort := include "common.set-value" (list (.Values.deployment.service.port | toString) $globServicePort) | atoi }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "caraml-authz.fullname" . }}
+  name: {{ $serviceName }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "caraml-authz.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.deployment.service.type }}
   ports:
-    - port: {{ .Values.deployment.service.port }}
+    - port: {{ $servicePort }}
       targetPort: http
       protocol: TCP
       name: http

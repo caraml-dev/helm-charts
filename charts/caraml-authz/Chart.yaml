@@ -6,9 +6,12 @@ dependencies:
     name: postgresql
     repository: https://charts.helm.sh/stable
     version: 8.0.0
+  - name: common
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.2.4
 description: Helm chart for deploying Ory Keto
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: authz
-version: 0.1.0
+version: 0.1.1
