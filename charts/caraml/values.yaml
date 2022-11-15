@@ -26,9 +26,25 @@ mlp:
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
+  deployment:
+    resources:
+      requests:
+        cpu: "250m"
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
   merlin-postgresql:
     # -- To enable/disable merlin specific postgres
     enabled: false
+  mlflow:
+    resources:
+      requests:
+        cpu: "250m"
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
   mlflow-postgresql:
     # -- To enable/disable mlflow specific postgres
     enabled: false
@@ -39,14 +55,59 @@ merlin:
     chartValues:
       knativeServingIstio:
         chartValues:
+          controller:
+            resources:
+              requests:
+                cpu: 200m
+                memory: 256Mi
+              limits:
+                cpu: 1000m
+                memory: 512Mi
+          webhook:
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 300m
+                memory: 512Mi
+          knativeServingCore:
+            autoscaler:
+              resources:
+                requests:
+                  cpu: 250m
+                  memory: 256Mi
+                limits:
+                  cpu: 1000m
+                  memory: 1000Mi
+            autoscalerHpa:
+              resources:
+                requests:
+                  cpu: 250m
+                  memory: 128Mi
+                limits:
+                  cpu: 500m
+                  memory: 256Mi
+            controller:
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 256Mi
+                limits:
+                  cpu: 1000m
+                  memory: 512Mi
           istiod:
             enabled: false
           base:
             enabled: false
           istioIngressGateway:
-            enabled: false
+            global:
+              enabled: false
+            helmChart:
+              namespace: "istio-system" #  NOTE: Need to set this for the helm tests in kserve to run successfully.
           clusterLocalGateway:
-            enabled: false
+            global:
+              enabled: false
       # NOTE: If kserve is enabled, install cert-manager through kserve because
       # kserve requires cert-manager to be installed first
       # certManagerBase:
@@ -184,8 +245,8 @@ istiod:
 
       resources:
         requests:
-          cpu: 500m
-          memory: 512Mi
+          cpu: 250m
+          memory: 256Mi
         limits:
           cpu: 1
           memory: 1024Mi
@@ -228,17 +289,13 @@ istioIngressGateway:
       ISTIO_META_ROUTER_MODE: standard
       ISTIO_METAJSON_STATS: |
         {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
-    resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 2048Mi
 ############################################################
 # clusterLocalGateway - installed using helm-dep-installer chart
 ############################################################
@@ -279,18 +336,13 @@ clusterLocalGateway:
     env:
       ISTIO_METAJSON_STATS: |
         {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
-    resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
     service:
       type: ClusterIP
       ports:

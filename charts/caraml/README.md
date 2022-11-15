@@ -50,7 +50,10 @@ A Helm chart for deploying CaraML components
 | clusterLocalGateway.chartValues.labels.app | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.chartValues.labels.istio | string | `"cluster-local-gateway"` |  |
 | clusterLocalGateway.chartValues.name | string | `"cluster-local-gateway"` | Specify name here so each gateway installation has its own unique name |
-| clusterLocalGateway.chartValues.resources | object | `{}` |  |
+| clusterLocalGateway.chartValues.resources.limits.cpu | string | `"1000m"` |  |
+| clusterLocalGateway.chartValues.resources.limits.memory | string | `"1024Mi"` |  |
+| clusterLocalGateway.chartValues.resources.requests.cpu | string | `"250m"` |  |
+| clusterLocalGateway.chartValues.resources.requests.memory | string | `"256Mi"` |  |
 | clusterLocalGateway.chartValues.service.ports[0].name | string | `"http2"` |  |
 | clusterLocalGateway.chartValues.service.ports[0].port | int | `80` |  |
 | clusterLocalGateway.chartValues.service.ports[0].targetPort | int | `80` |  |
@@ -78,7 +81,10 @@ A Helm chart for deploying CaraML components
 | istioIngressGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | istioIngressGateway.chartValues.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |
 | istioIngressGateway.chartValues.name | string | `"istio-ingressgateway"` | Specify name here so each gateway installation has its own unique name |
-| istioIngressGateway.chartValues.resources | object | `{}` |  |
+| istioIngressGateway.chartValues.resources.limits.cpu | string | `"1000m"` |  |
+| istioIngressGateway.chartValues.resources.limits.memory | string | `"2048Mi"` |  |
+| istioIngressGateway.chartValues.resources.requests.cpu | string | `"250m"` |  |
+| istioIngressGateway.chartValues.resources.requests.memory | string | `"256Mi"` |  |
 | istioIngressGateway.chartValues.serviceAccount.create | bool | `true` |  |
 | istioIngressGateway.chartValues.serviceAccount.name | string | `"istio-ingressgateway"` |  |
 | istioIngressGateway.global.enabled | bool | `true` | Controls deployment of istio-ingressgateway. Set to false if there is an existing istio deployment |
@@ -98,8 +104,8 @@ A Helm chart for deploying CaraML components
 | istiod.chartValues.pilot.cpu.targetAverageUtilization | int | `80` |  |
 | istiod.chartValues.pilot.resources.limits.cpu | int | `1` |  |
 | istiod.chartValues.pilot.resources.limits.memory | string | `"1024Mi"` |  |
-| istiod.chartValues.pilot.resources.requests.cpu | string | `"500m"` |  |
-| istiod.chartValues.pilot.resources.requests.memory | string | `"512Mi"` |  |
+| istiod.chartValues.pilot.resources.requests.cpu | string | `"250m"` |  |
+| istiod.chartValues.pilot.resources.requests.memory | string | `"256Mi"` |  |
 | istiod.enabled | bool | `true` | Set to false if there is an existing istio deployment |
 | istiod.helmChart.chart | string | `"istiod"` |  |
 | istiod.helmChart.namespace | string | `"istio-system"` |  |
@@ -107,15 +113,44 @@ A Helm chart for deploying CaraML components
 | istiod.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
 | istiod.helmChart.version | string | `"1.13.9"` |  |
 | istiod.hook.weight | int | `-3` |  |
+| merlin.deployment.resources.limits.cpu | string | `"500m"` |  |
+| merlin.deployment.resources.limits.memory | string | `"512Mi"` |  |
+| merlin.deployment.resources.requests.cpu | string | `"250m"` |  |
+| merlin.deployment.resources.requests.memory | string | `"256Mi"` |  |
 | merlin.enabled | bool | `true` | To enable/disable merlin chart installation. |
 | merlin.kserve.chartValues.cert-manager.enabled | bool | `true` |  |
 | merlin.kserve.chartValues.knativeServingIstio.chartValues.base.enabled | bool | `false` |  |
-| merlin.kserve.chartValues.knativeServingIstio.chartValues.clusterLocalGateway.enabled | bool | `false` |  |
-| merlin.kserve.chartValues.knativeServingIstio.chartValues.istioIngressGateway.enabled | bool | `false` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.clusterLocalGateway.global.enabled | bool | `false` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.controller.resources.limits.cpu | string | `"1000m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.controller.resources.limits.memory | string | `"512Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.controller.resources.requests.cpu | string | `"200m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.controller.resources.requests.memory | string | `"256Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.istioIngressGateway.global.enabled | bool | `false` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.istioIngressGateway.helmChart.namespace | string | `"istio-system"` |  |
 | merlin.kserve.chartValues.knativeServingIstio.chartValues.istiod.enabled | bool | `false` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.autoscaler.resources.limits.cpu | string | `"1000m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.autoscaler.resources.limits.memory | string | `"1000Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.autoscaler.resources.requests.cpu | string | `"250m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.autoscaler.resources.requests.memory | string | `"256Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.autoscalerHpa.resources.limits.cpu | string | `"500m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.autoscalerHpa.resources.limits.memory | string | `"256Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.autoscalerHpa.resources.requests.cpu | string | `"250m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.autoscalerHpa.resources.requests.memory | string | `"128Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.controller.resources.limits.cpu | string | `"1000m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.controller.resources.limits.memory | string | `"512Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.controller.resources.requests.cpu | string | `"200m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.knativeServingCore.controller.resources.requests.memory | string | `"256Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.webhook.resources.limits.cpu | string | `"300m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.webhook.resources.limits.memory | string | `"512Mi"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.webhook.resources.requests.cpu | string | `"100m"` |  |
+| merlin.kserve.chartValues.knativeServingIstio.chartValues.webhook.resources.requests.memory | string | `"256Mi"` |  |
 | merlin.kserve.enabled | bool | `true` |  |
 | merlin.merlin-postgresql.enabled | bool | `false` | To enable/disable merlin specific postgres |
 | merlin.mlflow-postgresql.enabled | bool | `false` | To enable/disable mlflow specific postgres |
+| merlin.mlflow.resources.limits.cpu | string | `"500m"` |  |
+| merlin.mlflow.resources.limits.memory | string | `"512Mi"` |  |
+| merlin.mlflow.resources.requests.cpu | string | `"250m"` |  |
+| merlin.mlflow.resources.requests.memory | string | `"256Mi"` |  |
 | merlin.mlp.enabled | bool | `false` |  |
 | mlp.deployment.authorization.enabled | bool | `true` |  |
 | mlp.enabled | bool | `true` | To enable/disable MLP chart installation. |
