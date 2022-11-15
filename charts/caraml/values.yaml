@@ -104,7 +104,7 @@ merlin:
             global:
               enabled: false
             helmChart:
-              namespace: "istio-system" #  NOTE: Need to set this for the helm tests in kserve to run successfully.
+              namespace: "istio-system"  #  NOTE: Need to set this for the helm tests in kserve to run successfully.
           clusterLocalGateway:
             global:
               enabled: false
