@@ -1,0 +1,60 @@
+{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
+{{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix" "apiPrefix")) }}
+{{- $globFeastApi := include "common.get-component-value" (list .Values.global "feast" (list "vsPrefix" "apiPrefix")) }}
+{{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix")) }}
+{{- $globTuringApi := include "common.get-component-value" (list .Values.global "turing" (list "vsPrefix" "apiPrefix")) }}
+{{- $globFeastUI := include "common.get-component-value" (list .Values.global "feast" (list "uiPrefix")) }}
+{{- $globMerlinUI := include "common.get-component-value" (list .Values.global "merlin" (list "uiPrefix")) }}
+{{- $globTuringUI := include "common.get-component-value" (list .Values.global "turing" (list "uiPrefix")) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ template "mlp.config-cm-name" . }}
+  labels:
+    {{- include "mlp.labels" . | nindent 4 }}
+data:
+  mlp-config.yaml: |
+    APIHost: {{ include "common.set-value" (list .Values.deployment.apiHost $globApiHost) | quote }}
+
+    Environment: {{ .Values.deployment.environment }}
+
+    Port: {{ .Values.service.internalPort }}}
+
+    SentryDSN: {{ .Values.deployment.sentryDSN }}
+
+    OauthClientID: {{ include "common.set-value" (list .Values.deployment.oauthClientID $globOauthClientID) | quote }}
+
+    Authorization:
+      Enabled: {{ .Values.deployment.authorization.enabled }}
+      {{- if .Values.deployment.authorization.enabled }}
+      KetoServerURL: {{ default "" .Values.deployment.authorization.serverUrl }}
+      {{- end }}
+
+    Database:
+      Host: {{ template "postgres.host" . }}
+      User: {{ template "postgres.username" . }}
+      Database: {{ template "postgres.database" . }}
+
+    {{- if .Values.deployment.docs }}
+    Docs:
+      {{ toYaml .Values.deployment.streams | indent 6 }}
+    {{- end }}
+
+    Mlflow:
+      TrackingURL: {{ .Values.deployment.mlflowTrackingUrl }}
+
+    {{- if .Values.deployment.streams }}
+    Streams:
+      {{ toYaml .Values.deployment.streams | indent 6 }}
+    {{- end }}
+
+    UI:
+      FeastCoreAPI: {{ include "common.set-value" (list .Values.deployment.ui.feastCoreApi $globFeastApi) | quote }}
+      MerlinAPI: {{ include "common.set-value" (list .Values.deployment.ui.merlinApi $globMerlinApi) | quote }}
+      TuringAPI: {{ include "common.set-value" (list .Values.deployment.ui.turingApi $globTuringApi) | quote }}
+      ClockworkUIHomepage: "{{ .Values.deployment.ui.clockworkHomepage }}"
+      FeastUIHomepage: {{ include "common.set-value" (list .Values.deployment.ui.feastHomepage $globFeastUI) | quote }}
+      KubeflowUIHomepage: "{{ .Values.deployment.ui.kubeflowHomepage }}"
+      MerlinUIHomepage: {{ include "common.set-value" (list .Values.deployment.ui.merlinHomepage $globMerlinUI) | quote }}
+      TuringUIHomepage: {{ include "common.set-value" (list .Values.deployment.ui.turingHomepage $globTuringUI) | quote }}
