@@ -137,6 +137,9 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istiod.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
 | istiod.helmChart.version | string | `"1.13.9"` |  |
 | istiod.hook.weight | int | `0` |  |
+| istiod.monitoring.enabled | bool | `true` |  |
+| istiod.monitoring.namespace | string | `"istio-system"` |  |
+| istiod.monitoring.selector.matchLabels.app | string | `"istiod"` |  |
 | knativeServingCore.activator.autoscaling.enabled | bool | `false` | Enables autoscaling for activator deployment. |
 | knativeServingCore.activator.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/activator"` | Repository of the activator image |
 | knativeServingCore.activator.image.sha | string | `"ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"` | SHA256 of the activator image, either provide tag or SHA (SHA will be given priority) |
@@ -186,6 +189,23 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | knativeServingCore.webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.webhook.replicaCount | int | `1` | Number of replicas for the webhook deployment. |
 | knativeServingCore.webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| monitoring.istioEnvoy.enabled | bool | `true` |  |
+| monitoring.istioEnvoy.envoyStats[0].path | string | `"/stats/prometheus"` |  |
+| monitoring.istioEnvoy.envoyStats[0].port | string | `".*-envoy-prom"` |  |
+| monitoring.istioEnvoy.metricRelabelings[0].action | string | `"labeldrop"` |  |
+| monitoring.istioEnvoy.metricRelabelings[0].regex | string | `"(.*_canonical_.*|connection_security_policy|destination_app|destination_cluster|destination_principal|destination_service|destination_service_namespace|destination_version|destination_workload|response_flags|source_app|source_cluster|source_principal|source_version|source_workload|source_workload_namespace)"` |  |
+| monitoring.istioEnvoy.namespaceSelector | object | `{}` |  |
+| monitoring.istioEnvoy.selector.matchExpressions[0].key | string | `"service.istio.io/canonical-name"` |  |
+| monitoring.istioEnvoy.selector.matchExpressions[0].operator | string | `"Exists"` |  |
+| monitoring.serving.allNamespaces | bool | `true` |  |
+| monitoring.serving.enabled | bool | `true` |  |
+| monitoring.serving.metricRelabelingRegex | string | `"(gojek_com_team|gojek_com_stream|gojek_com_orchestrator|gojek_com_environment|gojek_com_app)"` |  |
+| monitoring.serving.podMonitor.metricRelabelings[0].action | string | `"drop"` |  |
+| monitoring.serving.podMonitor.metricRelabelings[0].regex | string | `"{{ .Values.monitoring.serving.metricRelabelingRegex }}"` |  |
+| monitoring.serving.podMonitor.selector.matchExpressions[0].key | string | `"serving.knative.dev/revision"` |  |
+| monitoring.serving.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
+| monitoring.serving.podMonitor.userMetricPortName | string | `"http-usermetric"` |  |
+| monitoring.serving.podMonitor.userPortName | string | `"user-port"` |  |
 | revision | string | `""` |  |
 | webhook.image.repository | string | `"gcr.io/knative-releases/knative.dev/net-istio/cmd/webhook"` | Repository of the webhook image |
 | webhook.image.sha | string | `"75d502bdff93e9c0e4611c2747d868b8d471f8d3a0402394de76ec2d98b89ce3"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |

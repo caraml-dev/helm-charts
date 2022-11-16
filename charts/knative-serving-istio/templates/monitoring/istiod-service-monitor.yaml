@@ -1,0 +1,17 @@
+---
+{{- if .Values.istiod.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: istiod
+  namespace: {{ .Values.istiod.monitoring.namespace }}
+  labels:
+{{ include "knative-net-istio.labels" . | indent 4 }}
+spec:
+{{- if .Values.istiod.monitoring.selector }}
+  selector:
+{{ toYaml .Values.istiod.monitoring.selector | indent 4 }}
+{{- end }}
+  endpoints:
+    - port: http-monitoring
+{{- end }}

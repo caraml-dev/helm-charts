@@ -1,0 +1,25 @@
+---
+{{- if .Values.monitoring.istioEnvoy.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: envoy-stats-metrics
+  namespace: {{ .Values.monitoring.istioSystemNS }}
+  labels:
+{{ include "monitoring.labels" . | indent 4 }}
+spec:
+{{- if .Values.monitoring.istioEnvoy.selector }}
+  selector:
+{{ toYaml .Values.monitoring.istioEnvoy.selector | indent 4 }}
+{{- end }}
+{{- if .Values.monitoring.istioEnvoy.namespaceSelector }}
+  namespaceSelector:
+{{ toYaml .Values.monitoring.istioEnvoy.namespaceSelector | indent 4 }}
+{{- end }}
+  podMetricsEndpoints:
+{{ toYaml .Values.monitoring.istioEnvoy.envoyStats | indent 4 }}
+{{- if .Values.monitoring.istioEnvoy.metricRelabelings }}
+      metricRelabelings:
+{{ toYaml .Values.monitoring.istioEnvoy.metricRelabelings | indent 6 }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,30 @@
+{{- if .Values.monitoring.serving.enabled }}
+# Queue proxy PodMonitor
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: knative-pod
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "monitoring.labels" . | indent 4 }}
+spec:
+{{- if .Values.monitoring.serving.allNamespaces }}
+  namespaceSelector:
+    any: true
+{{- end }}
+{{- if .Values.monitoring.serving.podMonitor.selector }}
+  selector:
+{{ tpl (toYaml .Values.monitoring.serving.podMonitor.selector | indent 4) . }}
+{{- end }}
+  podMetricsEndpoints:
+    - port: {{ .Values.monitoring.serving.podMonitor.userMetricPortName }}
+{{- if .Values.monitoring.serving.podMonitor.metricRelabelings }}
+      metricRelabelings:
+{{ tpl (toYaml .Values.monitoring.serving.podMonitor.metricRelabelings | indent 6) . }}
+{{- end }}
+    - port: {{ .Values.monitoring.serving.podMonitor.userPortName }}
+{{- if .Values.monitoring.serving.podMonitor.metricRelabelings }}
+      metricRelabelings:
+{{ tpl (toYaml .Values.monitoring.serving.podMonitor.metricRelabelings | indent 6) . }}
+{{- end }}
+{{- end }}
