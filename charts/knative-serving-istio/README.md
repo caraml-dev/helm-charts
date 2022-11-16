@@ -137,7 +137,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istiod.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
 | istiod.helmChart.version | string | `"1.13.9"` |  |
 | istiod.hook.weight | int | `0` |  |
-| istiod.monitoring.enabled | bool | `true` |  |
+| istiod.monitoring.enabled | bool | `false` |  |
 | istiod.monitoring.namespace | string | `"istio-system"` |  |
 | istiod.monitoring.selector.matchLabels.app | string | `"istiod"` |  |
 | knativeServingCore.activator.autoscaling.enabled | bool | `false` | Enables autoscaling for activator deployment. |
@@ -189,7 +189,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | knativeServingCore.webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.webhook.replicaCount | int | `1` | Number of replicas for the webhook deployment. |
 | knativeServingCore.webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
-| monitoring.istioEnvoy.enabled | bool | `true` |  |
+| monitoring.istioEnvoy.enabled | bool | `false` |  |
 | monitoring.istioEnvoy.envoyStats[0].path | string | `"/stats/prometheus"` |  |
 | monitoring.istioEnvoy.envoyStats[0].port | string | `".*-envoy-prom"` |  |
 | monitoring.istioEnvoy.metricRelabelings[0].action | string | `"labeldrop"` |  |
@@ -198,7 +198,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | monitoring.istioEnvoy.selector.matchExpressions[0].key | string | `"service.istio.io/canonical-name"` |  |
 | monitoring.istioEnvoy.selector.matchExpressions[0].operator | string | `"Exists"` |  |
 | monitoring.serving.allNamespaces | bool | `true` |  |
-| monitoring.serving.enabled | bool | `true` |  |
+| monitoring.serving.enabled | bool | `false` |  |
 | monitoring.serving.metricRelabelingRegex | string | `"(gojek_com_team|gojek_com_stream|gojek_com_orchestrator|gojek_com_environment|gojek_com_app)"` |  |
 | monitoring.serving.podMonitor.metricRelabelings[0].action | string | `"drop"` |  |
 | monitoring.serving.podMonitor.metricRelabelings[0].regex | string | `"{{ .Values.monitoring.serving.metricRelabelingRegex }}"` |  |

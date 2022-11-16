@@ -337,7 +337,7 @@ istiod:
     meshConfig:
       enableTracing: false
   monitoring:
-    enabled: true
+    enabled: false
     namespace: "istio-system"
     selector:
       matchLabels:
@@ -445,7 +445,7 @@ clusterLocalGateway:
 ############################################################
 monitoring:
   istioEnvoy:
-    enabled: true
+    enabled: false
     namespaceSelector: {}
     selector:
       matchExpressions:
@@ -459,7 +459,7 @@ monitoring:
         action: labeldrop
   serving:
     # Install Monitoring CRs related to knative service pods
-    enabled: true
+    enabled: false
     podMonitor:
       userMetricPortName: http-usermetric
       userPortName: user-port
