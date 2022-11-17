@@ -23,16 +23,16 @@ Generated names
     {{- if .Values.nameOverride -}}
         {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
-        {{- printf "%s" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
+        {{- printf "%s" (include "mlp.name" .) | trunc 63 | trimSuffix "-" -}}
     {{- end -}}
 {{- end -}}
 
 {{- define "mlp.config-cm-name" -}}
-    {{- printf "%s-config" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
+    {{- printf "%s-config" (include "mlp.name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "mlp.encryption-key-name" -}}
-    {{- printf "%s-encryption-key" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
+    {{- printf "%s-encryption-key" (include "mlp.name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 
