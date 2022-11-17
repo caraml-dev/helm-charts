@@ -14,7 +14,7 @@ Helm chart for deploying Ory Keto
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | common | 0.2.4 |
+| https://caraml-dev.github.io/helm-charts | common | 0.2.5 |
 | https://charts.helm.sh/stable | caraml-authz-postgresql(postgresql) | 8.0.0 |
 
 ## Values

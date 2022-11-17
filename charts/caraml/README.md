@@ -15,12 +15,19 @@ A Helm chart for deploying CaraML components
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../caraml-authz | caraml-authz(authz) | 0.1.1 |
+<<<<<<< HEAD
 | file://../mlp | mlp | 0.4.4 |
 | file://../routes | caraml-routes | 0.1.5 |
+=======
+| file://../merlin | merlin | 0.9.15 |
+| file://../mlp | mlp | 0.3.5 |
+| file://../routes | caraml-routes | 0.1.6 |
+>>>>>>> a33abfe (Up common chart version, Add global values to caraml chart)
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.5 |
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | merlin | 0.9.18 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
@@ -71,11 +78,33 @@ A Helm chart for deploying CaraML components
 | clusterLocalGateway.hook.weight | int | `1` |  |
 | global.authz.postgresqlDatabase | string | `"authz"` |  |
 | global.authz.serviceName | string | `"caraml-authz"` |  |
+| global.hosts.authz[0] | string | `"authz"` |  |
+| global.hosts.mlflow[0] | string | `"mlflow"` |  |
+| global.hosts.mlp[0] | string | `"console"` |  |
+| global.hosts.mlpdocs[0] | string | `"docs"` |  |
+| global.istioLookUp | object | `{"name":"istio-ingressgateway","namespace":"istio-system"}` | istioIngressIP takes precedence over domain. Used for local deployment |
+| global.merlin.apiPrefix | string | `"/v1"` |  |
+| global.merlin.externalPort | string | `"8080"` |  |
 | global.merlin.mlflow.postgresqlDatabase | string | `"mlflow"` |  |
 | global.merlin.postgresqlDatabase | string | `"merlin"` |  |
+| global.merlin.serviceName | string | `"merlin"` |  |
+| global.merlin.uiPrefix | string | `"/merlin"` |  |
+| global.merlin.uiServiceName | string | `"merlin"` |  |
+| global.merlin.useServiceFqdn | bool | `true` |  |
+| global.merlin.vsPrefix | string | `"/api/merlin"` |  |
+| global.mlflow.externalPort | string | `"80"` |  |
+| global.mlflow.serviceName | string | `"merlin-mlflow"` |  |
+| global.mlp.apiPrefix | string | `"/v1"` |  |
+| global.mlp.externalPort | string | `"8080"` |  |
 | global.mlp.postgresqlDatabase | string | `"mlp"` |  |
+| global.mlp.serviceName | string | `"mlp"` |  |
+| global.mlp.uiPrefix | string | `"/"` |  |
+| global.mlp.uiServiceName | string | `"mlp"` |  |
+| global.mlp.useServiceFqdn | bool | `true` |  |
+| global.mlp.vsPrefix | string | `"/api"` |  |
 | global.postgresqlDatabase | string | `"caraml"` |  |
 | global.postgresqlUsername | string | `"caraml"` |  |
+| global.protocol | string | `"http"` |  |
 | istioIngressGateway.chartValues.autoscaling.enabled | bool | `false` |  |
 | istioIngressGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | istioIngressGateway.chartValues.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |

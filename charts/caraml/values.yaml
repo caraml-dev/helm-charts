@@ -5,15 +5,43 @@
 global:
   postgresqlUsername: caraml
   postgresqlDatabase: caraml
+  protocol: "http"
+  # -- istioIngressIP takes precedence over domain. Used for local deployment
+  istioLookUp:
+    namespace: istio-system
+    name: istio-ingressgateway
+  hosts:
+    mlp: ["console"]
+    mlpdocs: ["docs"]
+    mlflow: ["mlflow"]
+    authz: ["authz"]
   authz:
     postgresqlDatabase: authz
     serviceName: caraml-authz
   mlp:
     postgresqlDatabase: mlp
+    apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
+    serviceName: mlp
+    externalPort: "8080"
+    vsPrefix: "/api"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/"
+    uiServiceName: mlp
   merlin:
+    apiPrefix: "/v1"
+    serviceName: merlin
+    externalPort: "8080"
+    vsPrefix: "/api/merlin"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/merlin"
+    uiServiceName: merlin
     postgresqlDatabase: merlin
     mlflow:
       postgresqlDatabase: mlflow
+  mlflow:
+    serviceName: merlin-mlflow
+    externalPort: "80"
+
 mlp:
   # -- To enable/disable MLP chart installation.
   enabled: true

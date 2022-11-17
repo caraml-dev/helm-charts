@@ -13,7 +13,7 @@ dependencies:
   version: 0.1.1
 - name: caraml-routes
   repository: file://../routes
-  version: 0.1.5
+  version: 0.1.6
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.5
