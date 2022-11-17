@@ -63,12 +63,12 @@ spec:
 {{ toYaml .Values.deployment.command | indent 12 -}}
 {{ end }}
           env:
-            - name: DATABASE__PASSWORD
+            - name: CARAML_DATABASE__PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ template "postgres.password-secret-name" . }}
                   key: {{ template "postgres.password-secret-key" . }}
-            - name: ENCRYPTION_KEY
+            - name: CARAML_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ include "mlp.encryption-key-name" . | quote}}
