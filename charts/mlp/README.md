@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
+![Version: 0.3.5](https://img.shields.io/badge/Version-0.3.5-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
 
 MLP API
 
@@ -14,7 +14,7 @@ MLP API
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | common | 0.2.4 |
+| https://caraml-dev.github.io/helm-charts | common | 0.2.5 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
 
 ## Values
