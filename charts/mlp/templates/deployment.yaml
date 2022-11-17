@@ -63,7 +63,7 @@ spec:
 {{ toYaml .Values.deployment.command | indent 12 -}}
 {{ end }}
           env:
-            - name: DATABASE_PASSWORD
+            - name: DATABASE__PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ template "postgres.password-secret-name" . }}
