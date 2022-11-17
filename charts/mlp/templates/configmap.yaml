@@ -16,39 +16,29 @@ metadata:
 data:
   mlp-config.yaml: |
     APIHost: {{ include "common.set-value" (list .Values.deployment.apiHost $globApiHost) | quote }}
-
     Environment: {{ .Values.deployment.environment }}
-
-    Port: {{ .Values.service.internalPort }}}
-
+    Port: {{ .Values.service.internalPort }}
     SentryDSN: {{ .Values.deployment.sentryDSN }}
-
     OauthClientID: {{ include "common.set-value" (list .Values.deployment.oauthClientID $globOauthClientID) | quote }}
-
     Authorization:
       Enabled: {{ .Values.deployment.authorization.enabled }}
       {{- if .Values.deployment.authorization.enabled }}
       KetoServerURL: {{ default "" .Values.deployment.authorization.serverUrl }}
       {{- end }}
-
     Database:
       Host: {{ template "postgres.host" . }}
       User: {{ template "postgres.username" . }}
       Database: {{ template "postgres.database" . }}
-
     {{- if .Values.deployment.docs }}
     Docs:
-      {{ toYaml .Values.deployment.streams | indent 6 }}
+      {{- toYaml .Values.deployment.docs | nindent 6 }}
     {{- end }}
-
     Mlflow:
       TrackingURL: {{ .Values.deployment.mlflowTrackingUrl }}
-
     {{- if .Values.deployment.streams }}
     Streams:
-      {{ toYaml .Values.deployment.streams | indent 6 }}
+      {{- toYaml .Values.deployment.streams | nindent 6 }}
     {{- end }}
-
     UI:
       FeastCoreAPI: {{ include "common.set-value" (list .Values.deployment.ui.feastCoreApi $globFeastApi) | quote }}
       MerlinAPI: {{ include "common.set-value" (list .Values.deployment.ui.merlinApi $globMerlinApi) | quote }}
