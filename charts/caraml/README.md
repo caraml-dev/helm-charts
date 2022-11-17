@@ -15,19 +15,12 @@ A Helm chart for deploying CaraML components
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../caraml-authz | caraml-authz(authz) | 0.1.1 |
-<<<<<<< HEAD
 | file://../mlp | mlp | 0.4.4 |
-| file://../routes | caraml-routes | 0.1.5 |
-=======
-| file://../merlin | merlin | 0.9.15 |
-| file://../mlp | mlp | 0.3.5 |
 | file://../routes | caraml-routes | 0.1.6 |
->>>>>>> a33abfe (Up common chart version, Add global values to caraml chart)
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.5 |
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | merlin | 0.9.18 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
