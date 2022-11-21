@@ -31,8 +31,7 @@ subdomain, domain
 {{- define "common.istio-lookup" }}
 {{- $istioLookupResult := "" }}
 {{- $outer := .istioLookUp | default dict -}}
-{{- $inner := $outer.inner | default dict -}}
-{{- if and (hasKey $inner "namespace") (hasKey $inner "name") }}
+{{- if and (hasKey $outer "namespace") (hasKey $outer "name") }}
 {{- $istioLookupResult = (lookup "v1" "Service" .istioLookUp.namespace .istioLookUp.name ) }}
 {{- end }}
 {{- if $istioLookupResult }}

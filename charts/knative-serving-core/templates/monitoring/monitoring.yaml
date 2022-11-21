@@ -14,7 +14,7 @@ spec:
 {{ tpl (toYaml .Values.monitoring.podMonitor.selector | indent 4) . }}
 {{- end }}
   podMetricsEndpoints:
-    - port: {{ .Values.monitoring.podMonitor.userMetricPortName }}
+    - port: {{ .Values.monitoring.podMonitor.metricPortName }}
 {{- if .Values.monitoring.podMonitor.metricRelabelings }}
       metricRelabelings:
 {{ tpl (toYaml .Values.monitoring.podMonitor.metricRelabelings | indent 6) . }}

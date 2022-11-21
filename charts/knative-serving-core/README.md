@@ -1,7 +1,7 @@
 # knative-serving-core
 
 ---
-![Version: 1.3.2](https://img.shields.io/badge/Version-1.3.2-informational?style=flat-square)
+![Version: 1.3.3](https://img.shields.io/badge/Version-1.3.3-informational?style=flat-square)
 ![AppVersion: v1.3.2](https://img.shields.io/badge/AppVersion-v1.3.2-informational?style=flat-square)
 
 Installs Knative Serving core and CRDs.
@@ -101,12 +101,11 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 | monitoring.allNamespaces | bool | `true` |  |
 | monitoring.enabled | bool | `false` |  |
+| monitoring.podMonitor.metricPortName | string | `"metrics"` |  |
 | monitoring.podMonitor.metricRelabelings | object | `{}` |  |
 | monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.monitoring.selectorKey }}"` |  |
 | monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
-| monitoring.podMonitor.userMetricPortName | string | `"http-usermetric"` |  |
-| monitoring.podMonitor.userPortName | string | `"user-port"` |  |
-| monitoring.selectorKey | string | `"serving.knative.dev/revision"` |  |
+| monitoring.selectorKey | string | `"serving.knative.dev/release"` |  |
 | queueProxy.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/queue"` | Repository of the queue proxy image |
 | queueProxy.image.sha | string | `"2249dc873059c0dfc0783bce5f614a0d8ada3d4499d63aa1dffd19f2788ba64b"` | SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
 | queueProxy.image.tag | string | `""` | Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
