@@ -16,7 +16,6 @@ caraml-authz:
         cpu: "150m"
         memory: 512Mi
 
-
 mlp:
   deployment:
     replicaCount: "1"
@@ -169,7 +168,7 @@ istiod:
   chartValues:
     resources:
       requests:
-        cpu: 250m
+        cpu: 200m
         memory: 512Mi
       limits:
         cpu: 250m
