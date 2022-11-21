@@ -23,7 +23,7 @@ Generated names
     {{- if .Values.nameOverride -}}
         {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
-        {{- printf "%s" (include "mlp.name" .) | trunc 63 | trimSuffix "-" -}}
+        {{- printf "%s" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
     {{- end -}}
 {{- end -}}
 
