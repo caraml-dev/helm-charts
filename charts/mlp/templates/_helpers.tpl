@@ -27,8 +27,12 @@ Generated names
     {{- end -}}
 {{- end -}}
 
+{{- define "mlp.config-cm-name" -}}
+    {{- printf "%s-config" (include "mlp.name" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{- define "mlp.encryption-key-name" -}}
-    {{- printf "%s-encryption-key" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
+    {{- printf "%s-encryption-key" (include "mlp.name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 

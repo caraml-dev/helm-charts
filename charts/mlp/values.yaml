@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/mlp
-    tag: v1.7.1
+    tag: v1.7.4-build.5-ac5d3eb
 
   replicaCount: 1
 
@@ -31,34 +31,22 @@ deployment:
     enabled: false
     serverUrl: http://mlp-authorization-keto
 
-  # -- teams list
-  teams:
-    - marketing
-    - operation
-    - business
-
   # -- Streams list
   streams:
-    - promotion-marketing
-    - operation-strategy
-    - business-analyst
+    marketing:
+      - promotions
+      - growth
+    business:
+      - operations
 
-  # -- Documentation list for caraml components, Added as part of env variables.
+  # -- Documentation list for caraml components
   docs:
-    [
-      {
-        "label": "Merlin User Guide",
-        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
-      },
-      {
-        "label": "Turing User Guide",
-        "href": "https://github.com/gojek/turing",
-      },
-      {
-        "label": "Feast User Guide",
-        "href": "https://docs.feast.dev/user-guide/overview",
-      },
-    ]
+    - label: "Merlin User Guide"
+      href: "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"
+    - label: "Turing User Guide"
+      href: "https://github.com/gojek/turing"
+    - label: "Feast User Guide"
+      href: "https://docs.feast.dev/user-guide/overview"
 
   ui:
     feastCoreApi: "http://feast.dev/v1"

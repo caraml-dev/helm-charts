@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![AppVersion: v1.7.4-build.5-ac5d3eb](https://img.shields.io/badge/AppVersion-v1.7.4--build.5--ac5d3eb-informational?style=flat-square)
 
 MLP API
 
@@ -24,9 +24,9 @@ MLP API
 | deployment.apiHost | string | `"http://mlp/v1"` |  |
 | deployment.authorization.enabled | bool | `false` |  |
 | deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
-| deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components, Added as part of env variables. |
+| deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components |
 | deployment.environment | string | `"production"` |  |
-| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"gojek/mlp","tag":"v1.7.1"}` | mlp image related configs |
+| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"gojek/mlp","tag":"v1.7.4-build.5-ac5d3eb"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
 | deployment.oauthClientID | string | `""` | OAuth client id for login |
@@ -34,8 +34,7 @@ MLP API
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` |  |
 | deployment.replicaCount | int | `1` |  |
 | deployment.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| deployment.streams | list | `["promotion-marketing","operation-strategy","business-analyst"]` | Streams list |
-| deployment.teams | list | `["marketing","operation","business"]` | teams list |
+| deployment.streams | object | `{"business":["operations"],"marketing":["promotions","growth"]}` | Streams list |
 | deployment.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
 | deployment.ui.feastCoreApi | string | `"http://feast.dev/v1"` |  |
 | deployment.ui.feastHomepage | string | `"http://feast.dev"` |  |
