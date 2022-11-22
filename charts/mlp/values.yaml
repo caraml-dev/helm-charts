@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/mlp
-    tag: v1.7.1
+    tag: v1.7.4-build.5-ac5d3eb
 
   replicaCount: 1
 
