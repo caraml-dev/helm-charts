@@ -32,7 +32,7 @@ dependencies:
   version: 0.2.1
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.4
+  version: 0.2.5
 description: Kubernetes-friendly ML model management, deployment, and serving.
 maintainers:
 - email: caraml-dev@caraml.dev
