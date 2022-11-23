@@ -22,6 +22,68 @@ entries:
   caraml:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2022-11-23T10:48:35.779252684Z"
+    dependencies:
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.3.4
+    - condition: merlin.enabled
+      name: merlin
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.9.15
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - condition: caraml-routes.enabled
+      name: caraml-routes
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.4
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.5
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.9
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.8.2
+    description: A Helm chart for deploying CaraML components
+    digest: 789bf2647da2fc4fe7869914234819a46a3a035ce520621f00f60df17dc116f8
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.3.17/caraml-0.3.17.tgz
+    version: 0.3.17
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2022-11-08T12:02:52.041374317Z"
     dependencies:
     - condition: mlp.enabled
@@ -800,6 +862,33 @@ entries:
   caraml-store:
   - apiVersion: v2
     appVersion: 0.1.3
+    created: "2022-11-23T10:48:35.924425365Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.9.13
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.3.11
+    description: 'CaraML store registry: Feature registry for CaraML store.'
+    digest: 3d12a28561f1abd66326cc3c1894aca4dcdf42e6b4fa3c61eb6cb4dca2c231b4
+    home: https://github.com/caraml-dev/caraml-store
+    keywords:
+    - machine learning
+    - feature store
+    - big data
+    - mlops
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml-store
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-store-0.1.9/caraml-store-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 0.1.3
     created: "2022-11-15T10:32:52.254704966Z"
     dependencies:
     - condition: postgresql.enabled
@@ -1247,6 +1336,45 @@ entries:
     - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-core-1.1.0/knative-serving-core-1.1.0.tgz
     version: 1.1.0
   knative-serving-istio:
+  - apiVersion: v2
+    appVersion: v1.3.0
+    created: "2022-11-23T10:48:36.09511243Z"
+    dependencies:
+    - alias: knativeServingCore
+      condition: knativeServingCore.enabled
+      name: knative-serving-core
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.3.3
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.9
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    description: Installs Knative-serving for Istio
+    digest: 720aeb4652862ae16c1ecc6a401be0256aca2bb36ee4611a31fa210ea3a1bef4
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: knative-serving-istio
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-istio-1.3.11/knative-serving-istio-1.3.11.tgz
+    version: 1.3.11
   - apiVersion: v2
     appVersion: v1.3.0
     created: "2022-11-07T09:48:49.47790494Z"
@@ -2016,6 +2144,51 @@ entries:
   merlin:
   - apiVersion: v2
     appVersion: 0.24.0
+    created: "2022-11-23T10:48:36.237252266Z"
+    dependencies:
+    - alias: merlin-postgresql
+      condition: merlin-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: mlflow-postgresql
+      condition: mlflow-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: vault
+      condition: vault.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.3.4
+    - alias: kserve
+      condition: kserve.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: minio
+      condition: minio.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.5
+    description: Kubernetes-friendly ML model management, deployment, and serving.
+    digest: fc56db74b5a4ae35777a29c2ef4cb91af41682850645a37291f7a5465a015616
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: merlin
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/merlin-0.9.16/merlin-0.9.16.tgz
+    version: 0.9.16
+  - apiVersion: v2
+    appVersion: 0.24.0
     created: "2022-11-23T10:24:36.280640715Z"
     dependencies:
     - alias: merlin-postgresql
@@ -2542,6 +2715,26 @@ entries:
   mlp:
   - apiVersion: v2
     appVersion: v1.7.4-build.5-ac5d3eb
+    created: "2022-11-23T10:48:36.383487964Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.5
+    description: MLP API
+    digest: 3a9029f4c5bc317892b25fa78cbc0891bdcebaaa5faf852d75d1872ba98529ab
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: mlp
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.4.1/mlp-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: v1.7.4-build.5-ac5d3eb
     created: "2022-11-22T04:51:46.13893409Z"
     dependencies:
     - condition: postgresql.enabled
@@ -2714,4 +2907,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2022-11-23T10:24:36.280905639Z"
+generated: "2022-11-23T10:48:36.383755768Z"
