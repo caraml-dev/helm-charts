@@ -1,5 +1,5 @@
 caraml-authz:
-  enabled: false
+  enabled: true
   deployment:
     replicaCount: "1"
     resources:
