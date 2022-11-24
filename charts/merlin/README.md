@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.16](https://img.shields.io/badge/Version-0.9.16-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
+![Version: 0.9.17](https://img.shields.io/badge/Version-0.9.17-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -111,6 +111,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | merlin-postgresql.resources.requests.cpu | string | `"100m"` |  |
 | merlin-postgresql.resources.requests.memory | string | `"512Mi"` |  |
 | merlinExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| merlinExternalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. |
 | merlinExternalPostgresql.database | string | `"merlin"` | External postgres database schema |
 | merlinExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | merlinExternalPostgresql.password | string | `"password"` |  |
@@ -175,6 +176,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflow.statefulset.updateStrategy | string | `"RollingUpdate"` |  |
 | mlflow.trackingURL | string | `"http://www.example.com"` |  |
 | mlflowExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| mlflowExternalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. |
 | mlflowExternalPostgresql.database | string | `"mlflow"` | External postgres database schema |
 | mlflowExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | mlflowExternalPostgresql.password | string | `"password"` |  |
