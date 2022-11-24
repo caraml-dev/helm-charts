@@ -187,6 +187,8 @@ merlinExternalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
+  # -- Enable this if you need the chart to create a secret when you provide the password above.
+  createSecret: false
   # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
   secretName: ""
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
@@ -322,6 +324,8 @@ mlflowExternalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
+  # -- Enable this if you need the chart to create a secret when you provide the password above.
+  createSecret: false
   # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
   secretName: ""
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)

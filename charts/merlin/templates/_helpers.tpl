@@ -128,7 +128,7 @@ Merlin Postgres related
     {{- if index .Values "merlin-postgresql" "enabled" -}}
         {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
     {{- else if .Values.merlinExternalPostgresql.enabled -}}
-        {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name) .Values.externalPostgresql.secretName -}}
+        {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name) .Values.merlinExternalPostgresql.secretName -}}
     {{- else -}}
         {{- printf "%s-postgresql" .Release.Name -}}
     {{- end -}}
@@ -136,7 +136,7 @@ Merlin Postgres related
 
 {{- define "merlin-postgresql.password-secret-key" -}}
     {{- if and .Values.merlinExternalPostgresql.enabled -}}
-        {{- default "postgresql-password" .Values.externalPostgresql.secretKey  -}}
+        {{- default "postgresql-password" .Values.merlinExternalPostgresql.secretKey  -}}
     {{- else -}}
         {{- printf "postgresql-password" -}}
     {{- end -}}
@@ -190,7 +190,7 @@ MLflow Postgres related
     {{- if index .Values "mlflow-postgresql" "enabled" -}}
         {{- printf "%s-mlflow-postgresql" .Release.Name -}}
     {{- else if .Values.mlflowExternalPostgresql.enabled -}}
-        {{- default (printf "%s-mlflow-external-postgresql" .Release.Name) .Values.externalPostgresql.secretName -}}
+        {{- default (printf "%s-mlflow-external-postgresql" .Release.Name) .Values.mlflowExternalPostgresql.secretName -}}
     {{- else -}}
         {{- printf "%s-postgresql" .Release.Name -}}
     {{- end -}}
@@ -198,7 +198,7 @@ MLflow Postgres related
 
 {{- define "mlflow-postgresql.password-secret-key" -}}
     {{- if and .Values.mlflowExternalPostgresql.enabled -}}
-        {{- default "postgresql-password" .Values.externalPostgresql.secretKey  -}}
+        {{- default "postgresql-password" .Values.mlflowExternalPostgresql.secretKey  -}}
     {{- else -}}
         {{- printf "postgresql-password" -}}
     {{- end -}}
