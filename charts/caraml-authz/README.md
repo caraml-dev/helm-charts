@@ -39,6 +39,7 @@ Helm chart for deploying Ory Keto
 | caraml-authz-postgresql.resources.requests.memory | string | `"512Mi"` |  |
 | caraml-authz-postgresql.service.port | int | `5432` |  |
 | caramlAuthzExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| caramlAuthzExternalPostgresql.createSecret | bool | `false` |  |
 | caramlAuthzExternalPostgresql.database | string | `"oryketo"` | External postgres database schema |
 | caramlAuthzExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | caramlAuthzExternalPostgresql.password | string | `"password"` |  |

@@ -36,6 +36,7 @@ caramlAuthzExternalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
+  createSecret: false
   # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
   secretName: ""
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
