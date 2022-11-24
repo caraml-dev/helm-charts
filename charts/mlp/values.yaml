@@ -88,10 +88,11 @@ externalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
-  # -- If a secret is created by external systems (eg. Valut)., mention the secret name here
+  createSecret: false
+  # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
   secretName: ""
-# -- If a secret is created by external systems (eg. Valut)., mention the key under which password is stored in secret (eg. postgresql-password)
-  secretKey: ""
+# -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
+  secretKey: "postgresql-password"
 
 postgresql:
   # -- Enable creating mlp specific postgres instance
