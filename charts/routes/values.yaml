@@ -146,7 +146,7 @@ feast:
 mlflow:
   enabled: true
 
-# Configuration for mlflow
+# Configuration for authorization service
 authz:
   enabled: true
 
