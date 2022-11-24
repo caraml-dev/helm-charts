@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![AppVersion: v1.7.4-build.5-ac5d3eb](https://img.shields.io/badge/AppVersion-v1.7.4--build.5--ac5d3eb-informational?style=flat-square)
+![Version: 0.4.2](https://img.shields.io/badge/Version-0.4.2-informational?style=flat-square) ![AppVersion: v1.7.4-build.5-ac5d3eb](https://img.shields.io/badge/AppVersion-v1.7.4--build.5--ac5d3eb-informational?style=flat-square)
 
 MLP API
 
@@ -45,11 +45,12 @@ MLP API
 | deployment.ui.turingHomepage | string | `"http://turing.dev"` |  |
 | encryption.key | string | `"example-key-here"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| externalPostgresql.createSecret | bool | `false` |  |
 | externalPostgresql.database | string | `"mlp"` | External postgres database schema |
 | externalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | externalPostgresql.password | string | `"password"` |  |
-| externalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Valut)., mention the key under which password is stored in secret (eg. postgresql-password) |
-| externalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Valut)., mention the secret name here |
+| externalPostgresql.secretKey | string | `"postgresql-password"` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
+| externalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | externalPostgresql.username | string | `"mlp"` | External postgres database user |
 | global | object | `{}` |  |
 | ingress.enabled | bool | `false` |  |
