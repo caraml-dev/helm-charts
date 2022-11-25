@@ -35,12 +35,20 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
+{{- define "mlp.resource-prefix-with-release-name" -}}
+    {{- (include "mlp.fullname" .) -}}
+{{- end -}}
+
+{{- define "mlp.resource-prefix" -}}
+    {{- (include "mlp.name" .) -}}
+{{- end -}}
+
 {{- define "mlp.config-cm-name" -}}
-    {{- printf "%s-config" (include "mlp.fullname" .) | trunc 63 | trimSuffix "-" -}}
+    {{- printf "%s-config" (include "mlp.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "mlp.encryption-key-name" -}}
-    {{- printf "%s-encryption-key" (include "mlp.fullname" .) | trunc 63 | trimSuffix "-" -}}
+    {{- printf "%s-encryption-key" (include "mlp.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
