@@ -5,47 +5,42 @@
 Generated names
 */}}
 
-{{- define "mlp.resource-prefix-with-release-name" -}}
-    {{- $deployedChart := .Chart.Name -}}
-    {{- $chartVersion := .Chart.Version | replace "." "-" -}}
-    {{- $deployedReleaseName := .Release.Name -}}
-    {{ printf "%s-%s-%s"  $deployedChart $chartVersion $deployedReleaseName }}
-{{- end -}}
 
-{{- define "mlp.resource-prefix" -}}
-    {{- $deployedChart := .Chart.Name -}}
-    {{- $chartVersion := .Chart.Version | replace "." "-" -}}
-    {{ printf "%s-%s"  $deployedChart $chartVersion }}
-{{- end -}}
-
-
+{{/*
+Expand the name of the chart.
+*/}}
 {{- define "mlp.name" -}}
-    {{- if .Values.nameOverride -}}
-        {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-    {{- else -}}
-        {{- printf "%s" (include "mlp.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
-    {{- end -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
-
-{{- define "mlp.config-cm-name" -}}
-    {{- printf "%s-config" (include "mlp.name" .) | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "mlp.encryption-key-name" -}}
-    {{- printf "%s-encryption-key" (include "mlp.name" .) | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 
 {{- define "mlp.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version -}}
 {{- end -}}
 
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+If release name contains chart name it will be used as a full name.
+*/}}
 {{- define "mlp.fullname" -}}
-    {{- if .Values.fullnameOverride -}}
-        {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
-    {{- else -}}
-        {{- printf "%s" (include "mlp.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
-    {{- end -}}
+{{- if .Values.fullnameOverride -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "mlp.config-cm-name" -}}
+    {{- printf "%s-config" (include "mlp.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "mlp.encryption-key-name" -}}
+    {{- printf "%s-encryption-key" (include "mlp.fullname" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
