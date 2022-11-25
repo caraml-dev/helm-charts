@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.2](https://img.shields.io/badge/Version-0.4.2-informational?style=flat-square) ![AppVersion: v1.7.4-build.5-ac5d3eb](https://img.shields.io/badge/AppVersion-v1.7.4--build.5--ac5d3eb-informational?style=flat-square)
+![Version: 0.4.3](https://img.shields.io/badge/Version-0.4.3-informational?style=flat-square) ![AppVersion: v1.7.4-build.5-ac5d3eb](https://img.shields.io/badge/AppVersion-v1.7.4--build.5--ac5d3eb-informational?style=flat-square)
 
 MLP API
 
