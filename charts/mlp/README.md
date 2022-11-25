@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.2](https://img.shields.io/badge/Version-0.4.2-informational?style=flat-square) ![AppVersion: v1.7.4-build.5-ac5d3eb](https://img.shields.io/badge/AppVersion-v1.7.4--build.5--ac5d3eb-informational?style=flat-square)
+![Version: 0.4.3](https://img.shields.io/badge/Version-0.4.3-informational?style=flat-square) ![AppVersion: v1.7.4-build.5-ac5d3eb](https://img.shields.io/badge/AppVersion-v1.7.4--build.5--ac5d3eb-informational?style=flat-square)
 
 MLP API
 
@@ -52,7 +52,8 @@ MLP API
 | externalPostgresql.secretKey | string | `"postgresql-password"` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | externalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | externalPostgresql.username | string | `"mlp"` | External postgres database user |
-| global | object | `{}` |  |
+| global.ingressIP | string | `""` |  |
+| global.oauthClientID | string | `"123"` |  |
 | ingress.enabled | bool | `false` |  |
 | postgresql.enabled | bool | `true` | Enable creating mlp specific postgres instance |
 | postgresql.nameOverride | string | `"mlp-postgresql"` | override the name here so that db gets created like <release_name>-mlp-postgresql |
