@@ -1,0 +1,34 @@
+suite: test helper functions
+templates:
+  - templates/test-helper-functions.yaml
+tests:
+  - it: setValue function should set the value as first arg when second is invalid or empty
+    set:
+      unitTests.enabled: true
+      unitTests.commonSetValue:
+        - "store"
+        - ""
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          value: test-helper-functions-cm
+      - equal:
+          path: data.commonSetValue
+          value: "store"
+  # - it: setValue function should set the value as first arg when second is invalid or empty
+  #   set:
+  #     unitTests.enabled: true
+  #     unitTests.commonSetValue:
+  #       - "store"
+  #       - "value"
+  #   asserts:
+  #     - isKind:
+  #         of: ConfigMap
+  #     - matchRegex:
+  #         path: metadata.name
+  #         value: test-helper-functions-cm
+  #     - equal:
+  #         path: data.commonSetValue
+  #         value: value
