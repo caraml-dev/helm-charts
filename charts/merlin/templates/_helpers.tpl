@@ -9,10 +9,12 @@ Generated names
     {{- if .Values.fullnameOverride -}}
         {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
-        {{- $deployedChart := .Chart.Name -}}
-        {{- $appVersion := .Chart.AppVersion | replace "." "-" -}}
-        {{- $deployedReleaseName := .Release.Name -}}
-        {{ printf "%s-%s-%s"  $deployedChart $appVersion $deployedReleaseName  | trunc 63 | trimSuffix "-" }}
+        {{- $name := default .Chart.Name .Values.nameOverride -}}
+        {{- if contains $name .Release.Name -}}
+            {{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+        {{- else -}}
+            {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+        {{- end -}}
     {{- end -}}
 {{- end -}}
 
@@ -21,8 +23,7 @@ Generated names
         {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
         {{- $deployedChart := .Chart.Name -}}
-        {{- $appVersion := .Chart.AppVersion | replace "." "-" -}}
-        {{ printf "%s-%s"  $deployedChart $appVersion | trunc 63 | trimSuffix "-" }}
+        {{ printf "%s"  $deployedChart | trunc 63 | trimSuffix "-" }}
     {{- end -}}
 {{- end -}}
 
