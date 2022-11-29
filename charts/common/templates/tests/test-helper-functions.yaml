@@ -5,5 +5,5 @@ kind: ConfigMap
 metadata:
   name: "test-helper-functions-cm"
 data:
-  commonSetValue: {{ template "common.set-value"  }}
+  commonSetValue: {{ template "common.set-value" .Values.unitTests.commonSetValue }}
 {{- end }}
