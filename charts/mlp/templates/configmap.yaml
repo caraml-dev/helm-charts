@@ -23,7 +23,7 @@ data:
     Authorization:
       Enabled: {{ .Values.deployment.authorization.enabled }}
       {{- if .Values.deployment.authorization.enabled }}
-      KetoServerURL: {{ default "" .Values.deployment.authorization.serverUrl }}
+      KetoServerURL: {{ include "authorization.server.url" . | quote}}
       {{- end }}
     Database:
       Host: {{ template "postgres.host" . }}

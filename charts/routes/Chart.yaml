@@ -28,11 +28,11 @@ dependencies:
 - condition: common.enabled
   name: common
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.4
+  version: 0.2.5
 description: A Helm chart for deploying CaraML networking resources
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: caraml-routes
 type: application
-version: 0.1.4
+version: 0.1.5

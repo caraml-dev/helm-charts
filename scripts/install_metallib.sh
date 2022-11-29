@@ -6,7 +6,7 @@
 
 set -ex
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.5/config/manifests/metallb-native.yaml
-kubectl wait pods --all -n metallb-system --for=condition=Ready
+kubectl wait pods --all -n metallb-system --for=condition=Ready --timeout 500s
 
 KIND_SUBNET=$(docker network inspect kind | jq '.[0].IPAM.Config[0].Subnet' | sed 's/"//g')
 if [[ -z $KIND_SUBNET ]]; then

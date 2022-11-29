@@ -1,3 +1,22 @@
+caraml-authz:
+  enabled: true
+  deployment:
+    replicaCount: "1"
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        cpu: "150m"
+        memory: 512Mi
+    initResources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        cpu: "150m"
+        memory: 512Mi
+
 mlp:
   deployment:
     replicaCount: "1"
@@ -145,12 +164,19 @@ postgresql:
     enabled: true
     size: 5Gi
 
+base:
+  # -- Set to false if there is an existing istio deployment
+  enabled: true
+  validationURL: ""
+  global:
+    istioNamespace: "istio-system"
+
 istiod:
   enabled: true
   chartValues:
     resources:
       requests:
-        cpu: 250m
+        cpu: 200m
         memory: 512Mi
       limits:
         cpu: 250m
@@ -179,3 +205,7 @@ clusterLocalGateway:
       limits:
         cpu: 250m
         memory: 512Mi
+
+cert-manager:
+  fullnameOverride: cert-manager
+  enabled: true

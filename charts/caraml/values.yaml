@@ -5,24 +5,73 @@
 global:
   postgresqlUsername: caraml
   postgresqlDatabase: caraml
+  protocol: "http"
+  # -- istioIngressIP takes precedence over domain. Used for local deployment
+  istioLookUp:
+    namespace: istio-system
+    name: istio-ingressgateway
+  hosts:
+    mlp: ["console"]
+    mlpdocs: ["docs"]
+    mlflow: ["mlflow"]
+  authz:
+    postgresqlDatabase: authz
+    serviceName: caraml-authz
   mlp:
     postgresqlDatabase: mlp
+    apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
+    serviceName: mlp
+    externalPort: "8080"
+    vsPrefix: "/api"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/"
+    uiServiceName: mlp
   merlin:
+    apiPrefix: "/v1"
+    serviceName: merlin
+    externalPort: "8080"
+    vsPrefix: "/api/merlin"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/merlin"
+    uiServiceName: merlin
     postgresqlDatabase: merlin
     mlflow:
       postgresqlDatabase: mlflow
+  mlflow:
+    serviceName: merlin-mlflow
+    externalPort: "80"
+
 mlp:
   # -- To enable/disable MLP chart installation.
   enabled: true
   postgresql:
     # -- To enable/disable MLP specific postgres
     enabled: false
+  deployment:
+    authorization:
+      enabled: true
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
+  deployment:
+    resources:
+      requests:
+        cpu: "250m"
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
   merlin-postgresql:
     # -- To enable/disable merlin specific postgres
     enabled: false
+  mlflow:
+    resources:
+      requests:
+        cpu: "250m"
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
   mlflow-postgresql:
     # -- To enable/disable mlflow specific postgres
     enabled: false
@@ -33,20 +82,118 @@ merlin:
     chartValues:
       knativeServingIstio:
         chartValues:
+          controller:
+            resources:
+              requests:
+                cpu: 200m
+                memory: 256Mi
+              limits:
+                cpu: 1000m
+                memory: 512Mi
+          webhook:
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 300m
+                memory: 512Mi
+          knativeServingCore:
+            autoscaler:
+              resources:
+                requests:
+                  cpu: 250m
+                  memory: 256Mi
+                limits:
+                  cpu: 1000m
+                  memory: 1000Mi
+            autoscalerHpa:
+              resources:
+                requests:
+                  cpu: 250m
+                  memory: 128Mi
+                limits:
+                  cpu: 500m
+                  memory: 256Mi
+            controller:
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 256Mi
+                limits:
+                  cpu: 1000m
+                  memory: 512Mi
           istiod:
             enabled: false
           base:
             enabled: false
           istioIngressGateway:
-            enabled: false
+            global:
+              enabled: false
+            helmChart:
+              namespace: "istio-system"  #  NOTE: Need to set this for the helm tests in kserve to run successfully.
           clusterLocalGateway:
-            enabled: false
+            global:
+              enabled: false
       # NOTE: If kserve is enabled, install cert-manager through kserve because
       # kserve requires cert-manager to be installed first
       # certManagerBase:
       #   enabled: false
       cert-manager:
         enabled: true
+caraml-authz:
+  enabled: true
+  caraml-authz-postgresql:
+    enabled: false
+  # -- You can add keto roles that can give access to CaraML components.
+  roles:
+    - id: "roles:admin"
+      members:
+        - "users:caram.user@caraml.dev"
+  # -- Following are the keto policies that are used in CaraML components.
+  policies:
+    - id: "policies:admin"
+      description: Administrator policy to gain access to all resources
+      subjects: ["roles:admin"]
+      resources: ["resources:**"]
+      actions: ["actions:**"]
+      effect: allow
+    - id: "policies:allow-read-all-projects"
+      description: Allow reading of all mlp projects
+      subjects: ["roles:project-reader"]
+      resources: ["resources:mlp:projects:**"]
+      actions: ["actions:read"]
+      effect: allow
+    - id: "policies:allow-all-list-environments"
+      description: Allow all users to list merlin environment
+      subjects: ["roles:**", "users:**"]
+      resources: ["resources:mlp:environments"]
+      actions: ["actions:read"]
+      effect: allow
+    - id: "policies:allow-all-list-create-projects"
+      description: Allow all users to list and create mlp project
+      subjects: ["roles:**", "users:**"]
+      resources: ["resources:mlp:projects"]
+      actions: ["actions:read", "actions:create"]
+      effect: allow
+    - id: "policies:allow-all-list-applications"
+      description: Allow all users to list applications
+      subjects: ["roles:**", "users:**"]
+      resources: ["resources:mlp:applications"]
+      actions: ["actions:read"]
+      effect: allow
+    - id: "policies:allow-access-users-resources"
+      description: Allow all users to access API related to the user
+      subjects: ["roles:**", "users:**"]
+      resources: ["resources:mlp:users", "resources:mlp:users:**"]
+      actions: ["actions:read"]
+      effect: allow
+    - id: "policies:allow-all-standard-transformer-simulate"
+      description: Allow all users to simulate standard transformer
+      subjects: ["roles:**", "users:**"]
+      resources: ["resources:mlp:standard_transformer:simulate"]
+      actions: ["actions:create"]
+      effect: allow
 caraml-routes:
   enabled: true
   certManagerBase:
@@ -90,6 +237,7 @@ postgresql:
       CREATE DATABASE mlp;
       CREATE DATABASE merlin;
       CREATE DATABASE mlflow;
+      CREATE DATABASE authz;
 ############################################################
 # Istio Base
 ############################################################
@@ -129,8 +277,8 @@ istiod:
 
       resources:
         requests:
-          cpu: 500m
-          memory: 512Mi
+          cpu: 250m
+          memory: 256Mi
         limits:
           cpu: 1
           memory: 1024Mi
@@ -173,17 +321,13 @@ istioIngressGateway:
       ISTIO_META_ROUTER_MODE: standard
       ISTIO_METAJSON_STATS: |
         {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
-    resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 2048Mi
 ############################################################
 # clusterLocalGateway - installed using helm-dep-installer chart
 ############################################################
@@ -224,18 +368,13 @@ clusterLocalGateway:
     env:
       ISTIO_METAJSON_STATS: |
         {\"sidecar.istio.io/statsInclusionSuffixes\": \"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\"}
-    resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
     service:
       type: ClusterIP
       ports:
