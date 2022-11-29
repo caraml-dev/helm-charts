@@ -3,7 +3,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: istiod
+  name: istiod-monitor
   namespace: {{ .Values.istiod.monitoring.namespace }}
   labels:
 {{ include "knative-net-istio.labels" . | indent 4 }}

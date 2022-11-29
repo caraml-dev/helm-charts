@@ -3,7 +3,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: envoy-stats-metrics
+  name: envoy-stats-metrics-monitor
   namespace: {{ .Values.monitoring.istioSystemNS }}
   labels:
 {{ include "monitoring.labels" . | indent 4 }}
