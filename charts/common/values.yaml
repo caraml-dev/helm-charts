@@ -1,0 +1,8 @@
+
+unittests:
+  enabled: false
+  commonSetValue:
+    - store: "store"
+      value: ""
+    - store: "store"
+      value: "store"
