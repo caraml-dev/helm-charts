@@ -15,36 +15,32 @@ metadata:
     {{- include "mlp.labels" . | nindent 4 }}
 data:
   mlp-config.yaml: |
-    APIHost: {{ include "common.set-value" (list .Values.deployment.apiHost $globApiHost) | quote }}
-    Environment: {{ .Values.deployment.environment }}
-    Port: {{ .Values.service.internalPort }}
-    SentryDSN: {{ .Values.deployment.sentryDSN }}
-    OauthClientID: {{ include "common.set-value" (list .Values.deployment.oauthClientID $globOauthClientID) | quote }}
-    Authorization:
-      Enabled: {{ .Values.deployment.authorization.enabled }}
+    apiHost: {{ include "common.set-value" (list .Values.deployment.apiHost $globApiHost) | quote }}
+    environment: {{ .Values.deployment.environment }}
+    port: {{ .Values.service.internalPort }}
+    sentryDSN: {{ .Values.deployment.sentryDSN }}
+    oauthClientID: {{ include "common.set-value" (list .Values.deployment.oauthClientID $globOauthClientID) | quote }}
+    applications:
+      {{- toYaml .Values.deployment.applications | nindent 6 }}
+    authorization:
+      enabled: {{ .Values.deployment.authorization.enabled }}
       {{- if .Values.deployment.authorization.enabled }}
-      KetoServerURL: {{ include "authorization.server.url" . | quote}}
+      ketoServerURL: {{ include "authorization.server.url" . | quote}}
       {{- end }}
-    Database:
-      Host: {{ template "postgres.host" . }}
-      User: {{ template "postgres.username" . }}
-      Database: {{ template "postgres.database" . }}
+    database:
+      host: {{ template "postgres.host" . }}
+      user: {{ template "postgres.username" . }}
+      database: {{ template "postgres.database" . }}
     {{- if .Values.deployment.docs }}
-    Docs:
+    docs:
       {{- toYaml .Values.deployment.docs | nindent 6 }}
     {{- end }}
-    Mlflow:
-      TrackingURL: {{ .Values.deployment.mlflowTrackingUrl }}
+    mlflow:
+      trackingURL: {{ .Values.deployment.mlflowTrackingUrl }}
     {{- if .Values.deployment.streams }}
-    Streams:
+    streams:
       {{- toYaml .Values.deployment.streams | nindent 6 }}
     {{- end }}
-    UI:
-      FeastCoreAPI: {{ include "common.set-value" (list .Values.deployment.ui.feastCoreApi $globFeastApi) | quote }}
-      MerlinAPI: {{ include "common.set-value" (list .Values.deployment.ui.merlinApi $globMerlinApi) | quote }}
-      TuringAPI: {{ include "common.set-value" (list .Values.deployment.ui.turingApi $globTuringApi) | quote }}
-      ClockworkUIHomepage: "{{ .Values.deployment.ui.clockworkHomepage }}"
-      FeastUIHomepage: {{ include "common.set-value" (list .Values.deployment.ui.feastHomepage $globFeastUI) | quote }}
-      KubeflowUIHomepage: "{{ .Values.deployment.ui.kubeflowHomepage }}"
-      MerlinUIHomepage: {{ include "common.set-value" (list .Values.deployment.ui.merlinHomepage $globMerlinUI) | quote }}
-      TuringUIHomepage: {{ include "common.set-value" (list .Values.deployment.ui.turingHomepage $globTuringUI) | quote }}
+    ui:
+      clockworkUIHomepage: "{{ .Values.deployment.ui.clockworkHomepage }}"
+      kubeflowUIHomepage: "{{ .Values.deployment.ui.kubeflowHomepage }}"
