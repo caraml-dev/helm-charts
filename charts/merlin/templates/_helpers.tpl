@@ -6,25 +6,33 @@ Generated names
 */}}
 
 {{- define "merlin.resource-prefix-with-release-name" -}}
-    {{- $deployedChart := .Chart.Name -}}
-    {{- $appVersion := .Chart.AppVersion | replace "." "-" -}}
-    {{- $deployedReleaseName := .Release.Name -}}
-    {{ printf "%s-%s-%s"  $deployedChart $appVersion $deployedReleaseName }}
+    {{- if .Values.fullnameOverride -}}
+        {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- $deployedChart := .Chart.Name -}}
+        {{- $appVersion := .Chart.AppVersion | replace "." "-" -}}
+        {{- $deployedReleaseName := .Release.Name -}}
+        {{ printf "%s-%s-%s"  $deployedChart $appVersion $deployedReleaseName  | trunc 63 | trimSuffix "-" }}
+    {{- end -}}
 {{- end -}}
 
 {{- define "merlin.resource-prefix" -}}
-    {{- $deployedChart := .Chart.Name -}}
-    {{- $appVersion := .Chart.AppVersion | replace "." "-" -}}
-    {{ printf "%s-%s"  $deployedChart $appVersion }}
+    {{- if .Values.nameOverride -}}
+        {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- $deployedChart := .Chart.Name -}}
+        {{- $appVersion := .Chart.AppVersion | replace "." "-" -}}
+        {{ printf "%s-%s"  $deployedChart $appVersion | trunc 63 | trimSuffix "-" }}
+    {{- end -}}
 {{- end -}}
 
 
 {{- define "merlin.name" -}}
-    {{- if .Values.nameOverride -}}
-        {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-    {{- else -}}
-        {{- printf "%s" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
-    {{- end -}}
+    {{- printf "%s" (include "merlin.resource-prefix" .) -}}
+{{- end -}}
+
+{{- define "merlin.fullname" -}}
+    {{- printf "%s" (include "merlin.resource-prefix-with-release-name" .) -}}
 {{- end -}}
 
 {{- define "merlin.envs-cm-name" -}}
@@ -54,14 +62,6 @@ Generated names
 
 {{- define "merlin.chart" -}}
     {{- printf "%s-%s" .Chart.Name .Chart.Version -}}
-{{- end -}}
-
-{{- define "merlin.fullname" -}}
-    {{- if .Values.fullnameOverride -}}
-        {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
-    {{- else -}}
-        {{- printf "%s" (include "merlin.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
-    {{- end -}}
 {{- end -}}
 
 {{- define "mlflow.fullname" -}}
