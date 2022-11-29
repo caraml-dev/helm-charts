@@ -34,7 +34,7 @@ deployment:
       description: Platform for deploying machine learning models
       homepage: /merlin
       configuration:
-        api: /api/merlin
+        api: /api/merlin/v1
         iconName: machineLearningApp
         navigation:
           - label: Models
@@ -45,7 +45,7 @@ deployment:
       description: Platform for setting up ML experiments
       homepage: /turing
       configuration:
-        api: /api/turing
+        api: /api/turing/v1
         iconName: graphApp
         navigation:
           - label: Routers
