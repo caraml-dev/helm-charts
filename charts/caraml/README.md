@@ -37,6 +37,7 @@ A Helm chart for deploying CaraML components
 | caraml-authz.caraml-authz-postgresql.enabled | bool | `false` |  |
 | caraml-authz.enabled | bool | `true` |  |
 | caraml-authz.policies | list | `[{"actions":["actions:**"],"description":"Administrator policy to gain access to all resources","effect":"allow","id":"policies:admin","resources":["resources:**"],"subjects":["roles:admin"]},{"actions":["actions:read"],"description":"Allow reading of all mlp projects","effect":"allow","id":"policies:allow-read-all-projects","resources":["resources:mlp:projects:**"],"subjects":["roles:project-reader"]},{"actions":["actions:read"],"description":"Allow all users to list merlin environment","effect":"allow","id":"policies:allow-all-list-environments","resources":["resources:mlp:environments"],"subjects":["roles:**","users:**"]},{"actions":["actions:read","actions:create"],"description":"Allow all users to list and create mlp project","effect":"allow","id":"policies:allow-all-list-create-projects","resources":["resources:mlp:projects"],"subjects":["roles:**","users:**"]},{"actions":["actions:read"],"description":"Allow all users to list applications","effect":"allow","id":"policies:allow-all-list-applications","resources":["resources:mlp:applications"],"subjects":["roles:**","users:**"]},{"actions":["actions:read"],"description":"Allow all users to access API related to the user","effect":"allow","id":"policies:allow-access-users-resources","resources":["resources:mlp:users","resources:mlp:users:**"],"subjects":["roles:**","users:**"]},{"actions":["actions:create"],"description":"Allow all users to simulate standard transformer","effect":"allow","id":"policies:allow-all-standard-transformer-simulate","resources":["resources:mlp:standard_transformer:simulate"],"subjects":["roles:**","users:**"]}]` | Following are the keto policies that are used in CaraML components. |
+| caraml-authz.roles | list | `[{"id":"roles:admin","members":["users:caram.user@caraml.dev"]}]` | You can add keto roles that can give access to CaraML components. |
 | caraml-routes.cert-manager.enabled | bool | `false` |  |
 | caraml-routes.certManagerBase.enabled | bool | `false` |  |
 | caraml-routes.enabled | bool | `true` |  |
@@ -71,7 +72,6 @@ A Helm chart for deploying CaraML components
 | clusterLocalGateway.hook.weight | int | `1` |  |
 | global.authz.postgresqlDatabase | string | `"authz"` |  |
 | global.authz.serviceName | string | `"caraml-authz"` |  |
-| global.hosts.authz[0] | string | `"authz"` |  |
 | global.hosts.mlflow[0] | string | `"mlflow"` |  |
 | global.hosts.mlp[0] | string | `"console"` |  |
 | global.hosts.mlpdocs[0] | string | `"docs"` |  |

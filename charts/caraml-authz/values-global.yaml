@@ -12,7 +12,6 @@ global:
     mlp: ["console"]
     mlpdocs: ["docs"]
     mlflow: ["mlflow"]
-    authz: ["authz"]
 
   mlp:
     apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost

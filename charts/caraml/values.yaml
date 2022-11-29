@@ -14,7 +14,6 @@ global:
     mlp: ["console"]
     mlpdocs: ["docs"]
     mlflow: ["mlflow"]
-    authz: ["authz"]
   authz:
     postgresqlDatabase: authz
     serviceName: caraml-authz
@@ -146,6 +145,11 @@ caraml-authz:
   enabled: true
   caraml-authz-postgresql:
     enabled: false
+  # -- You can add keto roles that can give access to CaraML components.
+  roles:
+    - id: "roles:admin"
+      members:
+        - "users:caram.user@caraml.dev"
   # -- Following are the keto policies that are used in CaraML components.
   policies:
     - id: "policies:admin"
