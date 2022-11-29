@@ -35,9 +35,9 @@ spec:
         app: net-istio-controller
         serving.knative.dev/release: "v1.0.0"
         {{- include "knative-net-istio.labels" . | nindent 8 }}
-      {{- if .Values.config.defaults }}
-        {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
-      {{- end }}
+        {{- if .Values.global.extraPodLabels }}
+          {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
+        {{- end }}
     spec:
       serviceAccountName: controller
       {{- if .Values.global.nodeSelector }}

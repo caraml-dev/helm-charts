@@ -336,6 +336,13 @@ istiod:
         targetAverageUtilization: 80
     meshConfig:
       enableTracing: false
+  monitoring:
+    enabled: false
+    namespace: "istio-system"
+    selector:
+      matchLabels:
+        app: istiod
+
 ############################################################
 # istioIngressGateway - installed using helm-dep-installer chart
 ############################################################
@@ -433,3 +440,28 @@ clusterLocalGateway:
           name: http2
         - port: 443
           name: https
+############################################################
+# Monitoring related - Prometheus Service Monitors and Pod Monitors
+############################################################
+monitoring:
+  istioEnvoy:
+    enabled: false
+    namespaceSelector: {}
+    selector:
+      matchExpressions:
+        - key: service.istio.io/canonical-name
+          operator: Exists
+    envoyStats:
+      - port: ".*-envoy-prom"
+        path: /stats/prometheus
+  serving:
+    # Install Monitoring CRs related to knative service pods
+    enabled: false
+    podMonitor:
+      userMetricPortName: http-usermetric
+      userPortName: user-port
+      selector:
+        matchExpressions:
+          - key: "serving.knative.dev/revision"
+            operator: Exists
+    allNamespaces: true
