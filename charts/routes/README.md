@@ -46,7 +46,6 @@ The following table lists the configurable parameters of the Routes chart and th
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| authz.enabled | bool | `true` |  |
 | base.enabled | bool | `false` |  |
 | cert-manager.enabled | bool | `true` |  |
 | certManagerBase.enabled | bool | `true` |  |
@@ -61,7 +60,6 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.feast.uiServiceName | string | `"feast-ui"` |  |
 | global.feast.useServiceFqdn | bool | `true` |  |
 | global.feast.vsPrefix | string | `"/feast"` |  |
-| global.hosts.authz[0] | string | `"authz"` |  |
 | global.hosts.mlflow[0] | string | `"mlflow"` |  |
 | global.hosts.mlp[0] | string | `"console"` |  |
 | global.hosts.mlpdocs[0] | string | `"docs"` |  |

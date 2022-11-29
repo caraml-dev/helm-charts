@@ -13,7 +13,6 @@ global:
     mlp: ["console"]
     mlpdocs: ["docs"]
     mlflow: ["mlflow"]
-    authz: ["authz"]
 
   mlp:
     apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
@@ -145,11 +144,6 @@ feast:
 # Configuration for mlflow
 mlflow:
   enabled: true
-
-# Configuration for authorization service
-authz:
-  enabled: true
-
 
 # Configuration for mlp
 mlp:

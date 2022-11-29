@@ -1,4 +1,4 @@
-{{- $hosts := (concat (get $.Values.global.hosts "mlp") (get $.Values.global.hosts "mlpdocs") (get $.Values.global.hosts "mlflow") (get $.Values.global.hosts "authz") )}}
+{{- $hosts := (concat (get $.Values.global.hosts "mlp") (get $.Values.global.hosts "mlpdocs") (get $.Values.global.hosts "mlflow"))}}
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
