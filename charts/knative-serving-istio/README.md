@@ -1,7 +1,7 @@
 # knative-serving-istio
 
 ---
-![Version: 1.3.11](https://img.shields.io/badge/Version-1.3.11-informational?style=flat-square)
+![Version: 1.3.12](https://img.shields.io/badge/Version-1.3.12-informational?style=flat-square)
 ![AppVersion: v1.3.0](https://img.shields.io/badge/AppVersion-v1.3.0-informational?style=flat-square)
 
 Installs Knative-serving for Istio
