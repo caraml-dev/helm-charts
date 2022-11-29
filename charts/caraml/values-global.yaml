@@ -66,3 +66,7 @@ global:
   mlflow:
     serviceName: merlin-mlflow
     externalPort: "80"
+
+  authz:
+    serviceName: caraml-authz
+    externalPort: "80"

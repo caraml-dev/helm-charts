@@ -121,7 +121,7 @@ Postgres related
 {{- define "authorization.server.url" -}}
     {{- $protocol := (default "http" .Values.global.protocol ) }}
     {{- $globalAuthzUrl := "" }}
-    {{- if and .Values.global (hasKey .Values.global "authz") }}
+    {{- if and (and .Values.global (hasKey .Values.global "authz")) .Values.global.authz.serviceName }}
         {{- $globalAuthzUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "authz" (list "serviceName")))) }}
     {{- end }}
     {{- printf "%s" (include "common.set-value" (list .Values.deployment.authorization.serverUrl $globalAuthzUrl)) -}}
