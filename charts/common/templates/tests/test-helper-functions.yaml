@@ -1,0 +1,9 @@
+{{- if .Values.unittests.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "test-helper-functions-cm"
+data:
+  commonSetValue: {{ template "common.set-value"  }}
+{{- end }}
