@@ -18,8 +18,4 @@ spec:
 {{- end }}
   podMetricsEndpoints:
 {{ toYaml .Values.monitoring.istioEnvoy.envoyStats | indent 4 }}
-{{- if .Values.monitoring.istioEnvoy.metricRelabelings }}
-      metricRelabelings:
-{{ toYaml .Values.monitoring.istioEnvoy.metricRelabelings | indent 6 }}
-{{- end }}
 {{- end }}

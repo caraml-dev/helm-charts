@@ -192,16 +192,11 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | monitoring.istioEnvoy.enabled | bool | `false` |  |
 | monitoring.istioEnvoy.envoyStats[0].path | string | `"/stats/prometheus"` |  |
 | monitoring.istioEnvoy.envoyStats[0].port | string | `".*-envoy-prom"` |  |
-| monitoring.istioEnvoy.metricRelabelings[0].action | string | `"labeldrop"` |  |
-| monitoring.istioEnvoy.metricRelabelings[0].regex | string | `"(.*_canonical_.*|connection_security_policy|destination_app|destination_cluster|destination_principal|destination_service|destination_service_namespace|destination_version|destination_workload|response_flags|source_app|source_cluster|source_principal|source_version|source_workload|source_workload_namespace)"` |  |
 | monitoring.istioEnvoy.namespaceSelector | object | `{}` |  |
 | monitoring.istioEnvoy.selector.matchExpressions[0].key | string | `"service.istio.io/canonical-name"` |  |
 | monitoring.istioEnvoy.selector.matchExpressions[0].operator | string | `"Exists"` |  |
 | monitoring.serving.allNamespaces | bool | `true` |  |
 | monitoring.serving.enabled | bool | `false` |  |
-| monitoring.serving.metricRelabelingRegex | string | `"(gojek_com_team|gojek_com_stream|gojek_com_orchestrator|gojek_com_environment|gojek_com_app)"` |  |
-| monitoring.serving.podMonitor.metricRelabelings[0].action | string | `"drop"` |  |
-| monitoring.serving.podMonitor.metricRelabelings[0].regex | string | `"{{ .Values.monitoring.serving.metricRelabelingRegex }}"` |  |
 | monitoring.serving.podMonitor.selector.matchExpressions[0].key | string | `"serving.knative.dev/revision"` |  |
 | monitoring.serving.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
 | monitoring.serving.podMonitor.userMetricPortName | string | `"http-usermetric"` |  |

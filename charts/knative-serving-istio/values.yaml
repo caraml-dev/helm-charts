@@ -454,9 +454,6 @@ monitoring:
     envoyStats:
       - port: ".*-envoy-prom"
         path: /stats/prometheus
-    metricRelabelings:
-      - regex: "(.*_canonical_.*|connection_security_policy|destination_app|destination_cluster|destination_principal|destination_service|destination_service_namespace|destination_version|destination_workload|response_flags|source_app|source_cluster|source_principal|source_version|source_workload|source_workload_namespace)"
-        action: labeldrop
   serving:
     # Install Monitoring CRs related to knative service pods
     enabled: false
@@ -467,8 +464,4 @@ monitoring:
         matchExpressions:
           - key: "serving.knative.dev/revision"
             operator: Exists
-      metricRelabelings:
-        - action: drop
-          regex: "{{ .Values.monitoring.serving.metricRelabelingRegex }}"
-    metricRelabelingRegex: (gojek_com_team|gojek_com_stream|gojek_com_orchestrator|gojek_com_environment|gojek_com_app)
     allNamespaces: true

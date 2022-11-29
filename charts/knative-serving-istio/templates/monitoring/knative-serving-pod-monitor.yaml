@@ -23,8 +23,4 @@ spec:
 {{ tpl (toYaml .Values.monitoring.serving.podMonitor.metricRelabelings | indent 6) . }}
 {{- end }}
     - port: {{ .Values.monitoring.serving.podMonitor.userPortName }}
-{{- if .Values.monitoring.serving.podMonitor.metricRelabelings }}
-      metricRelabelings:
-{{ tpl (toYaml .Values.monitoring.serving.podMonitor.metricRelabelings | indent 6) . }}
-{{- end }}
 {{- end }}
