@@ -1,8 +1,9 @@
 suite: test helper functions
 templates:
-  - templates/test-helper-functions.yaml
+  - helper-functions.yaml
 tests:
   - it: setValue function should set the value as first arg when second is invalid or empty
+    template: helper-functions.yaml
     set:
       unitTests.enabled: true
       unitTests.commonSetValue:
@@ -11,7 +12,7 @@ tests:
     asserts:
       - isKind:
           of: ConfigMap
-      - matchRegex:
+      - equal:
           path: metadata.name
           value: test-helper-functions-cm
       - equal:
