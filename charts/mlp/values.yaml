@@ -6,7 +6,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/mlp
-    tag: v1.7.4-build.5-ac5d3eb
+    tag: v1.7.4-build.6-322163a
 
   replicaCount: 1
 
@@ -28,17 +28,67 @@ deployment:
   mlflowTrackingUrl: "http://mlflow.mlp"
   environment: "production"
 
+  # -- Enabled CaraML applications
+  applications:
+    - name: Merlin
+      description: Platform for deploying machine learning models
+      homepage: /merlin
+      configuration:
+        api: /api/merlin/v1
+        iconName: machineLearningApp
+        navigation:
+          - label: Models
+            destination: /models
+          - label: Transformer Simulator
+            destination: /transformer-simulator
+    - name: Turing
+      description: Platform for setting up ML experiments
+      homepage: /turing
+      configuration:
+        api: /api/turing/v1
+        iconName: graphApp
+        navigation:
+          - label: Routers
+            destination: /routers
+          - label: Ensemblers
+            destination: /ensemblers
+          - label: Ensembling Jobs
+            destination: /jobs
+          - label: Experiments
+            destination: /experiments
+    - name: Feast
+      description: Platform for managing and serving ML features
+      homepage: /feast
+      configuration:
+        api: /feast/api
+        iconName: appSearchApp
+        navigation:
+          - label: Entities
+            destination: /entities
+          - label: Feature Tables
+            destination: /featuretables
+          - label: Batch Ingestion Jobs
+            destination: /jobs/batch
+          - label: Stream Ingestion Jobs
+            destination: /jobs/stream
+    - name: Pipelines
+      description: Platform for managing ML pipelines
+      homepage: /pipeline
+      configuration:
+        iconName: pipelineApp
+
+
   authorization:
     enabled: false
     serverUrl: http://mlp-authorization-keto
 
   # -- Streams list
-  streams:
-    marketing:
-      - promotions
-      - growth
-    business:
-      - operations
+  streams: {}
+  #   marketing:
+  #     - promotions
+  #     - growth
+  #   business:
+  #     - operations
 
   # -- Documentation list for caraml components
   docs:
@@ -50,14 +100,8 @@ deployment:
       href: "https://docs.feast.dev/user-guide/overview"
 
   ui:
-    feastCoreApi: "http://feast.dev/v1"
-    merlinApi: "http://merlin.dev/v1"
-    turingApi: "http://turing.dev/v1"
     clockworkHomepage: "http://clockwork.dev"
-    feastHomepage: "http://feast.dev"
     kubeflowHomepage: "http://kubeflow.org"
-    merlinHomepage: "http://merlin.dev"
-    turingHomepage: "http://turing.dev"
 
   # -- OAuth client id for login
   oauthClientID: ""

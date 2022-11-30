@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.5](https://img.shields.io/badge/Version-0.4.5-informational?style=flat-square) ![AppVersion: v1.7.4-build.5-ac5d3eb](https://img.shields.io/badge/AppVersion-v1.7.4--build.5--ac5d3eb-informational?style=flat-square)
+![Version: 0.4.6](https://img.shields.io/badge/Version-0.4.6-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
 
 MLP API
 
@@ -22,11 +22,12 @@ MLP API
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | deployment.apiHost | string | `"http://mlp/v1"` |  |
+| deployment.applications | list | `[{"configuration":{"api":"/api/merlin/v1","iconName":"machineLearningApp","navigation":[{"destination":"/models","label":"Models"},{"destination":"/transformer-simulator","label":"Transformer Simulator"}]},"description":"Platform for deploying machine learning models","homepage":"/merlin","name":"Merlin"},{"configuration":{"api":"/api/turing/v1","iconName":"graphApp","navigation":[{"destination":"/routers","label":"Routers"},{"destination":"/ensemblers","label":"Ensemblers"},{"destination":"/jobs","label":"Ensembling Jobs"},{"destination":"/experiments","label":"Experiments"}]},"description":"Platform for setting up ML experiments","homepage":"/turing","name":"Turing"},{"configuration":{"api":"/feast/api","iconName":"appSearchApp","navigation":[{"destination":"/entities","label":"Entities"},{"destination":"/featuretables","label":"Feature Tables"},{"destination":"/jobs/batch","label":"Batch Ingestion Jobs"},{"destination":"/jobs/stream","label":"Stream Ingestion Jobs"}]},"description":"Platform for managing and serving ML features","homepage":"/feast","name":"Feast"},{"configuration":{"iconName":"pipelineApp"},"description":"Platform for managing ML pipelines","homepage":"/pipeline","name":"Pipelines"}]` | Enabled CaraML applications |
 | deployment.authorization.enabled | bool | `false` |  |
 | deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components |
 | deployment.environment | string | `"production"` |  |
-| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"gojek/mlp","tag":"v1.7.4-build.5-ac5d3eb"}` | mlp image related configs |
+| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"gojek/mlp","tag":"v1.7.4-build.6-322163a"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
 | deployment.oauthClientID | string | `""` | OAuth client id for login |
@@ -34,15 +35,9 @@ MLP API
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` |  |
 | deployment.replicaCount | int | `1` |  |
 | deployment.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| deployment.streams | object | `{"business":["operations"],"marketing":["promotions","growth"]}` | Streams list |
+| deployment.streams | object | `{}` | Streams list |
 | deployment.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
-| deployment.ui.feastCoreApi | string | `"http://feast.dev/v1"` |  |
-| deployment.ui.feastHomepage | string | `"http://feast.dev"` |  |
 | deployment.ui.kubeflowHomepage | string | `"http://kubeflow.org"` |  |
-| deployment.ui.merlinApi | string | `"http://merlin.dev/v1"` |  |
-| deployment.ui.merlinHomepage | string | `"http://merlin.dev"` |  |
-| deployment.ui.turingApi | string | `"http://turing.dev/v1"` |  |
-| deployment.ui.turingHomepage | string | `"http://turing.dev"` |  |
 | encryption.key | string | `"example-key-here"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | externalPostgresql.createSecret | bool | `false` |  |

@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: v1.7.4-build.5-ac5d3eb
+appVersion: v1.7.4-build.6-322163a
 dependencies:
 - condition: postgresql.enabled
   name: postgresql
@@ -13,4 +13,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: mlp
-version: 0.4.5
+version: 0.4.6
