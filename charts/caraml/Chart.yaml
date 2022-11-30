@@ -3,8 +3,8 @@ appVersion: 1.0.0
 dependencies:
 - condition: mlp.enabled
   name: mlp
-  repository: file://../mlp
-  version: 0.4.4
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.4.5
 - condition: merlin.enabled
   name: merlin
   repository: https://caraml-dev.github.io/helm-charts
@@ -16,8 +16,8 @@ dependencies:
 - alias: caraml-authz
   condition: caraml-authz.enabled
   name: authz
-  repository: file://../caraml-authz
-  version: 0.1.1
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.1.2
 - condition: caraml-routes.enabled
   name: caraml-routes
   repository: https://caraml-dev.github.io/helm-charts
@@ -60,4 +60,4 @@ maintainers:
   name: caraml-dev
 name: caraml
 type: application
-version: 0.4.0
+version: 0.4.1
