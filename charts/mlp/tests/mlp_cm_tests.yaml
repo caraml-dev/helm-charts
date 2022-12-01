@@ -1,0 +1,71 @@
+suite: Unit tests for mlp config map values
+templates:
+  - configmap.yaml
+tests:
+  - it: should set the configs from values if no global values found
+    set:
+      global: {}
+      deployment.apiHost: "http://mlp/v1"
+      deployment.oauthClientID: "oauthId"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*apiHost: "http://mlp/v1"
+            .*oauthClientID: "oauthId"
+            .*applications:
+            .*api: \/api\/merlin\/v1
+            .*homepage: \/merlin
+            .*name: Merlin
+            .*api: \/api\/turing\/v1
+            .*homepage: \/turing
+            .*name: Turing
+            .*api: \/feast\/api
+            .*homepage: \/feast
+            .*name: Feast
+  - it: should set the configs from global if global values found
+    set:
+      global:
+        oauthClientID: "test-client-123"
+        mlp:
+          apiPrefix: "/v1"
+          vsPrefix: "/api"
+          uiPrefix: "/"
+        merlin:
+          apiPrefix: "/v1"
+          vsPrefix: "/api/merlin"
+          uiPrefix: "/merlin"
+        turing:
+          apiPrefix: "/v1"
+          vsPrefix: "/api/turing"
+          uiPrefix: "/turing"
+        feast:
+          apiPrefix: "/api"
+          vsPrefix: "/feast"
+          uiPrefix: "/feast"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*apiHost: "/api/v1"
+            .*oauthClientID: "test-client-123"
+            .*applications:
+            .*api: \/api\/merlin\/v1
+            .*homepage: \/merlin
+            .*name: Merlin
+            .*api: \/api\/turing\/v1
+            .*homepage: \/turing
+            .*name: Turing
+            .*api: \/feast\/api
+            .*homepage: \/feast
+            .*name: Feast
