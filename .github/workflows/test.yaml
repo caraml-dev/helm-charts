@@ -38,6 +38,15 @@ jobs:
             echo "charts_changed=$changed" >> $GITHUB_OUTPUT
           fi
 
+      - name: Add dependency chart repos
+        run: |
+          for dir in $(ls -d charts/*/); do
+            num_of_deps=$(( $(helm dependency list $dir 2> /dev/null | tail +2 | wc -l ) -1 ))
+            if [ $num_of_deps -gt 0 ]; then
+              helm dependency list $dir 2> /dev/null | tail +2 | head -n $num_of_deps | awk '{ print " " $1 " " $3 }' | grep -v "file://" | xargs -n 2 helm repo add --force-update
+            fi
+          done
+
       - name: Install plugin and run Unit-tests on changed charts
         id: unit-tests
         env:
@@ -50,15 +59,6 @@ jobs:
             helm unittest --helm3 -u  -f tests/* . --debug
             rm -rf tests/__snapshot__
             cd ../../
-          done
-
-      - name: Add dependency chart repos
-        run: |
-          for dir in $(ls -d charts/*/); do
-            num_of_deps=$(( $(helm dependency list $dir 2> /dev/null | tail +2 | wc -l ) -1 ))
-            if [ $num_of_deps -gt 0 ]; then
-              helm dependency list $dir 2> /dev/null | tail +2 | head -n $num_of_deps | awk '{ print " " $1 " " $3 }' | grep -v "file://" | xargs -n 2 helm repo add --force-update
-            fi
           done
 
       - name: Create kind cluster
