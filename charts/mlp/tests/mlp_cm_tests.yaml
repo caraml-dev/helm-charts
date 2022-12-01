@@ -69,3 +69,120 @@ tests:
             .*api: \/feast\/api
             .*homepage: \/feast
             .*name: Feast
+  - it: should not set the authorization server url when it is not enabled
+    set:
+      deployment:
+        authorization:
+          enabled: false
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*enabled: false
+      - notMatchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*ketoServerURL: .*
+  - it: should set the authorization server url from values when it is enabled and no authz config found in global values
+    set:
+      global:
+        protocol: http
+      deployment:
+        authorization:
+          enabled: true
+          serverUrl: "http://authz-url"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*enabled: true
+            .*ketoServerURL: "http://authz-url"
+  - it: should set the authorization server url from values when it is enabled and no serviceName in authz config in global values
+    set:
+      global:
+        protocol: http
+        authz: {}
+      deployment:
+        authorization:
+          enabled: true
+          serverUrl: "http://authz-url"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*enabled: true
+            .*ketoServerURL: "http://authz-url"
+  - it: should set the authorization server url from global when it is enabled and serviceName in authz config in global values
+    set:
+      global:
+        protocol: http
+        authz:
+          serviceName: "caraml-authz"
+      deployment:
+        authorization:
+          enabled: true
+          serverUrl: "http://authz-url"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*enabled: true
+            .*ketoServerURL: "http://caraml-authz"
+  - it: should set streams config when exists
+    set:
+      deployment:
+        streams:
+          marketing:
+            - promotions
+            - growth
+          business:
+            - operations
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*streams.*
+  - it: should not set streams config when it doesn't exist
+    set:
+      deployment:
+        streams: {}
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - notMatchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*streams.*
