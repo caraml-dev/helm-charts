@@ -44,7 +44,7 @@ jobs:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |
           helm plugin install https://github.com/quintush/helm-unittest
-          for chart in $changed; do
+          for chart in $CHARTS_CHANGED; do
             chart=`echo $chart | sed 's/ *$//g'`
             cd $chart
             helm unittest --helm3 -u  -f tests/* . --debug
