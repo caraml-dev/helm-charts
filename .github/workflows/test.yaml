@@ -38,6 +38,20 @@ jobs:
             echo "charts_changed=$changed" >> $GITHUB_OUTPUT
           fi
 
+      - name: Install plugin and run Unit-tests on changed charts
+        id: unit-tests
+        env:
+          CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
+        run: |
+          helm plugin install https://github.com/quintush/helm-unittest
+          for chart in $changed; do
+            chart=`echo $chart | sed 's/ *$//g'`
+            cd $chart
+            helm unittest --helm3 -u  -f tests/* . --debug
+            rm -rf tests/__snapshot__
+            cd ../../
+          done
+
       - name: Add dependency chart repos
         run: |
           for dir in $(ls -d charts/*/); do
