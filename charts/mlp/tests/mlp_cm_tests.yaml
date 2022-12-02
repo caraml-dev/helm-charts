@@ -1,6 +1,11 @@
 suite: Unit tests for mlp config map values
 templates:
   - configmap.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
 tests:
   - it: should set the configs from values if no global values found
     set:
@@ -186,3 +191,85 @@ tests:
           path: data.[mlp-config.yaml]
           pattern: |
             (?s).*streams.*
+  - it: should set database config from values if chart specific db is enabled
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: true
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: true
+        address: postgresql
+        username: mlp-ext
+        database: mlp-ext
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*database:
+            .*host: my-release-mlp-postgresql.my-namespace.svc.cluster.local
+            .*user: mlp
+            .*database: mlp
+  - it: should set database config from values if chart specific db is disabled, external db is enabled
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: false
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: true
+        address: postgresql
+        username: mlp-ext
+        database: mlp-ext
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*database:
+            .*host: postgresql
+            .*user: mlp-ext
+            .*database: mlp-ext
+  - it: should set database config from global values if chart specific db is disabled, external db is disabled
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        mlp:
+          postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: false
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: false
+        address: postgresql
+        username: mlp-ext
+        database: mlp-ext
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*database:
+            .*host: my-release-postgresql.my-namespace.svc.cluster.local
+            .*user: mlp-global
+            .*database: mlp-global
