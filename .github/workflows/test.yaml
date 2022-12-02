@@ -57,8 +57,7 @@ jobs:
             chart=`echo $chart | sed 's/ *$//g'`
             cd $chart
             helm dep build > /dev/null 2>&1
-            helm unittest --helm3 -u  -f tests/* . --debug
-            rm -rf tests/__snapshot__
+            helm unittest --helm3 -u -d .
             cd ../../
           done
 

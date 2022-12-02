@@ -1,0 +1,104 @@
+suite: Unit tests for mlp Deployment
+templates:
+  - deployment.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set database secret key and name from values if chart specific db is enabled
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        mlp:
+          postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: true
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: false
+        address: postgresql
+        username: mlp-ext
+        database: mlp-ext
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-mlp$
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-mlp-postgresql
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: postgresql-password
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        mlp:
+          postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: false
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: true
+        secretName: ext-postgres-secret
+        secretKey: ext-postgres-key
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-mlp$
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: ext-postgres-secret
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: ext-postgres-key
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are not set
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        mlp:
+          postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: false
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-mlp$
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-mlp-external-postgresql
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: postgresql-password
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is disabled
+    set:
+      postgresql:
+        enabled: false
+      externalPostgresql:
+        enabled: false
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-mlp$
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-postgresql
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: postgresql-password
