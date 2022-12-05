@@ -1,11 +1,5 @@
 {{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
 {{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix" "apiPrefix")) }}
-{{- $globFeastApi := include "common.get-component-value" (list .Values.global "feast" (list "vsPrefix" "apiPrefix")) }}
-{{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix")) }}
-{{- $globTuringApi := include "common.get-component-value" (list .Values.global "turing" (list "vsPrefix" "apiPrefix")) }}
-{{- $globFeastUI := include "common.get-component-value" (list .Values.global "feast" (list "uiPrefix")) }}
-{{- $globMerlinUI := include "common.get-component-value" (list .Values.global "merlin" (list "uiPrefix")) }}
-{{- $globTuringUI := include "common.get-component-value" (list .Values.global "turing" (list "uiPrefix")) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,7 +15,7 @@ data:
     sentryDSN: {{ .Values.deployment.sentryDSN }}
     oauthClientID: {{ include "common.set-value" (list .Values.deployment.oauthClientID $globOauthClientID) | quote }}
     applications:
-      {{- toYaml .Values.deployment.applications | nindent 6 }}
+      {{- include "mlp.deployment.applications" . | nindent 6 }}
     authorization:
       enabled: {{ .Values.deployment.authorization.enabled }}
       {{- if .Values.deployment.authorization.enabled }}

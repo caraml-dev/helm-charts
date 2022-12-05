@@ -126,3 +126,32 @@ Postgres related
     {{- end }}
     {{- printf "%s" (include "common.set-value" (list .Values.deployment.authorization.serverUrl $globalAuthzUrl)) -}}
 {{- end -}}
+
+{{- define "mlp.deployment.applications" -}}
+    {{- $globFeastApi := include "common.get-component-value" (list .Values.global "feast" (list "vsPrefix" "apiPrefix")) }}
+    {{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix")) }}
+    {{- $globTuringApi := include "common.get-component-value" (list .Values.global "turing" (list "vsPrefix" "apiPrefix")) }}
+    {{- $globFeastUI := include "common.get-component-value" (list .Values.global "feast" (list "uiPrefix")) }}
+    {{- $globMerlinUI := include "common.get-component-value" (list .Values.global "merlin" (list "uiPrefix")) }}
+    {{- $globTuringUI := include "common.get-component-value" (list .Values.global "turing" (list "uiPrefix")) }}
+    {{- $applications := default (list) .Values.deployment.applications -}}
+    {{- $modifiedApps := (list) -}}
+    {{- range $applications -}}
+        {{- $name := .name -}}
+        {{- $homepage := .homepage -}}
+        {{- $api := .configuration.api -}}
+        {{- if eq $name "Merlin" -}}
+            {{- $homepage = include "common.set-value" (list .homepage $globMerlinUI) -}}
+            {{- $api = include "common.set-value" (list $api $globMerlinApi) -}}
+        {{- else if eq $name "Turing" -}}
+            {{- $homepage = include "common.set-value" (list .homepage $globTuringUI) -}}
+            {{- $api = include "common.set-value" (list $api $globTuringApi) -}}
+        {{- else if eq $name "Feast" -}}
+            {{- $homepage = include "common.set-value" (list .homepage $globFeastUI) -}}
+            {{- $api = include "common.set-value" (list $api $globFeastApi) -}}
+        {{- end -}}
+        {{- $_ := set . "homepage" $homepage -}}
+        {{- $_ := set .configuration "api" $api -}}
+    {{- end -}}
+    {{ toYaml $applications }}
+{{- end -}}

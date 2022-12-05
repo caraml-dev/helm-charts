@@ -1,0 +1,275 @@
+suite: Unit tests for mlp config map values
+templates:
+  - configmap.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set the configs from values if no global values found
+    set:
+      global: {}
+      deployment.apiHost: "http://mlp/v1"
+      deployment.oauthClientID: "oauthId"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*apiHost: "http://mlp/v1"
+            .*oauthClientID: "oauthId"
+            .*applications:
+            .*api: \/api\/merlin\/v1
+            .*homepage: \/merlin
+            .*name: Merlin
+            .*api: \/api\/turing\/v1
+            .*homepage: \/turing
+            .*name: Turing
+            .*api: \/feast\/api
+            .*homepage: \/feast
+            .*name: Feast
+  - it: should set the configs from global if global values found
+    set:
+      global:
+        oauthClientID: "test-client-123"
+        mlp:
+          apiPrefix: "/v1"
+          vsPrefix: "/api"
+          uiPrefix: "/"
+        merlin:
+          apiPrefix: "/v1"
+          vsPrefix: "/api/merlin"
+          uiPrefix: "/merlin"
+        turing:
+          apiPrefix: "/v1"
+          vsPrefix: "/api/turing"
+          uiPrefix: "/turing"
+        feast:
+          apiPrefix: "/api"
+          vsPrefix: "/feast"
+          uiPrefix: "/feast"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*apiHost: "/api/v1"
+            .*oauthClientID: "test-client-123"
+            .*applications:
+            .*api: \/api\/merlin\/v1
+            .*homepage: \/merlin
+            .*name: Merlin
+            .*api: \/api\/turing\/v1
+            .*homepage: \/turing
+            .*name: Turing
+            .*api: \/feast\/api
+            .*homepage: \/feast
+            .*name: Feast
+  - it: should not set the authorization server url when it is not enabled
+    set:
+      deployment:
+        authorization:
+          enabled: false
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*enabled: false
+      - notMatchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*ketoServerURL: .*
+  - it: should set the authorization server url from values when it is enabled and no authz config found in global values
+    set:
+      global:
+        protocol: http
+      deployment:
+        authorization:
+          enabled: true
+          serverUrl: "http://authz-url"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*enabled: true
+            .*ketoServerURL: "http://authz-url"
+  - it: should set the authorization server url from values when it is enabled and no serviceName in authz config in global values
+    set:
+      global:
+        protocol: http
+        authz: {}
+      deployment:
+        authorization:
+          enabled: true
+          serverUrl: "http://authz-url"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*enabled: true
+            .*ketoServerURL: "http://authz-url"
+  - it: should set the authorization server url from global when it is enabled and serviceName in authz config in global values
+    set:
+      global:
+        protocol: http
+        authz:
+          serviceName: "caraml-authz"
+      deployment:
+        authorization:
+          enabled: true
+          serverUrl: "http://authz-url"
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*authorization:
+            .*enabled: true
+            .*ketoServerURL: "http://caraml-authz"
+  - it: should set streams config when exists
+    set:
+      deployment:
+        streams:
+          marketing:
+            - promotions
+            - growth
+          business:
+            - operations
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*streams.*
+  - it: should not set streams config when it doesn't exist
+    set:
+      deployment:
+        streams: {}
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - notMatchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*streams.*
+  - it: should set database config from values if chart specific db is enabled
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: true
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: true
+        address: postgresql
+        username: mlp-ext
+        database: mlp-ext
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*database:
+            .*host: my-release-mlp-postgresql.my-namespace.svc.cluster.local
+            .*user: mlp
+            .*database: mlp
+  - it: should set database config from values if chart specific db is disabled, external db is enabled
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: false
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: true
+        address: postgresql
+        username: mlp-ext
+        database: mlp-ext
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*database:
+            .*host: postgresql
+            .*user: mlp-ext
+            .*database: mlp-ext
+  - it: should set database config from global values if chart specific db is disabled, external db is disabled
+    set:
+      global:
+        postgresqlUsername: mlp-global
+        mlp:
+          postgresqlDatabase: mlp-global
+      postgresql:
+        enabled: false
+        postgresqlDatabase: mlp
+        postgresqlUsername: mlp
+      externalPostgresql:
+        enabled: false
+        address: postgresql
+        username: mlp-ext
+        database: mlp-ext
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: metadata.name
+          pattern: mlp-*-config$
+      - matchRegex:
+          path: data.[mlp-config.yaml]
+          pattern: |
+            (?s).*database:
+            .*host: my-release-postgresql.my-namespace.svc.cluster.local
+            .*user: mlp-global
+            .*database: mlp-global
