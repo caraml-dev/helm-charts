@@ -69,35 +69,7 @@ app.kubernetes.io/part-of: caraml
 {{/*
 Postgres related
 */}}
-{{- define "postgres.host" -}}
-{{- if .Values.postgresql.enabled -}}
-    {{- printf "%s-%s-postgresql.%s.svc.cluster.local" .Release.Name .Chart.Name .Release.Namespace -}}
-{{- else if .Values.externalPostgresql.enabled -}}
-    {{- .Values.externalPostgresql.address -}}
-{{- else -}}
-    {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
 
-{{- define "postgres.username" -}}
-    {{- if .Values.postgresql.enabled -}}
-        {{- .Values.postgresql.postgresqlUsername -}}
-    {{- else if .Values.externalPostgresql.enabled -}}
-        {{- .Values.externalPostgresql.username -}}
-    {{- else -}}
-        {{- .Values.global.postgresqlUsername -}}
-    {{- end -}}
-{{- end -}}
-
-{{- define "postgres.database" -}}
-    {{- if .Values.postgresql.enabled -}}
-        {{- .Values.postgresql.postgresqlDatabase -}}
-    {{- else if .Values.externalPostgresql.enabled -}}
-        {{- .Values.externalPostgresql.database -}}
-    {{- else -}}
-        {{- .Values.global.mlp.postgresqlDatabase -}}
-    {{- end -}}
-{{- end -}}
 
 {{- define "postgres.password-secret-name" -}}
     {{- if .Values.postgresql.enabled -}}

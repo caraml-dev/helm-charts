@@ -22,9 +22,9 @@ data:
       ketoServerURL: {{ include "authorization.server.url" . | quote}}
       {{- end }}
     database:
-      host: {{ template "postgres.host" . }}
-      user: {{ template "postgres.username" . }}
-      database: {{ template "postgres.database" . }}
+      host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
+      user: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
+      database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
     {{- if .Values.deployment.docs }}
     docs:
       {{- toYaml .Values.deployment.docs | nindent 6 }}
