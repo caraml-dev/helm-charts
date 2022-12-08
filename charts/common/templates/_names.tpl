@@ -60,3 +60,38 @@ Get postgres database name in the following order of precendence: Chart specific
         {{- $global.mlp.postgresqlDatabase -}}
     {{- end -}}
 {{- end -}}
+
+{{/*
+Get postgres database secret name in the following order of precendence: Chart specific postgresql > Chart external Postgresql > Umbrella chart postgresql (release name), Arguments:
+1) postgresql object
+2) external postgresql object
+3) Release object
+4) Chart object
+*/}}
+{{- define "common.postgres-password-secret-name" -}}
+{{- $postgresql := index . 0 -}}
+{{- $externalPostgresql := index . 1 -}}
+{{- $release := index . 2 -}}
+{{- $chart := index . 3 -}}
+    {{- if $postgresql.enabled -}}
+        {{- printf "%s-%s-postgresql" $release.Name $chart.Name -}}
+    {{- else if $externalPostgresql.enabled -}}
+        {{- default (printf "%s-%s-external-postgresql" $release.Name $chart.Name) $externalPostgresql.secretName -}}
+    {{- else -}}
+        {{- printf "%s-postgresql" $release.Name -}}
+    {{- end -}}
+{{- end -}}
+
+
+{{/*
+Get postgres secret key in the following order of precendence: Chart external Postgresql enabled and specific key mentioned > (default)"postgresql-password" , Arguments:
+2) external postgresql object
+*/}}
+{{- define "common.postgres-password-secret-key" -}}
+{{- $externalPostgresql := index . 0 -}}
+    {{- if and $externalPostgresql.enabled -}}
+        {{- default "postgresql-password" $externalPostgresql.secretKey  -}}
+    {{- else -}}
+        {{- printf "postgresql-password" -}}
+    {{- end -}}
+{{- end -}}
