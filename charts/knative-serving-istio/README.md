@@ -1,7 +1,7 @@
 # knative-serving-istio
 
 ---
-![Version: 1.3.12](https://img.shields.io/badge/Version-1.3.12-informational?style=flat-square)
+![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square)
 ![AppVersion: v1.3.0](https://img.shields.io/badge/AppVersion-v1.3.0-informational?style=flat-square)
 
 Installs Knative-serving for Istio
@@ -137,9 +137,6 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | istiod.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
 | istiod.helmChart.version | string | `"1.13.9"` |  |
 | istiod.hook.weight | int | `0` |  |
-| istiod.monitoring.enabled | bool | `false` |  |
-| istiod.monitoring.namespace | string | `"istio-system"` |  |
-| istiod.monitoring.selector.matchLabels.app | string | `"istiod"` |  |
 | knativeServingCore.activator.autoscaling.enabled | bool | `false` | Enables autoscaling for activator deployment. |
 | knativeServingCore.activator.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/activator"` | Repository of the activator image |
 | knativeServingCore.activator.image.sha | string | `"ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"` | SHA256 of the activator image, either provide tag or SHA (SHA will be given priority) |
@@ -189,14 +186,15 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | knativeServingCore.webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.webhook.replicaCount | int | `1` | Number of replicas for the webhook deployment. |
 | knativeServingCore.webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
-| monitoring.istioEnvoy.enabled | bool | `false` |  |
+| monitoring.enabled | bool | `false` |  |
 | monitoring.istioEnvoy.envoyStats[0].path | string | `"/stats/prometheus"` |  |
 | monitoring.istioEnvoy.envoyStats[0].port | string | `".*-envoy-prom"` |  |
 | monitoring.istioEnvoy.namespaceSelector | object | `{}` |  |
 | monitoring.istioEnvoy.selector.matchExpressions[0].key | string | `"service.istio.io/canonical-name"` |  |
 | monitoring.istioEnvoy.selector.matchExpressions[0].operator | string | `"Exists"` |  |
+| monitoring.istiod.namespace | string | `"istio-system"` |  |
+| monitoring.istiod.selector.matchLabels.app | string | `"istiod"` |  |
 | monitoring.serving.allNamespaces | bool | `true` |  |
-| monitoring.serving.enabled | bool | `false` |  |
 | monitoring.serving.podMonitor.selector.matchExpressions[0].key | string | `"serving.knative.dev/revision"` |  |
 | monitoring.serving.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
 | monitoring.serving.podMonitor.userMetricPortName | string | `"http-usermetric"` |  |
