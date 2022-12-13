@@ -1,12 +1,12 @@
 ---
-{{- if .Values.monitoring.istioEnvoy.enabled }}
+{{- if and (or .Values.istioIngressGateway.global.enabled .Values.clusterLocalGateway.global.enabled) .Values.monitoring.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: envoy-stats-metrics-monitor
   namespace: {{ .Values.monitoring.istioSystemNS }}
   labels:
-{{ include "monitoring.labels" . | indent 4 }}
+{{ include "knative-net-istio.labels" . | indent 4 }}
 spec:
 {{- if .Values.monitoring.istioEnvoy.selector }}
   selector:

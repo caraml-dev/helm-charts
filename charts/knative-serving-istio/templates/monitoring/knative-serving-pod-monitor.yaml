@@ -1,4 +1,4 @@
-{{- if .Values.monitoring.serving.enabled }}
+{{- if .Values.monitoring.enabled }}
 # Queue proxy PodMonitor
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -6,7 +6,7 @@ metadata:
   name: knative-serving-pod-monitor
   namespace: {{ .Release.Namespace }}
   labels:
-{{ include "monitoring.labels" . | indent 4 }}
+{{ include "knative-net-istio.labels" . | indent 4 }}
 spec:
 {{- if .Values.monitoring.serving.allNamespaces }}
   namespaceSelector:
