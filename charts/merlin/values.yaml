@@ -426,3 +426,6 @@ kserve:
     release: kserve
     namespace: kserve
     createNamespace: true
+
+monitoring:
+  enabled: false

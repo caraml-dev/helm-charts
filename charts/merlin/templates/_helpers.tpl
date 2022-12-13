@@ -78,6 +78,8 @@ Generated names
 Common labels
 */}}
 {{- define "merlin.labels" -}}
+app: {{ template "merlin.name" .}}
+release: {{ .Release.Name }}
 app.kubernetes.io/name: {{ template "merlin.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}

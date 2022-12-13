@@ -1,0 +1,16 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "merlin.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ include "merlin.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "merlin.name" .}}
+      release: {{ .Release.Name }}
+  endpoints:
+    - targetPort: {{ .Values.service.internalPort }}
+{{- end }}
