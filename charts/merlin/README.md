@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.23](https://img.shields.io/badge/Version-0.9.23-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
+![Version: 0.9.24](https://img.shields.io/badge/Version-0.9.24-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -186,6 +186,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlp.enabled | bool | `true` |  |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
 | mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
+| monitoring.enabled | bool | `false` |  |
 | monitoring.enabled | bool | `false` |  |
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
