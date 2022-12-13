@@ -256,7 +256,7 @@ The following table lists the configurable parameters of the Kserve chart and th
 | knativeServingIstio.helmChart.namespace | string | `"knative-serving"` |  |
 | knativeServingIstio.helmChart.release | string | `"knative-serving"` |  |
 | knativeServingIstio.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| knativeServingIstio.helmChart.version | string | `"1.3.12"` |  |
+| knativeServingIstio.helmChart.version | string | `"1.4.0"` |  |
 | labels | object | `{"common":{}}` | For release specific common labels |
 | logger.defaultUrl | string | `"http://default-broker"` |  |
 | logger.image.registry | string | `""` |  |
