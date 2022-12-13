@@ -187,7 +187,6 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
 | mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
 | monitoring.enabled | bool | `false` |  |
-| monitoring.enabled | bool | `false` |  |
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
 | newrelic.licenseSecretName | string | `"newrelic-license-secret"` |  |
