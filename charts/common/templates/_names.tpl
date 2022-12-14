@@ -52,12 +52,14 @@ Get postgres database name in the following order of precendence: Chart specific
 {{- $postgresql := index . 0 -}}
 {{- $externalPostgresql := index . 1 -}}
 {{- $global := index . 2 -}}
+{{- $service := index . 3 -}}
+{{- $databaseNameKey := index . 4 -}}
     {{- if $postgresql.enabled -}}
         {{- $postgresql.postgresqlDatabase -}}
     {{- else if $externalPostgresql.enabled -}}
         {{- $externalPostgresql.database -}}
     {{- else -}}
-        {{- $global.mlp.postgresqlDatabase -}}
+        {{- include "common.get-component-value" (list $global $service (list $databaseNameKey)) }}
     {{- end -}}
 {{- end -}}
 
