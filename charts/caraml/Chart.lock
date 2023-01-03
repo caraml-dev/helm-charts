@@ -16,7 +16,7 @@ dependencies:
   version: 0.1.6
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.6
+  version: 0.2.7
 - name: base
   repository: https://istio-release.storage.googleapis.com/charts
   version: 1.13.9
@@ -35,5 +35,5 @@ dependencies:
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.8.2
-digest: sha256:31536a39ae97e546522d36990b4e09130e72c96748cde24825ff6da785081b75
-generated: "2022-12-13T08:45:18.433154804Z"
+digest: sha256:cc170b197fa9651bff4b2b91b93eada177319dc8e79df5913c47d12b3b6fbdac
+generated: "2023-01-03T05:05:08.787622474Z"
