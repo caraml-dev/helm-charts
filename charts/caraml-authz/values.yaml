@@ -7,7 +7,7 @@ deployment:
 
   image:
     repository: oryd/keto
-    tag: v0.4.3
+    tag: v0.5.4
     pullPolicy: IfNotPresent
 
   service:
@@ -44,6 +44,9 @@ caramlAuthzExternalPostgresql:
 
 caraml-authz-postgresql:
   enabled: true
+  auth:
+    username: oryketo
+    database: oryketo
   postgresqlUsername: oryketo
   postgresqlDatabase: oryketo
   # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
@@ -73,18 +76,18 @@ bootstrap:
       cpu: 100m
       memory: 200Mi
   roles:
-  # - id: role:admin
-  #   subjects: [alice]
-  # - id: role:member
-  #   subjects: [bob]
+    # - id: role:admin
+    #   subjects: [alice]
+    # - id: role:member
+    #   subjects: [bob]
   policies:
-  # - id: example-policy
-  #   subjects: [alice]
-  #   resources: ["blog_posts:my-first-blog-post"]
-  #   actions: [delete]
-  #   effect: allow
-  # - id: example-policy-2
-  #   subjects: [admin]
-  #   resources: ["blog_posts:my-first-blog-post-2"]
-  #   actions: [delete]
-  #   effect: allow
+    # - id: example-policy
+    #   subjects: [alice]
+    #   resources: ["blog_posts:my-first-blog-post"]
+    #   actions: [delete]
+    #   effect: allow
+    # - id: example-policy-2
+    #   subjects: [admin]
+    #   resources: ["blog_posts:my-first-blog-post-2"]
+    #   actions: [delete]
+    #   effect: allow
