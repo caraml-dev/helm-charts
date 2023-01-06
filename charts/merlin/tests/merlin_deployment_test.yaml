@@ -1,0 +1,108 @@
+suite: Unit tests for merlin Deployment
+templates:
+  - merlin-deployment.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set database secret key and name from values if chart specific db is enabled
+    set:
+      global:
+        postgresqlUsername: merlin-global
+        merlin:
+          postgresqlDatabase: merlin-global
+      merlin-postgresql:
+        enabled: true
+        postgresqlDatabase: merlin
+        postgresqlUsername: merlin
+      merlinExternalPostgresql:
+        enabled: false
+        address: postgresql
+        username: merlin-ext
+        database: merlin-ext
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-merlin$
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          value: my-release-merlin-postgresql
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
+          value: postgresql-password
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
+    set:
+      global:
+        postgresqlUsername: merlin-global
+        merlin:
+          postgresqlDatabase: merlin-global
+      merlin-postgresql:
+        enabled: false
+        postgresqlDatabase: merlin
+        postgresqlUsername: merlin
+      merlinExternalPostgresql:
+        enabled: true
+        secretName: ext-postgres-secret
+        secretKey: ext-postgres-key
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-merlin$
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          value: ext-postgres-secret
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
+          value: ext-postgres-key
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are not set
+    set:
+      global:
+        postgresqlUsername: merlin-global
+        merlin:
+          postgresqlDatabase: merlin-global
+      merlin-postgresql:
+        enabled: false
+        postgresqlDatabase: merlin
+        postgresqlUsername: merlin
+      merlinExternalPostgresql:
+        enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-merlin$
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          value: my-release-merlin-external-postgresql
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
+          value: postgresql-password
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is disabled
+    set:
+      global:
+        postgresqlUsername: merlin-global
+        merlin:
+          postgresqlDatabase: merlin-global
+      merlin-postgresql:
+        enabled: false
+      merlinExternalPostgresql:
+        enabled: false
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-merlin$
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          value: my-release-postgresql
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
+          value: postgresql-password

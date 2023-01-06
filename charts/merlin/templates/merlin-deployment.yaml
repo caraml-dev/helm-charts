@@ -79,8 +79,8 @@ spec:
           - name: DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ template "merlin-postgresql.password-secret-name" . }}
-                key: {{ template "merlin-postgresql.password-secret-key" . }}
+                name: {{ include "common.postgres-password-secret-name" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Release .Chart ) }}
+                key: {{ include "common.postgres-password-secret-key" (list .Values.merlinExternalPostgresql) }}
           - name: DATABASE_NAME
             value: {{ template "merlin-postgresql.database" . }}
           - name: REACT_APP_OAUTH_CLIENT_ID
