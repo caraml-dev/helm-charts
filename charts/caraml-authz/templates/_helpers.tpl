@@ -5,38 +5,36 @@
 Generated names
 */}}
 
+
 {{- define "caraml-authz.resource-prefix-with-release-name" -}}
-    {{- $deployedChart := .Chart.Name -}}
-    {{- $chartVersion := .Chart.Version | replace "." "-" -}}
-    {{- $deployedReleaseName := .Release.Name -}}
-    {{ printf "%s-%s-%s"  $deployedChart $chartVersion $deployedReleaseName }}
+    {{- if .Values.fullnameOverride -}}
+        {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- $name := default .Chart.Name .Values.nameOverride -}}
+        {{- if contains $name .Release.Name -}}
+            {{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+        {{- else -}}
+            {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+        {{- end -}}
+    {{- end -}}
 {{- end -}}
 
 {{- define "caraml-authz.resource-prefix" -}}
-    {{- $deployedChart := .Chart.Name -}}
-    {{- $chartVersion := .Chart.Version | replace "." "-" -}}
-    {{ printf "%s-%s"  $deployedChart $chartVersion }}
+    {{- if .Values.nameOverride -}}
+        {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- $deployedChart := .Chart.Name -}}
+        {{ printf "%s"  $deployedChart | trunc 63 | trimSuffix "-" }}
+    {{- end -}}
 {{- end -}}
 
 
 {{- define "caraml-authz.name" -}}
-    {{- if .Values.nameOverride -}}
-        {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
-    {{- else -}}
-        {{- printf "%s" (include "caraml-authz.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
-    {{- end -}}
-{{- end -}}
-
-{{- define "caraml-authz.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version -}}
+    {{- printf "%s" (include "caraml-authz.resource-prefix" .) -}}
 {{- end -}}
 
 {{- define "caraml-authz.fullname" -}}
-    {{- if .Values.fullnameOverride -}}
-        {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
-    {{- else -}}
-        {{- printf "%s" (include "caraml-authz.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
-    {{- end -}}
+    {{- printf "%s" (include "caraml-authz.resource-prefix-with-release-name" .) -}}
 {{- end -}}
 
 
@@ -55,61 +53,10 @@ app.kubernetes.io/part-of: caraml
 {{- end }}
 
 
-{{/*
-CaraML Authz Postgres related
-*/}}
-
-{{- define "caraml-authz-postgresql.host" -}}
-{{- if index .Values "caraml-authz-postgresql" "enabled" -}}
-    {{- printf "%s-%s-postgresql.%s.svc.cluster.local" .Release.Name .Chart.Name .Release.Namespace -}}
-{{- else if .Values.caramlAuthzExternalPostgresql.enabled -}}
-    {{- .Values.caramlAuthzExternalPostgresql.address -}}
-{{- else -}}
-    {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
-
-
-{{- define "caraml-authz-postgresql.username" -}}
-    {{- if index .Values "caraml-authz-postgresql" "enabled" -}}
-        {{- index .Values "caraml-authz-postgresql" "postgresqlUsername" -}}
-    {{- else if .Values.caramlAuthzExternalPostgresql.enabled -}}
-        {{- .Values.caramlAuthzExternalPostgresql.username -}}
-    {{- else -}}
-        {{- .Values.global.postgresqlUsername -}}
-    {{- end -}}
-{{- end -}}
-
-{{- define "caraml-authz-postgresql.database" -}}
-    {{- if index .Values "caraml-authz-postgresql" "enabled" -}}
-        {{- index .Values "caraml-authz-postgresql" "postgresqlDatabase" -}}
-    {{- else if .Values.caramlAuthzExternalPostgresql.enabled -}}
-        {{- .Values.caramlAuthzExternalPostgresql.database -}}
-    {{- else -}}
-        {{- .Values.global.authz.postgresqlDatabase -}}
-    {{- end -}}
-{{- end -}}
-
-
-{{- define "caraml-authz-postgresql.password-secret-name" -}}
-    {{- if index .Values "caraml-authz-postgresql" "enabled" -}}
-        {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
-    {{- else if .Values.caramlAuthzExternalPostgresql.enabled -}}
-        {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name ) .Values.caramlAuthzExternalPostgresql.secretName -}}
-    {{- else -}}
-        {{- printf "%s-postgresql" .Release.Name -}}
-    {{- end -}}
-{{- end -}}
-
-{{- define "caraml-authz-postgresql.password-secret-key" -}}
-    {{- if .Values.caramlAuthzExternalPostgresql.enabled -}}
-        {{- default "password" .Values.caramlAuthzExternalPostgresql.secretKey  -}}
-    {{- else -}}
-        {{- printf "password" -}}
-    {{- end -}}
-{{- end -}}
-
-
 {{- define "caraml-authz.postgresql.dsn" -}}
-    {{- printf "postgres://%s:$(DATABASE_PASSWORD)@%s:5432/%s?sslmode=disable" (include "caraml-authz-postgresql.username" .) (include "caraml-authz-postgresql.host" .) (include "caraml-authz-postgresql.database" .) -}}
+    {{- printf "postgres://%s:$(DATABASE_PASSWORD)@%s:5432/%s?sslmode=disable"
+        (include "common.postgres-username" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Values.global ))
+        (include "common.postgres-host" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Release .Chart ))
+        (include "common.postgres-database" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Values.global "authz" "postgresqlDatabase"))
+    -}}
 {{- end -}}

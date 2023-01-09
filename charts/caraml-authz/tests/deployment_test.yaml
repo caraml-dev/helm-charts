@@ -1,0 +1,115 @@
+suite: Unit tests for authz Deployment
+templates:
+  - deployment.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set database secret key and name from values if chart specific db is enabled
+    set:
+      global: {}
+      caraml-authz-postgresql:
+        enabled: true
+        postgresqlDatabase: authz
+        postgresqlUsername: authz
+      caramlAuthzExternalPostgresql:
+        enabled: false
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-authz$
+      - equal: # check database secret name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-authz-postgresql
+      - equal: # check database secret key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: password
+      - equal: # check database DSN url
+          path: spec.template.spec.containers[0].env[1].value
+          value: postgres://authz:$(DATABASE_PASSWORD)@my-release-authz-postgresql.my-namespace.svc.cluster.local:5432/authz?sslmode=disable
+      - equal: # check database secret name
+          path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-authz-postgresql
+      - equal: # check database secret key
+          path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.key
+          value: password
+      - equal: # check database DSN url
+          path: spec.template.spec.initContainers[0].env[1].value
+          value: postgres://authz:$(DATABASE_PASSWORD)@my-release-authz-postgresql.my-namespace.svc.cluster.local:5432/authz?sslmode=disable
+
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
+    set:
+      global: {}
+      caraml-authz-postgresql:
+        enabled: false
+      caramlAuthzExternalPostgresql:
+        enabled: true
+        address: caraml-authz-ext-db-address
+        username: caraml-authz-ext
+        database: caraml-authz-ext
+        secretName: ext-postgres-secret
+        secretKey: ext-postgres-key
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-authz$
+      - equal: # check database secret name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: ext-postgres-secret
+      - equal: # check database secret key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: ext-postgres-key
+      - equal: # check database DSN url
+          path: spec.template.spec.containers[0].env[1].value
+          value: postgres://caraml-authz-ext:$(DATABASE_PASSWORD)@caraml-authz-ext-db-address:5432/caraml-authz-ext?sslmode=disable
+      - equal: # check database secret name
+          path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.name
+          value: ext-postgres-secret
+      - equal: # check database secret key
+          path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.key
+          value: ext-postgres-key
+      - equal: # check database DSN url
+          path: spec.template.spec.initContainers[0].env[1].value
+          value: postgres://caraml-authz-ext:$(DATABASE_PASSWORD)@caraml-authz-ext-db-address:5432/caraml-authz-ext?sslmode=disable
+
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is disabled
+    set:
+      global:
+        dbSecretKey: "postgresql-password"
+        postgresqlUsername: caraml-authz-global
+        authz:
+          postgresqlDatabase: caraml-authz-global
+      caraml-authz-postgresql:
+        enabled: false
+      caramlAuthzExternalPostgresql:
+        enabled: false
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-authz$
+      - equal: # check database secret name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-postgresql
+      - equal: # check database secret key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: postgresql-password
+      - equal: # check database DSN url
+          path: spec.template.spec.containers[0].env[1].value
+          value: postgres://caraml-authz-global:$(DATABASE_PASSWORD)@my-release-postgresql.my-namespace.svc.cluster.local:5432/caraml-authz-global?sslmode=disable
+      - equal: # check database secret name
+          path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-postgresql
+      - equal: # check database secret key
+          path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.key
+          value: postgresql-password
+      - equal: # check database DSN url
+          path: spec.template.spec.initContainers[0].env[1].value
+          value: postgres://caraml-authz-global:$(DATABASE_PASSWORD)@my-release-postgresql.my-namespace.svc.cluster.local:5432/caraml-authz-global?sslmode=disable
