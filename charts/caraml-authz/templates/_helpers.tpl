@@ -103,9 +103,9 @@ CaraML Authz Postgres related
 
 {{- define "caraml-authz-postgresql.password-secret-key" -}}
     {{- if .Values.caramlAuthzExternalPostgresql.enabled -}}
-        {{- default "postgresql-password" .Values.caramlAuthzExternalPostgresql.secretKey  -}}
+        {{- default "password" .Values.caramlAuthzExternalPostgresql.secretKey  -}}
     {{- else -}}
-        {{- printf "postgresql-password" -}}
+        {{- printf "password" -}}
     {{- end -}}
 {{- end -}}
 
