@@ -9,43 +9,44 @@ release:
 tests:
   - it: should set database secret key and name from values if chart specific db is enabled
     set:
-      global:
-        postgresqlUsername: merlin-global
-        merlin:
-          postgresqlDatabase: merlin-global
+      global: {}
       merlin-postgresql:
         enabled: true
         postgresqlDatabase: merlin
         postgresqlUsername: merlin
       merlinExternalPostgresql:
         enabled: false
-        address: postgresql
-        username: merlin-ext
-        database: merlin-ext
     asserts:
       - isKind:
           of: Deployment
       - matchRegex:
           path: metadata.name
           pattern: my-release-merlin$
-      - equal:
+      - equal: # check database secret name
           path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
           value: my-release-merlin-postgresql
-      - equal:
+      - equal: # check database secret key
           path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
           value: postgresql-password
+      - equal: # check database host url
+          path: spec.template.spec.containers[0].env[4].value
+          value: my-release-merlin-postgresql.my-namespace.svc.cluster.local
+      - equal: # check database username
+          path: spec.template.spec.containers[0].env[5].value
+          value: merlin
+      - equal: # check database name
+          path: spec.template.spec.containers[0].env[7].value
+          value: merlin
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
     set:
-      global:
-        postgresqlUsername: merlin-global
-        merlin:
-          postgresqlDatabase: merlin-global
+      global: {}
       merlin-postgresql:
         enabled: false
-        postgresqlDatabase: merlin
-        postgresqlUsername: merlin
       merlinExternalPostgresql:
         enabled: true
+        address: merlin-ext-db-address
+        username: merlin-ext
+        database: merlin-ext
         secretName: ext-postgres-secret
         secretKey: ext-postgres-key
     asserts:
@@ -54,22 +55,26 @@ tests:
       - matchRegex:
           path: metadata.name
           pattern: my-release-merlin$
-      - equal:
+      - equal: # check database secret name
           path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
           value: ext-postgres-secret
-      - equal:
+      - equal: # check database secret key
           path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
           value: ext-postgres-key
+      - equal: # check database host url
+          path: spec.template.spec.containers[0].env[4].value
+          value: merlin-ext-db-address
+      - equal: # check database username
+          path: spec.template.spec.containers[0].env[5].value
+          value: merlin-ext
+      - equal: # check database name
+          path: spec.template.spec.containers[0].env[7].value
+          value: merlin-ext
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are not set
     set:
-      global:
-        postgresqlUsername: merlin-global
-        merlin:
-          postgresqlDatabase: merlin-global
+      global: {}
       merlin-postgresql:
         enabled: false
-        postgresqlDatabase: merlin
-        postgresqlUsername: merlin
       merlinExternalPostgresql:
         enabled: true
     asserts:
@@ -78,10 +83,10 @@ tests:
       - matchRegex:
           path: metadata.name
           pattern: my-release-merlin$
-      - equal:
+      - equal: # check database secret name
           path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
           value: my-release-merlin-external-postgresql
-      - equal:
+      - equal: # check database secret key
           path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
           value: postgresql-password
   - it: should set database secret key and name from values if chart specific db is disabled, external db is disabled
@@ -100,9 +105,18 @@ tests:
       - matchRegex:
           path: metadata.name
           pattern: my-release-merlin$
-      - equal:
+      - equal: # check database secret name
           path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
           value: my-release-postgresql
-      - equal:
+      - equal: # check database secret key
           path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
           value: postgresql-password
+      - equal: # check database host url
+          path: spec.template.spec.containers[0].env[4].value
+          value: my-release-postgresql.my-namespace.svc.cluster.local
+      - equal: # check database username
+          path: spec.template.spec.containers[0].env[5].value
+          value: merlin-global
+      - equal: # check database name
+          path: spec.template.spec.containers[0].env[7].value
+          value: merlin-global

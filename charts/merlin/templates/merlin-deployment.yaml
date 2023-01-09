@@ -73,16 +73,16 @@ spec:
           - name: PORT
             value: "{{ .Values.service.internalPort }}"
           - name: DATABASE_HOST
-            value: {{ template "merlin-postgresql.host" . }}
+            value: {{ include "common.postgres-host" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Release .Chart ) }}
           - name: DATABASE_USER
-            value: {{ template "merlin-postgresql.username" . }}
+            value: {{ include "common.postgres-username" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global ) }}
           - name: DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: {{ include "common.postgres-password-secret-name" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Release .Chart ) }}
                 key: {{ include "common.postgres-password-secret-key" (list .Values.merlinExternalPostgresql) }}
           - name: DATABASE_NAME
-            value: {{ template "merlin-postgresql.database" . }}
+            value: {{ include "common.postgres-database" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global "merlin" "postgresqlDatabase") }}
           - name: REACT_APP_OAUTH_CLIENT_ID
             value: {{ include "common.set-value" (list .Values.ui.oauthClientID $globOauthClientID) | quote }}
           - name: REACT_APP_ENVIRONMENT
