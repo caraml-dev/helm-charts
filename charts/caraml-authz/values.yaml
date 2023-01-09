@@ -44,6 +44,7 @@ caramlAuthzExternalPostgresql:
 
 caraml-authz-postgresql:
   enabled: true
+  # -- Postgres chart 11.8 needs username and database to be specified in under `auth` to create them when initialized.
   auth:
     username: oryketo
     database: oryketo

@@ -27,8 +27,7 @@ Helm chart for deploying Ory Keto
 | bootstrap.resources.requests.cpu | string | `"10m"` |  |
 | bootstrap.resources.requests.memory | string | `"50Mi"` |  |
 | bootstrap.roles | string | `nil` |  |
-| caraml-authz-postgresql.auth.database | string | `"oryketo"` |  |
-| caraml-authz-postgresql.auth.username | string | `"oryketo"` |  |
+| caraml-authz-postgresql.auth | object | `{"database":"oryketo","username":"oryketo"}` | Postgres chart 11.8 needs username and database to be specified in under `auth` to create them when initialized. |
 | caraml-authz-postgresql.enabled | bool | `true` |  |
 | caraml-authz-postgresql.nameOverride | string | `"authz-postgresql"` |  |
 | caraml-authz-postgresql.persistence.accessMode | string | `"ReadWriteOnce"` |  |
