@@ -3,6 +3,27 @@ entries:
   authz:
   - apiVersion: v2
     appVersion: 0.4.3
+    created: "2023-01-09T05:21:10.111637409Z"
+    dependencies:
+    - alias: caraml-authz-postgresql
+      condition: caraml-authz-postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.8.0
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.7
+    description: Helm chart for deploying Ory Keto
+    digest: 761ec0cd5596ce1707b99192272efc3c0d54e944fd24f7b80ba3df45d259e8c5
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: authz
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/authz-0.1.4/authz-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 0.4.3
     created: "2023-01-03T05:50:46.83796575Z"
     dependencies:
     - alias: caraml-authz-postgresql
@@ -4640,4 +4661,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2023-01-03T07:23:37.792137395Z"
+generated: "2023-01-09T05:21:10.112814015Z"
