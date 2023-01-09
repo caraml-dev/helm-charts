@@ -25,8 +25,8 @@ spec:
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: "{{ template "caraml-authz-postgresql.password-secret-name" . }}"
-              key: "{{ template "caraml-authz-postgresql.password-secret-key" . }}"
+              name: {{ include "common.postgres-password-secret-name" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Release .Chart ) | quote }}
+              key: {{ include "common.postgres-password-secret-key" (list .Values.caramlAuthzExternalPostgresql (default "password" .Values.global.dbSecretKey)) | quote }}
         - name: DSN
           value: {{ template "caraml-authz.postgresql.dsn" . }}
         resources:
@@ -51,8 +51,8 @@ spec:
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: "{{ template "caraml-authz-postgresql.password-secret-name" . }}"
-              key: "{{ template "caraml-authz-postgresql.password-secret-key" . }}"
+              name: {{ include "common.postgres-password-secret-name" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Release .Chart ) | quote }}
+              key: {{ include "common.postgres-password-secret-key" (list .Values.caramlAuthzExternalPostgresql (default "password" .Values.global.dbSecretKey)) | quote }}
         - name: DSN
           value: {{ template "caraml-authz.postgresql.dsn" . }}
         resources:
