@@ -2121,6 +2121,16 @@ entries:
     version: 1.8.1
   common:
   - apiVersion: v2
+    appVersion: 0.2.8
+    created: "2023-01-09T10:50:04.155467198Z"
+    description: A Helm chart for Kubernetes
+    digest: e206eba579e3bf82970ec0a2d5239d445ea47fa2d21cb462ad666c159749ad56
+    name: common
+    type: library
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/common-0.2.8/common-0.2.8.tgz
+    version: 0.2.8
+  - apiVersion: v2
     appVersion: 0.2.7
     created: "2023-01-03T05:03:30.239025292Z"
     description: A Helm chart for Kubernetes
@@ -4661,4 +4671,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2023-01-09T05:21:10.112814015Z"
+generated: "2023-01-09T10:50:04.155747004Z"
