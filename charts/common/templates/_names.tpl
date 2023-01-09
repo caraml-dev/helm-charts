@@ -87,7 +87,8 @@ Get postgres database secret name in the following order of precendence: Chart s
 
 {{/*
 Get postgres secret key in the following order of precendence: Chart external Postgresql enabled and specific key mentioned > (default)"postgresql-password" , Arguments:
-2) external postgresql object
+1) external postgresql object
+2) default secret key
 */}}
 {{- define "common.postgres-password-secret-key" -}}
 {{- $externalPostgresql := index . 0 -}}
