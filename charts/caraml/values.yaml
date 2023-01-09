@@ -6,6 +6,7 @@ global:
   postgresqlUsername: caraml
   postgresqlDatabase: caraml
   protocol: "http"
+  dbSecretKey: "postgresql-password"
   # -- istioIngressIP takes precedence over domain. Used for local deployment
   istioLookUp:
     namespace: istio-system

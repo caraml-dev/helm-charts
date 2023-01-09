@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.4.13](https://img.shields.io/badge/Version-0.4.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.4.14](https://img.shields.io/badge/Version-0.4.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -14,7 +14,7 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.3 |
+| https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.5 |
 | https://caraml-dev.github.io/helm-charts | caraml-routes | 0.1.6 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.7 |
@@ -72,6 +72,7 @@ A Helm chart for deploying CaraML components
 | clusterLocalGateway.hook.weight | int | `1` |  |
 | global.authz.postgresqlDatabase | string | `"authz"` |  |
 | global.authz.serviceName | string | `"caraml-authz"` |  |
+| global.dbSecretKey | string | `"postgresql-password"` |  |
 | global.hosts.mlflow[0] | string | `"mlflow"` |  |
 | global.hosts.mlp[0] | string | `"console"` |  |
 | global.hosts.mlpdocs[0] | string | `"docs"` |  |
