@@ -17,14 +17,14 @@ dependencies:
   condition: caraml-authz.enabled
   name: authz
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.3
+  version: 0.1.4
 - condition: caraml-routes.enabled
   name: caraml-routes
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.1.6
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.7
+  version: 0.2.8
 - alias: base
   condition: base.enabled
   name: base
@@ -60,4 +60,4 @@ maintainers:
   name: caraml-dev
 name: caraml
 type: application
-version: 0.4.13
+version: 0.4.15
