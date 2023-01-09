@@ -9,19 +9,12 @@ release:
 tests:
   - it: should set database secret key and name from values if chart specific db is enabled
     set:
-      global:
-        postgresqlUsername: mlp-global
-        mlp:
-          postgresqlDatabase: mlp-global
+      global: {}
       postgresql:
         enabled: true
         postgresqlDatabase: mlp
         postgresqlUsername: mlp
-      externalPostgresql:
-        enabled: false
-        address: postgresql
-        username: mlp-ext
-        database: mlp-ext
+      externalPostgresql: {}
     asserts:
       - isKind:
           of: Deployment
@@ -36,14 +29,9 @@ tests:
           value: postgresql-password
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
     set:
-      global:
-        postgresqlUsername: mlp-global
-        mlp:
-          postgresqlDatabase: mlp-global
+      global: {}
       postgresql:
         enabled: false
-        postgresqlDatabase: mlp
-        postgresqlUsername: mlp
       externalPostgresql:
         enabled: true
         secretName: ext-postgres-secret
@@ -62,14 +50,9 @@ tests:
           value: ext-postgres-key
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are not set
     set:
-      global:
-        postgresqlUsername: mlp-global
-        mlp:
-          postgresqlDatabase: mlp-global
+      global: {}
       postgresql:
         enabled: false
-        postgresqlDatabase: mlp
-        postgresqlUsername: mlp
       externalPostgresql:
         enabled: true
     asserts:
