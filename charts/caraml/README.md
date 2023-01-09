@@ -17,7 +17,7 @@ A Helm chart for deploying CaraML components
 | https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.5 |
 | https://caraml-dev.github.io/helm-charts | caraml-routes | 0.1.6 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
-| https://caraml-dev.github.io/helm-charts | common | 0.2.7 |
+| https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
