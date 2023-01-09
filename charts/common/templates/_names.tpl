@@ -91,11 +91,10 @@ Get postgres secret key in the following order of precendence: Chart external Po
 */}}
 {{- define "common.postgres-password-secret-key" -}}
 {{- $externalPostgresql := index . 0 -}}
-{{- if lt (len .) 2 -}}
-    {{- $secretKey := "postgresql-password" -}}
-{{- else -}}
-    {{- $secretKey := index . 1 -}}
-{{- end-}}
+{{- $secretKey := "postgresql-password" -}}
+{{- if ge (len .) 2 -}}
+    {{- $secretKey = index . 1 -}}
+{{- end -}}
     {{- if and $externalPostgresql.enabled -}}
         {{- default $secretKey $externalPostgresql.secretKey  -}}
     {{- else -}}
