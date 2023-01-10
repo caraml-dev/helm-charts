@@ -95,6 +95,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
 | ingress.enabled | bool | `false` |  |
+| kserve.chartValues.knativeServingIstio.chartValues.istioIngressGateway.helmChart.namespace | string | `"istio-system"` |  |
 | kserve.enabled | bool | `true` |  |
 | kserve.helmChart.chart | string | `"kserve"` |  |
 | kserve.helmChart.createNamespace | bool | `true` |  |
