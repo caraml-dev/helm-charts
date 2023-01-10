@@ -7,10 +7,10 @@ dependencies:
   version: 7.0.2
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.7
+  version: 0.2.8
 description: MLP API
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: mlp
-version: 0.4.8
+version: 0.4.9
