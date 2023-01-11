@@ -21,7 +21,7 @@ A Helm chart for deploying CaraML components
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | merlin | 0.9.32 |
+| https://caraml-dev.github.io/helm-charts | merlin | 0.9.29 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.4.11 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
 | https://charts.jetstack.io | cert-manager | v1.8.2 |
