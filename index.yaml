@@ -3493,6 +3493,51 @@ entries:
   merlin:
   - apiVersion: v2
     appVersion: 0.24.0
+    created: "2023-01-11T09:11:36.64032165Z"
+    dependencies:
+    - alias: merlin-postgresql
+      condition: merlin-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: mlflow-postgresql
+      condition: mlflow-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: vault
+      condition: vault.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.11
+    - alias: kserve
+      condition: kserve.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: minio
+      condition: minio.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: Kubernetes-friendly ML model management, deployment, and serving.
+    digest: 8a5e074289fb9e558d3dd727ee90e0a3bbbfbf4a238b4649cb4bfd38045d58e7
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: merlin
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/merlin-0.9.32/merlin-0.9.32.tgz
+    version: 0.9.32
+  - apiVersion: v2
+    appVersion: 0.24.0
     created: "2023-01-11T06:08:36.480583229Z"
     dependencies:
     - alias: merlin-postgresql
@@ -5066,4 +5111,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.2.0/mlp-0.2.0.tgz
     version: 0.2.0
-generated: "2023-01-11T08:38:18.843573877Z"
+generated: "2023-01-11T09:11:36.640674956Z"
