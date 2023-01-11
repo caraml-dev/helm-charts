@@ -91,60 +91,6 @@ app.kubernetes.io/part-of: caraml
 {{- end }}
 
 
-
-{{/*
-Merlin Postgres related
-*/}}
-
-{{- define "merlin-postgresql.host" -}}
-{{- if index .Values "merlin-postgresql" "enabled" -}}
-    {{- printf "%s-merlin-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- else if .Values.merlinExternalPostgresql.enabled -}}
-    {{- .Values.merlinExternalPostgresql.address -}}
-{{- else -}}
-    {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
-
-
-{{- define "merlin-postgresql.username" -}}
-    {{- if index .Values "merlin-postgresql" "enabled" -}}
-        {{- index .Values "merlin-postgresql" "postgresqlUsername" -}}
-    {{- else if .Values.merlinExternalPostgresql.enabled -}}
-        {{- .Values.merlinExternalPostgresql.username -}}
-    {{- else -}}
-        {{- .Values.global.postgresqlUsername -}}
-    {{- end -}}
-{{- end -}}
-
-{{- define "merlin-postgresql.database" -}}
-    {{- if index .Values "merlin-postgresql" "enabled" -}}
-        {{- index .Values "merlin-postgresql" "postgresqlDatabase" -}}
-    {{- else if .Values.merlinExternalPostgresql.enabled -}}
-        {{- .Values.merlinExternalPostgresql.database -}}
-    {{- else -}}
-        {{- .Values.global.merlin.postgresqlDatabase -}}
-    {{- end -}}
-{{- end -}}
-
-{{- define "merlin-postgresql.password-secret-name" -}}
-    {{- if index .Values "merlin-postgresql" "enabled" -}}
-        {{- printf "%s-%s-postgresql" .Release.Name .Chart.Name -}}
-    {{- else if .Values.merlinExternalPostgresql.enabled -}}
-        {{- default (printf "%s-%s-external-postgresql" .Release.Name .Chart.Name) .Values.merlinExternalPostgresql.secretName -}}
-    {{- else -}}
-        {{- printf "%s-postgresql" .Release.Name -}}
-    {{- end -}}
-{{- end -}}
-
-{{- define "merlin-postgresql.password-secret-key" -}}
-    {{- if and .Values.merlinExternalPostgresql.enabled -}}
-        {{- default "postgresql-password" .Values.merlinExternalPostgresql.secretKey  -}}
-    {{- else -}}
-        {{- printf "postgresql-password" -}}
-    {{- end -}}
-{{- end -}}
-
 {{/*
 MLflow Postgres related
 */}}
