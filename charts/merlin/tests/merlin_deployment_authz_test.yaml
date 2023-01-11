@@ -1,0 +1,41 @@
+suite: Unit tests for merlin Deployment
+templates:
+  - merlin-deployment.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set authz url from values if set
+    set:
+      global: {}
+      authorization:
+        enabled: true
+        serverUrl: authz-server-url
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-merlin$
+      - equal:
+          path: spec.template.spec.containers[0].env[48].value
+          value: authz-server-url
+  - it: should set authz url from values if global is set
+    set:
+      global:
+        protocol: http
+        authz:
+          serviceName: caraml-authz
+      authorization:
+        enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-merlin$
+      - equal:
+          path: spec.template.spec.containers[0].env[48].value
+          value: http://caraml-authz
