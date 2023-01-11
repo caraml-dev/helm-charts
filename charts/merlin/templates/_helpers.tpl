@@ -187,7 +187,7 @@ MLflow Postgres related
 {{- end }}
 {{- end }}
 
-{{- define "authorization.server.url" -}}
+{{- define "merlin.authorization.server.url" -}}
     {{- $protocol := (default "http" .Values.global.protocol ) }}
     {{- $globalAuthzUrl := "" }}
     {{- if and .Values.global (hasKey .Values.global "authz") }}
