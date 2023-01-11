@@ -426,3 +426,9 @@ kserve:
     release: kserve
     namespace: kserve
     createNamespace: true
+  chartValues:
+    knativeServingIstio:
+      chartValues:
+        istioIngressGateway:
+          helmChart:
+            namespace: "istio-system"

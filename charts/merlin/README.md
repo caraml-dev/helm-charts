@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.30](https://img.shields.io/badge/Version-0.9.30-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
+![Version: 0.9.31](https://img.shields.io/badge/Version-0.9.31-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -95,6 +95,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
 | ingress.enabled | bool | `false` |  |
+| kserve.chartValues.knativeServingIstio.chartValues.istioIngressGateway.helmChart.namespace | string | `"istio-system"` |  |
 | kserve.enabled | bool | `true` |  |
 | kserve.helmChart.chart | string | `"kserve"` |  |
 | kserve.helmChart.createNamespace | bool | `true` |  |

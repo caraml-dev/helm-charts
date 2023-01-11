@@ -186,3 +186,14 @@ MLflow Postgres related
 {{- printf ""}}
 {{- end }}
 {{- end }}
+
+{{- define "authorization.server.url" -}}
+    {{- $protocol := (default "http" .Values.global.protocol ) }}
+    {{- $globalAuthzUrl := "" }}
+    {{- if and .Values.global (hasKey .Values.global "authz") }}
+        {{- if .Values.global.authz.serviceName }}
+            {{- $globalAuthzUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "authz" (list "serviceName")))) }}
+        {{- end }}
+    {{- end }}
+    {{- printf "%s" (include "common.set-value" (list .Values.authorization.serverUrl $globalAuthzUrl)) -}}
+{{- end -}}
