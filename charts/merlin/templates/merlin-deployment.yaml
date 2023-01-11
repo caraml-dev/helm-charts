@@ -210,7 +210,7 @@ spec:
             value: "{{ .Values.authorization.enabled }}"
           {{- if .Values.authorization.enabled }}
           - name: AUTHORIZATION_SERVER_URL
-            value: {{ include "authorization.server.url" . | quote }}
+            value: {{ include "merlin.authorization.server.url" . | quote }}
           {{- end }}
           - name: MONITORING_DASHBOARD_ENABLED
             value: "{{ .Values.monitoring.enabled }}"
