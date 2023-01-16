@@ -1,3 +1,7 @@
+global:
+  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+  extraPodLabels: {}
+
 observationService:
   image:
     # -- Docker registry for Observation Service image
@@ -5,7 +9,7 @@ observationService:
     # -- Docker image repository for Observation Service
     repository: caraml-dev/timber/observation-service
     # -- Docker image tag for Observation Service
-    tag: v0.1.0
+    tag: v0.0.0-build.15-b8afdb5
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
@@ -148,7 +152,3 @@ fluentd:
     maxReplicas: 2
     # -- CPU utilization percentage threshold to activate HPA scaling
     targetCPUUtilizationPercentage: 80
-
-global:
-  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
-  extraPodLabels: {}

@@ -63,7 +63,7 @@ The following table lists the configurable parameters of the Observation Service
 | observationService.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | observationService.image.registry | string | `"ghcr.io"` | Docker registry for Observation Service image |
 | observationService.image.repository | string | `"caraml-dev/timber/observation-service"` | Docker image repository for Observation Service |
-| observationService.image.tag | string | `"v0.1.0"` | Docker image tag for Observation Service |
+| observationService.image.tag | string | `"v0.0.0-build.15-b8afdb5"` | Docker image tag for Observation Service |
 | observationService.ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule, useful when there are multiple ingress controllers installed |
 | observationService.ingress.enabled | bool | `false` | Enable ingress to provision Ingress resource for external access to Observation Service |
 | observationService.ingress.host | string | `""` | Set host value to enable name based virtual hosting. This allows routing HTTP traffic to multiple host names at the same IP address. If no host is specified, the ingress rule applies to all inbound HTTP traffic through the IP address specified. https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting |

@@ -1,6 +1,29 @@
 {{/*
 Expand the name of the chart.
 */}}
+
+{{- define "observation-service.resource-prefix-with-release-name" -}}
+    {{- if .Values.fullnameOverride -}}
+        {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- $name := default .Chart.Name .Values.nameOverride -}}
+        {{- if contains $name .Release.Name -}}
+            {{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+        {{- else -}}
+            {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- define "observation-service.resource-prefix" -}}
+    {{- if .Values.nameOverride -}}
+        {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- $deployedChart := .Chart.Name -}}
+        {{ printf "%s"  $deployedChart | trunc 63 | trimSuffix "-" }}
+    {{- end -}}
+{{- end -}}
+
 {{- define "observation-service.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
