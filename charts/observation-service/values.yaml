@@ -88,6 +88,12 @@ observationService:
     # -- CPU utilization percentage threshold to activate HPA scaling
     targetCPUUtilizationPercentage: 80
 
+  # -- Service Monitor configuration for Observation Service
+  monitoring:
+    enabled: false
+    # baseURL: ""
+    # jobBaseURL: ""
+
 fluentd:
   # -- Flag to toggle deployment of Observation Service fluentd
   enabled: false
