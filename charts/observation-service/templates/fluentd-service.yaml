@@ -1,0 +1,32 @@
+{{- if .Values.fluentd.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-fluentd
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}-fluentd
+    {{- include "observation-service.labels" . | nindent 4 }}
+{{ if .Values.fluentd.extraLabels -}}
+{{ toYaml .Values.fluentd.extraLabels | indent 4 -}}
+{{- end }}
+spec:
+  selector:
+    app: {{ .Release.Name }}-fluentd
+    release: {{ .Release.Name }}
+  type: {{ .Values.fluentd.service.type }}
+  {{- if .Values.fluentd.service.multiPort.enabled }}
+  ports:
+  {{- range .Values.fluentd.service.multiPorts }}
+  - name: {{ .name }}
+    port: {{ .port }}
+    targetPort: {{ .targetPort }}
+  {{- end }}
+  {{ else }}
+  ports:
+  - name: http
+    port: {{ .Values.fluentd.service.externalPort }}
+    targetPort: {{ .Values.fluentd.service.internalPort }}
+    protocol: TCP
+  {{ end }}
+{{- end -}}

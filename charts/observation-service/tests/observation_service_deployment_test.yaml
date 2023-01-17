@@ -1,0 +1,24 @@
+suite: Unit tests for Observation Service Deployment
+templates:
+  - deployment.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set Fluentd GCP secret if Fluentd is configured for BQ sink writing
+    set:
+      global: {}
+      fluentd:
+        gcpServiceAccount:
+          enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-observation-service$
+      - equal: # check GCP service account volume
+          path: spec.template.spec.volumes[0].name
+          value: gcp-service-account
