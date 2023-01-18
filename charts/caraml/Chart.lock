@@ -9,7 +9,7 @@ dependencies:
   repository: https://charts.helm.sh/stable
   version: 7.0.2
 - name: authz
-  repository: file://../caraml-authz
+  repository: https://caraml-dev.github.io/helm-charts
   version: 0.1.6
 - name: caraml-routes
   repository: https://caraml-dev.github.io/helm-charts
@@ -35,5 +35,5 @@ dependencies:
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.8.2
-digest: sha256:8f3f9a68081cc2166bb8b50367c0fabf1a44172c452b8b373fccad55bc5fd9aa
-generated: "2023-01-18T15:35:31.856524+05:30"
+digest: sha256:fd5fce0de3ca23defdc7eab779c38819d7031628f7d8c83b8595c3fbb6041259
+generated: "2023-01-18T16:07:56.016098+05:30"
