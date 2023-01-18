@@ -1,4 +1,6 @@
 {{- $configMapName := printf "%s-bootstrap-cm" (include "caraml-authz.resource-prefix" .) }}
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "authz" (list "serviceName")) }}
+{{- $serviceName := include "common.set-value" (list (include "caraml-authz.fullname" .) $globServiceName) }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -17,7 +19,7 @@ spec:
         args: ["engines", "acp", "ory", "roles", "import", "glob", "/etc/keto/bootstrap-role.json"]
         env:
         - name: KETO_URL
-          value: {{ printf "http://%s" ( include "caraml-authz.fullname" . )}}
+          value: {{ printf "http://%s" $serviceName }}
         resources:
 {{- toYaml .Values.bootstrap.resources | nindent 10 }}
         volumeMounts:
