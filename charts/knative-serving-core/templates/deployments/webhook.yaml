@@ -20,7 +20,9 @@ metadata:
     app.kubernetes.io/component: webhook
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
+{{- if .Values.webhook.autoscaling.enabled }}
   replicas: {{ .Values.webhook.replicaCount }}
+{{- end}}
   selector:
     matchLabels:
       app: webhook
