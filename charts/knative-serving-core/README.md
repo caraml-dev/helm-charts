@@ -81,12 +81,12 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | controller.autoscaling.minReplicas | int | `1` | Minimum number of replicas for controller. |
 | controller.autoscaling.targetCPUUtilizationPercentage | int | `50` | Target CPU utlisation before it scales up/down. |
 | controller.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/controller"` | Repository of the controller image |
-| controller.image.sha | string | `"f81c354e13768a11ecdcb84c512af339a0cef596a418daa932e378c6c9c2c87e"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
+| controller.image.sha | string | `"97125c7b1ee8c188ddb9d39786161f18bc9166d4a81a01ceae320863c9d3c4e6"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.image.tag | string | `""` | Tag of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.replicaCount | int | `1` | Number of replicas for the controller deployment. |
 | controller.resources | object | `{"limits":{"cpu":"1000m","memory":"1000Mi"},"requests":{"cpu":"500m","memory":"500Mi"}}` | Resources requests and limits for controller. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | domainMapping.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping"` | Repository of the domain mapping image |
-| domainMapping.image.sha | string | `"ed47da2c95a9bf73dd3b511323023578e15730864852fb0c869f8f64a2bab39f"` | SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority) |
+| domainMapping.image.sha | string | `"ff5c657ea01d3377be33d88bd3756f3fde49d99b1796c7adf5463b4eb20f37af"` | SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority) |
 | domainMapping.image.tag | string | `""` | Tag of the domain mapping image, either provide tag or SHA (SHA will be given priority) |
 | domainMapping.replicaCount | int | `1` | Number of replicas for the domain mapping deployment. |
 | domainMapping.resources | object | `{"limits":{"cpu":"300m","memory":"400Mi"},"requests":{"cpu":"30m","memory":"40Mi"}}` | Resources requests and limits for domain mapping. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |

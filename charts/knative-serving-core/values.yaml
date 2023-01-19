@@ -928,7 +928,7 @@ controller:
     # -- Tag of the controller image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the controller image, either provide tag or SHA (SHA will be given priority)
-    sha: "f81c354e13768a11ecdcb84c512af339a0cef596a418daa932e378c6c9c2c87e"
+    sha: "97125c7b1ee8c188ddb9d39786161f18bc9166d4a81a01ceae320863c9d3c4e6"
   # -- Number of replicas for the controller deployment.
   replicaCount: 1
   # -- Resources requests and limits for controller. This should be set
@@ -949,7 +949,7 @@ domainMapping:
     # -- Tag of the domain mapping image, either provide tag or SHA (SHA will be given priority)
     tag: ""
     # -- SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority)
-    sha: "ed47da2c95a9bf73dd3b511323023578e15730864852fb0c869f8f64a2bab39f"
+    sha: "ff5c657ea01d3377be33d88bd3756f3fde49d99b1796c7adf5463b4eb20f37af"
   # -- Number of replicas for the domain mapping deployment.
   replicaCount: 1
   # -- Resources requests and limits for domain mapping. This should be set
