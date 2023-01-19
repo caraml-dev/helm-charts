@@ -20,7 +20,9 @@ metadata:
     app.kubernetes.io/component: activator
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
+{{- if not .Values.activator.autoscaling.enabled }}
   replicas: {{ .Values.activator.replicaCount }}
+{{- end}}
   selector:
     matchLabels:
       app: activator
