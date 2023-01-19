@@ -20,7 +20,9 @@ metadata:
     app.kubernetes.io/component: controller
     {{- include "knative-serving-core.labels" . | nindent 4 }}
 spec:
+{{- if .Values.controller.autoscaling.enabled }}
   replicas: {{ .Values.controller.replicaCount }}
+{{- end}}
   selector:
     matchLabels:
       app: controller
