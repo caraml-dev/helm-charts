@@ -1,11 +1,11 @@
 apiVersion: v2
-appVersion: v1.3.0
+appVersion: v1.7.1
 dependencies:
 - alias: knativeServingCore
   condition: knativeServingCore.enabled
   name: knative-serving-core
   repository: https://caraml-dev.github.io/helm-charts
-  version: 1.3.3
+  version: 1.7.3
 - alias: istiod
   condition: istiod.enabled
   name: generic-dep-installer
@@ -32,4 +32,4 @@ maintainers:
   name: caraml-dev
 name: knative-serving-istio
 type: application
-version: 1.4.0
+version: 1.7.1
