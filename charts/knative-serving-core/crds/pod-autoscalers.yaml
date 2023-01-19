@@ -19,12 +19,11 @@ kind: CustomResourceDefinition
 metadata:
   name: podautoscalers.autoscaling.internal.knative.dev
   labels:
-    helm.sh/chart: knative-serving-core
-    app.kubernetes.io/version: "1.3.2"
-    serving.knative.dev/release: "v1.3.2"
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: knative-serving
+    app.kubernetes.io/version: "1.7.4"
     knative.dev/crd-install: "true"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: knative-serving-core
   annotations:
     "helm.sh/resource-policy": keep
 spec:
@@ -61,7 +60,7 @@ spec:
           jsonPath: ".status.conditions[?(@.type=='Ready')].reason"
       schema:
         openAPIV3Schema:
-          description: 'PodAutoscaler is a Knative abstraction that encapsulates the interface by which Knative components instantiate autoscalers.  This definition is an abstraction that may be backed by multiple definitions.  For more information, see the Knative Pluggability presentation: https://docs.google.com/presentation/d/10KWynvAJYuOEWy69VBa6bHJVCqIsz1TNdEKosNvcpPY/edit'
+          description: 'PodAutoscaler is a Knative abstraction that encapsulates the interface by which Knative components instantiate autoscalers.  This definition is an abstraction that may be backed by multiple definitions.  For more information, see the Knative Pluggability presentation: https://docs.google.com/presentation/d/19vW9HFZ6Puxt31biNZF3uLRejDmu82rxJIk1cWmxF7w/edit'
           type: object
           properties:
             apiVersion:
@@ -102,6 +101,7 @@ spec:
                     name:
                       description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                       type: string
+                  x-kubernetes-map-type: atomic
             status:
               description: Status communicates the observed state of the PodAutoscaler (from the controller).
               type: object
@@ -131,7 +131,6 @@ spec:
                       lastTransitionTime:
                         description: LastTransitionTime is the last time the condition transitioned from one status to another. We use VolatileTime in place of metav1.Time to exclude this from creating equality.Semantic differences (all other things held constant).
                         type: string
-                        format: date-time
                       message:
                         description: A human readable message indicating details about the transition.
                         type: string

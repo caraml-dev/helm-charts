@@ -33,8 +33,7 @@ webhooks:
       - apiGroups:
           - serving.knative.dev
         apiVersions:
-          - v1alpha1
-          - v1beta1
+          - "*"
         operations:
           - CREATE
           - UPDATE
@@ -42,3 +41,4 @@ webhooks:
         scope: "*"
         resources:
           - domainmappings
+          - domainmappings/status

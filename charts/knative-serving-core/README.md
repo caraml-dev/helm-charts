@@ -1,8 +1,8 @@
 # knative-serving-core
 
 ---
-![Version: 1.3.3](https://img.shields.io/badge/Version-1.3.3-informational?style=flat-square)
-![AppVersion: v1.3.2](https://img.shields.io/badge/AppVersion-v1.3.2-informational?style=flat-square)
+![Version: 1.7.4](https://img.shields.io/badge/Version-1.7.4-informational?style=flat-square)
+![AppVersion: v1.7.4](https://img.shields.io/badge/AppVersion-v1.7.4-informational?style=flat-square)
 
 Installs Knative Serving core and CRDs.
 
@@ -60,38 +60,38 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | activator.autoscaling.minReplicas | int | `1` | Minimum number of replicas for activator. |
 | activator.autoscaling.targetCPUUtilizationPercentage | int | `50` | Target CPU utlisation before it scales up/down. |
 | activator.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/activator"` | Repository of the activator image |
-| activator.image.sha | string | `"01270196a1eba7e5fd5fe34b877c82a7e8c93861de535a82342717d28f81d671"` | SHA256 of the activator image, either provide tag or SHA (SHA will be given priority) |
+| activator.image.sha | string | `"2a71f86db077e2af4dc02cd8662c545b8206c6d5c853056225967c719251cc20"` | SHA256 of the activator image, either provide tag or SHA (SHA will be given priority) |
 | activator.image.tag | string | `""` | Tag of the activator image, either provide tag or SHA (SHA will be given priority) |
 | activator.replicaCount | int | `1` | Number of replicas for the activator deployment. |
 | activator.resources | object | `{"limits":{"cpu":"1000m","memory":"600Mi"},"requests":{"cpu":"300m","memory":"100Mi"}}` | Resources requests and limits for activator. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | autoscaler.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler"` | Repository of the autoscaler image |
-| autoscaler.image.sha | string | `"c5a03a236bfe2abdc7d40203d787668c8accaaf39062a86e68b4d403077835e2"` | SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
+| autoscaler.image.sha | string | `"cbc663928cc3e3dc60c1d6cdd054d203895c4ee0ebe2b19d86804bd708f3fa2e"` | SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | autoscaler.image.tag | string | `""` | Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | autoscaler.replicaCount | int | `1` | Number of replicas for the autoscaler deployment. |
 | autoscaler.resources | object | `{"limits":{"cpu":"1000m","memory":"1000Mi"},"requests":{"cpu":"500m","memory":"500Mi"}}` | Resources requests and limits for autoscaler. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | autoscalerHpa.enabled | bool | `true` |  |
 | autoscalerHpa.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler-hpa"` | Repository of the autoscaler image |
-| autoscalerHpa.image.sha | string | `"256373054915e035d3f5df214ca80eea7a235526c93348933f42acf0437bb1a2"` | SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
+| autoscalerHpa.image.sha | string | `"f81c354e13768a11ecdcb84c512af339a0cef596a418daa932e378c6c9c2c87e"` | SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | autoscalerHpa.image.tag | string | `""` | Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | autoscalerHpa.replicaCount | int | `1` | Number of replicas for the autoscaler deployment. |
 | autoscalerHpa.resources | object | `{"limits":{"cpu":"1000m","memory":"256Mi"},"requests":{"cpu":"500m","memory":"128Mi"}}` | Resources requests and limits for autoscaler. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
-| config | object | `{"autoscaler":{},"buckets":"1","defaults":{},"deployment":{"queueSidecarImage":"gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:2249dc873059c0dfc0783bce5f614a0d8ada3d4499d63aa1dffd19f2788ba64b"},"domain":{},"features":{},"gc":{},"leaderElection":{"lease-duration":"60s","renew-deadline":"40s","retry-period":"10s"},"logging":{"logging.request-log-template":""},"network":{},"observability":{},"tracing":{}}` | Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml |
+| config | object | `{"autoscaler":{},"defaults":{},"deployment":{"queueSidecarImage":"gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:fec35c5d66dad3d520e39de7f4f75ec6057962401f85761c143efc902f34efe7"},"domain":{},"features":{},"gc":{},"leaderElection":{"buckets":"1","lease-duration":"60s","renew-deadline":"40s","retry-period":"10s"},"logging":{"logging.request-log-template":""},"network":{},"observability":{},"tracing":{}}` | Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml |
 | controller.autoscaling.enabled | bool | `true` | Enables autoscaling for controller deployment. |
 | controller.autoscaling.maxReplicas | int | `20` | Maximum number of replicas for controller. |
 | controller.autoscaling.minReplicas | int | `1` | Minimum number of replicas for controller. |
 | controller.autoscaling.targetCPUUtilizationPercentage | int | `50` | Target CPU utlisation before it scales up/down. |
 | controller.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/controller"` | Repository of the controller image |
-| controller.image.sha | string | `"cc33e6392485e9d015886d4443324b9a41c17f6ce98b31ef4b19e47325a9a7e8"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
+| controller.image.sha | string | `"f81c354e13768a11ecdcb84c512af339a0cef596a418daa932e378c6c9c2c87e"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.image.tag | string | `""` | Tag of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.replicaCount | int | `1` | Number of replicas for the controller deployment. |
 | controller.resources | object | `{"limits":{"cpu":"1000m","memory":"1000Mi"},"requests":{"cpu":"500m","memory":"500Mi"}}` | Resources requests and limits for controller. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | domainMapping.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping"` | Repository of the domain mapping image |
-| domainMapping.image.sha | string | `"00a26f25ef119952b0ecf890f9f9dcb877b5f5d496f43c44756b93343d71b66e"` | SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority) |
+| domainMapping.image.sha | string | `"ed47da2c95a9bf73dd3b511323023578e15730864852fb0c869f8f64a2bab39f"` | SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority) |
 | domainMapping.image.tag | string | `""` | Tag of the domain mapping image, either provide tag or SHA (SHA will be given priority) |
 | domainMapping.replicaCount | int | `1` | Number of replicas for the domain mapping deployment. |
 | domainMapping.resources | object | `{"limits":{"cpu":"300m","memory":"400Mi"},"requests":{"cpu":"30m","memory":"40Mi"}}` | Resources requests and limits for domain mapping. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | domainMappingWebhook.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping-webhook"` | Repository of the domain mapping webhook image |
-| domainMappingWebhook.image.sha | string | `"f8f09d3a509b0c25d50be7532d4337a30df4ec5f51b9ed23ad9f21b3940c16ca"` | SHA256 of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority) |
+| domainMappingWebhook.image.sha | string | `"ed47da2c95a9bf73dd3b511323023578e15730864852fb0c869f8f64a2bab39f"` | SHA256 of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority) |
 | domainMappingWebhook.image.tag | string | `""` | Tag of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority) |
 | domainMappingWebhook.replicaCount | int | `1` | Number of replicas for the domain mapping webhook deployment. |
 | domainMappingWebhook.resources | object | `{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for domain mapping webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
@@ -107,14 +107,14 @@ The following table lists the configurable parameters of the Knative Serving Cor
 | monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
 | monitoring.selectorKey | string | `"serving.knative.dev/release"` |  |
 | queueProxy.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/queue"` | Repository of the queue proxy image |
-| queueProxy.image.sha | string | `"2249dc873059c0dfc0783bce5f614a0d8ada3d4499d63aa1dffd19f2788ba64b"` | SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
+| queueProxy.image.sha | string | `"fec35c5d66dad3d520e39de7f4f75ec6057962401f85761c143efc902f34efe7"` | SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
 | queueProxy.image.tag | string | `""` | Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
 | webhook.autoscaling.enabled | bool | `true` | Enables autoscaling for webhook deployment. |
 | webhook.autoscaling.maxReplicas | int | `20` | Maximum number of replicas for webhook. |
 | webhook.autoscaling.minReplicas | int | `1` | Minimum number of replicas for webhook. |
 | webhook.autoscaling.targetCPUUtilizationPercentage | int | `50` | Target CPU utlisation before it scales up/down. |
 | webhook.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/webhook"` | Repository of the webhook image |
-| webhook.image.sha | string | `"b001a58cb7eac7fbae4d83d8a111fa0f6726d36e86844d5b1dc3c9b8fdd5710a"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
+| webhook.image.sha | string | `"1dc88f22b885d56efc88aae8f0b3160d9bd9632bd0256847eed774e68b3a769b"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.replicaCount | int | `1` | Number of replicas for the webhook deployment. |
 | webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
