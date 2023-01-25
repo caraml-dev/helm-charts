@@ -413,7 +413,7 @@ knativeServingIstio:
   enabled: true
   helmChart:
     chart: knative-serving-istio
-    version: 1.4.0
+    version: 1.4.1
     repository: "https://caraml-dev.github.io/helm-charts"
     release: knative-serving
     namespace: knative-serving
