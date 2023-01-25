@@ -7,6 +7,7 @@ Common labels
 helm.sh/chart: {{ .Chart.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+serving.knative.dev/release: {{ .Chart.AppVersion }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/name: knative-serving
@@ -27,6 +28,7 @@ autoscaling hpa labels
 helm.sh/chart: {{ .Chart.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+serving.knative.dev/release: {{ .Chart.AppVersion }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/name: knative-serving

@@ -20,6 +20,7 @@ metadata:
     app.kubernetes.io/name: knative-serving
     app.kubernetes.io/component: networking
     app.kubernetes.io/version: "1.7.4"
+    serving.knative.dev/release: "v1.7.4"
     knative.dev/crd-install: "true"
     app.kubernetes.io/managed-by: Helm
     helm.sh/chart: knative-serving-core
