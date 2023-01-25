@@ -20,7 +20,7 @@ metadata:
     app.kubernetes.io/component: autoscaler
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
-    knative.dev/example-checksum: "16af78ce"
+    knative.dev/example-checksum: "47c2487f"
 data:
 {{- if .Values.config.autoscaler }}
   {{- toYaml .Values.config.autoscaler | nindent 2 }}

@@ -20,7 +20,7 @@ metadata:
     app.kubernetes.io/component: networking
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
-    knative.dev/example-checksum: "ddc3250f"
+    knative.dev/example-checksum: "73d96d1b"
 data:
 {{- if .Values.config.network }}
   {{- toYaml .Values.config.network | nindent 2 }}
