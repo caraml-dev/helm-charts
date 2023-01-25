@@ -2747,6 +2747,19 @@ entries:
     version: 0.1.0
   knative-serving-core:
   - apiVersion: v2
+    appVersion: v1.7.4
+    created: "2023-01-25T05:19:45.941192236Z"
+    description: Installs Knative Serving core and CRDs.
+    digest: 337d117d8967b14dbe48995ccf2bc8e75759e28da5d413a4cd463820c7e1fc53
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: knative-serving-core
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/knative-serving-core-1.7.4/knative-serving-core-1.7.4.tgz
+    version: 1.7.4
+  - apiVersion: v2
     appVersion: v1.3.2
     created: "2023-01-19T07:26:34.254588058Z"
     description: Installs Knative Serving core and CRDs.
@@ -5511,4 +5524,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/observation-service-0.1.1/observation-service-0.1.1.tgz
     version: 0.1.1
-generated: "2023-01-19T07:38:21.894842703Z"
+generated: "2023-01-25T05:19:45.941772334Z"
