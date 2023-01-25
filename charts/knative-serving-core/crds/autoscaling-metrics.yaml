@@ -19,12 +19,12 @@ kind: CustomResourceDefinition
 metadata:
   name: metrics.autoscaling.internal.knative.dev
   labels:
-    helm.sh/chart: knative-serving-core
-    app.kubernetes.io/version: "1.3.2"
-    serving.knative.dev/release: "v1.3.2"
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: knative-serving
+    app.kubernetes.io/version: "1.7.4"
+    serving.knative.dev/release: "v1.7.4"
     knative.dev/crd-install: "true"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: knative-serving-core
   annotations:
     "helm.sh/resource-policy": keep
 spec:

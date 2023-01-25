@@ -20,7 +20,7 @@ metadata:
     app.kubernetes.io/component: controller
     {{- include "knative-serving-core.labels" . | nindent 4 }}
   annotations:
-    knative.dev/example-checksum: "45463e45"
+    knative.dev/example-checksum: "aa3813a8"
 data:
 {{- if .Values.config.gc }}
   {{- toYaml .Values.config.gc | nindent 2 }}
