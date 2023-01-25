@@ -1,8 +1,8 @@
 # knative-serving-istio
 
 ---
-![Version: 1.4.1](https://img.shields.io/badge/Version-1.4.1-informational?style=flat-square)
-![AppVersion: v1.3.0](https://img.shields.io/badge/AppVersion-v1.3.0-informational?style=flat-square)
+![Version: 1.7.1](https://img.shields.io/badge/Version-1.7.1-informational?style=flat-square)
+![AppVersion: v1.7.1](https://img.shields.io/badge/AppVersion-v1.7.1-informational?style=flat-square)
 
 Installs Knative-serving for Istio
 
@@ -90,10 +90,10 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | clusterLocalGateway.helmChart.version | string | `"1.13.9"` |  |
 | clusterLocalGateway.hook.weight | int | `1` |  |
 | clusterLocalGatewayIstioSelector | string | `"cluster-local-gateway"` |  |
-| config | object | `{"istio":{"enable-virtualservice-status":"false","gateway.{{ .Release.Namespace }}.knative-ingress-gateway":"istio-ingressgateway.istio-system.svc.cluster.local","local-gateway.mesh":"mesh","local-gateway.{{ .Release.Namespace }}.knative-local-gateway":"cluster-local-gateway.istio-system.svc.cluster.local"}}` | Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml |
+| config | object | `{"istio":{"enable-virtualservice-status":"false","gateway.{{ .Release.Namespace }}.knative-ingress-gateway":"istio-ingressgateway.istio-system.svc.cluster.local","local-gateway.{{ .Release.Namespace }}.knative-local-gateway":"cluster-local-gateway.istio-system.svc.cluster.local"}}` | Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml |
 | controller.autoscaling.enabled | bool | `false` | Enables autoscaling for net-istio-controller deployment. |
 | controller.image.repository | string | `"gcr.io/knative-releases/knative.dev/net-istio/cmd/controller"` | Repository of the controller image |
-| controller.image.sha | string | `"7f17fb47568a74de3f82bb512422a174017b7c06643a330557bc3445c8869932"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
+| controller.image.sha | string | `"c110b0b5d545561f220d23bdb48a6c75f5591d068de9fb079baad47c82903e28"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.image.tag | string | `""` | Tag of the controller image, either provide tag or SHA (SHA will be given priority) |
 | controller.replicaCount | int | `1` | Number of replicas for the net-istio-controller deployment. |
 | controller.resources | object | `{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"500m","memory":"512Mi"}}` | Resources requests and limits for net-istio-controller. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
@@ -201,7 +201,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | monitoring.serving.podMonitor.userPortName | string | `"user-port"` |  |
 | revision | string | `""` |  |
 | webhook.image.repository | string | `"gcr.io/knative-releases/knative.dev/net-istio/cmd/webhook"` | Repository of the webhook image |
-| webhook.image.sha | string | `"75d502bdff93e9c0e4611c2747d868b8d471f8d3a0402394de76ec2d98b89ce3"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
+| webhook.image.sha | string | `"d74e79f7db426c1d24e060009e31344cad2d6e8c7e161184f121fde78b2f4a1d"` | SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.image.tag | string | `""` | Tag of the webhook image, either provide tag or SHA (SHA will be given priority) |
 | webhook.replicaCount | int | `1` | Number of replicas for the net-istio-webhook deployment. |
 | webhook.resources | object | `{"limits":{"cpu":"200m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Resources requests and limits for net-istio-webhook. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
