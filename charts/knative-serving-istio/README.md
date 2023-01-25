@@ -90,7 +90,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | clusterLocalGateway.helmChart.version | string | `"1.13.9"` |  |
 | clusterLocalGateway.hook.weight | int | `1` |  |
 | clusterLocalGatewayIstioSelector | string | `"cluster-local-gateway"` |  |
-| config | object | `{"istio":{"enable-virtualservice-status":"false","gateway.{{ .Release.Namespace }}.knative-ingress-gateway":"istio-ingressgateway.istio-system.svc.cluster.local","local-gateway.mesh":"mesh","local-gateway.{{ .Release.Namespace }}.knative-local-gateway":"cluster-local-gateway.istio-system.svc.cluster.local"}}` | Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml |
+| config | object | `{"istio":{"enable-virtualservice-status":"false","gateway.{{ .Release.Namespace }}.knative-ingress-gateway":"istio-ingressgateway.istio-system.svc.cluster.local","local-gateway.{{ .Release.Namespace }}.knative-local-gateway":"cluster-local-gateway.istio-system.svc.cluster.local"}}` | Please check out the Knative documentation in https://github.com/knative-sandbox/net-istio/releases/download/knative-v1.0.0/net-istio.yaml |
 | controller.autoscaling.enabled | bool | `false` | Enables autoscaling for net-istio-controller deployment. |
 | controller.image.repository | string | `"gcr.io/knative-releases/knative.dev/net-istio/cmd/controller"` | Repository of the controller image |
 | controller.image.sha | string | `"c110b0b5d545561f220d23bdb48a6c75f5591d068de9fb079baad47c82903e28"` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
