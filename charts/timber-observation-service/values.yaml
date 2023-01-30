@@ -17,7 +17,7 @@ observationService:
 
   # -- Observation Service server configuration.
   apiConfig: {}
-    # Sample config using BQ FLuentd
+    # E.g. using BQ FLuentd
     # DeploymentConfig:
     #   EnvironmentType: dev
     # logConsumerConfig:
@@ -118,7 +118,7 @@ observationService:
     # baseURL: ""
     # jobBaseURL: ""
 
-# -- Fluentd configuration
+# Fluentd configuration
 # ref: https://github.com/caraml-dev/helm-charts/tree/main/charts/timber-fluentd
 fluentd:
   # -- Flag to toggle deployment of Observation Service fluentd
@@ -206,9 +206,9 @@ fluentd:
     # -- CPU utilization percentage threshold to activate HPA scaling
     targetCPUUtilizationPercentage: 80
 
-# -- Fluentd config
+  # -- Fluentd.conf
   fluentdConfig: ""
-    # Sample fluentconfig with BQ
+    # E.G. Fluentd producer with BQ
     # |-
     # # Set fluentd log level to error
     # <system>

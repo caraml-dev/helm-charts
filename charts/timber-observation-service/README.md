@@ -1,14 +1,15 @@
 # observation-service
 
 ---
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square)
-![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
+![AppVersion: 0.2.0](https://img.shields.io/badge/AppVersion-0.2.0-informational?style=flat-square)
 
 Observation Service - Logging system for collecting ground truth observation result from ML prediction
 
 ## Introduction
 
-This Helm chart installs [Observation-Service](https://github.com/caraml-dev/observation-service) and all its dependencies in a Kubernetes cluster.
+This Helm chart installs [Timber-Observation-Service](https://github.com/caraml-dev/observation-service) and all its dependencies in a Kubernetes cluster.
+It installs fluentd service optionally as a subchart.
 
 ## Maintainers
 
@@ -40,6 +41,7 @@ The following table lists the configurable parameters of the Observation Service
 | fluentd.enabled | bool | `false` | Flag to toggle deployment of Observation Service fluentd |
 | fluentd.extraEnvs | list | `[]` | List of extra environment variables to add to Observation Service fluentd container |
 | fluentd.extraLabels | object | `{}` | List of extra labels to add to Observation Service fluentd K8s resources |
+| fluentd.fluentdConfig | string | `""` | Fluentd.conf |
 | fluentd.gcpServiceAccount.account | string | `""` |  |
 | fluentd.gcpServiceAccount.enabled | bool | `false` | Flag to toggle flushing Observation logs to BQ |
 | fluentd.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
