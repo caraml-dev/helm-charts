@@ -1,5 +1,5 @@
 apiVersion: v2
-name: observation-service
+name: timber-observation-service
 description: Observation Service - Logging system for collecting ground truth observation result from ML prediction
 version: 0.2.0
 appVersion: 0.2.0
@@ -7,7 +7,6 @@ dependencies:
 - alias: fluentd
   condition: fluentd.enabled
   name: timber-fluentd
-  # repository: "file://../timber-fluentd"
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.0.0
 maintainers:
