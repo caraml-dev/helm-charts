@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "timber-fluentd.fullname" . }}-fluentd
+  labels:
+    {{- include "timber-fluentd.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-fluentd
+      release: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}-fluentd
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-fluentd
+        release: {{ .Release.Name }}
+        {{- include "timber-fluentd.labels" . | nindent 8 }}
+        {{- if .Values.global.extraPodLabels }}
+          {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: logger
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- with .Values.extraEnvs }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+            - containerPort: {{ .Values.service.externalPort }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - mountPath: /fluentd/etc
+            name: fluentd-conf
+          {{- if .Values.gcpServiceAccount.enabled }}
+          - mountPath: /etc/gcp_service_account
+            name: gcp-service-account
+            readOnly: true
+          {{- end }}
+          {{- if .Values.pvcConfig }}
+          - mountPath: {{ .Values.pvcConfig.mountPath }}
+            name: {{ .Values.pvcConfig.name }}
+          {{- end }}
+      volumes:
+      - name: fluentd-conf
+        configMap:
+          name: {{ include "timber-fluentd.fullname" . }}-config
+          defaultMode: 0777
+      {{- if .Values.gcpServiceAccount.enabled }}
+      - name: gcp-service-account
+        secret:
+          secretName: {{ .Release.Name }}-fluentd-secret
+      {{- end }}
+  {{- if .Values.pvcConfig }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.pvcConfig.name }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.pvcConfig.storage }}
+  {{ end -}}

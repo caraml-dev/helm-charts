@@ -17,6 +17,26 @@ observationService:
 
   # -- Observation Service server configuration.
   apiConfig: {}
+    # Sample config using BQ FLuentd
+    # DeploymentConfig:
+    #   EnvironmentType: dev
+    # logConsumerConfig:
+    #   Kind: kafka
+    #   KafkaConfig:
+    #     Brokers: kafka.default.svc.cluster.local #kafka
+    #     Topic: test-topic
+    # LogProducerConfig:
+    #   FlushIntervalSeconds: 10
+    #   Kind: fluentd
+    #   FluentdConfig:
+    #     Host: observation-service-fluentd
+    #     Port: 24224
+    #     Kind: bq
+    #     Tag: observation-service.log
+    #     BQConfig:
+    #       Project: project
+    #       Dataset: dataset
+    #       Table: table
 
   # -- Resources requests and limits for Observation Service. This should be set
   # according to your cluster capacity and service level objectives.
@@ -63,6 +83,10 @@ observationService:
 
   # -- List of extra environment variables to add to Observation Service server container
   extraEnvs: []
+    # Configuration needed if fluentd.gcpServiceAccount.enabled and 
+    # fluentd.gcpServiceAccount.account is supplied
+    # - name: GOOGLE_APPLICATION_CREDENTIALS
+    #   value: /etc/gcp_service_account/service-account.json
 
   # -- List of extra labels to add to Observation Service K8s resources
   extraLabels: {}
@@ -94,30 +118,23 @@ observationService:
     # baseURL: ""
     # jobBaseURL: ""
 
+# -- Fluentd configuration
+# ref: https://github.com/caraml-dev/helm-charts/tree/main/charts/timber-fluentd
 fluentd:
   # -- Flag to toggle deployment of Observation Service fluentd
   enabled: false
 
   image:
-    # -- Docker registry for Observation Service fluentd image
     registry: ghcr.io
-    # -- Docker image repository for Observation Service fluentd
     repository: caraml-dev/timber/fluentd
-    # -- Docker image tag for Observation Service fluentd
     tag: v0.1.0
-    # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
   replicaCount: 1
 
-  # -- Resources requests and limits for Observation Service fluentd StatefulSet. This should be set
-  # according to your cluster capacity and service level objectives.
-  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources: {}
 
-  # GCP configurations for flushing Observation logs to BQ
   gcpServiceAccount:
-    # -- Flag to toggle flushing Observation logs to BQ
     enabled: false
     account: ""
 

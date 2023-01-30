@@ -5,9 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "observation-service.labels" . | nindent 4 }}
-{{ if .Values.observationService.extraLabels -}}
-{{ toYaml .Values.observationService.extraLabels | indent 4 -}}
-{{- end }}
 spec:
   {{- if not .Values.observationService.autoscaling.enabled }}
   replicas: {{ .Values.observationService.replicaCount }}
