@@ -29,6 +29,10 @@ spec:
         {{- if .Values.global.extraPodLabels }}
           {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
         {{- end }}
+      {{- with .Values.observationService.annotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       containers:
         - name: api
