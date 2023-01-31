@@ -1,8 +1,8 @@
 # timber-fluentd
 
 ---
-![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square)
-![AppVersion: 0.0.0](https://img.shields.io/badge/AppVersion-0.0.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square)
+![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 Fluentd service - Fluentd service that supports UPI logs parsing
 
@@ -46,7 +46,7 @@ The following table lists the configurable parameters of the Observation Service
 | image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | image.registry | string | `"ghcr.io"` | Docker registry for fluentd image |
 | image.repository | string | `"caraml-dev/timber/fluentd"` | Docker image repository for fluentd |
-| image.tag | string | `"v0.1.0"` | Docker image tag for fluentd |
+| image.tag | string | `"v0.0.0-build.16-01ac82e"` | Docker image tag for fluentd |
 | pvcConfig | object | `{"mountPath":"/cache","name":"cache-volume","storage":"3Gi"}` | PVC configurations for fluentd StatefulSet storage |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` | Resources requests and limits for fluentd StatefulSet. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |

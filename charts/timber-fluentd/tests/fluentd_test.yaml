@@ -1,0 +1,48 @@
+suite: Unit tests for Fluentd Deployment
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should not create volume or replica by default
+    templates:
+      - statefulset.yaml
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - isEmpty: # No volume mounted for gcp or fluentdConfig
+          path: spec.template.spec.volumes
+      - isEmpty: # No replicas set
+          path: spec.template.spec.replica
+  - it: should create volume and cm for fluentd-config when is set
+    set:
+      fluentdConfig: test-fluentd-config
+    templates:
+      - statefulset.yaml
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - equal: 
+          path: spec.template.spec.volumes[0].name
+          value: fluentd-conf
+      - matchRegex:
+          path: data.[fluent.conf]
+          pattern: test-fluentd-config
+        template: configmap.yaml
+  - it: should create volume and secrets for gcp service account when is set
+    set:
+      gcpServiceAccount.enabled: true
+      gcpServiceAccount.account: dummy-account
+    templates:
+      - statefulset.yaml
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - equal: 
+          path: spec.template.spec.volumes[0].name
+          value: gcp-service-account
+      - matchRegex:
+          path: data.[service-account.json]
+          pattern: dummy-account
+        template: secret.yaml

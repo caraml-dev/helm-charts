@@ -2,13 +2,15 @@ global:
   # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
   extraPodLabels: {}
 
+nameOverride: ""
+
 image:
   # -- Docker registry for fluentd image
   registry: ghcr.io
   # -- Docker image repository for fluentd
   repository: caraml-dev/timber/fluentd
   # -- Docker image tag for fluentd
-  tag: v0.1.0
+  tag: v0.0.0-build.16-01ac82e
   # -- Docker image pull policy
   pullPolicy: IfNotPresent
 
@@ -66,3 +68,57 @@ autoscaling:
 
 # -- Fluentd config to be mounted as fluentd/etc/fluent.conf
 fluentdConfig: ""
+# E.g. Kafka sink -> UPI parser -> BQ
+  # Set fluentd log level to error
+  # <system>
+  #   log_level "#{ENV['FLUENTD_LOG_LEVEL']}"
+  #   workers "#{ENV['FLUENTD_WORKER_COUNT']}"
+  # </system>
+
+  # <source>
+  #   @type kafka
+
+  #   brokers "#{ENV['FLUENTD_KAFKA_BROKER']}" #broker:9092
+  #   topics "#{ENV['FLUENTD_KAFKA_TOPIC']}"
+
+  #   format upi_logs
+  #   class_name "#{ENV['FLUENTD_KAFKA_PROTO_CLASS_NAME']}" #"caraml.upi.v1.PredictionLog"
+  # </source>
+
+  # # Buffer and output to multiple sinks
+  # <match "#{ENV['FLUENTD_KAFKA_TOPIC']}">
+  #   @type copy
+  #   <store>
+  #     @type stdout
+  #   </store>
+  #   <store>
+  #     @type bigquery_load
+
+  #     <buffer>
+  #       @type file
+
+  #       path "#{ENV['FLUENTD_LOG_PATH']}"
+  #       timekey_use_utc
+        
+  #       flush_at_shutdown true
+  #       flush_mode interval
+  #       flush_interval "#{ENV['FLUENTD_FLUSH_INTERVAL_SECONDS']}"
+  #       retry_max_times 3
+
+  #       chunk_limit_size 1g
+  #       compress gzip
+  #       total_limit_size "#{ENV['FLUENTD_BUFFER_LIMIT']}"
+
+  #       delayed_commit_timeout 150
+  #       disable_chunk_backup true
+  #     </buffer>
+
+  #     # Authenticate with BigQuery using a json key
+  #     auth_method json_key
+  #     json_key "#{ENV['FLUENTD_GCP_JSON_KEY_PATH']}"
+  #     project "#{ENV['FLUENTD_GCP_PROJECT']}"
+  #     dataset "#{ENV['FLUENTD_BQ_DATASET']}"
+  #     table "#{ENV['FLUENTD_BQ_TABLE']}"
+  #     fetch_schema true
+  #   </store>
+  # </match>

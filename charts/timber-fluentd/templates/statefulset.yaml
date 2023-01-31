@@ -38,8 +38,10 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+          {{- if .Values.fluentdConfig }}
           - mountPath: /fluentd/etc
             name: fluentd-conf
+          {{- end }}
           {{- if .Values.gcpServiceAccount.enabled }}
           - mountPath: /etc/gcp_service_account
             name: gcp-service-account
@@ -50,10 +52,12 @@ spec:
             name: {{ .Values.pvcConfig.name }}
           {{- end }}
       volumes:
+      {{- if .Values.fluentdConfig }}
       - name: fluentd-conf
         configMap:
           name: {{ include "timber-fluentd.fullname" . }}-config
           defaultMode: 0777
+      {{- end }}
       {{- if .Values.gcpServiceAccount.enabled }}
       - name: gcp-service-account
         secret:

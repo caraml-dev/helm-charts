@@ -1,8 +1,8 @@
 apiVersion: v2
 name: timber-fluentd
 description: Fluentd service - Fluentd service that supports UPI logs parsing
-version: 0.0.0
-appVersion: 0.0.0
+version: 0.1.0
+appVersion: 0.1.0
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
