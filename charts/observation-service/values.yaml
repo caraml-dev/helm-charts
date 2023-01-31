@@ -1,0 +1,160 @@
+global:
+  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+  extraPodLabels: {}
+
+observationService:
+  image:
+    # -- Docker registry for Observation Service image
+    registry: ghcr.io
+    # -- Docker image repository for Observation Service
+    repository: caraml-dev/timber/observation-service
+    # -- Docker image tag for Observation Service
+    tag: v0.0.0-build.15-b8afdb5
+    # -- Docker image pull policy
+    pullPolicy: IfNotPresent
+
+  replicaCount: 1
+
+  # -- Observation Service server configuration.
+  apiConfig: {}
+
+  # -- Resources requests and limits for Observation Service. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources: {}
+
+  livenessProbe:
+    # -- HTTP path for liveness check
+    path: "/v1/internal/health/live"
+    # -- Liveness probe delay and thresholds
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
+  readinessProbe:
+    # -- HTTP path for readiness check
+    path: "/v1/internal/health/ready"
+    # -- Readiness probe delay and thresholds
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
+  service:
+    type: ClusterIP
+    # -- Observation Service Kubernetes service port number
+    externalPort: 9001
+    # -- Observation Service container port number
+    internalPort: 9001
+
+  ingress:
+    # -- Enable ingress to provision Ingress resource for external access to Observation Service
+    enabled: false
+    # -- Set host value to enable name based virtual hosting. This allows routing
+    # HTTP traffic to multiple host names at the same IP address. If no host is
+    # specified, the ingress rule applies to all inbound HTTP traffic through
+    # the IP address specified.
+    # https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting
+    host: ""
+    # -- Ingress class annotation to add to this Ingress rule,
+    # useful when there are multiple ingress controllers installed
+    class: ""
+
+  # -- List of extra environment variables to add to Observation Service server container
+  extraEnvs: []
+
+  # -- List of extra labels to add to Observation Service K8s resources
+  extraLabels: {}
+
+  # -- Define which nodes the pods are scheduled on.
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+  # -- If specified, the pod's tolerations.
+  # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+  # -- Assign custom affinity rules to constrain pods to nodes.
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+  # -- HPA scaling configuration for Observation Service
+  autoscaling:
+    # -- Toggle to enable HPA scaling
+    enabled: false
+    # -- Minimum replicas for HPA scaling
+    minReplicas: 1
+    # -- Maximum replicas for HPA scaling
+    maxReplicas: 2
+    # -- CPU utilization percentage threshold to activate HPA scaling
+    targetCPUUtilizationPercentage: 80
+
+  # -- Service Monitor configuration for Observation Service
+  monitoring:
+    enabled: false
+    # baseURL: ""
+    # jobBaseURL: ""
+
+fluentd:
+  # -- Flag to toggle deployment of Observation Service fluentd
+  enabled: false
+
+  image:
+    # -- Docker registry for Observation Service fluentd image
+    registry: ghcr.io
+    # -- Docker image repository for Observation Service fluentd
+    repository: caraml-dev/timber/fluentd
+    # -- Docker image tag for Observation Service fluentd
+    tag: v0.1.0
+    # -- Docker image pull policy
+    pullPolicy: IfNotPresent
+
+  replicaCount: 1
+
+  # -- Resources requests and limits for Observation Service fluentd StatefulSet. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources: {}
+
+  # GCP configurations for flushing Observation logs to BQ
+  gcpServiceAccount:
+    # -- Flag to toggle flushing Observation logs to BQ
+    enabled: false
+    account: ""
+
+  # -- PVC configurations for fluentd StatefulSet storage
+  pvcConfig:
+    name: cache-volume
+    mountPath: /cache
+    storage: 3Gi
+
+  # -- Kubernetes Service for fluentd StatefulSet
+  service:
+    type: ClusterIP
+    internalPort: &internalPort 9880
+    externalPort: &externalPort 24224
+    multiPort:
+      enabled: true
+    multiPorts:
+      - name: tcp-input
+        port: *externalPort
+        targetPort: *externalPort
+      - name: http-input
+        port: *internalPort
+        targetPort: *internalPort
+
+  # -- List of extra environment variables to add to Observation Service fluentd container
+  extraEnvs: []
+
+  # -- List of extra labels to add to Observation Service fluentd K8s resources
+  extraLabels: {}
+
+  # -- HPA scaling configuration for Observation Service fluentd
+  autoscaling:
+    # -- Toggle to enable HPA scaling
+    enabled: false
+    # -- Minimum replicas for HPA scaling
+    minReplicas: 1
+    # -- Maximum replicas for HPA scaling
+    maxReplicas: 2
+    # -- CPU utilization percentage threshold to activate HPA scaling
+    targetCPUUtilizationPercentage: 80
