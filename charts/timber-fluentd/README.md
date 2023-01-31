@@ -47,7 +47,7 @@ The following table lists the configurable parameters of the Observation Service
 | image.registry | string | `"ghcr.io"` | Docker registry for fluentd image |
 | image.repository | string | `"caraml-dev/timber/fluentd"` | Docker image repository for fluentd |
 | image.tag | string | `"v0.0.0-build.16-01ac82e"` | Docker image tag for fluentd |
-| kubernatesServiceAccount | string | `""` | Kubernetes service account for GKE to enable BQ access Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts |
+| kubernatesServiceAccount | string | `""` | Kubernetes service account for GKE to access GCP's resources. Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts |
 | nameOverride | string | `""` |  |
 | pvcConfig | object | `{"mountPath":"/cache","name":"cache-volume","storage":"3Gi"}` | PVC configurations for fluentd StatefulSet storage |
 | replicaCount | int | `1` |  |
