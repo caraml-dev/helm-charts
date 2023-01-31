@@ -122,4 +122,3 @@ fluentdConfig: ""
   #     fetch_schema true
   #   </store>
   # </match>
-  
