@@ -32,6 +32,7 @@ The following table lists the configurable parameters of the Observation Service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| annotations | object | `{}` | Annotations to add to fluentd pod |
 | autoscaling | object | `{"enabled":false,"maxReplicas":2,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | HPA scaling configuration for Observation Service fluentd |
 | autoscaling.enabled | bool | `false` | Toggle to enable HPA scaling |
 | autoscaling.maxReplicas | int | `2` | Maximum replicas for HPA scaling |
@@ -51,4 +52,3 @@ The following table lists the configurable parameters of the Observation Service
 | pvcConfig | object | `{"mountPath":"/cache","name":"cache-volume","storage":"3Gi"}` | PVC configurations for fluentd StatefulSet storage |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` | Resources requests and limits for fluentd StatefulSet. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
-| service | object | `{"externalPort":24224,"internalPort":9880,"multiPort":{"enabled":true},"multiPorts":[{"name":"tcp-input","port":24224,"targetPort":24224},{"name":"http-input","port":9880,"targetPort":9880}],"type":"ClusterIP"}` | Kubernetes Service for fluentd StatefulSet |

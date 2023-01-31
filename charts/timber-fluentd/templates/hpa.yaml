@@ -2,7 +2,7 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "timber-fluentd.fullname" . }}-fluentd
+  name: {{ include "timber-fluentd.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "timber-fluentd.labels" . | nindent 4 }}
@@ -10,7 +10,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "timber-fluentd.fullname" . }}-fluentd
+    name: {{ include "timber-fluentd.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

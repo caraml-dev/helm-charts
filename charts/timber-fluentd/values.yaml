@@ -16,6 +16,9 @@ image:
 
 replicaCount: 1
 
+# -- Annotations to add to fluentd pod
+annotations: {}
+
 # -- Resources requests and limits for fluentd StatefulSet. This should be set
 # according to your cluster capacity and service level objectives.
 # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -33,21 +36,6 @@ pvcConfig:
   name: cache-volume
   mountPath: /cache
   storage: 3Gi
-
-# -- Kubernetes Service for fluentd StatefulSet
-service:
-  type: ClusterIP
-  internalPort: &internalPort 9880
-  externalPort: &externalPort 24224
-  multiPort:
-    enabled: true
-  multiPorts:
-    - name: tcp-input
-      port: *externalPort
-      targetPort: *externalPort
-    - name: http-input
-      port: *internalPort
-      targetPort: *internalPort
 
 # -- List of extra environment variables to add to fluentd container
 extraEnvs: []
