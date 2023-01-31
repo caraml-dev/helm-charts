@@ -47,6 +47,7 @@ The following table lists the configurable parameters of the Observation Service
 | image.registry | string | `"ghcr.io"` | Docker registry for fluentd image |
 | image.repository | string | `"caraml-dev/timber/fluentd"` | Docker image repository for fluentd |
 | image.tag | string | `"v0.0.0-build.16-01ac82e"` | Docker image tag for fluentd |
+| nameOverride | string | `""` |  |
 | pvcConfig | object | `{"mountPath":"/cache","name":"cache-volume","storage":"3Gi"}` | PVC configurations for fluentd StatefulSet storage |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` | Resources requests and limits for fluentd StatefulSet. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
