@@ -11,13 +11,13 @@ spec:
   minReadySeconds: 5
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-fluentd
+      app: {{ include "timber-fluentd.fullname" . }}-fluentd
       release: {{ .Release.Name }}
-  serviceName: {{ .Release.Name }}-fluentd
+  serviceName: {{ include "timber-fluentd.fullname" . }}-fluentd
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-fluentd
+        app: {{ include "timber-fluentd.fullname" . }}-fluentd
         release: {{ .Release.Name }}
         {{- include "timber-fluentd.labels" . | nindent 8 }}
         {{- if .Values.global.extraPodLabels }}
@@ -46,7 +46,7 @@ spec:
           - mountPath: /fluentd/etc
             name: fluentd-conf
           {{- end }}
-          {{- if .Values.gcpServiceAccount.enabled }}
+          {{- if .Values.gcpServiceAccount }}
           - mountPath: /etc/gcp_service_account
             name: gcp-service-account
             readOnly: true
@@ -55,6 +55,9 @@ spec:
           - mountPath: {{ .Values.pvcConfig.mountPath }}
             name: {{ .Values.pvcConfig.name }}
           {{- end }}
+      {{- if .Values.kubernatesServiceAccount }}
+      serviceAccountName: {{ .Values.kubernatesServiceAccount }}
+      {{- end }}
       volumes:
       {{- if .Values.fluentdConfig }}
       - name: fluentd-conf
@@ -62,10 +65,18 @@ spec:
           name: {{ include "timber-fluentd.fullname" . }}-config
           defaultMode: 0777
       {{- end }}
-      {{- if .Values.gcpServiceAccount.enabled }}
+      {{- if .Values.gcpServiceAccount.credentials }}
       - name: gcp-service-account
         secret:
-          secretName: {{ .Release.Name }}-fluentd-secret
+          secretName: {{ .Values.gcpServiceAccount.credentials.name }}
+          items:
+            - key: {{ .Values.gcpServiceAccount.credentials.key }}
+              path: service-account.json
+      {{- end }}
+      {{- if .Values.gcpServiceAccount.credentialsData }}
+      - name: gcp-service-account
+        secret:
+          secretName: {{ include "timber-fluentd.fullname" . }}-secret
       {{- end }}
   {{- if .Values.pvcConfig }}
   volumeClaimTemplates:

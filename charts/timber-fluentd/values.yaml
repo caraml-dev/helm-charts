@@ -24,12 +24,17 @@ annotations: {}
 # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 resources: {}
 
-# GCP configurations for flushing Observation logs to BQ
-gcpServiceAccount:
-  # -- Flag to toggle flushing Observation logs to BQ
-  enabled: false
-  # -- Base64 encoded service account json
-  account: ""
+# For BQ access configuration
+# -- Kubernetes service account for GKE to enable BQ access
+# Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts
+kubernatesServiceAccount: ""
+# -- Google service account used to access GCP's resources. Secret will be mounted at /etc/gcp_service_account/service-account.json
+gcpServiceAccount: {}
+# Base64 values as credentialsData or external secrets via credentials
+# credentialsData: 
+# credentials:
+#   name: secret-name
+#   key: sa.json
 
 # -- PVC configurations for fluentd StatefulSet storage
 pvcConfig:

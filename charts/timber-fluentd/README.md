@@ -41,13 +41,13 @@ The following table lists the configurable parameters of the Observation Service
 | extraEnvs | list | `[]` | List of extra environment variables to add to fluentd container |
 | extraLabels | object | `{}` | List of extra labels to add to fluentd K8s resources |
 | fluentdConfig | string | `""` | Fluentd config to be mounted as fluentd/etc/fluent.conf |
-| gcpServiceAccount.account | string | `""` | Base64 encoded service account json |
-| gcpServiceAccount.enabled | bool | `false` | Flag to toggle flushing Observation logs to BQ |
+| gcpServiceAccount | object | `{}` | Google service account used to access GCP's resources. Secret will be mounted at /etc/gcp_service_account/service-account.json |
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | image.registry | string | `"ghcr.io"` | Docker registry for fluentd image |
 | image.repository | string | `"caraml-dev/timber/fluentd"` | Docker image repository for fluentd |
 | image.tag | string | `"v0.0.0-build.16-01ac82e"` | Docker image tag for fluentd |
+| kubernatesServiceAccount | string | `""` | Kubernetes service account for GKE to enable BQ access Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts |
 | nameOverride | string | `""` |  |
 | pvcConfig | object | `{"mountPath":"/cache","name":"cache-volume","storage":"3Gi"}` | PVC configurations for fluentd StatefulSet storage |
 | replicaCount | int | `1` |  |
