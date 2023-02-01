@@ -239,7 +239,7 @@ fluentd:
 
   #         path "#{ENV['FLUENTD_LOG_PATH']}"
   #         timekey_use_utc
-          
+
   #         flush_at_shutdown true
   #         flush_mode interval
   #         flush_interval "#{ENV['FLUENTD_FLUSH_INTERVAL_SECONDS']}"
@@ -262,3 +262,4 @@ fluentd:
   #       fetch_schema true
   #     </store>
   #   </match>
+  

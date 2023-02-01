@@ -2,7 +2,7 @@
 
 ---
 ![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
-![AppVersion: 0.2.0](https://img.shields.io/badge/AppVersion-0.2.0-informational?style=flat-square)
+![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 Observation Service - Logging system for collecting ground truth observation result from ML prediction
 
@@ -30,6 +30,8 @@ but it's possible it works with earlier k8s versions too
 ## Configuration
 
 The following table lists the configurable parameters of the Observation Service chart and their default values.
+
+For more configurable of fluentd, check out [Timber-Fluentd](https://github.com/caraml-dev/timber-fluentd)
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
