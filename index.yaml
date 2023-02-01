@@ -5591,4 +5591,17 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/observation-service-0.1.1/observation-service-0.1.1.tgz
     version: 0.1.1
-generated: "2023-01-31T05:15:42.799144883Z"
+  timber-fluentd:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2023-02-01T02:04:59.379041469Z"
+    description: Fluentd service - Fluentd service that supports UPI logs parsing
+    digest: e93497989910f0810f5a781cebf441b75ae4d00daafbe9d2ffdd0879b3708407
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: timber-fluentd
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/timber-fluentd-0.1.0/timber-fluentd-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-02-01T02:04:59.379337672Z"
