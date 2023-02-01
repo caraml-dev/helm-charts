@@ -13,6 +13,9 @@ observationService:
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
+  # Annotations to add to Observation Service
+  annotations: {}
+
   replicaCount: 1
 
   # -- Observation Service server configuration.
@@ -107,6 +110,9 @@ fluentd:
     tag: v0.1.0
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
+
+  # Annotations to add to Observation Service fluentd
+  annotations: {}
 
   replicaCount: 1
 

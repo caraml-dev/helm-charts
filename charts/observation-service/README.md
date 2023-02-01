@@ -1,7 +1,7 @@
 # observation-service
 
 ---
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square)
 ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 Observation Service - Logging system for collecting ground truth observation result from ML prediction
@@ -32,6 +32,7 @@ The following table lists the configurable parameters of the Observation Service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| fluentd.annotations | object | `{}` |  |
 | fluentd.autoscaling | object | `{"enabled":false,"maxReplicas":2,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | HPA scaling configuration for Observation Service fluentd |
 | fluentd.autoscaling.enabled | bool | `false` | Toggle to enable HPA scaling |
 | fluentd.autoscaling.maxReplicas | int | `2` | Maximum replicas for HPA scaling |
@@ -52,6 +53,7 @@ The following table lists the configurable parameters of the Observation Service
 | fluentd.service | object | `{"externalPort":24224,"internalPort":9880,"multiPort":{"enabled":true},"multiPorts":[{"name":"tcp-input","port":24224,"targetPort":24224},{"name":"http-input","port":9880,"targetPort":9880}],"type":"ClusterIP"}` | Kubernetes Service for fluentd StatefulSet |
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | observationService.affinity | object | `{}` | Assign custom affinity rules to constrain pods to nodes. ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/ |
+| observationService.annotations | object | `{}` |  |
 | observationService.apiConfig | object | `{}` | Observation Service server configuration. |
 | observationService.autoscaling | object | `{"enabled":false,"maxReplicas":2,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | HPA scaling configuration for Observation Service |
 | observationService.autoscaling.enabled | bool | `false` | Toggle to enable HPA scaling |
