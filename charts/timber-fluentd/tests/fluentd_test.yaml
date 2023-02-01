@@ -55,7 +55,7 @@ tests:
           content:
            name: gcp-service-account
            secret:
-            secretName: my-release-timber-fluentd-secret
+            secretName: my-release-timber-fluentd
       - matchRegex: # secret created from secret.yaml
           path: data.[service-account.json]
           pattern: dummy-account
