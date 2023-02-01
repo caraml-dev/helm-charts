@@ -94,7 +94,7 @@ observationService:
   # -- Service Monitor configuration for Observation Service
   monitoring:
     enabled: false
-    # baseURL: ""
+    baseURL: /v1/metrics
     # jobBaseURL: ""
 
 fluentd:

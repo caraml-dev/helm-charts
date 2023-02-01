@@ -1,7 +1,7 @@
 # observation-service
 
 ---
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square)
 ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 Observation Service - Logging system for collecting ground truth observation result from ML prediction
@@ -74,7 +74,7 @@ The following table lists the configurable parameters of the Observation Service
 | observationService.livenessProbe.periodSeconds | int | `10` |  |
 | observationService.livenessProbe.successThreshold | int | `1` |  |
 | observationService.livenessProbe.timeoutSeconds | int | `5` |  |
-| observationService.monitoring | object | `{"enabled":false}` | Service Monitor configuration for Observation Service |
+| observationService.monitoring | object | `{"baseURL":"/v1/metrics","enabled":false}` | Service Monitor configuration for Observation Service |
 | observationService.nodeSelector | object | `{}` | Define which nodes the pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | observationService.readinessProbe.initialDelaySeconds | int | `60` | Readiness probe delay and thresholds |
 | observationService.readinessProbe.path | string | `"/v1/internal/health/ready"` | HTTP path for readiness check |

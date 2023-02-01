@@ -12,5 +12,6 @@ spec:
       app: {{ template "observation-service.name" .}}
       release: {{ .Release.Name }}
   endpoints:
-    - targetPort: {{ .Values.observationService.service.internalPort }}
+    - port: http
+      path: {{ .Values.observationService.monitoring.baseURL }}
 {{- end }}
