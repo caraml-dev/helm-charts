@@ -13,4 +13,5 @@ spec:
       release: {{ .Release.Name }}
   endpoints:
     - targetPort: {{ .Values.observationService.service.internalPort }}
+      path: {{ .Values.observationService.monitoring.baseURL }}
 {{- end }}
