@@ -1,0 +1,264 @@
+global:
+  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+  extraPodLabels: {}
+
+observationService:
+  image:
+    # -- Docker registry for Observation Service image
+    registry: ghcr.io
+    # -- Docker image repository for Observation Service
+    repository: caraml-dev/timber/observation-service
+    # -- Docker image tag for Observation Service
+    tag: v0.0.0-build.15-b8afdb5
+    # -- Docker image pull policy
+    pullPolicy: IfNotPresent
+
+  # -- Annotations to add to Observation Service pod
+  annotations: {}
+
+  replicaCount: 1
+
+  # -- Observation Service server configuration.
+  apiConfig: {}
+    # Default configuration base on caraml-dev/timber/observation-service: v0.0.0-build.15-b8afdb5
+    # DeploymentConfig:
+    #   EnvironmentType: local
+    #   ProjectName: ""
+    #   ServiceName: ""
+    #   LogLevel: "INFO"
+    #   MaxGoRoutines: 1000
+    # NewRelicConfig:
+    #   Enabled: false
+    #   License: string
+    #   Labels: {}
+    #   IgnoreStatusCodes: []
+    # SentryConfig:
+    #   Enabled: false
+    #   DSN: ""
+    #   Labels: {}
+    # LogConsumerConfig:
+    #   Kind: ""
+    #   KafkaConfig:
+    #     Brokers: ""
+    #     Topic: ""
+    #     MaxMessageBytes: 1048588
+    #     CompressionType: "none"
+    #     ConnectTimeoutMS: 1000
+    #     PollInterval: 1000
+    #     AutoOffsetReset: "latest"
+    # LogProducerConfig:
+    #   Kind: ""
+    #   QueueLength: 100
+    #   FlushIntervalSeconds: 1
+    #   KafkaConfig:
+    #     Brokers: ""
+    #     Topic: ""
+    #     MaxMessageBytes: 1048588
+    #     CompressionType: "none"
+    #     ConnectTimeoutMS: 1000
+    #     PollInterval: 1000
+    #     AutoOffsetReset: "latest"
+    #   FluentdConfig:
+    #     Kind: ""
+    #     Host: "localhost"
+    #     Port: 24224
+    #     Tag: "observation-service"
+    #     BQConfig:
+    #       Project: ""
+    #       Dataset: ""
+    #       Table: ""
+    #   MonitoringConfig:
+    #     Kind: ""
+
+    # E.g. using BQ FLuentd
+    # DeploymentConfig:
+    #   EnvironmentType: dev
+    # logConsumerConfig:
+    #   Kind: kafka
+    #   KafkaConfig:
+    #     Brokers: kafka.default.svc.cluster.local
+    #     Topic: test-topic
+    # LogProducerConfig:
+    #   FlushIntervalSeconds: 10
+    #   Kind: fluentd
+    #   FluentdConfig:
+    #     Host: observation-service-fluentd
+    #     Port: 24224
+    #     Kind: bq
+    #     Tag: observation-service.log
+    #     BQConfig:
+    #       Project: project
+    #       Dataset: dataset
+    #       Table: table
+
+  # -- Resources requests and limits for Observation Service. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources: {}
+
+  livenessProbe:
+    # -- HTTP path for liveness check
+    path: "/v1/internal/health/live"
+    # -- Liveness probe delay and thresholds
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
+  readinessProbe:
+    # -- HTTP path for readiness check
+    path: "/v1/internal/health/ready"
+    # -- Readiness probe delay and thresholds
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
+  service:
+    type: ClusterIP
+    # -- Observation Service Kubernetes service port number
+    externalPort: 9001
+    # -- Observation Service container port number
+    internalPort: 9001
+
+  ingress:
+    # -- Enable ingress to provision Ingress resource for external access to Observation Service
+    enabled: false
+    # -- Set host value to enable name based virtual hosting. This allows routing
+    # HTTP traffic to multiple host names at the same IP address. If no host is
+    # specified, the ingress rule applies to all inbound HTTP traffic through
+    # the IP address specified.
+    # https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting
+    host: ""
+    # -- Ingress class annotation to add to this Ingress rule,
+    # useful when there are multiple ingress controllers installed
+    class: ""
+
+  # -- List of extra environment variables to add to Observation Service server container
+  extraEnvs: []
+
+  # -- List of extra labels to add to Observation Service K8s resources
+  extraLabels: {}
+
+  # -- Define which nodes the pods are scheduled on.
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+  # -- If specified, the pod's tolerations.
+  # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+  # -- Assign custom affinity rules to constrain pods to nodes.
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+  # -- HPA scaling configuration for Observation Service
+  autoscaling:
+    # -- Toggle to enable HPA scaling
+    enabled: false
+    # -- Minimum replicas for HPA scaling
+    minReplicas: 1
+    # -- Maximum replicas for HPA scaling
+    maxReplicas: 2
+    # -- CPU utilization percentage threshold to activate HPA scaling
+    targetCPUUtilizationPercentage: 80
+
+  # -- Service Monitor configuration for Observation Service
+  monitoring:
+    enabled: false
+    baseURL: /v1/metrics
+    # jobBaseURL: ""
+
+# Fluentd configuration
+# ref: https://github.com/caraml-dev/helm-charts/tree/main/charts/timber-fluentd
+fluentd:
+  # -- Flag to toggle deployment of Observation Service fluentd
+  enabled: false
+
+  nameOverride: timber-observation-service-fluentd
+
+  # -- List of extra environment variables to add to Observation Service fluentd container
+  extraEnvs:
+    # E.g. Sample for fluentd env to work with fluentd.conf with bq
+    # - name: FLUENTD_WORKER_COUNT
+    #   value: "1"
+    # - name: FLUENTD_LOG_LEVEL
+    #   value: debug
+    # - name: FLUENTD_BUFFER_LIMIT
+    #   value: 1g
+    # - name: FLUENTD_FLUSH_INTERVAL_SECONDS
+    #   value: "30"
+    # - name: FLUENTD_LOG_PATH
+    #   value: /fluentd/cache/log
+    # - name: FLUENTD_TAG
+    #   value: observation-service.log
+    # - name: FLUENTD_GCP_JSON_KEY_PATH
+    #   value: /etc/gcp_service_account/service-account.json
+    # - name: FLUENTD_GCP_PROJECT
+    #   value: project
+    # - name: FLUENTD_BQ_DATASET
+    #   value: dataset
+    # - name: FLUENTD_BQ_TABLE
+    #   value: table
+
+  # -- Fluentd.conf
+  fluentdConfig: ""
+  # E.g. sample fluentd.conf deployment for Fluentd producer to BQ sink
+  # |-
+  #   # Set fluentd log level to error
+  #   <system>
+  #     log_level "#{ENV['FLUENTD_LOG_LEVEL']}"
+  #     workers "#{ENV['FLUENTD_WORKER_COUNT']}"
+  #   </system>
+
+  #   # Accept HTTP input
+  #   <source>
+  #     @type http
+  #     port 9880
+  #     bind 0.0.0.0
+  #     body_size_limit 32m
+  #     keepalive_timeout 10s
+  #   </source>
+
+  #   # Accept events on tcp socket
+  #   <source>
+  #     @type forward
+  #     port 24224
+  #     bind 0.0.0.0
+  #   </source>
+
+  #   # Buffer and output to multiple sinks
+  #   <match "#{ENV['FLUENTD_TAG']}">
+  #     @type copy
+  #     <store>
+  #       @type stdout
+  #     </store>
+  #     <store>
+  #       @type bigquery_load
+
+  #       <buffer>
+  #         @type file
+
+  #         path "#{ENV['FLUENTD_LOG_PATH']}"
+  #         timekey_use_utc
+          
+  #         flush_at_shutdown true
+  #         flush_mode interval
+  #         flush_interval "#{ENV['FLUENTD_FLUSH_INTERVAL_SECONDS']}"
+  #         retry_max_times 3
+
+  #         chunk_limit_size 1g
+  #         compress gzip
+  #         total_limit_size "#{ENV['FLUENTD_BUFFER_LIMIT']}"
+
+  #         delayed_commit_timeout 150
+  #         disable_chunk_backup true
+  #       </buffer>
+
+  #       # Authenticate with BigQuery using a json key
+  #       auth_method json_key
+  #       json_key "#{ENV['FLUENTD_GCP_JSON_KEY_PATH']}"
+  #       project "#{ENV['FLUENTD_GCP_PROJECT']}"
+  #       dataset "#{ENV['FLUENTD_BQ_DATASET']}"
+  #       table "#{ENV['FLUENTD_BQ_TABLE']}"
+  #       fetch_schema true
+  #     </store>
+  #   </match>
