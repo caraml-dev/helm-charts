@@ -43,6 +43,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "observation-service.labels" -}}
+release: {{ .Release.Name }}
 app.kubernetes.io/name: {{ template "observation-service.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}
