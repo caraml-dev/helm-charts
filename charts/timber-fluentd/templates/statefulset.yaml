@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "timber-fluentd.fullname" . }}-fluentd
+  name: {{ include "timber-fluentd.fullname" . }}
   labels:
     {{- include "timber-fluentd.labels" . | nindent 4 }}
 spec:
@@ -11,13 +11,13 @@ spec:
   minReadySeconds: 5
   selector:
     matchLabels:
-      app: {{ include "timber-fluentd.fullname" . }}-fluentd
+      app: {{ include "timber-fluentd.fullname" . }}
       release: {{ .Release.Name }}
-  serviceName: {{ include "timber-fluentd.fullname" . }}-fluentd
+  serviceName: {{ include "timber-fluentd.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ include "timber-fluentd.fullname" . }}-fluentd
+        app: {{ include "timber-fluentd.fullname" . }}
         release: {{ .Release.Name }}
         {{- include "timber-fluentd.labels" . | nindent 8 }}
         {{- if .Values.global.extraPodLabels }}
@@ -62,7 +62,7 @@ spec:
       {{- if .Values.fluentdConfig }}
       - name: fluentd-conf
         configMap:
-          name: {{ include "timber-fluentd.fullname" . }}-config
+          name: {{ include "timber-fluentd.fullname" . }}
           defaultMode: 0777
       {{- end }}
       {{- if .Values.gcpServiceAccount.credentials }}
@@ -76,7 +76,7 @@ spec:
       {{- if .Values.gcpServiceAccount.credentialsData }}
       - name: gcp-service-account
         secret:
-          secretName: {{ include "timber-fluentd.fullname" . }}-secret
+          secretName: {{ include "timber-fluentd.fullname" . }}
       {{- end }}
   {{- if .Values.pvcConfig }}
   volumeClaimTemplates:
