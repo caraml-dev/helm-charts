@@ -262,4 +262,3 @@ fluentd:
   #       fetch_schema true
   #     </store>
   #   </match>
-  
