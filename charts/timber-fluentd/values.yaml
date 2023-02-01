@@ -1,0 +1,117 @@
+global:
+  # -- Extra pod labels in a map[string]string format, most likely to be used for the costing labels.
+  extraPodLabels: {}
+
+nameOverride: ""
+
+image:
+  # -- Docker registry for fluentd image
+  registry: ghcr.io
+  # -- Docker image repository for fluentd
+  repository: caraml-dev/timber/fluentd
+  # -- Docker image tag for fluentd
+  tag: v0.0.0-build.16-01ac82e
+  # -- Docker image pull policy
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+# -- Annotations to add to fluentd pod
+annotations: {}
+
+# -- Resources requests and limits for fluentd StatefulSet. This should be set
+# according to your cluster capacity and service level objectives.
+# Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+resources: {}
+
+# For BQ access configuration
+# -- Kubernetes service account for GKE to access GCP's resources.
+# Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts
+kubernatesServiceAccount: ""
+# -- Google service account used to access GCP's resources. Secret will be mounted at /etc/gcp_service_account/service-account.json
+gcpServiceAccount: {}
+# Base64 values as credentialsData or external secrets via credentials
+# credentialsData:
+# credentials:
+#   name: secret-name
+#   key: sa.json
+
+# -- PVC configurations for fluentd StatefulSet storage
+pvcConfig:
+  name: cache-volume
+  mountPath: /cache
+  storage: 3Gi
+
+# -- List of extra environment variables to add to fluentd container
+extraEnvs: []
+
+# -- List of extra labels to add to fluentd K8s resources
+extraLabels: {}
+
+# -- HPA scaling configuration for Observation Service fluentd
+autoscaling:
+  # -- Toggle to enable HPA scaling
+  enabled: false
+  # -- Minimum replicas for HPA scaling
+  minReplicas: 1
+  # -- Maximum replicas for HPA scaling
+  maxReplicas: 2
+  # -- CPU utilization percentage threshold to activate HPA scaling
+  targetCPUUtilizationPercentage: 80
+
+# -- Fluentd config to be mounted as fluentd/etc/fluent.conf
+fluentdConfig: ""
+# E.g. Kafka sink -> UPI parser -> BQ
+  # Set fluentd log level to error
+  # <system>
+  #   log_level "#{ENV['FLUENTD_LOG_LEVEL']}"
+  #   workers "#{ENV['FLUENTD_WORKER_COUNT']}"
+  # </system>
+
+  # <source>
+  #   @type kafka
+
+  #   brokers "#{ENV['FLUENTD_KAFKA_BROKER']}" #broker:9092
+  #   topics "#{ENV['FLUENTD_KAFKA_TOPIC']}"
+
+  #   format upi_logs
+  #   class_name "#{ENV['FLUENTD_KAFKA_PROTO_CLASS_NAME']}" #"caraml.upi.v1.PredictionLog"
+  # </source>
+
+  # # Buffer and output to multiple sinks
+  # <match "#{ENV['FLUENTD_KAFKA_TOPIC']}">
+  #   @type copy
+  #   <store>
+  #     @type stdout
+  #   </store>
+  #   <store>
+  #     @type bigquery_load
+
+  #     <buffer>
+  #       @type file
+
+  #       path "#{ENV['FLUENTD_LOG_PATH']}"
+  #       timekey_use_utc
+
+  #       flush_at_shutdown true
+  #       flush_mode interval
+  #       flush_interval "#{ENV['FLUENTD_FLUSH_INTERVAL_SECONDS']}"
+  #       retry_max_times 3
+
+  #       chunk_limit_size 1g
+  #       compress gzip
+  #       total_limit_size "#{ENV['FLUENTD_BUFFER_LIMIT']}"
+
+  #       delayed_commit_timeout 150
+  #       disable_chunk_backup true
+  #     </buffer>
+
+  #     # Authenticate with BigQuery using a json key
+  #     auth_method json_key
+  #     json_key "#{ENV['FLUENTD_GCP_JSON_KEY_PATH']}"
+  #     project "#{ENV['FLUENTD_GCP_PROJECT']}"
+  #     dataset "#{ENV['FLUENTD_BQ_DATASET']}"
+  #     table "#{ENV['FLUENTD_BQ_TABLE']}"
+  #     fetch_schema true
+  #   </store>
+  # </match>

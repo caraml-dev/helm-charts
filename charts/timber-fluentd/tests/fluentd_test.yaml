@@ -1,0 +1,80 @@
+suite: Unit tests for Fluentd Deployment
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should not create volume or replica by default
+    templates:
+      - statefulset.yaml
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - isEmpty: # No volume mounted for gcp or fluentdConfig
+          path: spec.template.spec.volumes
+      - notContains: 
+          path: spec.template.spec.containers[0].volumeMounts
+          content: 
+            mountPath: /etc/gcp_service_account
+            name: gcp-service-account
+            readOnly: true
+      - isEmpty: # No replicas set
+          path: spec.template.spec.replica
+  - it: should create volume and cm for fluentd-config when is set
+    set:
+      fluentdConfig: test-fluentd-config
+    templates:
+      - statefulset.yaml
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - equal: 
+          path: spec.template.spec.volumes[0].name
+          value: fluentd-conf
+      - matchRegex:
+          path: data.[fluent.conf]
+          pattern: test-fluentd-config
+        template: configmap.yaml
+  - it: should create volume and secrets for gcp when gcp cred data is set
+    set:
+      gcpServiceAccount.credentialsData: dummy-account
+    templates:
+      - statefulset.yaml
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - contains: 
+          path: spec.template.spec.containers[0].volumeMounts
+          content: 
+            mountPath: /etc/gcp_service_account
+            name: gcp-service-account
+            readOnly: true
+      - contains: # secret created mounted
+          path: spec.template.spec.volumes
+          content:
+           name: gcp-service-account
+           secret:
+            secretName: my-release-timber-fluentd-secret
+      - matchRegex: # secret created from secret.yaml
+          path: data.[service-account.json]
+          pattern: dummy-account
+        template: secret.yaml
+  - it: should create volume for gcp when gcp secret is set
+    set:
+      gcpServiceAccount.credentials.name: dummy-secret-name
+      gcpServiceAccount.credentials.key: dummy-secret-key
+    templates:
+      - statefulset.yaml
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - contains: # secret provided mounted
+          path: spec.template.spec.volumes
+          content:
+           name: gcp-service-account
+           secret:
+            secretName: dummy-secret-name
+            items:
+              - key: dummy-secret-key
+                path: service-account.json

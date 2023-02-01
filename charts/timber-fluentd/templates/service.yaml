@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "timber-fluentd.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "timber-fluentd.fullname" . }}
+    {{- include "timber-fluentd.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ include "timber-fluentd.fullname" . }}
+    release: {{ .Release.Name }}
+  type: ClusterIP
+  ports:
+  - name: tcp-input
+    port: 24224
+    targetPort: 24224
+  - name: http-input
+    port: 9880
+    targetPort: 9880

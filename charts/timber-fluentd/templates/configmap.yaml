@@ -1,0 +1,11 @@
+{{- if .Values.fluentdConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "timber-fluentd.fullname" . }}-config
+  labels:
+    {{- include "timber-fluentd.labels" . | nindent 4 }}
+data:
+  fluent.conf: |-
+{{ .Values.fluentdConfig | nindent 4}}
+{{- end }}
