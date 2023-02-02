@@ -5655,4 +5655,24 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/timber-fluentd-0.1.0/timber-fluentd-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-01T08:01:26.393922902Z"
+  timber-observation-service:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2023-02-02T05:47:44.672591718Z"
+    dependencies:
+    - alias: fluentd
+      condition: fluentd.enabled
+      name: timber-fluentd
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.1
+    description: Observation Service - Logging system for collecting ground truth
+      observation result from ML prediction
+    digest: 16dfb5e98d75e205d5136ec64a0b3810819350e2d766130f063dc6cb4274c0ea
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: timber-observation-service
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.0/timber-observation-service-0.2.0.tgz
+    version: 0.2.0
+generated: "2023-02-02T05:47:44.673120314Z"
