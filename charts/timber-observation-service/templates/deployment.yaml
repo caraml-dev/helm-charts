@@ -21,7 +21,6 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}
-        release: {{ .Release.Name }}
         {{- include "observation-service.labels" . | nindent 8 }}
         {{- if .Values.global.extraPodLabels }}
           {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
@@ -35,14 +34,16 @@ spec:
         - name: api
           image: "{{ .Values.observationService.image.registry }}/{{ .Values.observationService.image.repository }}:{{ .Values.observationService.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.observationService.image.pullPolicy }}
+          {{- if or .Values.fluentd.gcpServiceAccount .Values.observationService.extraEnvs}}
           env:
-            {{ if .Values.fluentd.gcpServiceAccount}}
+            {{- if .Values.fluentd.gcpServiceAccount}}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /etc/gcp_service_account/service-account.json
             {{- end }}
             {{- with .Values.observationService.extraEnvs }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.observationService.service.internalPort }}
