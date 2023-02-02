@@ -5580,6 +5580,19 @@ entries:
   observation-service:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2023-02-02T08:46:13.38268433Z"
+    description: Observation Service - Logging system for collecting ground truth
+      observation result from ML prediction
+    digest: 84113ca13013fb09bfb46200c917b00996b6be25e2b0d99ded8cae66529a5762
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: observation-service
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/observation-service-0.1.5/observation-service-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2023-02-01T08:01:26.393636999Z"
     description: Observation Service - Logging system for collecting ground truth
       observation result from ML prediction
@@ -5633,6 +5646,18 @@ entries:
   timber-fluentd:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2023-02-02T08:46:13.545176586Z"
+    description: Fluentd service - Fluentd service that supports UPI logs parsing
+    digest: 6f64cf5c62f2a8c6e88e0b75b8763e2b01380c3a91f823cbbfcc25a34cdf743c
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: timber-fluentd
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/timber-fluentd-0.1.2/timber-fluentd-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2023-02-01T06:26:03.695366967Z"
     description: Fluentd service - Fluentd service that supports UPI logs parsing
     digest: 0a4f45008c655bed14e74ccccc556d10203d1feac9b987fd91c2114e7f94c3c5
@@ -5658,6 +5683,25 @@ entries:
   timber-observation-service:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2023-02-02T08:46:13.706822538Z"
+    dependencies:
+    - alias: fluentd
+      condition: fluentd.enabled
+      name: timber-fluentd
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.1
+    description: Observation Service - Logging system for collecting ground truth
+      observation result from ML prediction
+    digest: 6b07e486613177939e5767d5ce8f771696e60dee8420ba36e6312715efb992d2
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: timber-observation-service
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.1/timber-observation-service-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2023-02-02T05:47:44.672591718Z"
     dependencies:
     - alias: fluentd
@@ -5675,4 +5719,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.0/timber-observation-service-0.2.0.tgz
     version: 0.2.0
-generated: "2023-02-02T05:47:44.673120314Z"
+generated: "2023-02-02T08:46:13.707085739Z"
