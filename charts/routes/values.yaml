@@ -156,6 +156,10 @@ mlp:
 https:
   # NOTE: Set https to true by default to allow google oauth login, disable from parent chart
   enabled: true
+  certificateIssuer:
+    create: true
+    name: default
+    kind: ClusterIssuer
   tls:
     mode: SIMPLE
     credentialName: mlp-tls-cert
