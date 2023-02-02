@@ -13,11 +13,7 @@ spec:
     name: {{ include "observation-service.fullname" . }}-fluentd
   minReplicas: {{ .Values.fluentd.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.fluentd.autoscaling.maxReplicas }}
-  metrics:
-    {{- if .Values.fluentd.autoscaling.targetCPUUtilizationPercentage }}
-    - type: Resource
-      resource:
-        name: cpu
-        targetAverageUtilization: {{ .Values.fluentd.autoscaling.targetCPUUtilizationPercentage }}
-    {{- end }}
+  {{- if .Values.fluentd.autoscaling.targetCPUUtilizationPercentage }}
+  targetCPUUtilizationPercentage: {{ .Values.fluentd.autoscaling.targetCPUUtilizationPercentage }}
+  {{- end }}
 {{- end }}

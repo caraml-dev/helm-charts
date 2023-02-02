@@ -13,11 +13,7 @@ spec:
     name: {{ include "observation-service.fullname" . }}
   minReplicas: {{ .Values.observationService.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.observationService.autoscaling.maxReplicas }}
-  metrics:
-    {{- if .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}
-    - type: Resource
-      resource:
-        name: cpu
-        targetAverageUtilization: {{ .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}
-    {{- end }}
+  {{- if .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}
+  targetCPUUtilizationPercentage: {{ .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}
+  {{- end }}
 {{- end }}

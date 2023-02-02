@@ -1,7 +1,7 @@
 apiVersion: v2
 name: observation-service
 description: Observation Service - Logging system for collecting ground truth observation result from ML prediction
-version: 0.1.4
+version: 0.1.5
 appVersion: 0.1.0
 maintainers:
 - email: caraml-dev@caraml.dev

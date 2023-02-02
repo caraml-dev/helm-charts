@@ -1,0 +1,24 @@
+suite: Unit tests for Fluentd HPA
+templates:
+  - hpa.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set specified targetCPUUtilizationPercentage
+    set:
+      global: {}
+      autoscaling:
+        enabled: true
+        targetCPUUtilizationPercentage: 90
+    asserts:
+      - isKind:
+          of: HorizontalPodAutoscaler
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-timber-fluentd$
+      - equal: # check targetCPUUtilizationPercentage
+          path: spec.targetCPUUtilizationPercentage
+          value: 90
