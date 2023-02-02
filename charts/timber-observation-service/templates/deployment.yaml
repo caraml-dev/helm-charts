@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "observation-service.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "observation-service.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.observationService.autoscaling.enabled }}
+  replicas: {{ .Values.observationService.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+      release: {{ .Release.Name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        {{- include "observation-service.labels" . | nindent 8 }}
+        {{- if .Values.global.extraPodLabels }}
+          {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
+        {{- end }}
+        {{- with .Values.observationService.annotations }}
+        annotations:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: api
+          image: "{{ .Values.observationService.image.registry }}/{{ .Values.observationService.image.repository }}:{{ .Values.observationService.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.observationService.image.pullPolicy }}
+          {{- if or .Values.fluentd.gcpServiceAccount .Values.observationService.extraEnvs}}
+          env:
+            {{- if .Values.fluentd.gcpServiceAccount}}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /etc/gcp_service_account/service-account.json
+            {{- end }}
+            {{- with .Values.observationService.extraEnvs }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.observationService.service.internalPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.observationService.livenessProbe.path }}
+              port: {{ .Values.observationService.service.internalPort }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.observationService.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.observationService.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.observationService.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.observationService.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.observationService.readinessProbe.path }}
+              port: {{ .Values.observationService.service.internalPort }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.observationService.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.observationService.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.observationService.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.observationService.readinessProbe.timeoutSeconds }}
+          resources:
+            {{- toYaml .Values.observationService.resources | nindent 12 }}
+          # Give time for running pods to terminate existing connection before letting
+          # Kubernetes terminate the pods.
+          # https://blog.sebastian-daschner.com/entries/zero-downtime-updates-kubernetes
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "sleep 15"]
+          args:
+          - serve
+          - --config=/etc/observation-service/config.yaml
+          {{- with .Values.observationService.extraArgs }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+          volumeMounts:
+          {{- if .Values.fluentd.gcpServiceAccount }}
+          - mountPath: /etc/gcp_service_account
+            name: gcp-service-account
+            readOnly: true
+          {{- end }}
+          - name: config
+            mountPath: /etc/observation-service
+      volumes:
+      {{- if .Values.fluentd.gcpServiceAccount.credentials }}
+      - name: gcp-service-account
+        secret:
+          secretName: {{ .Values.gcpServiceAccount.credentials.name }}
+          items:
+            - key: {{ .Values.gcpServiceAccount.credentials.key }}
+              path: service-account.json
+      {{- end }}
+      {{- if .Values.fluentd.gcpServiceAccount.credentialsData }}
+      - name: gcp-service-account
+        secret:
+          secretName: {{ template "timber-fluentd.fullname" .Subcharts.fluentd }}
+      {{- end }}
+      - name: config
+        secret:
+          secretName: {{ template "observation-service.fullname" . }}
+      {{- if .Values.observationService.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.observationService.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.observationService.affinity }}
+      affinity:
+        {{- toYaml .Values.observationService.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.observationService.tolerations }}
+      tolerations:
+        {{- toYaml .Values.observationService.tolerations | nindent 8 }}
+      {{- end }}
