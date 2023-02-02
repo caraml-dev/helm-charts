@@ -1,7 +1,7 @@
 apiVersion: v2
 name: timber-observation-service
 description: Observation Service - Logging system for collecting ground truth observation result from ML prediction
-version: 0.2.0
+version: 0.2.1
 appVersion: 0.1.0
 dependencies:
 - alias: fluentd
