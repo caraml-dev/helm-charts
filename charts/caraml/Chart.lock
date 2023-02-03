@@ -4,7 +4,7 @@ dependencies:
   version: 0.4.11
 - name: merlin
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.9.33
+  version: 0.9.34
 - name: postgresql
   repository: https://charts.helm.sh/stable
   version: 7.0.2
@@ -35,5 +35,5 @@ dependencies:
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.8.2
-digest: sha256:fd5fce0de3ca23defdc7eab779c38819d7031628f7d8c83b8595c3fbb6041259
-generated: "2023-01-18T16:07:56.016098+05:30"
+digest: sha256:975a0c6dc3a429b0813b9e7d473ea713a32d30f678d54c51a25e13c6cb0ccf1b
+generated: "2023-02-02T11:15:58.47377064Z"
