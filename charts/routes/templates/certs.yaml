@@ -23,8 +23,8 @@ spec:
     name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "issuer" }}
     kind: ClusterIssuer
     {{- else }}
-    name: {{ .Values.https.certificateIssuer.name }}
-    kind: {{ .Values.https.certificateIssuer.kind }}
+    name: {{ .Values.https.certificateIssuer.external.name }}
+    kind: {{ .Values.https.certificateIssuer.external.kind }}
     {{- end }}
     group: cert-manager.io
   dnsNames:

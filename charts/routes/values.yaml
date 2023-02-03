@@ -158,8 +158,9 @@ https:
   enabled: true
   certificateIssuer:
     create: true
-    name: default
-    kind: ClusterIssuer
+    external:
+      name: default
+      kind: ClusterIssuer
   tls:
     mode: SIMPLE
     credentialName: mlp-tls-cert

@@ -101,8 +101,8 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.xp.useServiceFqdn | bool | `true` |  |
 | global.xp.vsPrefix | string | `"/api/xp"` |  |
 | https.certificateIssuer.create | bool | `true` |  |
-| https.certificateIssuer.kind | string | `"ClusterIssuer"` |  |
-| https.certificateIssuer.name | string | `"default"` |  |
+| https.certificateIssuer.external.kind | string | `"ClusterIssuer"` |  |
+| https.certificateIssuer.external.name | string | `"default"` |  |
 | https.enabled | bool | `true` |  |
 | https.tls.credentialName | string | `"mlp-tls-cert"` |  |
 | https.tls.mode | string | `"SIMPLE"` |  |
