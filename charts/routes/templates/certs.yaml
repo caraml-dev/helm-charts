@@ -1,5 +1,6 @@
 {{- $hosts := (concat (get $.Values.global.hosts "mlp") (get $.Values.global.hosts "mlpdocs") (get $.Values.global.hosts "mlflow") )}}
-{{- if and .Values.https.enabled }}
+{{- if .Values.https.enabled }}
+{{- if .Values.https.certificateIssuer.create }}
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -7,6 +8,7 @@ metadata:
   name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "issuer" }}
 spec:
   selfSigned: {}
+{{- end }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -17,8 +19,13 @@ metadata:
 spec:
   secretName: {{ include "caraml-routes.tls-cert-name" . }}
   issuerRef:
+    {{- if .Values.https.certificateIssuer.create }}
     name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "issuer" }}
     kind: ClusterIssuer
+    {{- else }}
+    name: {{ .Values.https.certificateIssuer.external.name }}
+    kind: {{ .Values.https.certificateIssuer.external.kind }}
+    {{- end }}
     group: cert-manager.io
   dnsNames:
     {{- range $hosts }}

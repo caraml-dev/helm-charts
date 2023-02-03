@@ -1,8 +1,8 @@
 # caraml-routes
 
 ---
-![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square)
-![AppVersion: 0.1.2](https://img.shields.io/badge/AppVersion-0.1.2-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
+![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML networking resources
 
@@ -100,6 +100,9 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.xp.uiServiceName | string | `"xp-management"` |  |
 | global.xp.useServiceFqdn | bool | `true` |  |
 | global.xp.vsPrefix | string | `"/api/xp"` |  |
+| https.certificateIssuer.create | bool | `true` |  |
+| https.certificateIssuer.external.kind | string | `"ClusterIssuer"` |  |
+| https.certificateIssuer.external.name | string | `"default"` |  |
 | https.enabled | bool | `true` |  |
 | https.tls.credentialName | string | `"mlp-tls-cert"` |  |
 | https.tls.mode | string | `"SIMPLE"` |  |
