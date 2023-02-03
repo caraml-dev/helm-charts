@@ -127,6 +127,73 @@ entries:
   caraml:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-02-03T04:20:42.625981129Z"
+    dependencies:
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.11
+    - condition: merlin.enabled
+      name: merlin
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.9.34
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: caraml-authz
+      condition: caraml-authz.enabled
+      name: authz
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.6
+    - condition: caraml-routes.enabled
+      name: caraml-routes
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.6
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.9
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.8.2
+    description: A Helm chart for deploying CaraML components
+    digest: 2ca8f719d7fca3c97e1b97fdbcd77d85751ab77c578df04b9a321aeab5177d88
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.4.22/caraml-0.4.22.tgz
+    version: 0.4.22
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-01-18T10:55:14.416006465Z"
     dependencies:
     - condition: mlp.enabled
@@ -5783,4 +5850,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.0/timber-observation-service-0.2.0.tgz
     version: 0.2.0
-generated: "2023-02-02T11:14:49.666454665Z"
+generated: "2023-02-03T04:20:42.626413828Z"
