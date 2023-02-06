@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
-    tag: 0.24.0-rc1
+    tag: 0.26.0-rc1
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -19,6 +19,7 @@ deployment:
       cpu: "1"
       memory: 1Gi
 environment: dev
+deploymentLabelPrefix: "gojek.com/"
 loggerDestinationURL: "http://yourDestinationLogger"
 queue:
   numOfWorkers: 1
@@ -75,7 +76,21 @@ transformer:
     feastBigtableServingURL: online-serving-bt.feast.dev
   feast:
     defaultServingURL: online-serving-redis.feast.dev
-    servingURLs: [{host: "online-serving-redis.feast.dev", label: "Online Serving with Redis", source_type: "REDIS", icon: "redis"}, {host: "online-serving-bigtable.feast.dev", label: "Online Serving with BigTable", source_type: "BIGTABLE", icon: "bigtable"}]
+    servingURLs:
+      [
+        {
+          host: "online-serving-redis.feast.dev",
+          label: "Online Serving with Redis",
+          source_type: "REDIS",
+          icon: "redis",
+        },
+        {
+          host: "online-serving-bigtable.feast.dev",
+          label: "Online Serving with BigTable",
+          source_type: "BIGTABLE",
+          icon: "bigtable",
+        },
+      ]
     ## Redis storage configuration for feast retrieval
     ##
     # redisStorage:
@@ -166,7 +181,13 @@ ui:
   apiHost: /api/merlin/v1
   mlp:
     apiHost: /api/v1
-  docsURL: [{"href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md", "label": "Getting Started with Merlin"}]
+  docsURL:
+    [
+      {
+        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
+        "label": "Getting Started with Merlin",
+      },
+    ]
   # Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
   maxAllowedReplica: 20
