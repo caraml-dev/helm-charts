@@ -10,7 +10,6 @@ metadata:
 {{ toYaml .Values.mlflow.service.annotations | indent 4 }}
 {{- end }}
   labels:
-    app: {{ template "mlflow.fullname" . }}
     {{- include "merlin.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.mlflow.service.type }}
@@ -34,5 +33,5 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: {{ template "mlflow.fullname" . }}
+    app: {{ template "mlflow.name" . }}
     release: {{ .Release.Name }}
