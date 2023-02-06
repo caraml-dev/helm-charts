@@ -173,7 +173,7 @@ fluentd:
   # -- Flag to toggle deployment of Observation Service fluentd
   enabled: false
 
-  nameOverride: timber-observation-service-fluentd
+  nameOverride: timber-obs-fluentd
 
   # -- List of extra environment variables to add to Observation Service fluentd container
   extraEnvs:

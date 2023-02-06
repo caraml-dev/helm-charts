@@ -3,4 +3,4 @@ dependencies:
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.1.2
 digest: sha256:b8301cc7db5ad41cd909d9a7fd6955ad3e7b22a2861476ba7fdcf65b670a93f2
-generated: "2023-02-02T08:48:46.897798082Z"
+generated: "2023-02-06T18:50:58.379453+08:00"

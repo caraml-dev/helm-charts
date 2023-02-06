@@ -42,22 +42,17 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "timber-fluentd.labels" -}}
-helm.sh/chart: {{ include "timber-fluentd.chart" . }}
-{{ include "timber-fluentd.selectorLabels" . }}
+app: {{ template "timber-fluentd.fullname" .}}
+release: {{ .Release.Name }}
+app.kubernetes.io/name: {{ template "timber-fluentd.fullname" . }}
+helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
 {{ if .Values.extraLabels -}}
     {{ toYaml .Values.extraLabels -}}
 {{- end }}
-{{- end }}
-
-{{/*
-Selector labels
-*/}}
-{{- define "timber-fluentd.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "timber-fluentd.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
