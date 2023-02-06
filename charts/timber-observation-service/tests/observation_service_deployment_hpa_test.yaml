@@ -19,7 +19,7 @@ tests:
           of: HorizontalPodAutoscaler
       - matchRegex:
           path: metadata.name
-          pattern: my-release-timber-observation-service$
+          pattern: my-release-timber-obs-service
       - equal: # check targetCPUUtilizationPercentage
           path: spec.targetCPUUtilizationPercentage
           value: 90
