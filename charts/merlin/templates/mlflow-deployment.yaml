@@ -4,7 +4,6 @@ metadata:
   name: {{ template "mlflow.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ template "mlflow.fullname" . }}
     {{- include "merlin.labels" . | nindent 4 }}
     {{- if .Values.mlflow.deploymentLabels}}
       {{- toYaml .Values.mlflow.deploymentLabels | nindent 4 }}
@@ -13,7 +12,7 @@ spec:
   replicas: {{ .Values.mlflow.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "mlflow.fullname" . }}
+      app: {{ template "mlflow.name" . }}
       release: {{ .Release.Name }}
   strategy:
     type: RollingUpdate
@@ -23,7 +22,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "mlflow.fullname" . }}
+        app: {{ template "mlflow.name" . }}
         release: {{ .Release.Name }}
         {{- if .Values.mlflow.podLabels }}
           {{- toYaml .Values.mlflow.podLabels | nindent 8 }}
