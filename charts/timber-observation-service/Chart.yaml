@@ -12,4 +12,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: timber-observation-service
-version: 0.2.2
+version: 0.2.3

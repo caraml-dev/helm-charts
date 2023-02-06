@@ -93,9 +93,9 @@ spec:
       {{- if .Values.fluentd.gcpServiceAccount.credentials }}
       - name: gcp-service-account
         secret:
-          secretName: {{ .Values.gcpServiceAccount.credentials.name }}
+          secretName: {{ .Values.fluentd.gcpServiceAccount.credentials.name }}
           items:
-            - key: {{ .Values.gcpServiceAccount.credentials.key }}
+            - key: {{ .Values.fluentd.gcpServiceAccount.credentials.key }}
               path: service-account.json
       {{- end }}
       {{- if .Values.fluentd.gcpServiceAccount.credentialsData }}
