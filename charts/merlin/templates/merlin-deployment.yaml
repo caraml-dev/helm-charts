@@ -66,8 +66,6 @@ spec:
         env:
           - name: ENVIRONMENT
             value: "{{ .Values.environment }}"
-          - name: DEPLOYMENT_LABEL_PREFIX
-            value: "{{ .Values.deploymentLabelPrefix }}"
           - name: LOGGER_DESTINATION_URL
             value: "{{ .Values.loggerDestinationURL }}"
           - name: NUM_OF_WORKERS
@@ -256,6 +254,8 @@ spec:
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /etc/gcp_service_account/service-account.json
           {{- end }}
+          - name: DEPLOYMENT_LABEL_PREFIX
+            value: "{{ .Values.deploymentLabelPrefix }}"
         volumeMounts:
         - mountPath: /opt/config
           name: config
