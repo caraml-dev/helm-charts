@@ -1,5 +1,5 @@
 {{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
-{{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix" "apiPrefix")) }}
+{{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix")) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
