@@ -37,7 +37,7 @@ Generated names
 {{- end -}}
 
 {{- define "merlin.envs-cm-name" -}}
-    {{- printf "%s-environments" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
+    {{- printf "%s-config" (include "merlin.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "merlin.scripts-cm-name" -}}
