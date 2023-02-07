@@ -174,6 +174,17 @@ mlpGateway:
 
 # configuration for extra mappings in VS (e.g. authentication proxies)
 extraMappings: []
+  # name: auth-proxy
+  # match:
+  #   - uri:
+  #       prefix: /auth-proxy/
+  # rewrite:
+  #   uri: /
+  # route:
+  #   - destination:
+  #       host: auth-proxy
+  #       port:
+  #         number: 8080
 
 ############################################################
 # Istio Base
