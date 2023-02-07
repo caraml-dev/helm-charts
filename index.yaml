@@ -2148,6 +2148,48 @@ entries:
   caraml-routes:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-02-07T04:51:22.466664519Z"
+    dependencies:
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.1
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.4
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.8.1
+    - condition: common.enabled
+      name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.5
+    description: A Helm chart for deploying CaraML networking resources
+    digest: a77b08ab61df33b7eda63e78a9ba9c2a753693b555d2c73ef59610d3447d892a
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml-routes
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-routes-0.2.2/caraml-routes-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-02-03T08:44:07.313471458Z"
     dependencies:
     - alias: istiod
@@ -6096,4 +6138,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.0/timber-observation-service-0.2.0.tgz
     version: 0.2.0
-generated: "2023-02-07T04:18:28.362137711Z"
+generated: "2023-02-07T04:51:22.467095444Z"
