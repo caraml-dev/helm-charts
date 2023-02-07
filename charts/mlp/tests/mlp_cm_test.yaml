@@ -62,7 +62,7 @@ tests:
       - matchRegex:
           path: data.[mlp-config.yaml]
           pattern: |
-            (?s).*apiHost: "/api/v1"
+            (?s).*apiHost: "/api"
             .*oauthClientID: "test-client-123"
             .*applications:
             .*api: \/api\/merlin\/v1
