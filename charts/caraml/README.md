@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.4.26](https://img.shields.io/badge/Version-0.4.26-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.4.28](https://img.shields.io/badge/Version-0.4.28-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -14,14 +14,14 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.6 |
+| https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.7 |
 | https://caraml-dev.github.io/helm-charts | caraml-routes | 0.2.2 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | merlin | 0.9.36 |
+| https://caraml-dev.github.io/helm-charts | merlin | 0.9.37 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.4.11 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
 | https://charts.jetstack.io | cert-manager | v1.8.2 |
