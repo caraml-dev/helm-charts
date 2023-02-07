@@ -254,6 +254,8 @@ spec:
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /etc/gcp_service_account/service-account.json
           {{- end }}
+          - name: DEPLOYMENT_LABEL_PREFIX
+            value: "{{ .Values.deploymentLabelPrefix }}"
         volumeMounts:
         - mountPath: /opt/config
           name: config

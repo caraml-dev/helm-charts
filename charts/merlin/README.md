@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.35](https://img.shields.io/badge/Version-0.9.35-informational?style=flat-square) ![AppVersion: 0.24.0](https://img.shields.io/badge/AppVersion-0.24.0-informational?style=flat-square)
+![Version: 0.9.36](https://img.shields.io/badge/Version-0.9.36-informational?style=flat-square) ![AppVersion: 0.26.0](https://img.shields.io/badge/AppVersion-0.26.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -39,7 +39,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.24.0-rc1"` |  |
+| deployment.image.tag | string | `"0.26.0-rc1"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -47,6 +47,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.resources.limits.memory | string | `"1Gi"` |  |
 | deployment.resources.requests.cpu | string | `"500m"` |  |
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
+| deploymentLabelPrefix | string | `"gojek.com/"` |  |
 | encryption.key | string | `"password"` |  |
 | environment | string | `"dev"` |  |
 | environmentConfigs[0].cluster | string | `"test"` |  |
