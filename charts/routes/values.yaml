@@ -172,6 +172,8 @@ mlpGateway:
   selector:
     istio: ingressgateway
 
+# configuration for extra mappings in VS (e.g. authentication proxies)
+extraMappings: []
 
 ############################################################
 # Istio Base

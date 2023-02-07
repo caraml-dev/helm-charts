@@ -34,6 +34,11 @@ spec:
     {{- end }}
     {{- end }}
     {{- if .Values.feast.enabled }}
+    {{- if .Values.extraMappings }}
+    {{- range .Values.extraMappings }}
+    - {{- toYaml . | nindent 6 }}
+    {{- end}}
+    {{- end}}
     - name: "feast-ui-backend"
       match:
         - uri:
