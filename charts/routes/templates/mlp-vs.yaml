@@ -33,11 +33,11 @@ spec:
     {{- include "caraml-routes.mlp-api-routes" (list .appName (include "common.get-prefix-match" $.Values.global.mlp) .rewriteUri $.Values.global.mlp.serviceName .authHeader) | indent 4}}
     {{- end }}
     {{- end }}
-    {{- if .Values.feast.enabled }}
     {{- if .Values.extraMappings }}
     {{- range .Values.extraMappings }}
     - {{- toYaml . | nindent 6 }}
     {{- end}}
+    {{- if .Values.feast.enabled }}
     {{- end}}
     - name: "feast-ui-backend"
       match:
