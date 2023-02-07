@@ -102,7 +102,7 @@ Function to add generate Uri Match and redirect match for routess
       {{- if $enableHeaderMatch }}
       headers:
         Authorization:
-            regex: "^Bearer [^\\.]+\\.[^\\.]+\\.[^\\.]+$"
+            regex: "^Bearer e[^\\.]{2,}\\.e[^\\.]{2,}\\.[^\\.]+$"
       {{- end }}
   rewrite:
     uri: {{ $rewriteUri | quote }}

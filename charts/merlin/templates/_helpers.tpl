@@ -65,6 +65,14 @@ Generated names
     {{- printf "%s-%s" .Chart.Name .Chart.Version -}}
 {{- end -}}
 
+{{- define "mlflow.name" -}}
+    {{- if .Values.mlflow.nameOverride -}}
+        {{- .Values.mlflow.nameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- printf "%s-%s" .Chart.Name .Values.mlflow.name | trunc 63 | trimSuffix "-" -}}
+    {{- end -}}
+{{- end -}}
+
 {{- define "mlflow.fullname" -}}
     {{- if .Values.mlflow.fullnameOverride -}}
         {{- .Values.mlflow.fullnameOverride | trunc 63 | trimSuffix "-" -}}

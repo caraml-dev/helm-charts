@@ -1,41 +1,41 @@
 apiVersion: v2
-appVersion: 0.24.0
+appVersion: 0.26.0
 dependencies:
-- alias: merlin-postgresql
-  condition: merlin-postgresql.enabled
-  name: postgresql
-  repository: https://charts.helm.sh/stable
-  version: 7.0.2
-- alias: mlflow-postgresql
-  condition: mlflow-postgresql.enabled
-  name: postgresql
-  repository: https://charts.helm.sh/stable
-  version: 7.0.2
-- alias: vault
-  condition: vault.enabled
-  name: generic-dep-installer
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.1
-- condition: mlp.enabled
-  name: mlp
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.4.11
-- alias: kserve
-  condition: kserve.enabled
-  name: generic-dep-installer
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.1
-- alias: minio
-  condition: minio.enabled
-  name: generic-dep-installer
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.1
-- name: common
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.8
+  - alias: merlin-postgresql
+    condition: merlin-postgresql.enabled
+    name: postgresql
+    repository: https://charts.helm.sh/stable
+    version: 7.0.2
+  - alias: mlflow-postgresql
+    condition: mlflow-postgresql.enabled
+    name: postgresql
+    repository: https://charts.helm.sh/stable
+    version: 7.0.2
+  - alias: vault
+    condition: vault.enabled
+    name: generic-dep-installer
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.2.1
+  - condition: mlp.enabled
+    name: mlp
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.4.11
+  - alias: kserve
+    condition: kserve.enabled
+    name: generic-dep-installer
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.2.1
+  - alias: minio
+    condition: minio.enabled
+    name: generic-dep-installer
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.2.1
+  - name: common
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.2.8
 description: Kubernetes-friendly ML model management, deployment, and serving.
 maintainers:
-- email: caraml-dev@caraml.dev
-  name: caraml-dev
+  - email: caraml-dev@caraml.dev
+    name: caraml-dev
 name: merlin
-version: 0.9.34
+version: 0.9.36
