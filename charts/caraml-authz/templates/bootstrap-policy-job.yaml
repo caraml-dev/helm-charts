@@ -1,4 +1,3 @@
-{{- $configMapName := printf "%s-bootstrap-cm" (include "caraml-authz.resource-prefix" .) }}
 {{- $globServiceName := include "common.get-component-value" (list .Values.global "authz" (list "serviceName")) }}
 {{- $serviceName := include "common.set-value" (list (include "caraml-authz.fullname" .) $globServiceName) }}
 apiVersion: batch/v1
@@ -29,5 +28,5 @@ spec:
       volumes:
       - name: bootstrap
         configMap:
-          name: {{ $configMapName }}
+          name: {{ template "caraml-authz.cm-name" . }}
       restartPolicy: OnFailure
