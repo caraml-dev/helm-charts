@@ -3,6 +3,27 @@ entries:
   authz:
   - apiVersion: v2
     appVersion: 0.4.3
+    created: "2023-02-07T10:21:04.381172601Z"
+    dependencies:
+    - alias: caraml-authz-postgresql
+      condition: caraml-authz-postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.8.2
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: Helm chart for deploying Ory Keto
+    digest: 1ca2e2bc09f508964fd9c21834a008aa285f9bbbe14be3cba7fabbcd5da2cc02
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: authz
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/authz-0.1.7/authz-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: 0.4.3
     created: "2023-01-18T10:33:41.057308406Z"
     dependencies:
     - alias: caraml-authz-postgresql
@@ -4333,6 +4354,51 @@ entries:
   merlin:
   - apiVersion: v2
     appVersion: 0.26.0
+    created: "2023-02-07T10:21:04.623958298Z"
+    dependencies:
+    - alias: merlin-postgresql
+      condition: merlin-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: mlflow-postgresql
+      condition: mlflow-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: vault
+      condition: vault.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.11
+    - alias: kserve
+      condition: kserve.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: minio
+      condition: minio.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: Kubernetes-friendly ML model management, deployment, and serving.
+    digest: 422bf90c4886c3ca16297922bb5fe51e43e2b67e81b9010376c824bbcb586af5
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: merlin
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/merlin-0.9.37/merlin-0.9.37.tgz
+    version: 0.9.37
+  - apiVersion: v2
+    appVersion: 0.26.0
     created: "2023-02-07T05:37:24.225283398Z"
     dependencies:
     - alias: merlin-postgresql
@@ -6336,4 +6402,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.0/timber-observation-service-0.2.0.tgz
     version: 0.2.0
-generated: "2023-02-07T05:52:43.020235799Z"
+generated: "2023-02-07T10:21:04.624686Z"
