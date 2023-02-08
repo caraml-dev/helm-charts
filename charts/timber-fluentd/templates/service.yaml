@@ -8,7 +8,7 @@ metadata:
     {{- include "timber-fluentd.labels" . | nindent 4 }}
 spec:
   selector:
-    app: {{ include "timber-fluentd.fullname" . }}
+    app: {{ include "timber-fluentd.name" . }}
     release: {{ .Release.Name }}
   type: ClusterIP
   ports:

@@ -1,4 +1,4 @@
-# timber-obs
+# observation-svc
 
 ---
 ![Version: 0.2.4](https://img.shields.io/badge/Version-0.2.4-informational?style=flat-square)

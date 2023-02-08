@@ -11,5 +11,5 @@ description: Observation Service - Logging system for collecting ground truth ob
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
-name: timber-obs
+name: observation-svc
 version: 0.2.4
