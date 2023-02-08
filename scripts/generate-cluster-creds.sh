@@ -87,8 +87,8 @@ EOF
   fi
 
   output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
-  echo "output=$output"
   output="$output" yq '.environmentConfigs[0] *= load("/tmp/temp_k8sconfig.yaml") | .imageBuilder.k8sConfig |= strenv(output)' -i "${SCRIPT_DIR}/../charts/merlin/values.yaml"
+  cat "${SCRIPT_DIR}/../charts/merlin/values.yaml"
 }
 
 main "$@"
