@@ -147,7 +147,7 @@ externalPostgresql:
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
   secretKey: "postgresql-password"
   # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
-  enableProxySidecar: true
+  enableProxySidecar: false
   # -- Type of sidecar to be created, mentioned type needs to have the spec below.
   proxyType: cloudSqlProxy
   # -- container spec for the sidecar

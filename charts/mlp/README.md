@@ -43,7 +43,7 @@ MLP API
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | externalPostgresql.createSecret | bool | `false` |  |
 | externalPostgresql.database | string | `"mlp"` | External postgres database schema |
-| externalPostgresql.enableProxySidecar | bool | `true` | Enable if you want to configure a sidecar for creating a proxy for your db connections. |
+| externalPostgresql.enableProxySidecar | bool | `false` | Enable if you want to configure a sidecar for creating a proxy for your db connections. |
 | externalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | externalPostgresql.password | string | `"password"` |  |
 | externalPostgresql.proxyType | string | `"cloudSqlProxy"` | Type of sidecar to be created, mentioned type needs to have the spec below. |
