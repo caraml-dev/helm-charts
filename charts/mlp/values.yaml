@@ -86,7 +86,6 @@ deployment:
       configuration:
         iconName: pipelineApp
 
-
   authorization:
     enabled: false
     serverUrl: http://mlp-authorization-keto
@@ -145,8 +144,35 @@ externalPostgresql:
   createSecret: false
   # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
   secretName: ""
-# -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
+  # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
   secretKey: "postgresql-password"
+  # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
+  enableProxySidecar: true
+  # -- Type of sidecar to be created, mentioned type needs to have the spec below.
+  proxyType: cloudSqlProxy
+  # -- container spec for the sidecar
+  sidecarSpec:
+    # -- container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
+    cloudSqlProxy:
+      dbConnectionName: "asia-east-1:mlp-db"
+      dbPort: 5432
+      spec:
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.33.2
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout"
+            - "-instances={{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
+          securityContext:
+            runAsNonRoot: true
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1G
 
 postgresql:
   # -- Enable creating mlp specific postgres instance

@@ -43,10 +43,14 @@ MLP API
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | externalPostgresql.createSecret | bool | `false` |  |
 | externalPostgresql.database | string | `"mlp"` | External postgres database schema |
+| externalPostgresql.enableProxySidecar | bool | `true` | Enable if you want to configure a sidecar for creating a proxy for your db connections. |
 | externalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | externalPostgresql.password | string | `"password"` |  |
+| externalPostgresql.proxyType | string | `"cloudSqlProxy"` | Type of sidecar to be created, mentioned type needs to have the spec below. |
 | externalPostgresql.secretKey | string | `"postgresql-password"` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | externalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
+| externalPostgresql.sidecarSpec | object | `{"cloudSqlProxy":{"dbConnectionName":"asia-east-1:mlp-db","dbPort":5432,"spec":[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:1.33.2","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]}}` | container spec for the sidecar |
+| externalPostgresql.sidecarSpec.cloudSqlProxy | object | `{"dbConnectionName":"asia-east-1:mlp-db","dbPort":5432,"spec":[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:1.33.2","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]}` | container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine |
 | externalPostgresql.username | string | `"mlp"` | External postgres database user |
 | global.protocol | string | `"http"` |  |
 | ingress.enabled | bool | `false` |  |
