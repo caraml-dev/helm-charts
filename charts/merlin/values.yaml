@@ -433,11 +433,6 @@ minio:
       annotations:
         kubernetes.io/ingress.class: istio
       path: /*
-setupScript:
-  enabled: false
-  # -- Image used to for setup scripts job
-  image: bitnami/kubectl:latest
-  clusterType: kind
 kserve:
   enabled: true
   hook:
