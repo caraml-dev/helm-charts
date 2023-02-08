@@ -19,13 +19,13 @@ tests:
           of: Deployment
       - matchRegex:
           path: metadata.name
-          pattern: my-release-timber-obs
+          pattern: my-release-observation-svc
       - contains: # check GCP service account volume
           path: spec.template.spec.volumes
           content:
            name: gcp-service-account
            secret:
-            secretName: my-release-fluentd
+            secretName: my-release-obs-fluentd
       - contains: # check env var added
           path: spec.template.spec.containers[0].env
           content:
