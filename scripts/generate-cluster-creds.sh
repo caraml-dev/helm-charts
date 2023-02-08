@@ -87,8 +87,9 @@ EOF
   fi
 
   output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
-  output="$output" yq '.environmentConfigs[0] *= load("/tmp/temp_k8sconfig.yaml") | .imageBuilder.k8sConfig |= strenv(output)' -i "${SCRIPT_DIR}/../charts/merlin/values.yaml"
-  cat "${SCRIPT_DIR}/../charts/merlin/values.yaml"
+  # NOTE: Write to ci/ files as these files will be used in ci tests! Consider looping through all files
+  # in ci dir
+  output="$output" yq '.environmentConfigs[0] *= load("/tmp/temp_k8sconfig.yaml") | .imageBuilder.k8sConfig |= strenv(output)' -i "${SCRIPT_DIR}/../charts/merlin/ci/ci-values.yaml"
 }
 
 main "$@"
