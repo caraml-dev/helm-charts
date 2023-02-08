@@ -42,9 +42,9 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "timber-fluentd.labels" -}}
-app: {{ template "timber-fluentd.fullname" .}}
+app: {{ template "timber-fluentd.name" .}}
 release: {{ .Release.Name }}
-app.kubernetes.io/name: {{ template "timber-fluentd.fullname" . }}
+app.kubernetes.io/name: {{ template "timber-fluentd.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
