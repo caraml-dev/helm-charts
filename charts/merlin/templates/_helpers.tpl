@@ -205,3 +205,11 @@ MLflow Postgres related
     {{- end }}
     {{- printf "%s" (include "common.set-value" (list .Values.authorization.serverUrl $globalAuthzUrl)) -}}
 {{- end -}}
+
+{{- define "merlin.environmentsSecretName" -}}
+{{- if .Values.mlp.environmentConfigSecret.name }}
+{{- printf "%s" .Values.mlp.environmentConfigSecret.name }}
+{{- else }}
+{{- printf "%s-environments" (include "merlin.fullname" .) }}
+{{- end -}}
+{{- end -}}

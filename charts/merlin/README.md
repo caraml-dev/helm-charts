@@ -69,6 +69,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | environmentConfigs[0].is_default | bool | `true` |  |
 | environmentConfigs[0].is_default_prediction_job | bool | `true` |  |
 | environmentConfigs[0].is_prediction_job_enabled | bool | `true` |  |
+| environmentConfigs[0].k8s_config | object | `{}` |  |
 | environmentConfigs[0].max_cpu | string | `"8"` |  |
 | environmentConfigs[0].max_memory | string | `"8Gi"` |  |
 | environmentConfigs[0].name | string | `"id-dev"` |  |
@@ -83,6 +84,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.baseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
 | imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
+| imageBuilder.k8sConfig | object | `{}` |  |
 | imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
 | imageBuilder.maxRetry | int | `3` |  |
 | imageBuilder.namespace | string | `"mlp"` |  |
@@ -186,6 +188,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflowExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlp.enabled | bool | `true` |  |
+| mlp.environmentConfigSecret.name | string | `""` |  |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
 | mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
 | monitoring.enabled | bool | `false` |  |
@@ -198,7 +201,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | setupScript.clusterType | string | `"kind"` |  |
-| setupScript.enabled | bool | `true` |  |
+| setupScript.enabled | bool | `false` |  |
 | setupScript.image | string | `"bitnami/kubectl:latest"` | Image used to for setup scripts job |
 | swagger.apiHost | string | `"merlin.dev"` |  |
 | swagger.basePath | string | `"/api/merlin/v1"` |  |

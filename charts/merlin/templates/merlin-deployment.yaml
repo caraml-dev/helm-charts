@@ -137,6 +137,16 @@ spec:
           {{- end }}
           - name: IMG_BUILDER_RETENTION
             value: "{{ .Values.imageBuilder.retention }}"
+          - name: IMG_BUILDER_K8S_CONFIG
+            valueFrom:
+              secretKeyRef:
+                {{- if .Values.mlp.environmentConfigSecret.name }}
+                name: {{ .Values.mlp.environmentConfigSecret.name }}
+                key: {{ .Values.mlp.environmentConfigSecret.imageBuilderKey }}
+                {{- else }}
+                name: {{ template "merlin.fullname" . }}-environments
+                key: imageBuilderK8sConfig
+                {{- end }}
           - name: DEFAULT_FEAST_SERVING_URL
             value: "{{ .Values.transformer.feast.defaultServingURL }}"
           - name: FEAST_SERVING_URLS
@@ -186,7 +196,7 @@ spec:
                 name: "{{ .Values.vault.secretName }}"
                 key: token
           - name: DEPLOYMENT_CONFIG_PATH
-            value: "/opt/config/environment.yaml"
+            value: {{ ternary (printf "/opt/config/%s" "environment.yaml") (printf "/opt/config/%s" .Values.mlp.environmentConfigSecret.envKey) (eq .Values.mlp.environmentConfigSecret.name "")}}
           {{ if .Values.sentry.enabled }}
           - name: SENTRY_ENABLED
             value: "{{ .Values.sentry.enabled }}"
@@ -307,8 +317,8 @@ spec:
 
       volumes:
       - name: config
-        configMap:
-          name: {{ template "merlin.envs-cm-name" .}}
+        secret:
+          secretName: {{ template "merlin.environmentsSecretName" . }}
       {{- if .Values.gcpServiceAccount }}
       - name: gcp-service-account
         secret:

@@ -40,51 +40,55 @@ main() {
   SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
   if [ "$CLUSTER_TYPE" == "minikube" ]; then
-    cat > cluster-credential.json <<EOF
+cat <<EOF | yq e -P - > k8s_config.yaml
 {
-  "name": "$CLUSTER_NAME",
-  "master_ip": "https://kubernetes.default.svc:443",
-  "certs": "$(cat ~/.minikube/ca.crt | awk '{printf "%s\\n", $0}')",
-  "client_certificate": "$(cat ~/.minikube/profiles/minikube/client.crt | awk '{printf "%s\\n", $0}'))",
-  "client_key": "$(cat ~/.minikube/profiles/minikube/client.key | awk '{printf "%s\\n", $0}'))"
+  "k8s_config": {
+    "name": "dev",
+    "cluster": {
+      "server": "https://kubernetes.default.svc.cluster.local:443",
+      "certificate-authority-data": "$(awk '{printf "%s\n", $0}' ~/.minikube/ca.crt | base64)"
+    },
+    "user": {
+      "client-certificate-data": "$(awk '{printf "%s\n", $0}' ~/.minikube/profiles/minikube/client.crt | base64)",
+      "client-key-data": "$(awk '{printf "%s\n", $0}' ~/.minikube/profiles/minikube/client.key | base64)"
+    }
+  }
 }
 EOF
   fi
 
   if [ "$CLUSTER_TYPE" == "k3d" ]; then
     k3d kubeconfig get $CLUSTER_NAME > kubeconfig.yaml
-    cat > cluster-credential.json <<EOF
-{
-"name": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"name\"])",
-"master_ip": "kubernetes.default:443",
-"certs": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"cluster\"][\"certificate-authority-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_certificate": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-certificate-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_key": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-key-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')"
-}
+      cat <<EOF |  yq -P - > /tmp/temp_k8sconfig.yaml
+    {
+        "k8s_config": {
+            "name": $(k3d kubeconfig get "$CLUSTER_NAME" | yq .clusters[0].name -o json -),
+            "cluster": $(k3d kubeconfig get "$CLUSTER_NAME" | yq '.clusters[0].cluster | .server = "https://kubernetes.default.svc.cluster.local:443"' -o json -),
+            "user": $(k3d kubeconfig get "$CLUSTER_NAME" | yq .users[0].user -o json - )
+        }
+    }
 EOF
     rm kubeconfig.yaml
   fi
 
   if [ "$CLUSTER_TYPE" == "kind" ]; then
-    kind get kubeconfig --name $CLUSTER_NAME > kubeconfig.yaml
-    echo "Kind cluster name: $(yaml kubeconfig.yaml [\"clusters\"][0][\"name\"])"
-    cat > cluster-credential.json <<EOF
-{
-"name": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"name\"])",
-"master_ip": "kubernetes.default:443",
-"certs": "$(yaml kubeconfig.yaml [\"clusters\"][0][\"cluster\"][\"certificate-authority-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_certificate": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-certificate-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')",
-"client_key": "$(yaml kubeconfig.yaml [\"users\"][0][\"user\"][\"client-key-data\"] | base64 --decode | awk '{printf "%s\\n", $0}')"
-}
+    kind get kubeconfig --name "$CLUSTER_NAME" > kubeconfig.yaml
+    echo "Kind cluster name: $(yq .clusters[0].name kubeconfig.yaml)"
+      cat <<EOF |  yq -P - > /tmp/temp_k8sconfig.yaml
+    {
+        "k8s_config": {
+            "name": $(yq .clusters[0].name -o json kubeconfig.yaml),
+            "cluster": $(yq '.clusters[0].cluster | .server = "https://kubernetes.default.svc.cluster.local:443"' -o json kubeconfig.yaml),
+            "user": $(yq .users[0].user -o json kubeconfig.yaml)
+        }
+    }
 EOF
     rm kubeconfig.yaml
   fi
 
-  if [ -f cluster-credential.json ]; then
-    echo "moving geenrated creds to $SCRIPT_DIR/../charts/merlin/files"
-    mv cluster-credential.json $SCRIPT_DIR/../charts/merlin/files
-  fi
-
+  output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
+  echo "output=$output"
+  output="$output" yq '.environmentConfigs[0] *= load("/tmp/temp_k8sconfig.yaml") | .imageBuilder.k8sConfig |= strenv(output)' -i "${SCRIPT_DIR}/../charts/merlin/values.yaml"
 }
 
 main "$@"
