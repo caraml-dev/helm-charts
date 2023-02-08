@@ -37,6 +37,9 @@ Generated names
     {{- printf "%s" (include "caraml-authz.resource-prefix-with-release-name" .) -}}
 {{- end -}}
 
+{{- define "caraml-authz.cm-name" -}}
+    {{- printf "%s-bootstrap-config" (include "caraml-authz.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
 
 {{/*
 Common labels
