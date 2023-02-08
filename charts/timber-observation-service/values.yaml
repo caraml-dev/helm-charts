@@ -173,7 +173,7 @@ fluentd:
   # -- Flag to toggle deployment of Observation Service fluentd
   enabled: false
 
-  nameOverride: fluentd
+  nameOverride: obs-fluentd
 
   # -- List of extra environment variables to add to Observation Service fluentd container
   extraEnvs:
