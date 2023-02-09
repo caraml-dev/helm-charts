@@ -52,19 +52,26 @@ imageBuilder:
   tolerations: []
   nodeSelectors: {}
   maxRetry: 3
-  k8sConfig: {}
-    # Example k8s_config to connect to cluster using gke-gcloud-auth-plugin
-    # name: dev-cluster
-    # cluster:
-    #   server: https://k8s.cluster
-    #   certificate-authority-data: some_cert_data
-    # user:
-    #   exec:
-    #     apiVersion: client.authentication.k8s.io/v1beta1
-    #     args: ["--use_application_default_credentials"]
-    #     command: gke-gcloud-auth-plugin
-    #     interactiveMode: IfAvailable
-    #     provideClusterInfo: true
+  k8sConfig: ''
+      # Example json
+      # '{
+      #   "name": "dev-cluster",
+      #   "cluster": {
+      #     "server": "https://k8s.cluster",
+      #     "certificate-authority-data": "some_cert_data"
+      #   },
+      #   "user": {
+      #     "exec": {
+      #       "apiVersion": "client.authentication.k8s.io/v1beta1",
+      #       "args": [
+      #         "--use_application_default_credentials"
+      #       ],
+      #       "command": "gke-gcloud-auth-plugin",
+      #       "interactiveMode": "IfAvailable",
+      #       "provideClusterInfo": true
+      #     }
+      #   }
+      # }'
 alerts:
   # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
   enabled: false

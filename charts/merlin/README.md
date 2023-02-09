@@ -83,7 +83,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.baseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
 | imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
-| imageBuilder.k8sConfig | object | `{}` |  |
+| imageBuilder.k8sConfig | string | `""` |  |
 | imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
 | imageBuilder.maxRetry | int | `3` |  |
 | imageBuilder.namespace | string | `"mlp"` |  |
