@@ -43,7 +43,7 @@ main() {
 cat <<EOF | yq e -P - > k8s_config.yaml
 {
   "k8s_config": {
-    "name": "dev",
+    "name": "$CLUSTER_NAME",
     "cluster": {
       "server": "https://kubernetes.default.svc.cluster.local:443",
       "certificate-authority-data": "$(awk '{printf "%s\n", $0}' ~/.minikube/ca.crt | base64)"
