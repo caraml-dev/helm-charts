@@ -90,15 +90,15 @@ spec:
           - name: config
             mountPath: /etc/observation-service
       volumes:
-      {{- if .Values.fluentd.gcpServiceAccount.credentials }}
+      {{- if and .Values.fluentd.gcpServiceAccount .Values.fluentd.gcpServiceAccount.credentials }}
       - name: gcp-service-account
         secret:
-          secretName: {{ .Values.gcpServiceAccount.credentials.name }}
+          secretName: {{ .Values.fluentd.gcpServiceAccount.credentials.name }}
           items:
-            - key: {{ .Values.gcpServiceAccount.credentials.key }}
+            - key: {{ .Values.fluentd.gcpServiceAccount.credentials.key }}
               path: service-account.json
       {{- end }}
-      {{- if .Values.fluentd.gcpServiceAccount.credentialsData }}
+      {{- if and .Values.fluentd.gcpServiceAccount .Values.fluentd.gcpServiceAccount.credentialsData }}
       - name: gcp-service-account
         secret:
           secretName: {{ template "timber-fluentd.fullname" .Subcharts.fluentd }}

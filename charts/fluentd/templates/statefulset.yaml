@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ include "timber-fluentd.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "timber-fluentd.labels" . | nindent 4 }}
 spec:
@@ -11,14 +12,13 @@ spec:
   minReadySeconds: 5
   selector:
     matchLabels:
-      app: {{ include "timber-fluentd.fullname" . }}
+      app: {{ include "timber-fluentd.name" . }}
       release: {{ .Release.Name }}
   serviceName: {{ include "timber-fluentd.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ include "timber-fluentd.fullname" . }}
-        release: {{ .Release.Name }}
+        app: {{ include "timber-fluentd.name" . }}
         {{- include "timber-fluentd.labels" . | nindent 8 }}
         {{- if .Values.global.extraPodLabels }}
           {{- toYaml .Values.global.extraPodLabels | nindent 8 }}

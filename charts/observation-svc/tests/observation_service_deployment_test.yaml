@@ -1,0 +1,59 @@
+suite: Unit tests for Observation Service Deployment
+templates:
+  - deployment.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set Fluentd GCP secret if cred data is provided is configured for BQ sink writing
+    set:
+      global: {}
+      fluentd:
+        enabled: true
+        gcpServiceAccount:
+          credentialsData: "dummy"
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-observation-svc
+      - contains: # check GCP service account volume
+          path: spec.template.spec.volumes
+          content:
+           name: gcp-service-account
+           secret:
+            secretName: my-release-obs-fluentd
+      - contains: # check env var added
+          path: spec.template.spec.containers[0].env
+          content:
+            name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /etc/gcp_service_account/service-account.json
+  - it: should set Fluentd GCP secret if kubernates secret is configured for BQ sink writing
+    set:
+      global: {}
+      fluentd:
+        enabled: true
+        gcpServiceAccount:
+          credentials: 
+            name: "dummy_name"
+            key: "dummy_key"
+    asserts:
+      - isKind:
+          of: Deployment
+      - contains: # check GCP SA secrets mounted as service-account.json
+          path: spec.template.spec.volumes
+          content:
+           name: gcp-service-account
+           secret:
+            secretName: dummy_name
+            items:
+            - key: dummy_key
+              path: service-account.json
+      - contains: # check env var added
+          path: spec.template.spec.containers[0].env
+          content:
+            name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /etc/gcp_service_account/service-account.json
