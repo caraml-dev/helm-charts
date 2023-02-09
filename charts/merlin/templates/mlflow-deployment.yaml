@@ -73,7 +73,17 @@ spec:
         - name: {{ $key }}
           value: {{ $val | quote }}
         {{- end}}
+        {{- if .Values.gcpServiceAccount }}
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/gcp_service_account/service-account.json
+        {{- end }}
 
+        {{- if .Values.gcpServiceAccount }}
+        volumeMounts:
+        - name: gcp-service-account
+          mountPath: "/etc/gcp_service_account"
+          readOnly: true
+        {{- end }}
 {{- if .Values.mlflow.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.mlflow.imagePullSecrets | indent 6 }}
@@ -82,4 +92,13 @@ spec:
 {{- if .Values.mlflow.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.mlflow.nodeSelector | indent 8 }}
+{{- end }}
+{{- if .Values.gcpServiceAccount }}
+      volumes:
+      - name: gcp-service-account
+        secret:
+          secretName: {{ .Values.gcpServiceAccount.secretName }}
+          items:
+            - key: {{ .Values.gcpServiceAccount.secretKey }}
+              path: service-account.json
 {{- end }}
