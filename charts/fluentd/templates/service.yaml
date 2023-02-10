@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "timber-fluentd.fullname" . }}
+  name: {{ include "fluentd.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ include "timber-fluentd.fullname" . }}
-    {{- include "timber-fluentd.labels" . | nindent 4 }}
+    app: {{ include "fluentd.fullname" . }}
+    {{- include "fluentd.labels" . | nindent 4 }}
 spec:
   selector:
-    app: {{ include "timber-fluentd.name" . }}
+    app: {{ include "fluentd.name" . }}
     release: {{ .Release.Name }}
   type: ClusterIP
   ports:
