@@ -89,7 +89,9 @@ EOF
   output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
   # NOTE: Write to ci/ files as these files will be used in ci tests! Consider looping through all files
   # in ci dir
+  # Write to merlin chart and caraml chart ci-values.yaml
   output="$output" yq '.environmentConfigs[0] *= load("/tmp/temp_k8sconfig.yaml") | .imageBuilder.k8sConfig |= strenv(output)' -i "${SCRIPT_DIR}/../charts/merlin/ci/ci-values.yaml"
+  output="$output" yq '.merlin.environmentConfigs[0] *= load("/tmp/temp_k8sconfig.yaml") | .merlin.imageBuilder.k8sConfig |= strenv(output)' -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
 }
 
 main "$@"
