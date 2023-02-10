@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "timber-fluentd.resource-prefix-with-release-name" -}}
+{{- define "fluentd.resource-prefix-with-release-name" -}}
     {{- if .Values.fullnameOverride -}}
         {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
@@ -14,7 +14,7 @@ Expand the name of the chart.
     {{- end -}}
 {{- end -}}
 
-{{- define "timber-fluentd.resource-prefix" -}}
+{{- define "fluentd.resource-prefix" -}}
     {{- if .Values.nameOverride -}}
         {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
@@ -23,28 +23,28 @@ Expand the name of the chart.
     {{- end -}}
 {{- end -}}
 
-{{- define "timber-fluentd.name" -}}
-    {{- printf "%s" (include "timber-fluentd.resource-prefix" .) -}}
+{{- define "fluentd.name" -}}
+    {{- printf "%s" (include "fluentd.resource-prefix" .) -}}
 {{- end }}
 
-{{- define "timber-fluentd.fullname" -}}
-    {{- printf "%s" (include "timber-fluentd.resource-prefix-with-release-name" .) -}}
+{{- define "fluentd.fullname" -}}
+    {{- printf "%s" (include "fluentd.resource-prefix-with-release-name" .) -}}
 {{- end -}}
 
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "timber-fluentd.chart" -}}
+{{- define "fluentd.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "timber-fluentd.labels" -}}
-app: {{ template "timber-fluentd.name" .}}
+{{- define "fluentd.labels" -}}
+app: {{ template "fluentd.name" .}}
 release: {{ .Release.Name }}
-app.kubernetes.io/name: {{ template "timber-fluentd.name" . }}
+app.kubernetes.io/name: {{ template "fluentd.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}

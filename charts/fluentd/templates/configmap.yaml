@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "timber-fluentd.fullname" . }}
+  name: {{ include "fluentd.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "timber-fluentd.labels" . | nindent 4 }}
+    {{- include "fluentd.labels" . | nindent 4 }}
 data:
   fluent.conf: |-
 {{ .Values.fluentdConfig | nindent 4}}
