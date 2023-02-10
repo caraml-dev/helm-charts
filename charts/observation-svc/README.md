@@ -38,7 +38,7 @@ For more configurable of fluentd, check out [Timber-Fluentd](https://github.com/
 | fluentd.enabled | bool | `false` | Flag to toggle deployment of Observation Service fluentd |
 | fluentd.extraEnvs | string | `nil` | List of extra environment variables to add to Observation Service fluentd container |
 | fluentd.fluentdConfig | string | `""` | Fluentd.conf |
-| fluentd.nameOverride | string | `"obs-fluentd"` |  |
+| fluentd.nameOverride | string | `"fluentd"` |  |
 | global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | observationService.affinity | object | `{}` | Assign custom affinity rules to constrain pods to nodes. ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/ |
 | observationService.annotations | object | `{}` | Annotations to add to Observation Service pod |

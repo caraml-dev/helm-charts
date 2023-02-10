@@ -4,8 +4,8 @@ dependencies:
 - alias: fluentd
   condition: fluentd.enabled
   name: fluentd
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.4
+  repository:  file:///Users/aria/project/caraml-charts/charts/fluentd
+  version: 0.1.5
 description: Observation Service - Logging system for collecting ground truth observation
   result from ML prediction
 maintainers:

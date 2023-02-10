@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 
-{{- define "observation-service.resource-prefix-with-release-name" -}}
+{{- define "observation-svc.resource-prefix-with-release-name" -}}
     {{- if .Values.fullnameOverride -}}
         {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
@@ -15,7 +15,7 @@ Expand the name of the chart.
     {{- end -}}
 {{- end -}}
 
-{{- define "observation-service.resource-prefix" -}}
+{{- define "observation-svc.resource-prefix" -}}
     {{- if .Values.nameOverride -}}
         {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
@@ -24,27 +24,27 @@ Expand the name of the chart.
     {{- end -}}
 {{- end -}}
 
-{{- define "observation-service.name" -}}
-    {{- printf "%s" (include "observation-service.resource-prefix" .) -}}
+{{- define "observation-svc.name" -}}
+    {{- printf "%s" (include "observation-svc.resource-prefix" .) -}}
 {{- end }}
 
-{{- define "observation-service.fullname" -}}
-    {{- printf "%s" (include "observation-service.resource-prefix-with-release-name" .) -}}
+{{- define "observation-svc.fullname" -}}
+    {{- printf "%s" (include "observation-svc.resource-prefix-with-release-name" .) -}}
 {{- end -}}
 
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "observation-service.chart" -}}
+{{- define "observation-svc.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "observation-service.labels" -}}
+{{- define "observation-svc.labels" -}}
 release: {{ .Release.Name }}
-app.kubernetes.io/name: {{ template "observation-service.name" . }}
+app.kubernetes.io/name: {{ template "observation-svc.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -60,7 +60,7 @@ app.kubernetes.io/part-of: caraml
 {{/*
 Selector labels
 */}}
-{{- define "observation-service.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "observation-service.name" . }}
+{{- define "observation-svc.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "observation-svc.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
