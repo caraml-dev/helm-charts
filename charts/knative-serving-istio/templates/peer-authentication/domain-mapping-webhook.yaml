@@ -23,5 +23,5 @@ spec:
     matchLabels:
       app: domainmapping-webhook
   portLevelMtls:
-    8443:
+    "8443":
       mode: PERMISSIVE
