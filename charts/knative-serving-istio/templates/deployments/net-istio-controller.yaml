@@ -33,7 +33,6 @@ spec:
         sidecar.istio.io/inject: "false"
       labels:
         app: net-istio-controller
-        serving.knative.dev/release: "v1.0.0"
         {{- include "knative-net-istio.labels" . | nindent 8 }}
         {{- if .Values.global.extraPodLabels }}
           {{- toYaml .Values.global.extraPodLabels | nindent 8 }}

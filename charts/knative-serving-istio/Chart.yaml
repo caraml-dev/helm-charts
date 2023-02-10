@@ -32,4 +32,4 @@ maintainers:
   name: caraml-dev
 name: knative-serving-istio
 type: application
-version: 1.7.1
+version: 1.7.2
