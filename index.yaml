@@ -4209,6 +4209,34 @@ entries:
   kserve:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2023-02-10T11:24:39.209661741Z"
+    dependencies:
+    - alias: knativeServingIstio
+      condition: knativeServingIstio.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.8.2
+    description: A Helm chart for installing Kserve
+    digest: 2a6bbe19574a8aa9fb45d22e6222551d97990b5ed6185a89bc24b955fc21d0b9
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: kserve
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/kserve-0.8.20/kserve-0.8.20.tgz
+    version: 0.8.20
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2023-01-31T05:15:42.798459359Z"
     dependencies:
     - alias: knativeServingIstio
@@ -6864,4 +6892,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.0/timber-observation-service-0.2.0.tgz
     version: 0.2.0
-generated: "2023-02-10T10:03:25.312148666Z"
+generated: "2023-02-10T11:24:39.210267742Z"
