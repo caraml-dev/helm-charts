@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.9.37](https://img.shields.io/badge/Version-0.9.37-informational?style=flat-square) ![AppVersion: 0.26.0](https://img.shields.io/badge/AppVersion-0.26.0-informational?style=flat-square)
+![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square) ![AppVersion: 0.26.0-rc3](https://img.shields.io/badge/AppVersion-0.26.0--rc3-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -15,12 +15,11 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | Repository | Name | Version |
 |------------|------|---------|
 | https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
-| https://caraml-dev.github.io/helm-charts | vault(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.4.11 |
-| https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.2 |
 | https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.2 |
+| https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.2 |
 
 ## Values
 
@@ -39,7 +38,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.26.0-rc1"` |  |
+| deployment.image.tag | string | `"0.26.0-rc3"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -69,6 +68,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | environmentConfigs[0].is_default | bool | `true` |  |
 | environmentConfigs[0].is_default_prediction_job | bool | `true` |  |
 | environmentConfigs[0].is_prediction_job_enabled | bool | `true` |  |
+| environmentConfigs[0].k8s_config | object | `{}` |  |
 | environmentConfigs[0].max_cpu | string | `"8"` |  |
 | environmentConfigs[0].max_memory | string | `"8Gi"` |  |
 | environmentConfigs[0].name | string | `"id-dev"` |  |
@@ -83,6 +83,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.baseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
 | imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
+| imageBuilder.k8sConfig | string | `""` |  |
 | imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
 | imageBuilder.maxRetry | int | `3` |  |
 | imageBuilder.namespace | string | `"mlp"` |  |
@@ -186,6 +187,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflowExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlp.enabled | bool | `true` |  |
+| mlp.environmentConfigSecret.name | string | `""` |  |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
 | mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
 | monitoring.enabled | bool | `false` |  |
@@ -197,9 +199,6 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | sentry.enabled | bool | `false` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
-| setupScript.clusterType | string | `"kind"` |  |
-| setupScript.enabled | bool | `true` |  |
-| setupScript.image | string | `"bitnami/kubectl:latest"` | Image used to for setup scripts job |
 | swagger.apiHost | string | `"merlin.dev"` |  |
 | swagger.basePath | string | `"/api/merlin/v1"` |  |
 | swagger.enabled | bool | `true` |  |
@@ -236,22 +235,6 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | ui.maxAllowedReplica | int | `20` |  |
 | ui.mlp.apiHost | string | `"/api/v1"` |  |
 | ui.oauthClientID | string | `""` |  |
-| vault.chartValues.injector.enabled | bool | `false` |  |
-| vault.chartValues.server.affinity | string | `nil` |  |
-| vault.chartValues.server.dataStore.enabled | bool | `false` |  |
-| vault.chartValues.server.dev | object | `{"enabled":true}` | This is just for quick install. For a production, NEVER EVER use the vault server in dev mode. |
-| vault.chartValues.server.resources.requests.cpu | string | `"25m"` |  |
-| vault.chartValues.server.resources.requests.memory | string | `"64Mi"` |  |
-| vault.chartValues.server.tolerations | string | `nil` |  |
-| vault.enabled | bool | `true` |  |
-| vault.helmChart.chart | string | `"vault"` |  |
-| vault.helmChart.createNamespace | bool | `true` |  |
-| vault.helmChart.namespace | string | `"vault"` |  |
-| vault.helmChart.release | string | `"vault"` |  |
-| vault.helmChart.repository | string | `"https://helm.releases.hashicorp.com"` |  |
-| vault.helmChart.version | string | `"0.19.0"` |  |
-| vault.hook.weight | string | `"-2"` |  |
-| vault.secretName | string | `"vault-secret"` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

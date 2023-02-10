@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
-    tag: 0.26.0-rc1
+    tag: 0.26.0-rc3
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -52,6 +52,26 @@ imageBuilder:
   tolerations: []
   nodeSelectors: {}
   maxRetry: 3
+  k8sConfig: ''
+      # Example json
+      # '{
+      #   "name": "dev-cluster",
+      #   "cluster": {
+      #     "server": "https://k8s.cluster",
+      #     "certificate-authority-data": "some_cert_data"
+      #   },
+      #   "user": {
+      #     "exec": {
+      #       "apiVersion": "client.authentication.k8s.io/v1beta1",
+      #       "args": [
+      #         "--use_application_default_credentials"
+      #       ],
+      #       "command": "gke-gcloud-auth-plugin",
+      #       "interactiveMode": "IfAvailable",
+      #       "provideClusterInfo": true
+      #     }
+      #   }
+      # }'
 alerts:
   # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
   enabled: false
@@ -163,6 +183,19 @@ environmentConfigs:
       max_replica: 1
       cpu_request: "500m"
       memory_request: "500Mi"
+    k8s_config: {}
+      # Example k8s_config to connect to cluster using gke-gcloud-auth-plugin
+      # name: dev-cluster
+      # cluster:
+      #   server: https://k8s.cluster
+      #   certificate-authority-data: some_cert_data
+      # user:
+      #   exec:
+      #     apiVersion: client.authentication.k8s.io/v1beta1
+      #     args: ["--use_application_default_credentials"]
+      #     command: gke-gcloud-auth-plugin
+      #     interactiveMode: IfAvailable
+      #     provideClusterInfo: true
 sentry:
   enabled: false
   dsn: ""
@@ -246,6 +279,9 @@ merlin-postgresql:
     size: 10Gi
 mlp:
   enabled: true
+  environmentConfigSecret:
+    name: ""
+
 mlflow:
   # This should be the actual DNS registered
   trackingURL: "http://www.example.com"
@@ -404,38 +440,6 @@ minio:
       annotations:
         kubernetes.io/ingress.class: istio
       path: /*
-setupScript:
-  enabled: true
-  # -- Image used to for setup scripts job
-  image: bitnami/kubectl:latest
-  clusterType: kind
-vault:
-  enabled: true
-  secretName: "vault-secret"
-  hook:
-    weight: "-2"
-  helmChart:
-    chart: vault
-    repository: https://helm.releases.hashicorp.com
-    version: 0.19.0
-    release: vault
-    namespace: vault
-    createNamespace: true
-  chartValues:
-    injector:
-      enabled: false
-    server:
-      # -- This is just for quick install. For a production, NEVER EVER use the vault server in dev mode.
-      dev:
-        enabled: true
-      dataStore:
-        enabled: false
-      resources:
-        requests:
-          cpu: 25m
-          memory: 64Mi
-      affinity: null
-      tolerations: null
 kserve:
   enabled: true
   hook:
