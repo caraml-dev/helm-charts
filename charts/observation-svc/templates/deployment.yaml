@@ -26,7 +26,7 @@ spec:
           {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
         {{- end }}
         {{- with .Values.observationService.annotations }}
-        annotations:
+      annotations:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
