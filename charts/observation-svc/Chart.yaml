@@ -12,4 +12,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: observation-svc
-version: 0.2.5
+version: 0.2.6
