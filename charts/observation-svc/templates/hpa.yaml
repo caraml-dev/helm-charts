@@ -2,15 +2,15 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "observation-service.fullname" . }}
+  name: {{ include "observation-svc.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "observation-service.labels" . | nindent 4 }}
+    {{- include "observation-svc.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "observation-service.fullname" . }}
+    name: {{ include "observation-svc.fullname" . }}
   minReplicas: {{ .Values.observationService.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.observationService.autoscaling.maxReplicas }}
   {{- if .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}

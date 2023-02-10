@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "observation-service.fullname" . }}
+  name: {{ include "observation-svc.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "observation-service.labels" . | nindent 4 }}
+    {{- include "observation-svc.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.observationService.autoscaling.enabled }}
   replicas: {{ .Values.observationService.replicaCount }}
@@ -21,12 +21,12 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}
-        {{- include "observation-service.labels" . | nindent 8 }}
+        {{- include "observation-svc.labels" . | nindent 8 }}
         {{- if .Values.global.extraPodLabels }}
           {{- toYaml .Values.global.extraPodLabels | nindent 8 }}
         {{- end }}
         {{- with .Values.observationService.annotations }}
-        annotations:
+      annotations:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
@@ -101,11 +101,11 @@ spec:
       {{- if and .Values.fluentd.gcpServiceAccount .Values.fluentd.gcpServiceAccount.credentialsData }}
       - name: gcp-service-account
         secret:
-          secretName: {{ template "timber-fluentd.fullname" .Subcharts.fluentd }}
+          secretName: {{ template "fluentd.fullname" .Subcharts.fluentd }}
       {{- end }}
       - name: config
         secret:
-          secretName: {{ template "observation-service.fullname" . }}
+          secretName: {{ template "observation-svc.fullname" . }}
       {{- if .Values.observationService.nodeSelector }}
       nodeSelector:
         {{- toYaml .Values.observationService.nodeSelector | nindent 8 }}

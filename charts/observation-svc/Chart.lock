@@ -1,6 +1,6 @@
 dependencies:
 - name: fluentd
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.4
-digest: sha256:6b6394e2f5a0caad584ea25bc667909fbec900373bde949877d7a353d5cac977
-generated: "2023-02-09T14:02:20.859016+08:00"
+  version: 0.1.5
+digest: sha256:f35671031c3544008b6a8342718d1a8fd2e2418587833134154f2d20141adc6b
+generated: "2023-02-10T17:28:43.424924+08:00"

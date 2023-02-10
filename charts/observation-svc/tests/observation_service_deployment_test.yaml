@@ -25,7 +25,7 @@ tests:
           content:
            name: gcp-service-account
            secret:
-            secretName: my-release-obs-fluentd
+            secretName: my-release-fluentd
       - contains: # check env var added
           path: spec.template.spec.containers[0].env
           content:

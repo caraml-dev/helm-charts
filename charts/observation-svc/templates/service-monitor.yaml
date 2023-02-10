@@ -2,14 +2,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "observation-service.fullname" . }}
+  name: {{ template "observation-svc.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{ include "observation-service.labels" . | nindent 4 }}
+    {{ include "observation-svc.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      app: {{ template "observation-service.name" .}}
+      app: {{ template "observation-svc.name" .}}
       release: {{ .Release.Name }}
   endpoints:
     - port: http
