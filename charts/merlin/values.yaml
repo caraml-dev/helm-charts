@@ -249,7 +249,7 @@ merlinExternalPostgresql:
   maxIdleConns: 0
   maxOpenConns: 0
   # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
-  enableProxySidecar: false
+  enableProxySidecar: true
   # -- Type of sidecar to be created, mentioned type needs to have the spec below.
   proxyType: cloudSqlProxy
   # -- container spec for the sidecar
@@ -435,7 +435,7 @@ mlflowExternalPostgresql:
   sidecarSpec:
     # -- container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
     cloudSqlProxy:
-      dbConnectionName: "asia-east-1:merlin-db"
+      dbConnectionName: "asia-east-1:mlflow-db"
       dbPort: 5432
       # -- When not using Googles workload identity, Give the path to the service account file which has the required permissions.
       serviceAccountCreds: /etc/gcp_service_account/service-account.json
