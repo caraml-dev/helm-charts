@@ -316,7 +316,9 @@ spec:
             echo "Running Swagger UI..."
             /usr/share/nginx/run.sh
       {{- end }}
-
+      {{- if .Values.merlinExternalPostgresql.enableProxySidecar }}
+      {{- tpl (toYaml (index .Values.merlinExternalPostgresql.sidecarSpec .Values.merlinExternalPostgresql.proxyType "spec")) . | nindent 6 }}
+      {{- end }}
       volumes:
       - name: config
         secret:

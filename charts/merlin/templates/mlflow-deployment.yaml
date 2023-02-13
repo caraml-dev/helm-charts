@@ -88,6 +88,9 @@ spec:
           mountPath: "/etc/gcp_service_account"
           readOnly: true
         {{- end }}
+      {{- if .Values.mlflowExternalPostgresql.enableProxySidecar }}
+      {{- tpl (toYaml (index .Values.mlflowExternalPostgresql.sidecarSpec .Values.mlflowExternalPostgresql.proxyType "spec")) . | nindent 6 }}
+      {{- end }}
 {{- if .Values.mlflow.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.mlflow.imagePullSecrets | indent 6 }}
