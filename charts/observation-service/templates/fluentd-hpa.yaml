@@ -1,4 +1,37 @@
 {{- if .Values.fluentd.autoscaling.enabled }}
+{{- if .Capabilities.APIVersions.Has "autoscaling/v2/HorizontalPodAutoscaler" }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "observation-service.fullname" . }}-fluentd
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "observation-service.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: {{ include "observation-service.fullname" . }}-fluentd
+  minReplicas: {{ .Values.fluentd.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.fluentd.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.fluentd.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.fluentd.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.fluentd.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.fluentd.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+{{- else if .Capabilities.APIVersions.Has "autoscaling/v1/HorizontalPodAutoscaler" }}
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
@@ -16,4 +49,5 @@ spec:
   {{- if .Values.fluentd.autoscaling.targetCPUUtilizationPercentage }}
   targetCPUUtilizationPercentage: {{ .Values.fluentd.autoscaling.targetCPUUtilizationPercentage }}
   {{- end }}
+{{- end }}
 {{- end }}
