@@ -19,6 +19,15 @@ deployment:
   #     cpu: 100m
   #     memory: 128Mi
 
+  # expects input structure as per specification https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#toleration-v1-core
+  # for example:
+  #   tolerations:
+  #   - key: foo.bar.com/role
+  #     operator: Equal
+  #     value: master
+  #     effect: NoSchedule
+  tolerations: []
+
   livenessProbe:
     path: "/v1/internal/live"
   readinessProbe:
