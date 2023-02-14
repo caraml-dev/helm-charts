@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.12](https://img.shields.io/badge/Version-0.4.12-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
+![Version: 0.4.13](https://img.shields.io/badge/Version-0.4.13-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
 
 MLP API
 
@@ -36,6 +36,7 @@ MLP API
 | deployment.replicaCount | int | `1` |  |
 | deployment.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | deployment.streams | object | `{}` | Streams list |
+| deployment.tolerations | list | `[]` |  |
 | deployment.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
 | deployment.ui.kubeflowHomepage | string | `"http://kubeflow.org"` |  |
 | encryption.key | string | `"example-key-here"` |  |
