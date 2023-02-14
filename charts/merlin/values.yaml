@@ -18,6 +18,14 @@ deployment:
     limits:
       cpu: "1"
       memory: 1Gi
+  # expects input structure as per specification https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#toleration-v1-core
+  # for example:
+  #   tolerations:
+  #   - key: foo.bar.com/role
+  #     operator: Equal
+  #     value: master
+  #     effect: NoSchedule
+  tolerations: []
 environment: dev
 deploymentLabelPrefix: "gojek.com/"
 loggerDestinationURL: "http://yourDestinationLogger"
@@ -317,6 +325,16 @@ mlflow:
       memory: "512Mi"
     limits:
       memory: "2048Mi"
+
+  # expects input structure as per specification https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#toleration-v1-core
+  # for example:
+  #   tolerations:
+  #   - key: foo.bar.com/role
+  #     operator: Equal
+  #     value: master
+  #     effect: NoSchedule
+  tolerations: []
+
   ## The backend store is where MLflow server stores experiment
   ## and run metadata as well as params, metrics, and tags for runs.
   ## MLflow supports two types of backend stores: file store and database-backed store.

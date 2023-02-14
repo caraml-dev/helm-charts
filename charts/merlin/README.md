@@ -46,6 +46,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.resources.limits.memory | string | `"1Gi"` |  |
 | deployment.resources.requests.cpu | string | `"500m"` |  |
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
+| deployment.tolerations | list | `[]` |  |
 | deploymentLabelPrefix | string | `"gojek.com/"` |  |
 | encryption.key | string | `"password"` |  |
 | environment | string | `"dev"` |  |
@@ -177,6 +178,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflow.service.internalPort | int | `5000` |  |
 | mlflow.service.type | string | `"ClusterIP"` |  |
 | mlflow.statefulset.updateStrategy | string | `"RollingUpdate"` |  |
+| mlflow.tolerations | list | `[]` |  |
 | mlflow.trackingURL | string | `"http://www.example.com"` |  |
 | mlflowExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | mlflowExternalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. |

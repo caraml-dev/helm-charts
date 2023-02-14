@@ -102,3 +102,7 @@ spec:
             - key: {{ .Values.gcpServiceAccount.secretKey }}
               path: service-account.json
 {{- end }}
+{{- with .Values.mlflow.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+{{- end }}
