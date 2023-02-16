@@ -1,7 +1,7 @@
 # fluentd
 
 ---
-![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square)
+![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square)
 ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 Fluentd service - Fluentd service that supports UPI logs parsing
@@ -33,11 +33,12 @@ The following table lists the configurable parameters of the Observation Service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | annotations | object | `{}` | Annotations to add to fluentd pod |
-| autoscaling | object | `{"enabled":false,"maxReplicas":2,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | HPA scaling configuration for Observation Service fluentd |
+| autoscaling | object | `{"enabled":false,"maxReplicas":2,"minReplicas":1,"targetCPUUtilizationPercentage":80,"targetMemoryUtilizationPercentage":80}` | HPA scaling configuration for Observation Service fluentd |
 | autoscaling.enabled | bool | `false` | Toggle to enable HPA scaling |
 | autoscaling.maxReplicas | int | `2` | Maximum replicas for HPA scaling |
 | autoscaling.minReplicas | int | `1` | Minimum replicas for HPA scaling |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU utilization percentage threshold to activate HPA scaling |
+| autoscaling.targetMemoryUtilizationPercentage | int | `80` | Memory utilization percentage threshold to activate HPA scaling |
 | extraEnvs | list | `[]` | List of extra environment variables to add to fluentd container |
 | extraLabels | object | `{}` | List of extra labels to add to fluentd K8s resources |
 | fluentdConfig | string | `""` | Fluentd config to be mounted as fluentd/etc/fluent.conf |
