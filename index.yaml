@@ -3375,6 +3375,18 @@ entries:
   fluentd:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2023-02-16T04:00:14.410548234Z"
+    description: Fluentd service - Fluentd service that supports UPI logs parsing
+    digest: b93e9bdd8f4c1ad67ecfce7984efe7235876810da3e245e030181d4b64636601
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: fluentd
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/fluentd-0.1.6/fluentd-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2023-02-10T09:20:08.61443733Z"
     description: Fluentd service - Fluentd service that supports UPI logs parsing
     digest: 1222aea770392a6b4a1dbe3264509711287439c3806901d5f34104a02423a7ae
@@ -6759,6 +6771,19 @@ entries:
   observation-service:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2023-02-16T04:00:14.610718196Z"
+    description: Observation Service - Logging system for collecting ground truth
+      observation result from ML prediction
+    digest: 489b24098d2f91b2c8f0e0f698257b5acf3df6995e797b5e6492f448e657df7b
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: observation-service
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/observation-service-0.1.7/observation-service-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2023-02-07T04:18:28.226830686Z"
     description: Observation Service - Logging system for collecting ground truth
       observation result from ML prediction
@@ -6836,6 +6861,25 @@ entries:
     - https://github.com/caraml-dev/helm-charts/releases/download/observation-service-0.1.1/observation-service-0.1.1.tgz
     version: 0.1.1
   observation-svc:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2023-02-16T04:00:14.747302391Z"
+    dependencies:
+    - alias: fluentd
+      condition: fluentd.enabled
+      name: fluentd
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.5
+    description: Observation Service - Logging system for collecting ground truth
+      observation result from ML prediction
+    digest: 4fcf376770a2c77e9b97c0bd142b71e5ee1aaba12f7eb8755214d869324333f9
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: observation-svc
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/observation-svc-0.2.7/observation-svc-0.2.7.tgz
+    version: 0.2.7
   - apiVersion: v2
     appVersion: 0.1.0
     created: "2023-02-10T10:03:25.311626768Z"
@@ -7019,4 +7063,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.0/timber-observation-service-0.2.0.tgz
     version: 0.2.0
-generated: "2023-02-14T09:22:35.956495501Z"
+generated: "2023-02-16T04:00:14.74769689Z"
