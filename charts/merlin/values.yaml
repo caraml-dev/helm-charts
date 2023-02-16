@@ -394,6 +394,7 @@ mlflow:
     #   AWS_ACCESS_KEY_ID: YOURACCESSKEY
     #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
     #   AWS_DEFAULT_REGION: ap-southeast-2
+    #   Instead of this env variable minio.enabled should be used:
     #   MLFLOW_S3_ENDPOINT_URL: http://minio.minio.svc.cluster.local:9000
 # If you would like to use an external postgres database for MLflow, you can connect using these credentials
 mlflowExternalPostgresql:
