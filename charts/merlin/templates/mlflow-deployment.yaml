@@ -69,6 +69,10 @@ spec:
           value: "{{ .Values.mlflow.host }}"
         - name: PORT
           value: "{{ .Values.mlflow.service.internalPort }}"
+        {{- if .Values.minio.enabled }}
+        - name: MLFLOW_S3_ENDPOINT_URL
+          value: http://minio.minio.svc.cluster.local:9000
+        {{- end}}
         {{- range $key, $val := .Values.mlflow.extraEnvs }}
         - name: {{ $key }}
           value: {{ $val | quote }}
