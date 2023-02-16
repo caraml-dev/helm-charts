@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.13](https://img.shields.io/badge/Version-0.4.13-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
+![Version: 0.4.14](https://img.shields.io/badge/Version-0.4.14-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
 
 MLP API
 
@@ -21,6 +21,9 @@ MLP API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| caramlEnvironments.enabled | bool | `true` |  |
+| caramlEnvironments.environmentConfigs | object | `{}` |  |
+| caramlEnvironments.imageBuilderConfigs | string | `""` |  |
 | deployment.apiHost | string | `"http://mlp/v1"` |  |
 | deployment.applications | list | `[{"configuration":{"api":"/api/merlin/v1","iconName":"machineLearningApp","navigation":[{"destination":"/models","label":"Models"},{"destination":"/transformer-simulator","label":"Transformer Simulator"}]},"description":"Platform for deploying machine learning models","homepage":"/merlin","name":"Merlin"},{"configuration":{"api":"/api/turing/v1","iconName":"graphApp","navigation":[{"destination":"/routers","label":"Routers"},{"destination":"/ensemblers","label":"Ensemblers"},{"destination":"/jobs","label":"Ensembling Jobs"},{"destination":"/experiments","label":"Experiments"}]},"description":"Platform for setting up ML experiments","homepage":"/turing","name":"Turing"},{"configuration":{"api":"/feast/api","iconName":"appSearchApp","navigation":[{"destination":"/entities","label":"Entities"},{"destination":"/featuretables","label":"Feature Tables"},{"destination":"/jobs/batch","label":"Batch Ingestion Jobs"},{"destination":"/jobs/stream","label":"Stream Ingestion Jobs"}]},"description":"Platform for managing and serving ML features","homepage":"/feast","name":"Feast"},{"configuration":{"iconName":"pipelineApp"},"description":"Platform for managing ML pipelines","homepage":"/pipeline","name":"Pipelines"}]` | Enabled CaraML applications |
 | deployment.authorization.enabled | bool | `false` |  |
