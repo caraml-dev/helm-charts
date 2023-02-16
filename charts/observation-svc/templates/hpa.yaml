@@ -1,4 +1,37 @@
 {{- if .Values.observationService.autoscaling.enabled }}
+{{- if .Capabilities.APIVersions.Has "autoscaling/v2/HorizontalPodAutoscaler" }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "observation-svc.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "observation-svc.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "observation-svc.fullname" . }}
+  minReplicas: {{ .Values.observationService.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.observationService.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.observationService.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.observationService.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+{{- else if .Capabilities.APIVersions.Has "autoscaling/v1/HorizontalPodAutoscaler" }}
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
@@ -16,4 +49,5 @@ spec:
   {{- if .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}
   targetCPUUtilizationPercentage: {{ .Values.observationService.autoscaling.targetCPUUtilizationPercentage }}
   {{- end }}
+{{- end }}
 {{- end }}
