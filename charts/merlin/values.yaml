@@ -223,6 +223,14 @@ ui:
 service:
   externalPort: 8080
   internalPort: 8080
+serviceAccount:
+  # Specifies whether a ServiceAccount should be created
+  create: true
+  # The name of the ServiceAccount to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: merlin
+  annotations:
+    example.io/example: example
 ingress:
   enabled: false
 # If you would like to use an external postgres database for Merlin, you can connect using these credentials
@@ -249,7 +257,7 @@ merlinExternalPostgresql:
   maxIdleConns: 0
   maxOpenConns: 0
   # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
-  enableProxySidecar: true
+  enableProxySidecar: false
   # -- Type of sidecar to be created, mentioned type needs to have the spec below.
   proxyType: cloudSqlProxy
   # -- container spec for the sidecar
@@ -258,8 +266,6 @@ merlinExternalPostgresql:
     cloudSqlProxy:
       dbConnectionName: "asia-east-1:merlin-db"
       dbPort: 5432
-      # -- When not using Googles workload identity, Give the path to the service account file which has the required permissions.
-      serviceAccountCreds: /etc/gcp_service_account/service-account.json
       # -- Container spec for the sidecar
       spec:
         - name: cloud-sql-proxy
@@ -269,7 +275,6 @@ merlinExternalPostgresql:
             - "-ip_address_types=PRIVATE"
             - "-log_debug_stdout"
             - "-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
-            - "-credential_file={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.serviceAccountCreds }}"
           securityContext:
             runAsNonRoot: true
           resources:
@@ -388,6 +393,14 @@ mlflow:
     type: ClusterIP
     externalPort: 80
     internalPort: 5000
+  serviceAccount:
+    # Specifies whether a ServiceAccount should be created
+    create: true
+    # The name of the ServiceAccount to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: mlflow
+    annotations:
+      example.io/example: example
   ingress:
     enabled: false
     class: "nginx"
@@ -437,8 +450,6 @@ mlflowExternalPostgresql:
     cloudSqlProxy:
       dbConnectionName: "asia-east-1:mlflow-db"
       dbPort: 5432
-      # -- When not using Googles workload identity, Give the path to the service account file which has the required permissions.
-      serviceAccountCreds: /etc/gcp_service_account/service-account.json
       # -- Container spec for the sidecar
       spec:
         - name: cloud-sql-proxy
@@ -448,7 +459,6 @@ mlflowExternalPostgresql:
             - "-ip_address_types=PRIVATE"
             - "-log_debug_stdout"
             - "-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
-            - "-credential_file={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.serviceAccountCreds }}"
           securityContext:
             runAsNonRoot: true
           resources:
