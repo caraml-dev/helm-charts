@@ -165,9 +165,11 @@ externalPostgresql:
     cloudSqlProxy:
       dbConnectionName: "asia-east-1:mlp-db"
       dbPort: 5432
+      image:
+        tag: 1.33.2
       spec:
         - name: cloud-sql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.33.2
+          image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
           command:
             - "/cloud_sql_proxy"
             - "-ip_address_types=PRIVATE"
