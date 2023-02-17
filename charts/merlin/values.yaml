@@ -61,25 +61,25 @@ imageBuilder:
   nodeSelectors: {}
   maxRetry: 3
   k8sConfig: ''
-      # Example json
-      # '{
-      #   "name": "dev-cluster",
-      #   "cluster": {
-      #     "server": "https://k8s.cluster",
-      #     "certificate-authority-data": "some_cert_data"
-      #   },
-      #   "user": {
-      #     "exec": {
-      #       "apiVersion": "client.authentication.k8s.io/v1beta1",
-      #       "args": [
-      #         "--use_application_default_credentials"
-      #       ],
-      #       "command": "gke-gcloud-auth-plugin",
-      #       "interactiveMode": "IfAvailable",
-      #       "provideClusterInfo": true
-      #     }
-      #   }
-      # }'
+  # Example json
+  # '{
+  #   "name": "dev-cluster",
+  #   "cluster": {
+  #     "server": "https://k8s.cluster",
+  #     "certificate-authority-data": "some_cert_data"
+  #   },
+  #   "user": {
+  #     "exec": {
+  #       "apiVersion": "client.authentication.k8s.io/v1beta1",
+  #       "args": [
+  #         "--use_application_default_credentials"
+  #       ],
+  #       "command": "gke-gcloud-auth-plugin",
+  #       "interactiveMode": "IfAvailable",
+  #       "provideClusterInfo": true
+  #     }
+  #   }
+  # }'
 alerts:
   # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
   enabled: false
@@ -104,21 +104,7 @@ transformer:
     feastBigtableServingURL: online-serving-bt.feast.dev
   feast:
     defaultServingURL: online-serving-redis.feast.dev
-    servingURLs:
-      [
-        {
-          host: "online-serving-redis.feast.dev",
-          label: "Online Serving with Redis",
-          source_type: "REDIS",
-          icon: "redis",
-        },
-        {
-          host: "online-serving-bigtable.feast.dev",
-          label: "Online Serving with BigTable",
-          source_type: "BIGTABLE",
-          icon: "bigtable",
-        },
-      ]
+    servingURLs: [{host: "online-serving-redis.feast.dev", label: "Online Serving with Redis", source_type: "REDIS", icon: "redis"}, {host: "online-serving-bigtable.feast.dev", label: "Online Serving with BigTable", source_type: "BIGTABLE", icon: "bigtable"}]
     ## Redis storage configuration for feast retrieval
     ##
     # redisStorage:
@@ -192,18 +178,18 @@ environmentConfigs:
       cpu_request: "500m"
       memory_request: "500Mi"
     k8s_config: {}
-      # Example k8s_config to connect to cluster using gke-gcloud-auth-plugin
-      # name: dev-cluster
-      # cluster:
-      #   server: https://k8s.cluster
-      #   certificate-authority-data: some_cert_data
-      # user:
-      #   exec:
-      #     apiVersion: client.authentication.k8s.io/v1beta1
-      #     args: ["--use_application_default_credentials"]
-      #     command: gke-gcloud-auth-plugin
-      #     interactiveMode: IfAvailable
-      #     provideClusterInfo: true
+    # Example k8s_config to connect to cluster using gke-gcloud-auth-plugin
+    # name: dev-cluster
+    # cluster:
+    #   server: https://k8s.cluster
+    #   certificate-authority-data: some_cert_data
+    # user:
+    #   exec:
+    #     apiVersion: client.authentication.k8s.io/v1beta1
+    #     args: ["--use_application_default_credentials"]
+    #     command: gke-gcloud-auth-plugin
+    #     interactiveMode: IfAvailable
+    #     provideClusterInfo: true
 sentry:
   enabled: false
   dsn: ""
@@ -223,13 +209,7 @@ ui:
   upiDocURL: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
   mlp:
     apiHost: /api/v1
-  docsURL:
-    [
-      {
-        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
-        "label": "Getting Started with Merlin",
-      },
-    ]
+  docsURL: [{"href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md", "label": "Getting Started with Merlin"}]
   # -- Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
   maxAllowedReplica: 20
@@ -256,13 +236,11 @@ merlinExternalPostgresql:
   secretName: ""
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
   secretKey: ""
-
   # -- Connection pooling settings
   connMaxIdleTime: 0s
   connMaxLifetime: 0s
   maxIdleConns: 0
   maxOpenConns: 0
-
 merlin-postgresql:
   enabled: true
   postgresqlUsername: merlin
@@ -297,7 +275,6 @@ mlp:
   enabled: true
   environmentConfigSecret:
     name: ""
-
 mlflow:
   # This should be the actual DNS registered
   trackingURL: "http://www.example.com"
@@ -333,7 +310,6 @@ mlflow:
       memory: "512Mi"
     limits:
       memory: "2048Mi"
-
   # expects input structure as per specification https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#toleration-v1-core
   # for example:
   #   tolerations:
@@ -342,7 +318,6 @@ mlflow:
   #     value: master
   #     effect: NoSchedule
   tolerations: []
-
   ## The backend store is where MLflow server stores experiment
   ## and run metadata as well as params, metrics, and tags for runs.
   ## MLflow supports two types of backend stores: file store and database-backed store.
@@ -391,11 +366,11 @@ mlflow:
 
   # Add the following configs when you wish to point to an actual S3 for mlflow to store its artifacts
   extraEnvs: {}
-    #   AWS_ACCESS_KEY_ID: YOURACCESSKEY
-    #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
-    #   AWS_DEFAULT_REGION: ap-southeast-2
-    #   Instead of this env variable minio.enabled should be used:
-    #   MLFLOW_S3_ENDPOINT_URL: http://minio.minio.svc.cluster.local:9000
+  #   AWS_ACCESS_KEY_ID: YOURACCESSKEY
+  #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
+  #   AWS_DEFAULT_REGION: ap-southeast-2
+  #   Instead of this env variable minio.enabled should be used:
+  #   MLFLOW_S3_ENDPOINT_URL: http://minio.minio.svc.cluster.local:9000
 # If you would like to use an external postgres database for MLflow, you can connect using these credentials
 mlflowExternalPostgresql:
   # -- If you would like to use an external postgres database, enable it here using this
@@ -474,7 +449,7 @@ kserve:
   helmChart:
     chart: kserve
     repository: "https://caraml-dev.github.io/helm-charts"
-    version: 0.8.19
+    version: 0.8.20
     release: kserve
     namespace: kserve
     createNamespace: true
