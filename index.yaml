@@ -6570,6 +6570,26 @@ entries:
   mlp:
   - apiVersion: v2
     appVersion: v1.7.4-build.6-322163a
+    created: "2023-02-20T12:40:48.274437117Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: MLP API
+    digest: 3447863941d309ae219d4ba41cf77d270767e795547621d77dd904383cf6a0a3
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: mlp
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/mlp-0.4.14/mlp-0.4.14.tgz
+    version: 0.4.14
+  - apiVersion: v2
+    appVersion: v1.7.4-build.6-322163a
     created: "2023-02-14T08:59:45.335053508Z"
     dependencies:
     - condition: postgresql.enabled
@@ -7296,4 +7316,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/timber-observation-service-0.2.0/timber-observation-service-0.2.0.tgz
     version: 0.2.0
-generated: "2023-02-17T03:54:22.953466447Z"
+generated: "2023-02-20T12:40:48.275080818Z"
