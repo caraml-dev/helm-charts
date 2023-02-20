@@ -167,6 +167,13 @@ externalPostgresql:
       dbPort: 5432
       image:
         tag: 1.33.2
+      resources: &cloudCarSpecResource
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1G
       spec:
         - name: cloud-sql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
@@ -177,13 +184,7 @@ externalPostgresql:
             - "-instances={{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
           securityContext:
             runAsNonRoot: true
-          resources:
-            requests:
-              cpu: 200m
-              memory: 512Mi
-            limits:
-              cpu: 1000m
-              memory: 1G
+          resources: *cloudCarSpecResource
 
 postgresql:
   # -- Enable creating mlp specific postgres instance
