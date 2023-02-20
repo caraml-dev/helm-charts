@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.10.5](https://img.shields.io/badge/Version-0.10.5-informational?style=flat-square) ![AppVersion: 0.26.0-rc3](https://img.shields.io/badge/AppVersion-0.26.0--rc3-informational?style=flat-square)
+![Version: 0.10.6](https://img.shields.io/badge/Version-0.10.6-informational?style=flat-square) ![AppVersion: 0.26.0-rc3](https://img.shields.io/badge/AppVersion-0.26.0--rc3-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -17,7 +17,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.4.13 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.4.14 |
 | https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.2 |
 | https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.2 |
 
