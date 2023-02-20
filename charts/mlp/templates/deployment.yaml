@@ -76,6 +76,9 @@ spec:
           volumeMounts:
             - mountPath: /etc/caraml
               name: config
+{{- if .Values.externalPostgresql.enableProxySidecar }}
+{{- tpl (toYaml (index .Values.externalPostgresql.sidecarSpec .Values.externalPostgresql.proxyType "spec")) . | nindent 8 }}
+{{- end }}
 {{- if .Values.deployment.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.deployment.imagePullSecrets | indent 6 }}
