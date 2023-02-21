@@ -14,7 +14,7 @@ dependencies:
 - condition: mlp.enabled
   name: mlp
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.4.14
+  version: 0.4.16
 - alias: kserve
   condition: kserve.enabled
   name: generic-dep-installer
@@ -33,4 +33,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: merlin
-version: 0.10.6
+version: 0.10.7
