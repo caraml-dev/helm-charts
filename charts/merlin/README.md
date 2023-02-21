@@ -190,7 +190,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflow.service.externalPort | int | `80` |  |
 | mlflow.service.internalPort | int | `5000` |  |
 | mlflow.service.type | string | `"ClusterIP"` |  |
-| mlflow.serviceAccount.annotations."example.io/example" | string | `"example"` |  |
+| mlflow.serviceAccount.annotations | object | `{}` |  |
 | mlflow.serviceAccount.create | bool | `true` |  |
 | mlflow.serviceAccount.name | string | `"mlflow"` |  |
 | mlflow.statefulset.updateStrategy | string | `"RollingUpdate"` |  |
