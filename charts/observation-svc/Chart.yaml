@@ -5,11 +5,11 @@ dependencies:
   condition: fluentd.enabled
   name: fluentd
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.5
+  version: 0.1.6
 description: Observation Service - Logging system for collecting ground truth observation
   result from ML prediction
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: observation-svc
-version: 0.2.6
+version: 0.2.8

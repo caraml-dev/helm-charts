@@ -1,7 +1,7 @@
 # observation-svc
 
 ---
-![Version: 0.2.6](https://img.shields.io/badge/Version-0.2.6-informational?style=flat-square)
+![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square)
 ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 Observation Service - Logging system for collecting ground truth observation result from ML prediction
@@ -43,11 +43,12 @@ For more configurable of fluentd, check out [Timber-Fluentd](https://github.com/
 | observationService.affinity | object | `{}` | Assign custom affinity rules to constrain pods to nodes. ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/ |
 | observationService.annotations | object | `{}` | Annotations to add to Observation Service pod |
 | observationService.apiConfig | object | `{}` | Observation Service server configuration. |
-| observationService.autoscaling | object | `{"enabled":false,"maxReplicas":2,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | HPA scaling configuration for Observation Service |
+| observationService.autoscaling | object | `{"enabled":false,"maxReplicas":2,"minReplicas":1,"targetCPUUtilizationPercentage":80,"targetMemoryUtilizationPercentage":80}` | HPA scaling configuration for Observation Service |
 | observationService.autoscaling.enabled | bool | `false` | Toggle to enable HPA scaling |
 | observationService.autoscaling.maxReplicas | int | `2` | Maximum replicas for HPA scaling |
 | observationService.autoscaling.minReplicas | int | `1` | Minimum replicas for HPA scaling |
 | observationService.autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU utilization percentage threshold to activate HPA scaling |
+| observationService.autoscaling.targetMemoryUtilizationPercentage | int | `80` | Memory utilization percentage threshold to activate HPA scaling |
 | observationService.extraEnvs | list | `[]` | List of extra environment variables to add to Observation Service server container |
 | observationService.extraLabels | object | `{}` | List of extra labels to add to Observation Service K8s resources |
 | observationService.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |

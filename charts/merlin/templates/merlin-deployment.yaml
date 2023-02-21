@@ -83,6 +83,14 @@ spec:
                 key: {{ include "common.postgres-password-secret-key" (list .Values.merlinExternalPostgresql) }}
           - name: DATABASE_NAME
             value: {{ include "common.postgres-database" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global "merlin" "postgresqlDatabase") }}
+          - name: DATABASE_CONN_MAX_IDLE_TIME
+            value: "{{ .Values.merlinExternalPostgresql.connMaxIdleTime }}"
+          - name: DATABASE_CONN_MAX_LIFETIME
+            value: "{{ .Values.merlinExternalPostgresql.connMaxLifetime }}"
+          - name: DATABASE_MAX_IDLE_CONNS
+            value: "{{ .Values.merlinExternalPostgresql.maxIdleConns }}"
+          - name: DATABASE_MAX_OPEN_CONNS
+            value: "{{ .Values.merlinExternalPostgresql.maxOpenConns }}"
           - name: REACT_APP_OAUTH_CLIENT_ID
             value: {{ include "common.set-value" (list .Values.ui.oauthClientID $globOauthClientID) | quote }}
           - name: REACT_APP_ENVIRONMENT
@@ -95,6 +103,8 @@ spec:
           - name: REACT_APP_MERLIN_DOCS_URL
             value: {{ .Values.ui.docsURL | toJson | quote }}
           {{- end }}
+          - name: REACT_APP_UPI_DOC_URL
+            value: "{{ .Values.ui.upiDocURL }}"
           - name: REACT_APP_HOMEPAGE
             value: {{ include "common.set-value" (list .Values.ui.homepage $globReactAppHomepage) | quote }}
           - name: REACT_APP_MERLIN_API
@@ -326,4 +336,8 @@ spec:
 {{- if .Values.nodeSelector }}
       nodeSelector:
 {{- toYaml .Values.nodeSelector | nindent 8 }}
+{{- end }}
+{{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
 {{- end }}

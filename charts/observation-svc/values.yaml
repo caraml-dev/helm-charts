@@ -160,6 +160,8 @@ observationService:
     maxReplicas: 2
     # -- CPU utilization percentage threshold to activate HPA scaling
     targetCPUUtilizationPercentage: 80
+    # -- Memory utilization percentage threshold to activate HPA scaling
+    targetMemoryUtilizationPercentage: 80
 
   # -- Service Monitor configuration for Observation Service
   monitoring:

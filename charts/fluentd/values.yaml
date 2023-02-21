@@ -58,6 +58,8 @@ autoscaling:
   maxReplicas: 2
   # -- CPU utilization percentage threshold to activate HPA scaling
   targetCPUUtilizationPercentage: 80
+  # -- Memory utilization percentage threshold to activate HPA scaling
+  targetMemoryUtilizationPercentage: 80
 
 # -- Fluentd config to be mounted as fluentd/etc/fluent.conf
 fluentdConfig: ""
