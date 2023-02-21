@@ -268,7 +268,7 @@ merlinExternalPostgresql:
       dbPort: 5432
       image:
         tag: 1.33.2
-      resources: &cloudCarSpecResource
+      resources: &merlinCloudCarSpecResource
         requests:
           cpu: 200m
           memory: 512Mi
@@ -286,7 +286,7 @@ merlinExternalPostgresql:
             - "-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
           securityContext:
             runAsNonRoot: true
-          resources: *cloudCarSpecResource
+          resources: *merlinCloudCarSpecResource
 merlin-postgresql:
   enabled: true
   postgresqlUsername: merlin
@@ -455,7 +455,7 @@ mlflowExternalPostgresql:
       dbPort: 5432
       image:
         tag: 1.33.2
-      resources: &cloudCarSpecResource
+      resources: &mlflowCloudSideCarSpecResource
         requests:
           cpu: 200m
           memory: 512Mi
@@ -473,7 +473,7 @@ mlflowExternalPostgresql:
             - "-instances={{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
           securityContext:
             runAsNonRoot: true
-          resources: *cloudCarSpecResource
+          resources: *mlflowCloudSideCarSpecResource
 mlflow-postgresql:
   enabled: true
   postgresqlUsername: mlflow
