@@ -136,8 +136,8 @@ serviceAccount:
   # The name of the ServiceAccount to use.
   # If not set and create is true, a name is generated using the fullname template
   name: mlp
-  annotations:
-    example.io/example: example
+  annotations: {}
+    # example.io/example: example
 
 externalPostgresql:
   # -- If you would like to use an external postgres database, enable it here using this
