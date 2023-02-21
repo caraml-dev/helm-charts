@@ -266,10 +266,19 @@ merlinExternalPostgresql:
     cloudSqlProxy:
       dbConnectionName: "asia-east-1:merlin-db"
       dbPort: 5432
+      image:
+        tag: 1.33.2
+      resources: &cloudCarSpecResource
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1G
       # -- Container spec for the sidecar
       spec:
         - name: cloud-sql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.33.2
+          image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
           command:
             - "/cloud_sql_proxy"
             - "-ip_address_types=PRIVATE"
@@ -277,13 +286,7 @@ merlinExternalPostgresql:
             - "-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
           securityContext:
             runAsNonRoot: true
-          resources:
-            requests:
-              cpu: 200m
-              memory: 512Mi
-            limits:
-              cpu: 1000m
-              memory: 1G
+          resources: *cloudCarSpecResource
 merlin-postgresql:
   enabled: true
   postgresqlUsername: merlin
@@ -450,24 +453,27 @@ mlflowExternalPostgresql:
     cloudSqlProxy:
       dbConnectionName: "asia-east-1:mlflow-db"
       dbPort: 5432
+      image:
+        tag: 1.33.2
+      resources: &cloudCarSpecResource
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1G
       # -- Container spec for the sidecar
       spec:
         - name: cloud-sql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.33.2
+          image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
           command:
             - "/cloud_sql_proxy"
             - "-ip_address_types=PRIVATE"
             - "-log_debug_stdout"
-            - "-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
+            - "-instances={{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
           securityContext:
             runAsNonRoot: true
-          resources:
-            requests:
-              cpu: 200m
-              memory: 512Mi
-            limits:
-              cpu: 1000m
-              memory: 1G
+          resources: *cloudCarSpecResource
 mlflow-postgresql:
   enabled: true
   postgresqlUsername: mlflow
