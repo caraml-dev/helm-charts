@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.10.9](https://img.shields.io/badge/Version-0.10.9-informational?style=flat-square) ![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
+![Version: 0.10.10](https://img.shields.io/badge/Version-0.10.10-informational?style=flat-square) ![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -222,7 +222,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | sentry.enabled | bool | `false` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
-| serviceAccount.annotations."example.io/example" | string | `"example"` |  |
+| serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"merlin"` |  |
 | swagger.apiHost | string | `"merlin.dev"` |  |

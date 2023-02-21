@@ -229,8 +229,8 @@ serviceAccount:
   # The name of the ServiceAccount to use.
   # If not set and create is true, a name is generated using the fullname template
   name: merlin
-  annotations:
-    example.io/example: example
+  annotations: {}
+  # example.io/example: example
 ingress:
   enabled: false
 # If you would like to use an external postgres database for Merlin, you can connect using these credentials
