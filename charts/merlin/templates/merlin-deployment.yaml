@@ -131,6 +131,8 @@ spec:
             value: "{{ .Values.imageBuilder.timeout }}"
           - name: IMG_BUILDER_KANIKO_IMAGE
             value: "{{ .Values.imageBuilder.kanikoImage }}"
+          - name: IMG_BUILDER_RESOURCES
+            value: {{ .Values.imageBuilder.resources | toJson | quote }}
           - name: IMG_BUILDER_TOLERATIONS
             value: {{ .Values.imageBuilder.tolerations | toJson | quote }}
           - name: IMG_BUILDER_NODE_SELECTORS
