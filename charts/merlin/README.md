@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.10.7](https://img.shields.io/badge/Version-0.10.7-informational?style=flat-square) ![AppVersion: 0.26.0-rc4](https://img.shields.io/badge/AppVersion-0.26.0--rc4-informational?style=flat-square)
+![Version: 0.10.7](https://img.shields.io/badge/Version-0.10.7-informational?style=flat-square) ![AppVersion: 0.26.0-rc5](https://img.shields.io/badge/AppVersion-0.26.0--rc5-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -38,7 +38,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.26.0-rc4"` |  |
+| deployment.image.tag | string | `"0.26.0-rc5"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |

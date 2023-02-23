@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
-    tag: 0.26.0-rc4
+    tag: 0.26.0-rc5
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
