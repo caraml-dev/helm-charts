@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
-    tag: 0.26.0-rc3
+    tag: 0.26.0-rc5
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -57,6 +57,13 @@ imageBuilder:
   timeout: "30m"
   retention: "48h"
   kanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
+  resources:
+    requests:
+      cpu: 1
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
   tolerations: []
   nodeSelectors: {}
   maxRetry: 3
