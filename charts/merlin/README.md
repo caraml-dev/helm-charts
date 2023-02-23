@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.10.7](https://img.shields.io/badge/Version-0.10.7-informational?style=flat-square) ![AppVersion: 0.26.0-rc5](https://img.shields.io/badge/AppVersion-0.26.0--rc5-informational?style=flat-square)
+![Version: 0.10.8](https://img.shields.io/badge/Version-0.10.8-informational?style=flat-square) ![AppVersion: 0.26.0-rc5](https://img.shields.io/badge/AppVersion-0.26.0--rc5-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -99,6 +99,10 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.resources.requests.cpu | int | `1` |  |
 | imageBuilder.resources.requests.memory | string | `"512Mi"` |  |
 | imageBuilder.retention | string | `"48h"` |  |
+| imageBuilder.serviceAccount.annotations | object | `{}` |  |
+| imageBuilder.serviceAccount.create | bool | `true` |  |
+| imageBuilder.serviceAccount.labels | object | `{}` |  |
+| imageBuilder.serviceAccount.name | string | `"kaniko-sa"` |  |
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
 | ingress.enabled | bool | `false` |  |
