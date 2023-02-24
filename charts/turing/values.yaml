@@ -9,7 +9,7 @@ deployment:
     # -- Docker image repository for Turing API
     repository: caraml-dev/turing
     # -- Docker image tag for Turing API
-    tag: v1.9.2
+    tag: v1.9.2-build.7-b9139be
   labels: {}
   # -- Resources requests and limits for Turing API. This should be set
   # according to your cluster capacity and service level objectives.
@@ -83,11 +83,29 @@ clusterConfig:
   # -- environmentConfigPath is a path to a file that contains environmentConfigs.
   # See api/environments-dev.yaml for example contents
   environmentConfigPath: "environments.yaml"
-  # -- See ClusterConfig.EnsemblingServiceK8sConfig in api/config-dev.yaml for example structure
-  ensemblingServiceK8sConfig: 
-    name: dev-cluster
-    cluster: {}
-    user: {}
+
+imageBuilder:
+  clusterName: "chart-testing"
+  k8sConfig: ''
+  # Example json
+  # '{
+  #   "name": "dev-cluster",
+  #   "cluster": {
+  #     "server": "https://k8s.cluster",
+  #     "certificate-authority-data": "some_cert_data"
+  #   },
+  #   "user": {
+  #     "exec": {
+  #       "apiVersion": "client.authentication.k8s.io/v1beta1",
+  #       "args": [
+  #         "--use_application_default_credentials"
+  #       ],
+  #       "command": "gke-gcloud-auth-plugin",
+  #       "interactiveMode": "IfAvailable",
+  #       "provideClusterInfo": true
+  #     }
+  #   }
+  # }'
 
 # -- Set this field to configure environment configs. See api/environments-dev.yaml for sample structure
 environmentConfigs: 
@@ -191,13 +209,17 @@ config:
     # The maximum number of open connections to the database. For more info see: https://pkg.go.dev/database/sql#DB.SetMaxOpenConns
     MaxOpenConns: 0
   KubernetesLabelConfigs: { }
-  MLPConfig: { }
+  MLPConfig:
+    MerlinURL: http://merlin:8080/v1
+    MLPURL: http://mlp:8080/v1
+    # Set the encryption key used by MLP, to de let Turing decrypt the values
+    # MLPEncryptionKey:
   Sentry:
     Enabled: false
   RouterDefaults:
-    Image: ghcr.io/caraml-dev/turing/turing-router:v1.7.1
+    Image: ghcr.io/caraml-dev/turing/turing-router:v1.9.2-build.7-b9139be
     FluentdConfig:
-      Image: ghcr.io/caraml-dev/turing/fluentd:v1.7.1-build.5-6dc23d0
+      Image: ghcr.io/caraml-dev/turing/fluentd:v1.8.0
 
 # -- Turing UI configuration.
 # Please Refer to https://github.com/caraml-dev/turing/blob/main/ui/public/app.config.js
@@ -234,13 +256,13 @@ turingExternalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
+  # -- External postgres database port
+  port: 5432
 turing-postgresql:
   enabled: true
   postgresqlUsername: turing
   postgresqlDatabase: turing
-  # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
-  # postgresqlPassword: turing
-
+  postgresqlPassword: turing
   resources:
     requests:
       cpu: 100m

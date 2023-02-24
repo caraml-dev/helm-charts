@@ -65,10 +65,6 @@ heritage: {{ .Release.Service }}
 {{- include "turing.fullname" . -}}
 {{- end -}}
 
-{{- define "turing.clusterConfig.useInClusterCredentials" -}}
-{{- .Values.tags.mlp | ternary true .Values.clusterConfig.useInClusterConfig -}}
-{{- end -}}
-
 {{- define "turing.mlp.encryption.key" -}}
 {{- .Values.config.MLPConfig.MLPEncryptionKey -}}
 {{- end -}}
@@ -203,17 +199,19 @@ API config related
 {{- $globMlpApi := include "common.get-component-value" (list .Values.global "mlp" (list "vsPrefix" "apiPrefix"))}}
 AuthConfig:
   URL: {{ include "turing.authorization.server.url" . | quote }}
+EnsemblerServiceBuilderConfig:
+  ClusterName: {{ .Values.imageBuilder.clusterName }}
 ClusterConfig:
   InClusterConfig: {{ .Values.clusterConfig.useInClusterConfig }}
   EnvironmentConfigPath: {{ include "turing.environments.absolutePath" . }}
   EnsemblingServiceK8sConfig: 
-{{ .Values.clusterConfig.ensemblingServiceK8sConfig | toYaml | indent 4}}
+{{ .Values.imageBuilder.k8sConfig | fromJson | toYaml | indent 4}}
 DbConfig:
-  Host: {{ include "turing.db.host" . | quote }}
-  Port: {{ include "turing.db.port" . }}
-  Database:  {{ include "turing.db.database" . }}
-  User:  {{ include "turing.db.user" . }}
-  Password:  {{ include "turing.db.password" . }}
+  Host: {{ include "turing-postgresql.host" . | quote }}
+  Port: 5432
+  Database:  {{ include "turing-postgresql.database" . }}
+  User:  {{ include "turing-postgresql.username" . }}
+  Password:  {{ include "turing-postgresql.password" . }}
   ConnMaxIdleTime: {{ .Values.config.DbConfig.ConnMaxIdleTime }}
   ConnMaxLifetime: {{ .Values.config.DbConfig.ConnMaxLifetime }}
   MaxIdleConns: {{ .Values.config.DbConfig.MaxIdleConns }}
@@ -224,7 +222,7 @@ KubernetesLabelConfigs:
   Environment: {{ .Values.config.KubernetesLabelConfigs.Environment | default (include "turing.environment" .) }}
 MLPConfig:
   MLPEncryptionKey: {{ include "turing.mlp.encryption.key" . | quote }}
-{{ if .Values.tags.mlp }}
+{{ if .Values.mlp.enabled }}
   MerlinURL: {{ include "common.set-value" (list .Values.uiConfig.apiConfig.merlinApiUrl $globMerlinApi) | quote }}
   MLPURL: {{ include "common.set-value" (list .Values.uiConfig.apiConfig.mlpApiUrl $globMlpApi) | quote }}
 {{ end }}

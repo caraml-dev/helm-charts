@@ -7,10 +7,8 @@ deployment:
     limits:
       cpu: "500m"
       memory: 512Mi
-
 imageBuilder:
   clusterName: "chart-testing"
-
 environmentConfigs:
   - name: "id-dev"
     is_default: true
@@ -40,7 +38,6 @@ environmentConfigs:
       max_replica: 1
       cpu_request: "500m"
       memory_request: "500Mi"
-
 turing-postgresql:
   enabled: true
   resources:
@@ -49,3 +46,7 @@ turing-postgresql:
       memory: 256Mi
   persistence:
     size: 5Gi
+mlp:
+  enabled: false
+merlin:
+  enabled: false
