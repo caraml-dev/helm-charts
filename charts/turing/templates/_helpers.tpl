@@ -162,13 +162,14 @@ UI config related
 */}}
 
 {{- define "turing.ui.defaultConfig" -}}
+{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
 {{- if .Values.uiConfig -}}
 alertConfig:
   enabled: {{ eq (quote .Values.uiConfig.alertConfig.enabled) "" | ternary .Values.config.AlertConfig.Enabled .Values.uiConfig.alertConfig.enabled }}
 appConfig:
   environment: {{ .Values.uiConfig.appConfig.environment | default (include "turing.environment" .) }}
 authConfig:
-  oauthClientId: {{ .Values.uiConfig.authConfig.oauthClientId | quote }}
+  oauthClientId: {{ include "common.set-value" (list .Values.uiConfig.authConfig.oauthClientId $globOauthClientID) | quote }}
 sentryConfig:
   environment: {{ .Values.uiConfig.sentryConfig.environment | default (include "turing.environment" .) }}
   dsn: {{ .Values.uiConfig.sentryConfig.dsn | default (include "turing.sentry.dsn" .) | quote }}

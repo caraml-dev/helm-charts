@@ -72,6 +72,13 @@ spec:
             secretKeyRef:
               name: {{ include "common.postgres-password-secret-name" (list (index .Values "turing-postgresql") .Values.turingExternalPostgresql .Release .Chart ) }}
               key: {{ include "common.postgres-password-secret-key" (list .Values.turingExternalPostgresql) }}
+        {{- if (or .Values.mlp.enabled .Values.merlin.mlp.enabled) }}
+        - name: MLPCONFIG_MLPENCRYPTIONKEY
+          valueFrom:
+            secretKeyRef:
+              name: turing-mlp-encryption-key # TODO: Update mlp.encryption-key-name
+              key: encryption-key
+        {{- end }}
         {{- with .Values.deployment.extraEnvs }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
