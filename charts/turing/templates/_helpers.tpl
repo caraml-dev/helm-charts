@@ -137,16 +137,6 @@ Postgres related
 {{- end -}}
 {{- end -}}
 
-{{- define "turing-postgresql.username" -}}
-  {{- if index .Values "turing-postgresql" "enabled" -}}
-    {{- index .Values "turing-postgresql" "postgresqlUsername" -}}
-  {{- else if .Values.turingExternalPostgresql.enabled -}}
-    {{- .Values.turingExternalPostgresql.username -}}
-  {{- else -}}
-    {{- .Values.global.postgresqlUsername -}}
-  {{- end -}}
-{{- end -}}
-
 {{- define "turing-postgresql.database" -}}
   {{- if index .Values "turing-postgresql" "enabled" -}}
     {{- index .Values "turing-postgresql" "postgresqlDatabase" -}}
@@ -154,6 +144,16 @@ Postgres related
     {{- .Values.turingExternalPostgresql.database -}}
   {{- else -}}
     {{- .Values.global.turing.postgresqlDatabase -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "turing-postgresql.username" -}}
+  {{- if index .Values "turing-postgresql" "enabled" -}}
+    {{- index .Values "turing-postgresql" "postgresqlUsername" -}}
+  {{- else if .Values.turingExternalPostgresql.enabled -}}
+    {{- .Values.turingExternalPostgresql.username -}}
+  {{- else -}}
+    {{- .Values.global.postgresqlUsername -}}
   {{- end -}}
 {{- end -}}
 

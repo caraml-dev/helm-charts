@@ -85,7 +85,7 @@ clusterConfig:
   environmentConfigPath: "environments.yaml"
 
 imageBuilder:
-  clusterName: "chart-testing"
+  clusterName: "test"
   k8sConfig: ''
   # Example json
   # '{
@@ -258,8 +258,6 @@ turingExternalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
-  # -- External postgres database port
-  port: 5432
 turing-postgresql:
   enabled: true
   postgresqlUsername: turing
