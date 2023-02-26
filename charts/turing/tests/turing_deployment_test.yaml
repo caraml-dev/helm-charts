@@ -28,6 +28,7 @@ tests:
       - equal: # check database secret key
           path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
           value: postgresql-password
+  
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
     set:
       global: {}
