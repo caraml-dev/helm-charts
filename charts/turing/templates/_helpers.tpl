@@ -157,16 +157,6 @@ Postgres related
   {{- end -}}
 {{- end -}}
 
-{{- define "turing-postgresql.password" -}}
-  {{- if index .Values "turing-postgresql" "enabled" -}}
-    {{- index .Values "turing-postgresql" "postgresqlPassword" -}}
-  {{- else if .Values.turingExternalPostgresql.enabled -}}
-    {{- .Values.turingExternalPostgresql.password -}}
-  {{- else -}}
-    {{- .Values.global.turing.postgresqlPassword -}}
-  {{- end -}}
-{{- end -}}
-
 {{/*
 UI config related
 */}}
@@ -195,8 +185,6 @@ API config related
 */}}
 
 {{- define "turing.defaultConfig" -}}
-{{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix"))}}
-{{- $globMlpApi := include "common.get-component-value" (list .Values.global "mlp" (list "vsPrefix" "apiPrefix"))}}
 AuthConfig:
   URL: {{ include "turing.authorization.server.url" . | quote }}
 EnsemblerServiceBuilderConfig:
@@ -211,7 +199,6 @@ DbConfig:
   Port: 5432
   Database:  {{ include "turing-postgresql.database" . }}
   User:  {{ include "turing-postgresql.username" . }}
-  Password:  {{ include "turing-postgresql.password" . }}
   ConnMaxIdleTime: {{ .Values.config.DbConfig.ConnMaxIdleTime }}
   ConnMaxLifetime: {{ .Values.config.DbConfig.ConnMaxLifetime }}
   MaxIdleConns: {{ .Values.config.DbConfig.MaxIdleConns }}
@@ -222,10 +209,6 @@ KubernetesLabelConfigs:
   Environment: {{ .Values.config.KubernetesLabelConfigs.Environment | default (include "turing.environment" .) }}
 MLPConfig:
   MLPEncryptionKey: {{ include "turing.mlp.encryption.key" . | quote }}
-{{ if .Values.mlp.enabled }}
-  MerlinURL: {{ include "common.set-value" (list .Values.uiConfig.apiConfig.merlinApiUrl $globMerlinApi) | quote }}
-  MLPURL: {{ include "common.set-value" (list .Values.uiConfig.apiConfig.mlpApiUrl $globMlpApi) | quote }}
-{{ end }}
 TuringEncryptionKey: {{ include "turing.encryption.key" . | quote }}
 Sentry:
   DSN: {{ .Values.config.Sentry.DSN | default (include "turing.sentry.dsn" .) | quote }}

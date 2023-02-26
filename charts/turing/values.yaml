@@ -210,7 +210,9 @@ config:
     MaxOpenConns: 0
   KubernetesLabelConfigs: { }
   MLPConfig:
+    # Set the Merlin URL if deployed externally
     MerlinURL: http://merlin:8080/v1
+    # Set the MLP URL if deployed externally
     MLPURL: http://mlp:8080/v1
     # Set the encryption key used by MLP, to de let Turing decrypt the values
     # MLPEncryptionKey:
@@ -262,7 +264,8 @@ turing-postgresql:
   enabled: true
   postgresqlUsername: turing
   postgresqlDatabase: turing
-  postgresqlPassword: turing
+  # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
+  # postgresqlPassword: turing
   resources:
     requests:
       cpu: 100m

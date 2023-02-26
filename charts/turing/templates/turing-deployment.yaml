@@ -67,6 +67,11 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
         env:
+        - name: DBCONFIG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "common.postgres-password-secret-name" (list (index .Values "turing-postgresql") .Values.turingExternalPostgresql .Release .Chart ) }}
+              key: {{ include "common.postgres-password-secret-key" (list .Values.turingExternalPostgresql) }}
         {{- with .Values.deployment.extraEnvs }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

@@ -195,7 +195,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
-| mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
+| mlpApi.encryptionKey | string | `"secret-encryption"` |  |
 | monitoring.enabled | bool | `false` |  |
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
