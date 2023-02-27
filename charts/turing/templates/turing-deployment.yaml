@@ -81,7 +81,7 @@ spec:
         - name: MLPCONFIG_MLPENCRYPTIONKEY
           valueFrom:
             secretKeyRef:
-              name: turing-mlp-encryption-key # TODO: Update mlp.encryption-key-name
+              name: {{ printf "%s-mlp-encryption-key" .Release.Name }} # TODO: Update mlp.encryption-key-name function
               key: encryption-key
         {{- end }}
         {{- with .Values.deployment.extraEnvs }}
