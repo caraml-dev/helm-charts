@@ -10,6 +10,15 @@ Kubernetes-friendly multi-model orchestration and experimentation system.
 | ---- | ------ | --- |
 | caraml-dev | <caraml-dev@caraml.dev> |  |
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
+| https://caraml-dev.github.io/helm-charts | merlin | 0.10.8 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.4.16 |
+| https://charts.helm.sh/stable | turing-postgresql(postgresql) | 7.0.2 |
+
 ## Values
 
 | Key | Type | Default | Description |

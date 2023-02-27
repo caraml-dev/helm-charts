@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 appVersion: 1.9.2
 dependencies:
 - alias: turing-postgresql
