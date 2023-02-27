@@ -133,7 +133,7 @@ tests:
           path: metadata.name
           pattern: my-release-merlin$
       - equal:
-          path: spec.template.spec.containers[0].env[52].value
+          path: spec.template.spec.containers[0].env[53].value
           value: authz-server-url
   - it: should set authz url from values if global is set
     set:
@@ -150,7 +150,7 @@ tests:
           path: metadata.name
           pattern: my-release-merlin$
       - equal:
-          path: spec.template.spec.containers[0].env[52].value
+          path: spec.template.spec.containers[0].env[53].value
           value: http://caraml-authz
 
   - it: should set authz url from values if global doesn't have authz
@@ -167,7 +167,7 @@ tests:
           path: metadata.name
           pattern: my-release-merlin$
       - equal:
-          path: spec.template.spec.containers[0].env[52].value
+          path: spec.template.spec.containers[0].env[53].value
           value: authz-server-url
 
   - it: should set authz url from values if global doesn't have authz serviceName
@@ -185,5 +185,5 @@ tests:
           path: metadata.name
           pattern: my-release-merlin$
       - equal:
-          path: spec.template.spec.containers[0].env[52].value
+          path: spec.template.spec.containers[0].env[53].value
           value: authz-server-url
