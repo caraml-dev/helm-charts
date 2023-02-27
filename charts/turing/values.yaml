@@ -46,7 +46,7 @@ deployment:
   #   command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
 
   # -- List of sidecar containers to attach to the Pod. For example, you can
-  # attach sidecar container that forward logs or dynamically update some 
+  # attach sidecar container that forward logs or dynamically update some
   # configuration files.
   extraContainers: []
   # Example:
@@ -61,7 +61,7 @@ deployment:
   #   - name: config-volume
   #     mountPath: /etc/fluentd-config
 
-  # -- Extra volumes to attach to the Pod. For example, you can mount 
+  # -- Extra volumes to attach to the Pod. For example, you can mount
   # additional secrets to these volumes
   extraVolumes: []
   # Example:
@@ -108,7 +108,7 @@ imageBuilder:
   # }'
 
 # -- Set this field to configure environment configs. See api/environments-dev.yaml for sample structure
-environmentConfigs: 
+environmentConfigs:
   - name: dev
     k8s_config:
       name: dev-cluster
@@ -128,7 +128,7 @@ experimentEngines: []
 # -- Override OpenAPI spec as long as it follows the OAS3 specifications.
 # A common use for this is to set the enums of the ExperimentEngineType.
 # See api/api/override-sample.yaml for an example.
-openApiSpecOverrides: { }
+openApiSpecOverrides: {}
 
 service:
   # -- Turing API Kubernetes service port number
@@ -141,11 +141,11 @@ ingress:
   enabled: false
   # -- Set host value to enable name based virtual hosting. This allows routing
   # HTTP traffic to multiple host names at the same IP address. If no host is
-  # specified, the ingress rule applies to all inbound HTTP traffic through 
+  # specified, the ingress rule applies to all inbound HTTP traffic through
   # the IP address specified.
   # https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting
   host: ""
-  # -- Ingress class annotation to add to this Ingress rule, 
+  # -- Ingress class annotation to add to this Ingress rule,
   # useful when there are multiple ingress controllers installed
   class: ""
   # -- Whether to use networking.k8s.io/v1 (k8s version >= 1.19) or networking.k8s.io/v1beta1 (1.16 >= k8s version >= 1.22)
@@ -198,7 +198,7 @@ config:
     FailureRetryInterval: 10
     PythonVersion: "3"
     TTLSecond: 86400
-  DeployConfig: { }
+  DeployConfig: {}
   DbConfig:
     # The maximum amount of time a connection may be idle. For more info see: https://pkg.go.dev/database/sql#DB.SetConnMaxIdleTime
     ConnMaxIdleTime: 0s
@@ -208,7 +208,7 @@ config:
     MaxIdleConns: 0
     # The maximum number of open connections to the database. For more info see: https://pkg.go.dev/database/sql#DB.SetMaxOpenConns
     MaxOpenConns: 0
-  KubernetesLabelConfigs: { }
+  KubernetesLabelConfigs: {}
   MLPConfig:
     # Set the Merlin URL if deployed externally
     MerlinURL: http://merlin:8080/v1
@@ -230,7 +230,8 @@ config:
 uiConfig:
   alertConfig:
     enabled: false
-    environment: "" # This value is passed down to the create / update alerts API
+    # This value is passed down to the create / update alerts API
+    environment: ""
   apiConfig:
     turingApiUrl: /api/turing/v1
     merlinApiUrl: /api/merlin/v1
@@ -244,7 +245,7 @@ uiConfig:
     batchEnsemblingEnabled: *batchEnsemblingEnabled
   authConfig:
     oauthClientId: ""
-  sentryConfig: { }
+  sentryConfig: {}
 
 # If you would like to use an external postgres database for Turing, you can connect using these credentials
 turingExternalPostgresql:
