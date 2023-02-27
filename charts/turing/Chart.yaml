@@ -9,11 +9,11 @@ dependencies:
 - condition: mlp.enabled
   name: mlp
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.4.12
+  version: 0.4.34
 - condition: merlin.enabled
   name: merlin
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.10.1
+  version: 0.10.8
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.8
