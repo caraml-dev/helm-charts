@@ -7,9 +7,9 @@ deployment:
     limits:
       cpu: "500m"
       memory: 512Mi
-imageBuilder:
+imageBuilder: &imageBuilder
   clusterName: "chart-testing"
-environmentConfigs:
+environmentConfigs: &environmentConfigs
   - name: "id-dev"
     is_default: true
     cluster: "chart-testing"
@@ -46,7 +46,49 @@ turing-postgresql:
       memory: 256Mi
   persistence:
     size: 5Gi
-mlp:
-  enabled: false
 merlin:
-  enabled: false
+  deployment:
+    replicaCount: "1"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
+  imageBuilder: *imageBuilder
+  environmentConfigs: *environmentConfigs
+  merlin-postgresql:
+    enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    persistence:
+      enabled: false
+  mlflow:
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+  mlflow-postgresql:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    persistence:
+      enabled: false
+  minio:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+  setupScript:
+    # -- Image used to for setup scripts job
+    image: bitnami/kubectl:latest
+    clusterType: kind
+  kserve:
+    enabled: false
