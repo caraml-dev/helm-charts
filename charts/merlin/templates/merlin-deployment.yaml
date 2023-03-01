@@ -319,7 +319,7 @@ spec:
       {{- if .Values.merlinExternalPostgresql.enableProxySidecar }}
       {{- tpl (toYaml (index .Values.merlinExternalPostgresql.sidecarSpec .Values.merlinExternalPostgresql.proxyType "spec")) . | nindent 6 }}
       {{- end }}
-      {{- if and .Values.serviceAccount.create }}
+      {{- if .Values.serviceAccount.create }}
       serviceAccountName: {{ default "merlin" .Values.serviceAccount.name }}
       {{- end }}
       volumes:
