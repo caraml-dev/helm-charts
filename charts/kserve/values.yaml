@@ -48,12 +48,12 @@ ingress:
   # Format of deployments
   domainTemplate: "{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }}"
   # -- Set default scheme of inferenceservice url, defaults to http if unset
-  # urlScheme: "http"
+  urlScheme: "http"
 logger:
   image:
     registry: ""
     repository: kserve/agent
-    tag: v0.8.0
+    tag: v0.9.0
   resources:
     requests:
       cpu: 100m
@@ -66,7 +66,7 @@ agent:
   image:
     registry: ""
     repository: kserve/agent
-    tag: v0.8.0
+    tag: v0.9.0
   resources:
     requests:
       cpu: 100m
@@ -78,7 +78,19 @@ batcher:
   image:
     registry: ""
     repository: kserve/agent
-    tag: v0.8.0
+    tag: v0.9.0
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+router:
+  image:
+    registry: ""
+    repository: kserve/router
+    tag: v0.9.0
   resources:
     requests:
       cpu: 1000m
@@ -91,7 +103,7 @@ storageInitializer:
   image:
     registry: ""
     repository: kserve/storage-initializer
-    tag: v0.8.0
+    tag: v0.9.0
   resources:
     requests:
       cpu: 100m
@@ -99,6 +111,7 @@ storageInitializer:
     limits:
       cpu: 1000m
       memory: 1Gi
+  storageSpecSecretName: storage-config
 # predictor spec configs for inferenceservices
 predictors:
   tensorflow:
@@ -118,41 +131,41 @@ predictors:
   sklearn:
     v1:
       image: kserve/sklearnserver
-      defaultImageVersion: v0.8.0
+      defaultImageVersion: v0.9.0
       supportedFrameworks:
         - sklearn
       multiModelServer: true
     v2:
       image: docker.io/seldonio/mlserver
-      defaultImageVersion: 0.5.3
+      defaultImageVersion: 1.0.0
       supportedFrameworks:
         - sklearn
       multiModelServer: true
   xgboost:
     v1:
       image: kserve/xgbserver
-      defaultImageVersion: v0.8.0
+      defaultImageVersion: v0.9.0
       supportedFrameworks:
         - xgboost
       multiModelServer: true
     v2:
       image: docker.io/seldonio/mlserver
-      defaultImageVersion: 0.5.3
+      defaultImageVersion: 1.0.0
       supportedFrameworks:
         - xgboost
       multiModelServer: true
   pytorch:
     v1:
-      image: kserve/torchserve-kfs
-      defaultImageVersion: 0.5.3
-      defaultGpuImageVersion: 0.5.3-gpu
+      image: pytorch/torchserve-kfs
+      defaultImageVersion: 0.6.0
+      defaultGpuImageVersion: 0.6.0-gpu
       supportedFrameworks:
         - pytorch
       multiModelServer: false
     v2:
-      image: kserve/torchserve-kfs
-      defaultImageVersion: 0.5.3
-      defaultGpuImageVersion: 0.5.3-gpu
+      image: pytorch/torchserve-kfs
+      defaultImageVersion: 0.6.0
+      defaultGpuImageVersion: 0.6.0-gpu
       supportedFrameworks:
         - pytorch
       multiModelServer: false
@@ -167,19 +180,19 @@ predictors:
     multiModelServer: true
   pmml:
     image: kserve/pmmlserver
-    defaultImageVersion: v0.8.0
+    defaultImageVersion: v0.9.0
     supportedFrameworks:
       - pmml
     multiModelServer: false
   lightgbm:
     image: kserve/lgbserver
-    defaultImageVersion: v0.8.0
+    defaultImageVersion: v0.9.0
     supportedFrameworks:
       - lightgbm
     multiModelServer: false
   paddle:
     image: kserve/paddleserver
-    defaultImageVersion: v0.8.0
+    defaultImageVersion: v0.9.0
     supportedFrameworks:
       - paddle
     multiModelServer: false

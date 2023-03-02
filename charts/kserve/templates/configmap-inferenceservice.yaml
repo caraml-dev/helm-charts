@@ -58,7 +58,8 @@ data:
         "localGatewayService" : "{{ .Values.ingress.localGatewayService }}",
         "ingressDomain"  : "{{ .Values.ingress.ingressDomain }}",
         "ingressClassName" : "{{ .Values.ingress.ingressClassName }}",
-        "domainTemplate": "{{ .Values.ingress.domainTemplate }}"
+        "domainTemplate": "{{ .Values.ingress.domainTemplate }}",
+        "urlScheme": "{{ .Values.ingress.urlScheme }}"
     }
   logger: |-
     {
@@ -71,13 +72,22 @@ data:
     }
   predictors: |-
     {{ toJson .Values.predictors | default "{}" }}
+  router: |-
+    {
+        "image" : "{{- if .Values.router.image.registry -}}{{ .Values.router.image.registry }}/{{- end -}}{{ .Values.router.image.repository }}:{{ .Values.router.image.tag }}",
+        "memoryRequest": "{{ .Values.router.resources.requests.memory }}",
+        "memoryLimit": "{{ .Values.router.resources.limits.memory }}",
+        "cpuRequest": "{{ .Values.router.resources.requests.cpu }}",
+        "cpuLimit": "{{ .Values.router.resources.limits.memory }}"
+    }
   storageInitializer: |-
     {
         "image" : "{{- if .Values.storageInitializer.image.registry -}}{{ .Values.storageInitializer.image.registry }}/{{- end -}}{{ .Values.storageInitializer.image.repository }}:{{ .Values.storageInitializer.image.tag }}",
         "memoryRequest": "{{ .Values.storageInitializer.resources.requests.memory }}",
         "memoryLimit": "{{ .Values.storageInitializer.resources.limits.memory }}",
         "cpuRequest": "{{ .Values.storageInitializer.resources.requests.cpu }}",
-        "cpuLimit": "{{ .Values.storageInitializer.resources.limits.cpu }}"
+        "cpuLimit": "{{ .Values.storageInitializer.resources.limits.cpu }}",
+        "storageSpecSecretName": "{{ .Values.storageInitializer.storageSpecSecretName }}"
     }
   transformers: |-
     {
