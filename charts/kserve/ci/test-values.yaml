@@ -20,7 +20,7 @@ controller:
     repository: kserve/kserve-controller
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v0.8.0"
+    tag: "v0.9.0"
 
   resources:
     requests:
@@ -47,7 +47,7 @@ logger:
   image:
     registry: ""
     repository: kserve/agent
-    tag: v0.8.0
+    tag: v0.9.0
   resources:
     requests:
       cpu: 50m
@@ -61,7 +61,7 @@ agent:
   image:
     registry: ""
     repository: kserve/agent
-    tag: v0.8.0
+    tag: v0.9.0
   resources:
     requests:
       cpu: 50m
@@ -75,7 +75,7 @@ batcher:
   image:
     registry: ""
     repository: kserve/agent
-    tag: v0.8.0
+    tag: v0.9.0
   resources:
     requests:
       cpu: 50m
@@ -84,11 +84,24 @@ batcher:
       cpu: 1
       memory: 1Gi
 
+router:
+  image:
+    registry: ""
+    repository: kserve/router
+    tag: v0.9.0
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
 storageInitializer:
   image:
     registry: ""
     repository: kserve/storage-initializer
-    tag: v0.8.0
+    tag: v0.9.0
   resources:
     requests:
       cpu: 50m
@@ -96,6 +109,7 @@ storageInitializer:
     limits:
       cpu: 1
       memory: 1Gi
+  storageSpecSecretName: storage-config
 
 predictors:
   tensorflow:
@@ -115,41 +129,41 @@ predictors:
   sklearn:
     v1:
       image: kserve/sklearnserver
-      defaultImageVersion: v0.8.0
+      defaultImageVersion: v0.9.0
       supportedFrameworks:
         - sklearn
       multiModelServer: true
     v2:
       image: docker.io/seldonio/mlserver
-      defaultImageVersion: 0.5.3
+      defaultImageVersion: 1.0.0
       supportedFrameworks:
         - sklearn
       multiModelServer: true
   xgboost:
     v1:
       image: kserve/xgbserver
-      defaultImageVersion: v0.8.0
+      defaultImageVersion: v0.9.0
       supportedFrameworks:
         - xgboost
       multiModelServer: true
     v2:
       image: docker.io/seldonio/mlserver
-      defaultImageVersion: 0.5.3
+      defaultImageVersion: 1.0.0
       supportedFrameworks:
         - xgboost
       multiModelServer: true
   pytorch:
     v1:
-      image: kserve/torchserve-kfs
-      defaultImageVersion: 0.5.3
-      defaultGpuImageVersion: 0.5.3-gpu
+      image: pytorch/torchserve-kfs
+      defaultImageVersion: 0.6.0
+      defaultGpuImageVersion: 0.6.0-gpu
       supportedFrameworks:
         - pytorch
       multiModelServer: false
     v2:
-      image: kserve/torchserve-kfs
-      defaultImageVersion: 0.5.3
-      defaultGpuImageVersion: 0.5.3-gpu
+      image: pytorch/torchserve-kfs
+      defaultImageVersion: 0.6.0
+      defaultGpuImageVersion: 0.6.0-gpu
       supportedFrameworks:
         - pytorch
       multiModelServer: false
@@ -164,19 +178,19 @@ predictors:
     multiModelServer: true
   pmml:
     image: kserve/pmmlserver
-    defaultImageVersion: v0.8.0
+    defaultImageVersion: v0.9.0
     supportedFrameworks:
       - pmml
     multiModelServer: false
   lightgbm:
     image: kserve/lgbserver
-    defaultImageVersion: v0.8.0
+    defaultImageVersion: v0.9.0
     supportedFrameworks:
       - lightgbm
     multiModelServer: false
   paddle:
     image: kserve/paddleserver
-    defaultImageVersion: v0.8.0
+    defaultImageVersion: v0.9.0
     supportedFrameworks:
       - paddle
     multiModelServer: false
@@ -185,224 +199,252 @@ clusterServingRuntimes:
   - name: kserve-lgbserver
     spec:
       containers:
-        - args:
-            - --model_name={{.Name}}
-            - --model_dir=/mnt/models
-            - --http_port=8080
-            - --nthread=1
-          image: kserve/lgbserver:v0.8.0
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - args:
+        - --model_name={{.Name}}
+        - --model_dir=/mnt/models
+        - --http_port=8080
+        - --nthread=1
+        image: kserve/lgbserver:v0.9.0
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v1
       supportedModelFormats:
-        - autoSelect: true
-          name: lightgbm
-          version: "2"
+      - autoSelect: true
+        name: lightgbm
+        version: "2"
   - name: kserve-mlserver
     spec:
       containers:
-        - env:
-            - name: MLSERVER_MODEL_IMPLEMENTATION
-              value: "{{.Labels.modelClass}}"
-            - name: MLSERVER_HTTP_PORT
-              value: "8080"
-            - name: MLSERVER_GRPC_PORT
-              value: "9000"
-            - name: MODELS_DIR
-              value: /mnt/models
-          image: docker.io/seldonio/mlserver:0.5.3
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - env:
+        - name: MLSERVER_MODEL_IMPLEMENTATION
+          value: '{{.Labels.modelClass}}'
+        - name: MLSERVER_HTTP_PORT
+          value: "8080"
+        - name: MLSERVER_GRPC_PORT
+          value: "9000"
+        - name: MODELS_DIR
+          value: /mnt/models
+        image: docker.io/seldonio/mlserver:1.0.0
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v2
       supportedModelFormats:
-        - name: sklearn
-          version: "0"
-        - name: xgboost
-          version: "1"
-        - name: lightgbm
-          version: "3"
-        - autoSelect: true
-          name: mlflow
-          version: "1"
+      - autoSelect: true
+        name: sklearn
+        version: "0"
+      - autoSelect: true
+        name: xgboost
+        version: "1"
+      - autoSelect: true
+        name: lightgbm
+        version: "3"
+      - autoSelect: true
+        name: mlflow
+        version: "1"
   - name: kserve-paddleserver
     spec:
       containers:
-        - args:
-            - --model_name={{.Name}}
-            - --model_dir=/mnt/models
-            - --http_port=8080
-          image: kserve/paddleserver:v0.8.0
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - args:
+        - --model_name={{.Name}}
+        - --model_dir=/mnt/models
+        - --http_port=8080
+        image: kserve/paddleserver:v0.9.0
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v1
       supportedModelFormats:
-        - autoSelect: true
-          name: paddle
-          version: "2"
+      - autoSelect: true
+        name: paddle
+        version: "2"
   - name: kserve-pmmlserver
     spec:
       containers:
-        - args:
-            - --model_name={{.Name}}
-            - --model_dir=/mnt/models
-            - --http_port=8080
-          image: kserve/pmmlserver:v0.8.0
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - args:
+        - --model_name={{.Name}}
+        - --model_dir=/mnt/models
+        - --http_port=8080
+        image: kserve/pmmlserver:v0.9.0
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v1
       supportedModelFormats:
-        - autoSelect: true
-          name: pmml
-          version: "3"
-        - autoSelect: true
-          name: pmml
-          version: "4"
+      - autoSelect: true
+        name: pmml
+        version: "3"
+      - autoSelect: true
+        name: pmml
+        version: "4"
   - name: kserve-sklearnserver
     spec:
       containers:
-        - args:
-            - --model_name={{.Name}}
-            - --model_dir=/mnt/models
-            - --http_port=8080
-          image: kserve/sklearnserver:v0.8.0
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - args:
+        - --model_name={{.Name}}
+        - --model_dir=/mnt/models
+        - --http_port=8080
+        image: kserve/sklearnserver:v0.9.0
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v1
       supportedModelFormats:
-        - autoSelect: true
-          name: sklearn
-          version: "1"
+      - autoSelect: true
+        name: sklearn
+        version: "1"
   - name: kserve-tensorflow-serving
     spec:
       containers:
-        - args:
-            - --model_name={{.Name}}
-            - --port=9000
-            - --rest_api_port=8080
-            - --model_base_path=/mnt/models
-            - --rest_api_timeout_in_ms=60000
-          command:
-            - /usr/bin/tensorflow_model_server
-          image: tensorflow/serving:2.6.2
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - args:
+        - --model_name={{.Name}}
+        - --port=9000
+        - --rest_api_port=8080
+        - --model_base_path=/mnt/models
+        - --rest_api_timeout_in_ms=60000
+        command:
+        - /usr/bin/tensorflow_model_server
+        image: tensorflow/serving:2.6.2
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v1
+      - grpc-v1
       supportedModelFormats:
-        - autoSelect: true
-          name: tensorflow
-          version: "1"
-        - autoSelect: true
-          name: tensorflow
-          version: "2"
+      - autoSelect: true
+        name: tensorflow
+        version: "1"
+      - autoSelect: true
+        name: tensorflow
+        version: "2"
   - name: kserve-torchserve
     spec:
       containers:
-        - args:
-            - torchserve
-            - --start
-            - --model-store=/mnt/models/model-store
-            - --ts-config=/mnt/models/config/config.properties
-          env:
-            - name: TS_SERVICE_ENVELOPE
-              value: "{{.Labels.serviceEnvelope}}"
-          image: kserve/torchserve-kfs:0.5.3
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - args:
+        - torchserve
+        - --start
+        - --model-store=/mnt/models/model-store
+        - --ts-config=/mnt/models/config/config.properties
+        env:
+        - name: TS_SERVICE_ENVELOPE
+          value: '{{.Labels.serviceEnvelope}}'
+        image: pytorch/torchserve-kfs:0.6.0
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v1
+      - v2
+      - grpc-v1
       supportedModelFormats:
-        - autoSelect: true
-          name: pytorch
-          version: "1"
+      - autoSelect: true
+        name: pytorch
+        version: "1"
   - name: kserve-tritonserver
     spec:
       containers:
-        - args:
-            - tritonserver
-            - --model-store=/mnt/models
-            - --grpc-port=9000
-            - --http-port=8080
-            - --allow-grpc=true
-            - --allow-http=true
-          image: nvcr.io/nvidia/tritonserver:21.09-py3
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - args:
+        - tritonserver
+        - --model-store=/mnt/models
+        - --grpc-port=9000
+        - --http-port=8080
+        - --allow-grpc=true
+        - --allow-http=true
+        image: nvcr.io/nvidia/tritonserver:21.09-py3
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v2
+      - grpc-v2
       supportedModelFormats:
-        - name: tensorrt
-          version: "8"
-        - name: tensorflow
-          version: "1"
-        - name: tensorflow
-          version: "2"
-        - autoSelect: true
-          name: onnx
-          version: "1"
-        - name: pytorch
-          version: "1"
-        - autoSelect: true
-          name: triton
-          version: "2"
+      - autoSelect: true
+        name: tensorrt
+        version: "8"
+      - autoSelect: true
+        name: tensorflow
+        version: "1"
+      - autoSelect: true
+        name: tensorflow
+        version: "2"
+      - autoSelect: true
+        name: onnx
+        version: "1"
+      - name: pytorch
+        version: "1"
+      - autoSelect: true
+        name: triton
+        version: "2"
   - name: kserve-xgbserver
     spec:
       containers:
-        - args:
-            - --model_name={{.Name}}
-            - --model_dir=/mnt/models
-            - --http_port=8080
-            - --nthread=1
-          image: kserve/xgbserver:v0.8.0
-          name: kserve-container
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
+      - args:
+        - --model_name={{.Name}}
+        - --model_dir=/mnt/models
+        - --http_port=8080
+        - --nthread=1
+        image: kserve/xgbserver:v0.9.0
+        name: kserve-container
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+      protocolVersions:
+      - v1
       supportedModelFormats:
-        - autoSelect: true
-          name: xgboost
-          version: "1"
+      - autoSelect: true
+        name: xgboost
+        version: "1"
 
 ###################################################################
 # knativeServingIstio dependency configuration
