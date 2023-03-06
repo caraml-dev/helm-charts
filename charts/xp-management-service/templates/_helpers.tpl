@@ -117,10 +117,10 @@ allowedOrigins: "*"
 authorizationConfig:
   enabled: false
 dbConfig:
-  host: {{ include "xp-postgresql.host" . | quote }}
+  host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
   port: 5432
-  database:  {{ include "xp-postgresql.database" . }}
-  user:  {{ include "xp-postgresql.username" . }}
+  database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
+  user: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
   connMaxIdleTime: {{ .Values.deployment.apiConfig.dbConfig.connMaxIdleTime }}
   connMaxLifetime: {{ .Values.deployment.apiConfig.dbConfig.connMaxLifetime }}
   maxIdleConns: {{ .Values.deployment.apiConfig.dbConfig.maxIdleConns }}
@@ -144,38 +144,4 @@ xpUIConfig:
 {{- define "management-svc.config" -}}
 {{- $defaultConfig := include "management-svc.defaultConfig" . | fromYaml -}}
 {{ .Values.deployment.apiConfig | merge $defaultConfig | toYaml }}
-{{- end -}}
-
-{{/*
-Postgres related
-*/}}
-
-{{- define "xp-postgresql.host" -}}
-{{- if index .Values "xp-postgresql" "enabled" -}}
-  {{- printf "%s-xp-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- else if .Values.xpExternalPostgresql.enabled -}}
-  {{- .Values.xpExternalPostgresql.address -}}
-{{- else -}}
-  {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
-
-{{- define "xp-postgresql.database" -}}
-  {{- if index .Values "xp-postgresql" "enabled" -}}
-    {{- index .Values "xp-postgresql" "postgresqlDatabase" -}}
-  {{- else if .Values.xpExternalPostgresql.enabled -}}
-    {{- .Values.xpExternalPostgresql.database -}}
-  {{- else -}}
-    {{- .Values.global.xp.postgresqlDatabase -}}
-  {{- end -}}
-{{- end -}}
-
-{{- define "xp-postgresql.username" -}}
-  {{- if index .Values "xp-postgresql" "enabled" -}}
-    {{- index .Values "xp-postgresql" "postgresqlUsername" -}}
-  {{- else if .Values.xpExternalPostgresql.enabled -}}
-    {{- .Values.xpExternalPostgresql.username -}}
-  {{- else -}}
-    {{- .Values.global.xp.postgresqlUsername -}}
-  {{- end -}}
 {{- end -}}

@@ -29,7 +29,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if and .Values.deployment.serviceAccount.create }}
       serviceAccountName: {{ include "management-svc.serviceAccountName" . }}
+      {{- end }}
       containers:
       - name: api
         image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
