@@ -217,7 +217,7 @@ MLflow Postgres related
 
 {{- define "merlin.kaniko-sa" -}}
 {{- if .Values.imageBuilder.serviceAccount.create }}
-{{- printf "%s-%s" .Values.imageBuilder.serviceAccount.name .Release.Name }}
+{{- include "merlin.fullname" . }}
 {{- else }}
 {{- printf "%s" .Values.imageBuilder.serviceAccount.name }}
 {{- end }}
