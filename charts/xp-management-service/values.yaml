@@ -1,0 +1,213 @@
+global:
+  # -- Environment of Management Service deployment
+  environment: dev
+
+  sentry:
+    # -- (string) Global Sentry DSN value
+    dsn:
+
+deployment:
+  image:
+    # -- Docker registry for XP Management Service image
+    registry: ghcr.io
+    # -- Docker image repository for XP Management Service
+    repository: caraml-dev/xp/xp-management
+    # -- Docker image tag for XP Management Service
+    tag: v0.11.1-build.2-e3f30e5
+    # -- Docker image pull policy
+    pullPolicy: IfNotPresent
+    # pullPolicy: Never
+
+  # No. of pods to serve traffic to Management Service deployment
+  replicaCount: 1
+
+  # -- XP Management Service server configuration.
+  # Please refer to https://github.com/caraml-dev/xp/blob/main/management-service/config/example.yaml
+  # for the detailed explanation on XP Management API config options
+  apiConfig:
+    allowedOrigins: "*"
+    authorizationConfig:
+      enabled: false
+    dbConfig:
+      # The maximum amount of time a connection may be idle. For more info see: https://pkg.go.dev/database/sql#DB.SetConnMaxIdleTime
+      connMaxIdleTime: 0s
+      # The maximum amount of time a connection may be reused. For more info see: https://pkg.go.dev/database/sql#DB.SetConnMaxLifetime
+      connMaxLifetime: 0s
+      # The maximum number of connections in the idle connection pool. For more info see: https://pkg.go.dev/database/sql#DB.SetMaxIdleConns
+      maxIdleConns: 0
+      # The maximum number of open connections to the database. For more info see: https://pkg.go.dev/database/sql#DB.SetMaxOpenConns
+      maxOpenConns: 0
+    deploymentConfig:
+      environmentType: dev
+    mlpConfig:
+      # Set the MLP URL if deployed externally
+      url: http://mlp:8080/v1
+    newRelicConfig:
+      enabled: false
+      appName: xp-management-service
+      license: ""
+    sentryConfig:
+      enabled: false
+      dsn: ""
+      labels:
+        app: xp-management-service
+    segmenterConfig:
+      s2_ids:
+        minS2CellLevel: 10
+        maxS2CellLevel: 14
+    port: 8080
+    xpUIConfig:
+      appDirectory: /app/xp-ui
+
+  # -- Resources requests and limits for XP Management Service. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources: {}
+
+  livenessProbe:
+    # -- HTTP path for liveness check
+    path: "/v1/internal/live"
+    # -- Liveness probe delay and thresholds
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
+  readinessProbe:
+    # -- HTTP path for readiness check
+    path: "/v1/internal/ready"
+    # -- Liveness probe delay and thresholds
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
+  service:
+    # -- XP Management Service Kubernetes service port number
+    externalPort: 8080
+    # -- XP Management Service container port number
+    internalPort: 8080
+
+  sentry:
+    enabled: false
+    # -- Sentry DSN value used by both XP Management Service and XP UI
+    dsn: ""
+
+  # -- Annotations to add to Management Service pod
+  annotations: {}
+
+  # -- List of extra environment variables to add to XP Management Service server container
+  extraEnvs: []
+  # # Example
+  # - name: DEMO_GREETING
+  #   value: "Hello from the environment"
+
+  # -- List of string containing additional XP Management Service server arguments. For
+  # example, multiple "-config" can be specified to use multiple config files
+  extraArgs: []
+  # Example
+  # - --config=/etc/secrets/experiment.yaml
+  # - --config=/etc/secrets/database.yaml
+
+  # -- Extra volumes to attach to the Pod. For example, you can mount
+  # additional secrets to these volumes
+  extraVolumes: []
+  # # Example
+  # - name: varlog
+  #   emptyDir: {}
+
+  # -- Extra volume mounts to attach to XP Management Service server container. For example
+  # to mount the extra volume containing secrets
+  extraVolumeMounts: []
+  # # Example
+  # - name: varlog
+  #   mountPath: /var/log
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+# -- XP UI configuration.
+uiConfig:
+  apiConfig:
+    xpApiUrl: /api/xp/v1
+    mlpApiUrl: /api/v1
+  appConfig:
+    docsUrl:
+      - label: XP User Guide
+        href: https://github.com/caraml-dev/xp/tree/main/docs
+  authConfig:
+    oauthClientId: ""
+  sentryConfig: {}
+
+# If you would like to use an external postgres database for XP Management Service, you can connect using these credentials
+xpExternalPostgresql:
+  # -- If you would like to use an external postgres database, enable it here using this
+  enabled: false
+  # -- External postgres database user
+  username: xp
+  # -- External postgres database schema
+  database: xp
+  # -- Set the External postgres db password using this value at runtime (using --set flag) to create a secret
+  password: password
+  # -- Host address for the External postgres
+  address: 127.0.0.1
+
+# -- Postgresql configuration to be applied to XP Management Service's postgresql database deployment
+# Reference: https://artifacthub.io/packages/helm/bitnami/postgresql/10.16.2#parameters
+xp-postgresql:
+  enabled: true
+  postgresqlDatabase: xp
+  postgresqlUsername: xp
+  # -- Password for XP Management Service Postgresql database
+  postgresqlPassword: xp
+  # -- Resources requests and limits for XP Management Service database. This should be set
+  # according to your cluster capacity and service level objectives.
+  # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  persistence:
+    # -- Persist Postgresql data in a Persistent Volume Claim
+    enabled: true
+    size: 10Gi
+  tls:
+    enabled: false
+  containerPorts:
+    postgresql: 5432
+  # metrics:
+  #   enabled: false
+  #   serviceMonitor:
+  #     enabled: false
+  # replication:
+  #   enabled: false
+  #   user: repl_user
+  #   password: repl_password
+  #   slaveReplicas: 2
+  #   # Set synchronous commit mode: on, off, remote_apply, remote_write and local
+  #   # ref: https://www.postgresql.org/docs/9.6/runtime-config-wal.html#GUC-WAL-LEVEL
+  #   synchronousCommit: "on"
+  #   # From the number of `slaveReplicas` defined above, set the number of those that will have synchronous replication
+  #   # NOTE: It cannot be > slaveReplicas
+  #   numSynchronousReplicas: 2
+  #   # Replication Cluster application name. Useful for defining multiple replication policies
+  #   applicationName: xp
+
+swaggerUi:
+  enabled: true
+  # -- Docker tag for Swagger UI https://hub.docker.com/r/swaggerapi/swagger-ui
+  image:
+    tag: v3.47.1
+  # -- URL of API server
+  apiServer: http://127.0.0.1/v1
+  service:
+    # -- Swagger UI container port number
+    internalPort: 8081
+    # -- Swagger UI Kubernetes service port number
+    externalPort: 3000
