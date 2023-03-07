@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.10.8](https://img.shields.io/badge/Version-0.10.8-informational?style=flat-square) ![AppVersion: 0.26.0-rc5](https://img.shields.io/badge/AppVersion-0.26.0--rc5-informational?style=flat-square)
+![Version: 0.10.9](https://img.shields.io/badge/Version-0.10.9-informational?style=flat-square) ![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -17,7 +17,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.4.14 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.4.16 |
 | https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.2 |
 | https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.2 |
 
@@ -38,7 +38,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.26.0-rc5"` |  |
+| deployment.image.tag | string | `"0.26.0-rc6"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -94,9 +94,9 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.predictionJobBaseImages."3.7.*".imageName | string | `"pyspark-py37:v0.1.0"` |  |
 | imageBuilder.predictionJobBaseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.predictionJobContextSubPath | string | `""` |  |
-| imageBuilder.resources.limits.cpu | int | `1` |  |
+| imageBuilder.resources.limits.cpu | string | `"1"` |  |
 | imageBuilder.resources.limits.memory | string | `"1Gi"` |  |
-| imageBuilder.resources.requests.cpu | int | `1` |  |
+| imageBuilder.resources.requests.cpu | string | `"1"` |  |
 | imageBuilder.resources.requests.memory | string | `"512Mi"` |  |
 | imageBuilder.retention | string | `"48h"` |  |
 | imageBuilder.serviceAccount.annotations | object | `{}` |  |
