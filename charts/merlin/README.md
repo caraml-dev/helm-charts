@@ -1,6 +1,6 @@
 # merlin
 
-![Version: 0.10.2](https://img.shields.io/badge/Version-0.10.2-informational?style=flat-square) ![AppVersion: 0.26.0-rc3](https://img.shields.io/badge/AppVersion-0.26.0--rc3-informational?style=flat-square)
+![Version: 0.10.9](https://img.shields.io/badge/Version-0.10.9-informational?style=flat-square) ![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -17,7 +17,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
 | https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.4.12 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.4.16 |
 | https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.2 |
 | https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.2 |
 
@@ -38,7 +38,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.26.0-rc3"` |  |
+| deployment.image.tag | string | `"0.26.0-rc6"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -94,6 +94,10 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.predictionJobBaseImages."3.7.*".imageName | string | `"pyspark-py37:v0.1.0"` |  |
 | imageBuilder.predictionJobBaseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.predictionJobContextSubPath | string | `""` |  |
+| imageBuilder.resources.limits.cpu | string | `"1"` |  |
+| imageBuilder.resources.limits.memory | string | `"1Gi"` |  |
+| imageBuilder.resources.requests.cpu | string | `"1"` |  |
+| imageBuilder.resources.requests.memory | string | `"512Mi"` |  |
 | imageBuilder.retention | string | `"48h"` |  |
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
@@ -105,7 +109,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | kserve.helmChart.namespace | string | `"kserve"` |  |
 | kserve.helmChart.release | string | `"kserve"` |  |
 | kserve.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| kserve.helmChart.version | string | `"0.8.19"` |  |
+| kserve.helmChart.version | string | `"0.8.20"` |  |
 | kserve.hook.weight | string | `"-2"` |  |
 | loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
@@ -115,9 +119,13 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | merlin-postgresql.resources.requests.cpu | string | `"100m"` |  |
 | merlin-postgresql.resources.requests.memory | string | `"512Mi"` |  |
 | merlinExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| merlinExternalPostgresql.connMaxIdleTime | string | `"0s"` | Connection pooling settings |
+| merlinExternalPostgresql.connMaxLifetime | string | `"0s"` |  |
 | merlinExternalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. |
 | merlinExternalPostgresql.database | string | `"merlin"` | External postgres database schema |
 | merlinExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
+| merlinExternalPostgresql.maxIdleConns | int | `0` |  |
+| merlinExternalPostgresql.maxOpenConns | int | `0` |  |
 | merlinExternalPostgresql.password | string | `"password"` |  |
 | merlinExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | merlinExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
@@ -150,7 +158,7 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflow-postgresql.resources.requests.memory | string | `"512Mi"` |  |
 | mlflow.artifactRoot | string | `"/data/artifacts"` |  |
 | mlflow.deploymentLabels | object | `{}` |  |
-| mlflow.extraEnvs.MLFLOW_S3_ENDPOINT_URL | string | `"http://minio.minio.svc.cluster.local:9000"` |  |
+| mlflow.extraEnvs | object | `{}` |  |
 | mlflow.host | string | `"0.0.0.0"` |  |
 | mlflow.image.pullPolicy | string | `"Always"` |  |
 | mlflow.image.registry | string | `"ghcr.io"` |  |
@@ -230,13 +238,14 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | transformer.simulation.feastBigtableServingURL | string | `"online-serving-bt.feast.dev"` |  |
 | transformer.simulation.feastRedisServingURL | string | `"online-serving-redis.feast.dev"` |  |
 | ui.apiHost | string | `"/api/merlin/v1"` |  |
-| ui.dockerRegistries | string | `"ghcr.io/gojek,ghcr.io/your-company"` |  |
+| ui.dockerRegistries | string | `"ghcr.io/gojek,ghcr.io/your-company"` | Comma-separated value of Docker registries that can be chosen in deployment page |
 | ui.docsURL[0].href | string | `"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"` |  |
 | ui.docsURL[0].label | string | `"Getting Started with Merlin"` |  |
 | ui.homepage | string | `"/merlin"` |  |
 | ui.maxAllowedReplica | int | `20` |  |
 | ui.mlp.apiHost | string | `"/api/v1"` |  |
 | ui.oauthClientID | string | `""` |  |
+| ui.upiDocURL | string | `"https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
