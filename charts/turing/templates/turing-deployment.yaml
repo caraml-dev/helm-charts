@@ -24,8 +24,8 @@ spec:
 {{ toYaml .Values.deployment.labels | indent 8 -}}
 {{- end }}
     spec:
-      {{- if .Values.clusterConfig.useInClusterConfig }}
-      serviceAccountName: {{ template "turing.serviceAccount.name" . }}
+      {{- if or .Values.serviceAccount.create .Values.clusterConfig.useInClusterConfig }}
+      serviceAccountName: {{ template "turing.serviceAccountName" . }}
       {{- end }}
       {{- with (include "turing.initContainers" . | fromYaml) }}
       {{- toYaml . | nindent 6 }}
@@ -67,16 +67,11 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
         env:
-        {{- if index .Values "turing-postgresql" "enabled" }}
         - name: DBCONFIG_PASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ include "common.postgres-password-secret-name" (list (index .Values "turing-postgresql") .Values.turingExternalPostgresql .Release .Chart ) }}
               key: {{ include "common.postgres-password-secret-key" (list .Values.turingExternalPostgresql) }}
-        {{- else }}
-        - name: DBCONFIG_PASSWORD
-          value: {{ .Values.turingExternalPostgresql.password }}
-        {{- end }}
         {{- if (or .Values.mlp.enabled .Values.merlin.mlp.enabled) }}
         - name: MLPCONFIG_MLPENCRYPTIONKEY
           valueFrom:
@@ -107,7 +102,7 @@ spec:
       volumes:
       - name: config 
         secret:
-          secretName: {{ template "turing.fullname" . }}-api-config
+          secretName: {{ template "turing.fullname" . }}-config
       - name: environments
         secret:
           secretName: {{ ternary (printf "%s-environments" (include "turing.fullname" .) ) ( .Values.mlp.environmentConfigSecret.name ) (eq .Values.mlp.environmentConfigSecret.name "") }}

@@ -2,15 +2,15 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ template "turing.serviceAccount.name" . }}-role-binding
+  name: {{ template "turing.serviceAccountName" . }}-role-binding
   labels:
 {{ include "turing.labels" . | indent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ template "turing.serviceAccount.name" . }}-cluster-role
+  name: {{ template "turing.serviceAccountName" . }}-cluster-role
 subjects:
   - kind: ServiceAccount
-    name: {{ template "turing.serviceAccount.name" . }}
+    name: {{ template "turing.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 {{- end }}

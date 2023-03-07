@@ -61,9 +61,13 @@ heritage: {{ .Release.Service }}
 {{- .Values.config.TuringEncryptionKey | default (randAlpha 12) -}}
 {{- end -}}
 
-{{- define "turing.serviceAccount.name" -}}
-{{- include "turing.fullname" . -}}
-{{- end -}}
+{{- define "turing.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "turing.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
 
 {{- define "turing.mlp.encryption.key" -}}
 {{- .Values.config.MLPConfig.MLPEncryptionKey -}}

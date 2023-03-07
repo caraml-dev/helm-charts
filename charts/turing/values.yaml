@@ -136,6 +136,15 @@ service:
   # -- Turing API container port number
   internalPort: 8080
 
+serviceAccount:
+  # Specifies whether a ServiceAccount should be created. If disabled and clusterConfig.useInClusterConfig is set,
+  # a service account will be created nonetheless.
+  create: true
+  # The name of the ServiceAccount to use.
+  name: turing
+  annotations: {}
+    # example.io/example: example
+
 ingress:
   # -- Enable ingress to provision Ingress resource for external access to Turing API
   enabled: false
@@ -259,6 +268,12 @@ turingExternalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
+  # -- Enable this if you need the chart to create a secret when you provide the password above. To be used together with password.
+  createSecret: false
+  # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
+  secretName: ""
+  # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
+  secretKey: ""
 turing-postgresql:
   enabled: true
   postgresqlUsername: turing
