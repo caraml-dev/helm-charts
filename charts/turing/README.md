@@ -56,6 +56,9 @@ Kubernetes-friendly multi-model orchestration and experimentation system.
 | sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` | Turing API Kubernetes service port number |
 | service.internalPort | int | `8080` | Turing API container port number |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `"turing"` |  |
 | turing-postgresql.enabled | bool | `true` |  |
 | turing-postgresql.persistence.size | string | `"10Gi"` |  |
 | turing-postgresql.postgresqlDatabase | string | `"turing"` |  |
@@ -63,9 +66,12 @@ Kubernetes-friendly multi-model orchestration and experimentation system.
 | turing-postgresql.resources.requests.cpu | string | `"100m"` |  |
 | turing-postgresql.resources.requests.memory | string | `"512Mi"` |  |
 | turingExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| turingExternalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. To be used together with password. |
 | turingExternalPostgresql.database | string | `"turing"` | External postgres database schema |
 | turingExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | turingExternalPostgresql.password | string | `"password"` |  |
+| turingExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
+| turingExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | turingExternalPostgresql.username | string | `"turing"` | External postgres database user |
 | uiConfig | object | computed value | Turing UI configuration. Please Refer to https://github.com/caraml-dev/turing/blob/main/ui/public/app.config.js for the detailed explanation on Turing UI config options |
 
