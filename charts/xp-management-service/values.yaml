@@ -16,7 +16,6 @@ deployment:
     tag: v0.11.1-build.2-e3f30e5
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
-    # pullPolicy: Never
 
   # No. of pods to serve traffic to Management Service deployment
   replicaCount: 1
@@ -162,6 +161,7 @@ externalPostgresql:
 # Reference: https://artifacthub.io/packages/helm/bitnami/postgresql/10.16.2#parameters
 postgresql:
   enabled: true
+  nameOverride: xp-management-postgresql
   postgresqlDatabase: xp
   postgresqlUsername: xp
   # -- Password for XP Management Service Postgresql database
