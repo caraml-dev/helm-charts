@@ -127,6 +127,28 @@ initContainers:
 {{- printf "%s/%s" $base $path -}}
 {{- end -}}
 
+{{- define "turing.get-workload-host" }}
+{{- $global := index . 0}}
+{{- $relNs := index . 1}}
+{{- $key := index . 2}}
+{{- $values := get $global $key}}
+{{- if not (hasKey $global $key) }}
+  {{- printf "" }}
+{{- else }}
+  {{- $values := get $global $key}}
+  {{- $host := "" }}
+  {{- with $values }}
+    {{- if .useServiceFqdn }}
+      {{- $host = printf "http://%s.%s.svc.cluster.local:%s%s" .serviceName $relNs .externalPort .apiPrefix}}
+    {{- else }}
+      {{- $inClusterPrefix := printf "%s%s" .vsPrefix .apiPrefix }}
+      {{- $host = printf "%s://%s%s" $global.protocol (include "common.get-external-hostname" $global) $inClusterPrefix }}
+    {{- end }}
+    {{- end }}
+  {{- printf "%s" $host }}
+  {{- end }}
+{{- end }}
+
 {{/*
 Postgres related
 */}}
@@ -190,6 +212,8 @@ API config related
 */}}
 
 {{- define "turing.defaultConfig" -}}
+{{- $globMerlinApiHost := include "turing.get-workload-host" (list .Values.global .Release.Namespace "merlin")}}
+{{- $globMlpApiHost := include "turing.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
 AuthConfig:
   URL: {{ include "turing.authorization.server.url" . | quote }}
 EnsemblerServiceBuilderConfig:
@@ -213,6 +237,8 @@ DeployConfig:
 KubernetesLabelConfigs:
   Environment: {{ .Values.config.KubernetesLabelConfigs.Environment | default (include "turing.environment" .) }}
 MLPConfig:
+  MerlinURL: {{ include "common.set-value" (list .Values.config.MLPConfig.MerlinURL $globMerlinApiHost) }}
+  MLPURL: {{ include "common.set-value" (list .Values.config.MLPConfig.MLPURL $globMlpApiHost) }}
   MLPEncryptionKey: {{ include "turing.mlp.encryption.key" . | quote }}
 TuringEncryptionKey: {{ include "turing.encryption.key" . | quote }}
 Sentry:
