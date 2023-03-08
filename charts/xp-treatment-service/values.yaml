@@ -3,16 +3,35 @@ deployment:
     # -- Docker registry for XP Treatment Service image
     registry: ghcr.io
     # -- Docker image repository for XP Treatment Service
-    repository: caraml-dev/xp/xp-treatment
+    # repository: caraml-dev/xp/xp-treatment
+    repository: terryyylim/xp/xp-treatment
     # -- Docker image tag for XP Treatment Service
-    tag: v0.11.1
+    # tag: v0.11.1-build.2-e3f30e5
+    tag: v0.0.0-build.76-7ba76d5
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
   # -- Application configurations to pass to XP Treatment Service server container during application start-up
-  config: {}
-
-  labels: {}
+  apiConfig:
+    deploymentConfig:
+      environmentType: dev
+    managementService:
+      url: http://xp-management:8080/v1
+      authorizationEnabled: false
+    newRelicConfig:
+      enabled: false
+      appName: xp-treatment-service
+      license: ""
+    sentryConfig:
+      enabled: false
+      dsn: ""
+      labels:
+        app: xp-treatment-service
+    segmenterConfig:
+      s2_ids:
+        minS2CellLevel: 10
+        maxS2CellLevel: 14
+    port: 8080
 
   # -- Resources requests and limits for XP Treatment Service API. This should be set
   # according to your cluster capacity and service level objectives.

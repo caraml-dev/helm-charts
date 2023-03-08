@@ -64,3 +64,29 @@ Selector labels
 app.kubernetes.io/name: {{ include "treatment-svc.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+API config related
+*/}}
+
+{{- define "treatment-svc.defaultConfig" -}}
+deploymentConfig:
+  environmentType: dev
+managementService:
+  url: http://xp-management:8080/v1
+  authorizationEnabled: false
+newRelicConfig:
+  enabled: false
+sentryConfig:
+  enabled: false
+segmenterConfig:
+  s2_ids:
+    minS2CellLevel: 10
+    maxS2CellLevel: 14
+port: 8080
+{{- end -}}
+
+{{- define "treatment-svc.config" -}}
+{{- $defaultConfig := include "treatment-svc.defaultConfig" . | fromYaml -}}
+{{ .Values.deployment.apiConfig | merge $defaultConfig | toYaml }}
+{{- end -}}

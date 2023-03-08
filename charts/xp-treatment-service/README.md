@@ -33,21 +33,20 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | deployment.annotations | object | `{}` | Annotations to add to Treatment Service pod |
+| deployment.apiConfig | object | `{"deploymentConfig":{"environmentType":"dev"},"managementService":{"authorizationEnabled":false,"url":"http://xp-management:8080/v1"},"newRelicConfig":{"appName":"xp-treatment-service","enabled":false,"license":""},"port":8080,"segmenterConfig":{"s2_ids":{"maxS2CellLevel":14,"minS2CellLevel":10}},"sentryConfig":{"dsn":"","enabled":false,"labels":{"app":"xp-treatment-service"}}}` | Application configurations to pass to XP Treatment Service server container during application start-up |
 | deployment.autoscaling.enabled | bool | `false` |  |
 | deployment.autoscaling.maxReplicas | int | `2` |  |
 | deployment.autoscaling.minReplicas | int | `1` |  |
 | deployment.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | deployment.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
-| deployment.config | object | `{}` | Application configurations to pass to XP Treatment Service server container during application start-up |
 | deployment.extraArgs | list | `[]` | List of extra argumetns to add to XP Treatment Service server container |
 | deployment.extraEnvs | list | `[]` | List of extra environment variables to add to XP Treatment Service server container |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts to attach to XP Treatment Service server container. For example to mount the extra volume containing secrets |
-| deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount  additional secrets to these volumes |
+| deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Treatment Service image |
-| deployment.image.repository | string | `"caraml-dev/xp/xp-treatment"` | Docker image repository for XP Treatment Service |
-| deployment.image.tag | string | `"v0.11.1"` | Docker image tag for XP Treatment Service |
-| deployment.labels | object | `{}` |  |
+| deployment.image.repository | string | `"terryyylim/xp/xp-treatment"` | Docker image repository for XP Treatment Service repository: caraml-dev/xp/xp-treatment |
+| deployment.image.tag | string | `"v0.0.0-build.76-7ba76d5"` | Docker image tag for XP Treatment Service tag: v0.11.1-build.2-e3f30e5 |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |
@@ -63,9 +62,9 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | deployment.service.externalPort | int | `8080` | XP Treatment Service Kubernetes service port number |
 | deployment.service.internalPort | int | `8080` | XP Treatment Service container port number |
 | deployment.service.type | string | `"ClusterIP"` |  |
-| ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule,  useful when there are multiple ingress controllers installed |
+| ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule, useful when there are multiple ingress controllers installed |
 | ingress.enabled | bool | `false` | Enable ingress to provision Ingress resource for external access to XP Treatment Service |
-| ingress.host | string | `""` | Set host value to enable name based virtual hosting. This allows routing HTTP traffic to multiple host names at the same IP address. If no host is specified, the ingress rule applies to all inbound HTTP traffic through  the IP address specified. https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting |
+| ingress.host | string | `""` | Set host value to enable name based virtual hosting. This allows routing HTTP traffic to multiple host names at the same IP address. If no host is specified, the ingress rule applies to all inbound HTTP traffic through the IP address specified. https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting |
 | swaggerUi.apiServer | string | `"http://127.0.0.1/v1"` | URL of API server |
 | swaggerUi.enabled | bool | `false` |  |
 | swaggerUi.image | object | `{"tag":"v3.47.1"}` | Docker tag for Swagger UI https://hub.docker.com/r/swaggerapi/swagger-ui |
