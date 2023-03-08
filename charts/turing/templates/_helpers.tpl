@@ -18,17 +18,21 @@ heritage: {{ .Release.Service }}
 {{- end }}
 {{- end -}}
 
+{{- define "turing.resource-prefix-with-release-name" -}}
+    {{- if .Values.fullnameOverride -}}
+        {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+    {{- else -}}
+        {{- $name := default .Chart.Name .Values.nameOverride -}}
+        {{- if contains $name .Release.Name -}}
+            {{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+        {{- else -}}
+            {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
 {{- define "turing.fullname" -}}
-{{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- if contains $name .Release.Name -}}
-{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-{{- end -}}
+    {{- printf "%s" (include "turing.resource-prefix-with-release-name" .) -}}
 {{- end -}}
 
 {{- define "turing.image" -}}

@@ -72,7 +72,7 @@ jobs:
         run: |
           ./scripts/install_metallib.sh
 
-      - name: Add cluster credentials as a file if merlin is being installed
+      - name: Add cluster credentials as a file if merlin/turing is being installed
         env:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |

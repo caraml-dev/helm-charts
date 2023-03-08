@@ -3,12 +3,11 @@ global:
 
 deployment:
   image:
-    # -- Docker registry for Turing API image. User is required to override
-    # the registry for now as there is no publicly available Turing image
+    # -- Docker registry for Turing image
     registry: ghcr.io
-    # -- Docker image repository for Turing API
+    # -- Docker image repository for Turing image
     repository: caraml-dev/turing
-    # -- Docker image tag for Turing API
+    # -- Docker image tag for Turing image
     tag: v1.9.2-build.7-b9139be
   labels: {}
   # -- Resources requests and limits for Turing API. This should be set

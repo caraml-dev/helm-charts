@@ -32,9 +32,9 @@ Kubernetes-friendly multi-model orchestration and experimentation system.
 | deployment.extraInitContainers | list | `[]` | List of extra initContainers to add to the Pod. For example, you need to run some init scripts to fetch credentials from a remote server |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts to attach to Turing API server container. For example to mount the extra volume containing secrets |
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
-| deployment.image.registry | string | `"ghcr.io"` | Docker registry for Turing API image. User is required to override the registry for now as there is no publicly available Turing image |
-| deployment.image.repository | string | `"caraml-dev/turing"` | Docker image repository for Turing API |
-| deployment.image.tag | string | `"v1.9.2-build.7-b9139be"` | Docker image tag for Turing API |
+| deployment.image.registry | string | `"ghcr.io"` | Docker registry for Turing image |
+| deployment.image.repository | string | `"caraml-dev/turing"` | Docker image repository for Turing image |
+| deployment.image.tag | string | `"v1.9.2-build.7-b9139be"` | Docker image tag for Turing image |
 | deployment.labels | object | `{}` |  |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` | HTTP path for readiness check |
