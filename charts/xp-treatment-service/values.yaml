@@ -7,7 +7,7 @@ deployment:
     repository: terryyylim/xp/xp-treatment
     # -- Docker image tag for XP Treatment Service
     # tag: v0.11.1-build.2-e3f30e5
-    tag: v0.0.0-build.76-7ba76d5
+    tag: v0.0.0-build.82-2b6c32a
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
