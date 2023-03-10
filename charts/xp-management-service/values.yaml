@@ -11,9 +11,9 @@ deployment:
     # -- Docker registry for XP Management Service image
     registry: ghcr.io
     # -- Docker image repository for XP Management Service
-    repository: caraml-dev/xp/xp-management
+    repository: terryyylim/xp/xp-management
     # -- Docker image tag for XP Management Service
-    tag: v0.11.1-build.2-e3f30e5
+    tag: v0.0.0-build.82-2b6c32a
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
