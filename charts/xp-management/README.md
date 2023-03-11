@@ -41,7 +41,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Management Service image |
 | deployment.image.repository | string | `"terryyylim/xp/xp-management"` | Docker image repository for XP Management Service |
-| deployment.image.tag | string | `"v0.0.0-build.82-2b6c32a"` | Docker image tag for XP Management Service |
+| deployment.image.tag | string | `"v0.0.0-build.84-92227ed"` | Docker image tag for XP Management Service |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |

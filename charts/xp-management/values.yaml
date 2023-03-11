@@ -13,7 +13,7 @@ deployment:
     # -- Docker image repository for XP Management Service
     repository: terryyylim/xp/xp-management
     # -- Docker image tag for XP Management Service
-    tag: v0.0.0-build.82-2b6c32a
+    tag: v0.0.0-build.84-92227ed
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 

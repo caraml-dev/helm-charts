@@ -24,7 +24,7 @@ Vault is needed to store the model cluster credential where models will be deplo
 > scripts/generate-cluster-creds.sh minikube dev
 ```
 
-This will generate a cluster-credentials.json file under `charts/xp-management-service/files` directory. That file will look like:
+This will generate a cluster-credentials.json file under `charts/xp-management/files` directory. That file will look like:
 
 ```json
 {
@@ -40,11 +40,11 @@ This will generate a cluster-credentials.json file under `charts/xp-management-s
 
 ```bash
 # Set postgresql persistence to false to ensure PVC gets deleted
-helm install xp-management caraml/xp-management-service \
+helm install xp-management caraml/xp-management \
   --set xp.uiConfig.authConfig.oauthClientID=${OAUTH_CLIENT_ID} \
   --set xp-postgresql.persistence.enabled=false \
   --set mlp.postgresql.persistence.enabled=false \
-  -f xp-management-service/values-global.yaml \
+  -f xp-management/values-global.yaml \
   --timeout=5m \
   --wait
 ```
