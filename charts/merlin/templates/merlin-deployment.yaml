@@ -62,7 +62,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         resources:
-{{ toYaml .Values.deployment.resources | indent 10 }}
+          {{- toYaml .Values.deployment.resources | nindent 10 }}
         env:
           - name: ENVIRONMENT
             value: "{{ .Values.environment }}"
@@ -316,7 +316,12 @@ spec:
             echo "Running Swagger UI..."
             /usr/share/nginx/run.sh
       {{- end }}
-
+      {{- if .Values.merlinExternalPostgresql.enableProxySidecar }}
+      {{- tpl (toYaml (index .Values.merlinExternalPostgresql.sidecarSpec .Values.merlinExternalPostgresql.proxyType "spec")) . | nindent 6 }}
+      {{- end }}
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ default "merlin" .Values.serviceAccount.name }}
+      {{- end }}
       volumes:
       - name: config
         secret:

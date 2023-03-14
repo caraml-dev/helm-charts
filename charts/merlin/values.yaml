@@ -223,6 +223,14 @@ ui:
 service:
   externalPort: 8080
   internalPort: 8080
+serviceAccount:
+  # Specifies whether a ServiceAccount should be created
+  create: true
+  # The name of the ServiceAccount to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: merlin
+  annotations: {}
+  # example.io/example: example
 ingress:
   enabled: false
 # If you would like to use an external postgres database for Merlin, you can connect using these credentials
@@ -248,6 +256,37 @@ merlinExternalPostgresql:
   connMaxLifetime: 0s
   maxIdleConns: 0
   maxOpenConns: 0
+  # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
+  enableProxySidecar: false
+  # -- Type of sidecar to be created, mentioned type needs to have the spec below.
+  proxyType: cloudSqlProxy
+  # -- container spec for the sidecar
+  sidecarSpec:
+    # -- container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
+    cloudSqlProxy:
+      dbConnectionName: "asia-east-1:merlin-db"
+      dbPort: 5432
+      image:
+        tag: 1.33.2
+      resources: &merlinCloudCarSpecResource
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1G
+      # -- Container spec for the sidecar
+      spec:
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout"
+            - "-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
+          securityContext:
+            runAsNonRoot: true
+          resources: *merlinCloudCarSpecResource
 merlin-postgresql:
   enabled: true
   postgresqlUsername: merlin
@@ -357,6 +396,14 @@ mlflow:
     type: ClusterIP
     externalPort: 80
     internalPort: 5000
+  serviceAccount:
+    # Specifies whether a ServiceAccount should be created
+    create: true
+    # The name of the ServiceAccount to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: mlflow
+    annotations: {}
+      # example.io/example: example
   ingress:
     enabled: false
     class: "nginx"
@@ -396,6 +443,37 @@ mlflowExternalPostgresql:
   secretName: ""
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
   secretKey: ""
+  # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
+  enableProxySidecar: false
+  # -- Type of sidecar to be created, mentioned type needs to have the spec below.
+  proxyType: cloudSqlProxy
+  # -- container spec for the sidecar
+  sidecarSpec:
+    # -- container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
+    cloudSqlProxy:
+      dbConnectionName: "asia-east-1:mlflow-db"
+      dbPort: 5432
+      image:
+        tag: 1.33.2
+      resources: &mlflowCloudSideCarSpecResource
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1G
+      # -- Container spec for the sidecar
+      spec:
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout"
+            - "-instances={{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
+          securityContext:
+            runAsNonRoot: true
+          resources: *mlflowCloudSideCarSpecResource
 mlflow-postgresql:
   enabled: true
   postgresqlUsername: mlflow
