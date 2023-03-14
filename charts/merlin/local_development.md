@@ -20,7 +20,7 @@ If using a Kind cluster, Use `./scripts/install_metallib.sh` to install the prer
 
 ## Generate Cluster Credentials
 
-Vault is needed to store the model cluster credential where models will be deployed. For local development, we will use the same Minikube cluster as model cluster. In production, you may have multiple model clusters. You can use the scripts added in the CaraML charts repo (`caraml/scripts/generate-cluster-creds.sh`) to generate the cluster credentials file in to merlin files, So that the chart will upload it to your local vault when you install CaraML.
+Vault is needed to store the model cluster credential where models will be deployed. For local development, we will use the same Minikube cluster as model cluster. In production, you may have multiple model clusters. You can use the scripts added in the CaraML charts repo (`caraml/scripts/generate-cluster-creds.sh`) to generate the cluster credentials file into merlin files, So that the chart will upload it to your local vault when you install CaraML.
 
 ```bash
 > scripts/generate-cluster-creds.sh minikube dev
