@@ -12,4 +12,4 @@ excluded-charts:
   - common
   - hashicorp=https://helm.releases.hashicorp.com
   - bitnami=https://charts.bitnami.com/bitnami
-helm-extra-args: --timeout 800s
+helm-extra-args: --dry-run --debug --timeout 800s

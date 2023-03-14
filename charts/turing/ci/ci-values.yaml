@@ -1,3 +1,11 @@
+global:
+  turing:
+    apiPrefix: "/v1"
+    serviceName: turing
+    vsPrefix: "/api/turing"
+    useServiceFqdn: true
+    uiPrefix: "/turing"
+    uiServiceName: turing
 deployment:
   replicaCount: "1"
   resources:
