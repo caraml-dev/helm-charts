@@ -40,8 +40,8 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Management Service image |
-| deployment.image.repository | string | `"terryyylim/xp/xp-management"` | Docker image repository for XP Management Service |
-| deployment.image.tag | string | `"v0.0.0-build.84-92227ed"` | Docker image tag for XP Management Service |
+| deployment.image.repository | string | `"caraml-dev/xp/xp-management"` | Docker image repository for XP Management Service |
+| deployment.image.tag | string | `"v0.11.2-rc1"` | Docker image tag for XP Management Service |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |
@@ -67,6 +67,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | externalPostgresql.password | string | `"password"` |  |
 | externalPostgresql.username | string | `"xp"` | External postgres database user |
 | global.environment | string | `"dev"` | Environment of Management Service deployment |
+| global.mlp.serviceName | string | `"mlp"` | Global MLP service name |
 | global.sentry.dsn | string | `nil` | Global Sentry DSN value |
 | postgresql | object | `{"containerPorts":{"postgresql":5432},"enabled":true,"nameOverride":"xp-management-postgresql","persistence":{"enabled":true,"size":"10Gi"},"postgresqlDatabase":"xp","postgresqlPassword":"xp","postgresqlUsername":"xp","resources":{"requests":{"cpu":"100m","memory":"256Mi"}},"tls":{"enabled":false}}` | Postgresql configuration to be applied to XP Management Service's postgresql database deployment Reference: https://artifacthub.io/packages/helm/bitnami/postgresql/10.16.2#parameters |
 | postgresql.persistence.enabled | bool | `true` | Persist Postgresql data in a Persistent Volume Claim |
