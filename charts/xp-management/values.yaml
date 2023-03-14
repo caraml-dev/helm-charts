@@ -6,14 +6,18 @@ global:
     # -- (string) Global Sentry DSN value
     dsn:
 
+  mlp:
+    # -- (string) Global MLP service name
+    serviceName: mlp
+
 deployment:
   image:
     # -- Docker registry for XP Management Service image
     registry: ghcr.io
     # -- Docker image repository for XP Management Service
-    repository: terryyylim/xp/xp-management
+    repository: caraml-dev/xp/xp-management
     # -- Docker image tag for XP Management Service
-    tag: v0.0.0-build.84-92227ed
+    tag: v0.11.2-rc1
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 

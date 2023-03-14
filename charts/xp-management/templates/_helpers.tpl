@@ -111,6 +111,17 @@ sentryConfig:
 API config related
 */}}
 
+{{- define "management-svc.mlp.server.url" -}}
+{{- $protocol := (default "http" .Values.global.protocol ) }}
+{{- $globalMLPUrl := "" }}
+{{- if and .Values.global (hasKey .Values.global "mlp") }}
+  {{- if .Values.global.mlp.serviceName }}
+    {{- $globalMLPUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "mlp" (list "serviceName")))) }}
+  {{- end }}
+{{- end }}
+{{- printf "%s" (include "common.set-value" (list .Values.deployment.apiConfig.mlpConfig.url $globalMLPUrl)) -}}
+{{- end -}}
+
 {{- define "management-svc.defaultConfig" -}}
 port: 8080
 allowedOrigins: "*"
@@ -132,7 +143,7 @@ segmenterConfig:
     minS2CellLevel: 10
     maxS2CellLevel: 14
 mlpConfig:
-  url: http://mlp:8080/v1
+  url: {{ .Values.deployment.apiConfig.mlpConfig.url | default (include "management-svc.mlp.server.url" .) | quote }}
 newRelicConfig:
   enabled: false
 sentryConfig:
