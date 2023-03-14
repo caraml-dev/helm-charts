@@ -1,0 +1,19 @@
+{{- if .Values.swaggerUi.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "management-svc.fullname" .}}-swagger
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "management-svc.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: {{ .Values.swaggerUi.service.externalPort }}
+      targetPort: {{ .Values.swaggerUi.service.internalPort }}
+      protocol: TCP
+  selector:
+    app: {{ template "management-svc.fullname" .}}
+    release: {{ .Release.Name }}
+{{- end }}
