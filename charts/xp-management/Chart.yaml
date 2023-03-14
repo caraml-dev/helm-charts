@@ -1,0 +1,21 @@
+apiVersion: v2
+appVersion: v0.11.1
+dependencies:
+- alias: postgresql
+  condition: postgresql.enabled
+  name: postgresql
+  repository: https://charts.helm.sh/stable
+  version: 7.0.2
+- condition: mlp.enabled
+  name: mlp
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.4.16
+- name: common
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.8
+description: Management service - A part of XP system that is used to configure experiments
+maintainers:
+- email: caraml-dev@caraml.dev
+  name: caraml-dev
+name: xp-management
+version: 0.1.3

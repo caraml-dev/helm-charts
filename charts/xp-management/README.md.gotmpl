@@ -1,0 +1,32 @@
+{{ template "chart.header" . }}
+---
+{{ template "chart.versionBadge" . }}
+{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+## Introduction
+
+This Helm chart installs [XP Management-Service](https://github.com/caraml-dev/xp-management-service) and all its dependencies in a Kubernetes cluster.
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| caraml-dev | <caraml-dev@caraml.dev> |  |
+
+## Prerequisites
+
+To use the charts here, [Helm](https://helm.sh/) must be configured for your
+Kubernetes cluster. Setting up Kubernetes and Helm is outside the scope of
+this README. Please refer to the Kubernetes and Helm documentation.
+
+- **Helm 3.0+** – This chart was tested with Helm v3.7.1, but it is also expected to work with earlier Helm versions
+- **Kubernetes 1.18+** – This chart was tested with GKE v1.20.x and with [Minikube](https://github.com/kubernetes/minikube) v1.27.x,
+but it's possible it works with earlier k8s versions too
+
+## Configuration
+
+The following table lists the configurable parameters of the XP Management Service chart and their default values.
+
+{{ template "chart.valuesTable" . }}
