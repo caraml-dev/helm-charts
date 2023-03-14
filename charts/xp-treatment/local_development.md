@@ -40,8 +40,8 @@ This will generate a cluster-credentials.json file under `charts/xp-treatment-se
 
 ```bash
 # Set postgresql persistence to false to ensure PVC gets deleted
-helm install xp-treatment caraml/xp-treatment-service \
-  -f xp-treatment-service/values-global.yaml \
+helm install xp-treatment caraml/xp-treatment \
+  -f xp-treatment/values-global.yaml \
   --timeout=5m \
   --wait
 ```

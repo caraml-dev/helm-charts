@@ -3,11 +3,9 @@ deployment:
     # -- Docker registry for XP Treatment Service image
     registry: ghcr.io
     # -- Docker image repository for XP Treatment Service
-    # repository: caraml-dev/xp/xp-treatment
-    repository: terryyylim/xp/xp-treatment
+    repository: caraml-dev/xp/xp-treatment
     # -- Docker image tag for XP Treatment Service
-    # tag: v0.11.1-build.2-e3f30e5
-    tag: v0.0.0-build.82-2b6c32a
+    tag: v0.11.2-rc1
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 

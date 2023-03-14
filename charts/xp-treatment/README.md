@@ -45,8 +45,8 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Treatment Service image |
-| deployment.image.repository | string | `"terryyylim/xp/xp-treatment"` | Docker image repository for XP Treatment Service repository: caraml-dev/xp/xp-treatment |
-| deployment.image.tag | string | `"v0.0.0-build.76-7ba76d5"` | Docker image tag for XP Treatment Service tag: v0.11.1-build.2-e3f30e5 |
+| deployment.image.repository | string | `"caraml-dev/xp/xp-treatment"` | Docker image repository for XP Treatment Service |
+| deployment.image.tag | string | `"v0.11.2-rc1"` | Docker image tag for XP Treatment Service |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |
