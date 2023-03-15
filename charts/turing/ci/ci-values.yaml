@@ -1,11 +1,21 @@
 global:
-  turing:
+  oauthClientID: "global-client-123"
+  mlp:
+    apiPrefix: "/v1" # path prefix to where mlp endpoints lie if running on localhost
+    serviceName: mlp
+    externalPort: "8080"
+    vsPrefix: "/api"
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/"
+    uiServiceName: mlp
+  merlin:
     apiPrefix: "/v1"
-    serviceName: turing
-    vsPrefix: "/api/turing"
-    useServiceFqdn: true
-    uiPrefix: "/turing"
-    uiServiceName: turing
+    serviceName: merlin
+    externalPort: "8080"
+    vsPrefix: "/api/merlin"
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/merlin"
+    uiServiceName: merlin
 deployment:
   replicaCount: "1"
   resources:
