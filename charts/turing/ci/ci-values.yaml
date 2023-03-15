@@ -1,11 +1,11 @@
 global:
   oauthClientID: "global-client-123"
   mlp:
-    apiPrefix: "/v1" # path prefix to where mlp endpoints lie if running on localhost
+    apiPrefix: "/v1"
     serviceName: mlp
     externalPort: "8080"
     vsPrefix: "/api"
-    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true
     uiPrefix: "/"
     uiServiceName: mlp
   merlin:
@@ -13,7 +13,7 @@ global:
     serviceName: merlin
     externalPort: "8080"
     vsPrefix: "/api/merlin"
-    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true
     uiPrefix: "/merlin"
     uiServiceName: merlin
 deployment:
@@ -74,6 +74,8 @@ merlin:
       limits:
         cpu: "500m"
         memory: 512Mi
+  authorization:
+    enabled: false
   imageBuilder: *imageBuilder
   environmentConfigs: *environmentConfigs
   merlin-postgresql:
@@ -110,3 +112,14 @@ merlin:
     clusterType: kind
   kserve:
     enabled: false
+mlp:
+  authorization:
+    enabled: false
+  mlp-postgresql:
+    enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    persistence:
+      enabled: false
