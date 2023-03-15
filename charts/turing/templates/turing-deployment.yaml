@@ -1,3 +1,5 @@
+{{- $globMerlinApiHost := include "turing.get-workload-host" (list .Values.global .Release.Namespace "merlin")}}
+{{- $globMlpApiHost := include "turing.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -78,6 +80,10 @@ spec:
             secretKeyRef:
               name: {{ printf "%s-mlp-encryption-key" .Release.Name }} # TODO: Update mlp.encryption-key-name function
               key: encryption-key
+        - name: MERLIN_API_TEST
+          value: {{ include "common.set-value" (list .Values.config.MLPConfig.MerlinURL $globMerlinApiHost) }}
+        - name: MLP_API_TEST
+          value: {{ include "common.set-value" (list .Values.config.MLPConfig.MLPURL $globMlpApiHost) }}
         {{- end }}
         {{- with .Values.deployment.extraEnvs }}
         {{- toYaml . | nindent 8 }}

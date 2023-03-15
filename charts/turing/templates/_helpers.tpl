@@ -241,7 +241,7 @@ DeployConfig:
 KubernetesLabelConfigs:
   Environment: {{ .Values.config.KubernetesLabelConfigs.Environment | default (include "turing.environment" .) }}
 MLPConfig:
-  MerlinURL: {{ $globMerlinApiHost }}
+  MerlinURL: {{ include "common.set-value" (list .Values.config.MLPConfig.MerlinURL $globMerlinApiHost) }}
   MLPURL: {{ include "common.set-value" (list .Values.config.MLPConfig.MLPURL $globMlpApiHost) }}
   MLPEncryptionKey: {{ include "turing.mlp.encryption.key" . | quote }}
 TuringEncryptionKey: {{ include "turing.encryption.key" . | quote }}
