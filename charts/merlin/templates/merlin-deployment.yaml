@@ -161,6 +161,12 @@ spec:
                 {{- end }}
           - name: DEFAULT_FEAST_SERVING_URL
             value: "{{ .Values.transformer.feast.defaultServingURL }}"
+          - name: FEAST_SERVING_KEEP_ALIVE_ENABLED
+            value: "{{ .Values.merlin.transformer.feast.grpc.keepAliveEnabled }}"
+          - name: FEAST_SERVING_KEEP_ALIVE_TIME
+            value: "{{ .Values.merlin.transformer.feast.grpc.keepAliveTime }}"
+          - name: FEAST_SERVING_KEEP_ALIVE_TIMEOUT
+            value: "{{ .Values.merlin.transformer.feast.grpc.keepAliveTimeout }}"
           - name: FEAST_SERVING_URLS
             value: {{ .Values.transformer.feast.servingURLs | toJson | quote }}
           {{- if .Values.transformer.feast.redisStorage }}
@@ -187,6 +193,12 @@ spec:
             value: "{{ .Values.transformer.feast.authEnabled }}"
           - name: STANDARD_TRANSFORMER_IMAGE_NAME
             value: "{{ .Values.transformer.image }}"
+          - name: MODEL_CLIENT_KEEP_ALIVE_ENABLED
+            value: "{{ .Values.merlin.transformer.model.grpc.keepAliveEnabled }}"
+          - name: MODEL_CLIENT_KEEP_ALIVE_TIME
+            value: "{{ .Values.merlin.transformer.model.grpc.keepAliveTime }}"
+          - name: MODEL_CLIENT_KEEP_ALIVE_TIMEOUT
+            value: "{{ .Values.merlin.transformer.model.grpc.keepAliveTimeout }}"
           - name: JAEGER_AGENT_HOST
             value: "{{ .Values.transformer.jaeger.agentHost }}"
           - name: JAEGER_AGENT_PORT
@@ -197,6 +209,8 @@ spec:
             value: "{{ .Values.transformer.jaeger.samplerParam }}"
           - name: JAEGER_DISABLED
             value: "{{ .Values.transformer.jaeger.disabled }}"
+          - name: PYFUNC_GRPC_OPTIONS
+            value: "{{ .Values.merlin.pyfuncGRPCOptions }}"
           - name: DEPLOYMENT_CONFIG_PATH
             value: {{ ternary (printf "/opt/config/%s" "environment.yaml") (printf "/opt/config/%s" .Values.mlp.environmentConfigSecret.envKey) (eq .Values.mlp.environmentConfigSecret.name "")}}
           {{ if .Values.sentry.enabled }}
