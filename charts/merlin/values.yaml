@@ -144,10 +144,10 @@ transformer:
     coreURL: core.feast.dev
     coreAuthAudience: core.feast.dev
     authEnabled: false
-  grpc:
-    keepAliveEnabled: true
-    keepAliveTime: 30s
-    keepAliveTimeout: 5s
+    grpc:
+      keepAliveEnabled: false
+      keepAliveTime: 60s
+      keepAliveTimeout: 5s
   image: merlin-transformer:1.0.0
   jaeger:
     agentHost: localhost
@@ -157,8 +157,8 @@ transformer:
     disabled: false
   model:
     grpc:
-      keepAliveEnabled: true
-      keepAliveTime: 30s
+      keepAliveEnabled: false
+      keepAliveTime: 60s
       keepAliveTimeout: 5s
 
 # Google service account used to access GCP's resources.

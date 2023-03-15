@@ -1,8 +1,12 @@
 # merlin
 
+<<<<<<< HEAD
 ---
 ![Version: 0.10.12](https://img.shields.io/badge/Version-0.10.12-informational?style=flat-square)
 ![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
+=======
+![Version: 0.10.12](https://img.shields.io/badge/Version-0.10.12-informational?style=flat-square) ![AppVersion: 0.26.0-rc9](https://img.shields.io/badge/AppVersion-0.26.0--rc9-informational?style=flat-square)
+>>>>>>> cd0f90b (Add keep alive configuration for standard transformer)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -73,7 +77,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.26.0-rc6"` |  |
+| deployment.image.tag | string | `"0.26.0-rc9"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -83,6 +87,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | deployment.tolerations | list | `[]` |  |
 | deploymentLabelPrefix | string | `"gojek.com/"` |  |
+| pyfuncGRPCOptions| object | `{}` | |
 | encryption.key | string | `"password"` |  |
 | environment | string | `"dev"` |  |
 | environmentConfigs[0].cluster | string | `"test"` |  |
@@ -267,6 +272,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | swagger.service.externalPort | int | `8080` |  |
 | swagger.service.internalPort | int | `8081` |  |
 | transformer.feast.authEnabled | bool | `false` |  |
+| transformer.feast.grpc.keepAliveEnabled | bool | `false` | |
+| transformer.feast.grpc.keepAliveTime | string | `30s` | |
+| transformer.feast.grpc.keepAliveTimeout | string | `5s` | |
 | transformer.feast.bigtableCredential | string | `nil` |  |
 | transformer.feast.coreAuthAudience | string | `"core.feast.dev"` |  |
 | transformer.feast.coreURL | string | `"core.feast.dev"` |  |
@@ -286,6 +294,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | transformer.jaeger.disabled | bool | `false` |  |
 | transformer.jaeger.samplerParam | int | `1` |  |
 | transformer.jaeger.samplerType | string | `"const"` |  |
+| transformer.model.grpc.keepAliveEnabled | bool | `false` | |
+| transformer.model.grpc.keepAliveTime | string | `30s` | |
+| transformer.model.grpc.keepAliveTimeout | string | `5s` | |
 | transformer.simulation.feastBigtableServingURL | string | `"online-serving-bt.feast.dev"` |  |
 | transformer.simulation.feastRedisServingURL | string | `"online-serving-redis.feast.dev"` |  |
 | ui.apiHost | string | `"/api/merlin/v1"` |  |
