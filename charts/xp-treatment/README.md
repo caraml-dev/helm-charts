@@ -33,7 +33,7 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | deployment.annotations | object | `{}` | Annotations to add to Treatment Service pod |
-| deployment.apiConfig | object | `{"deploymentConfig":{"environmentType":"dev"},"managementService":{"authorizationEnabled":false,"url":"http://xp-management:8080/v1"},"newRelicConfig":{"appName":"xp-treatment-service","enabled":false,"license":""},"port":8080,"segmenterConfig":{"s2_ids":{"maxS2CellLevel":14,"minS2CellLevel":10}},"sentryConfig":{"dsn":"","enabled":false,"labels":{"app":"xp-treatment-service"}}}` | Application configurations to pass to XP Treatment Service server container during application start-up |
+| deployment.apiConfig | object | `{"deploymentConfig":{"environmentType":"dev"},"managementService":{"authorizationEnabled":false,"url":null},"newRelicConfig":{"appName":"xp-treatment-service","enabled":false,"license":""},"port":8080,"segmenterConfig":{"s2_ids":{"maxS2CellLevel":14,"minS2CellLevel":10}},"sentryConfig":{"dsn":"","enabled":false,"labels":{"app":"xp-treatment-service"}}}` | Application configurations to pass to XP Treatment Service server container during application start-up |
 | deployment.autoscaling.enabled | bool | `false` |  |
 | deployment.autoscaling.maxReplicas | int | `2` |  |
 | deployment.autoscaling.minReplicas | int | `1` |  |
@@ -48,13 +48,13 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | deployment.image.repository | string | `"caraml-dev/xp/xp-treatment"` | Docker image repository for XP Treatment Service |
 | deployment.image.tag | string | `"v0.11.2-rc1"` | Docker image tag for XP Treatment Service |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
-| deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
+| deployment.livenessProbe.path | string | `"/v1/internal/health/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |
 | deployment.livenessProbe.successThreshold | int | `1` |  |
 | deployment.livenessProbe.timeoutSeconds | int | `5` |  |
 | deployment.nodeSelector | object | `{}` |  |
 | deployment.readinessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
-| deployment.readinessProbe.path | string | `"/v1/internal/ready"` | HTTP path for readiness check |
+| deployment.readinessProbe.path | string | `"/v1/internal/health/ready"` | HTTP path for readiness check |
 | deployment.readinessProbe.periodSeconds | int | `10` |  |
 | deployment.readinessProbe.successThreshold | int | `1` |  |
 | deployment.readinessProbe.timeoutSeconds | int | `5` |  |
@@ -62,6 +62,8 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | deployment.service.externalPort | int | `8080` | XP Treatment Service Kubernetes service port number |
 | deployment.service.internalPort | int | `8080` | XP Treatment Service container port number |
 | deployment.service.type | string | `"ClusterIP"` |  |
+| global.managementSvc.serviceName | string | `nil` | Global XP Management service name |
+| global.protocol | string | `"http"` |  |
 | ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule, useful when there are multiple ingress controllers installed |
 | ingress.enabled | bool | `false` | Enable ingress to provision Ingress resource for external access to XP Treatment Service |
 | ingress.host | string | `""` | Set host value to enable name based virtual hosting. This allows routing HTTP traffic to multiple host names at the same IP address. If no host is specified, the ingress rule applies to all inbound HTTP traffic through the IP address specified. https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting |

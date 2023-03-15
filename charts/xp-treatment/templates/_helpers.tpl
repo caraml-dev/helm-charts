@@ -69,11 +69,24 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 API config related
 */}}
 
+{{- define "treatment-svc.xp-management.server.url" -}}
+{{- $protocol := "http" }}
+{{- $globalXPManagementUrl := "" }}
+{{- if and .Values.global (hasKey .Values.global "managementSvc") }}
+  {{- if .Values.global.managementSvc.serviceName }}
+    {{- $globalXPManagementUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "managementSvc" (list "serviceName")))) }}
+  {{- else -}}
+    {{- $globalXPManagementUrl = (printf "%s://%s-%s:8080/v1" $protocol .Release.Name "xp-management" ) -}}
+  {{- end }}
+{{- end }}
+{{- printf "%s" (include "common.set-value" (list .Values.deployment.apiConfig.managementService.url $globalXPManagementUrl)) -}}
+{{- end -}}
+
 {{- define "treatment-svc.defaultConfig" -}}
 deploymentConfig:
   environmentType: dev
 managementService:
-  url: http://xp-management:8080/v1
+  url: {{ .Values.deployment.apiConfig.managementService.url | default (include "treatment-svc.xp-management.server.url" .) | quote }}
   authorizationEnabled: false
 newRelicConfig:
   enabled: false

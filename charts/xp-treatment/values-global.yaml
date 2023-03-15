@@ -48,6 +48,12 @@ global:
     uiPrefix: "/xp"
     uiServiceName: xp-management
 
+  xp-treatment:
+    apiPrefix: "/"
+    serviceName: xp-treatment
+    vsPrefix: "/api/xp"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+
   pipeline:
     uiPrefix: "/pipeline"
     serviceName: pipeline-ui

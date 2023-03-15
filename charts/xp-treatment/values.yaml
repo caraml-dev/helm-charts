@@ -1,3 +1,9 @@
+global:
+  protocol: http
+  managementSvc:
+    # -- (string) Global XP Management service name
+    serviceName:
+
 deployment:
   image:
     # -- Docker registry for XP Treatment Service image
@@ -14,7 +20,7 @@ deployment:
     deploymentConfig:
       environmentType: dev
     managementService:
-      url: http://xp-management:8080/v1
+      url:
       authorizationEnabled: false
     newRelicConfig:
       enabled: false
@@ -38,7 +44,7 @@ deployment:
 
   livenessProbe:
     # -- HTTP path for liveness check
-    path: "/v1/internal/live"
+    path: "/v1/internal/health/live"
     # -- Liveness probe delay and thresholds
     initialDelaySeconds: 60
     periodSeconds: 10
@@ -47,7 +53,7 @@ deployment:
 
   readinessProbe:
     # -- HTTP path for readiness check
-    path: "/v1/internal/ready"
+    path: "/v1/internal/health/ready"
     # -- Liveness probe delay and thresholds
     initialDelaySeconds: 60
     periodSeconds: 10

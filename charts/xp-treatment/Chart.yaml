@@ -6,6 +6,9 @@ dependencies:
   name: xp-management
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.1.3
+- name: common
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.8
 description: Treatment service - A part of XP system that is used to obtain the treatment configuration from active experiments
 version: 0.1.3
 appVersion: 0.11.1
