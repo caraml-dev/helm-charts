@@ -7,7 +7,7 @@
 
 ## Introduction
 
-This Helm chart installs Turing. I can also install the dependencies it requires, such as Merlin and MLP.
+This Helm chart installs Merlin. I can also install the dependencies it requires, such as Kserve, MLP, etc.
 See `Chart.yaml` for full list of dependencies.
 
 
@@ -36,10 +36,10 @@ helm repo add caraml https://caraml-dev.github.io/helm-charts
 
 ### Installing the chart
 
-This command will install Turing release named `turing` in the `default` namespace.
+This command will install Merlin release named `merlin` in the `default` namespace.
 Default chart values will be used for the installation:
 ```shell
-$ helm install caraml/turing
+$ helm install caraml/merlin
 ```
 
 You can (and most likely, should) override the default configuration with values suitable for your installation.
@@ -47,9 +47,9 @@ Refer to [Configuration](#configuration) section for the detailed description of
 
 ### Uninstalling the chart
 
-To uninstall `turing` release:
+To uninstall `merlin` release:
 ```shell
-$ helm uninstall turing
+$ helm uninstall merlin
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
@@ -57,6 +57,6 @@ This includes the dependencies that were installed by the chart. Note that, any 
 
 ## Configuration
 
-The following table lists the configurable parameters of the Turing chart and their default values.
+The following table lists the configurable parameters of the Merlin chart and their default values.
 
 {{ template "chart.valuesTable" . }}

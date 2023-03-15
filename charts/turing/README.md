@@ -35,7 +35,7 @@ helm repo add caraml https://caraml-dev.github.io/helm-charts
 
 ### Installing the chart
 
-This command will install KserveTuring release named `turing` in the `default` namespace.
+This command will install Turing release named `turing` in the `default` namespace.
 Default chart values will be used for the installation:
 ```shell
 $ helm install caraml/turing
