@@ -62,7 +62,6 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | deployment.service.externalPort | int | `8080` | XP Treatment Service Kubernetes service port number |
 | deployment.service.internalPort | int | `8080` | XP Treatment Service container port number |
 | deployment.service.type | string | `"ClusterIP"` |  |
-| global.managementSvc.serviceName | string | `nil` | Global XP Management service name |
 | global.protocol | string | `"http"` |  |
 | ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule, useful when there are multiple ingress controllers installed |
 | ingress.enabled | bool | `false` | Enable ingress to provision Ingress resource for external access to XP Treatment Service |

@@ -2,6 +2,7 @@ global:
   protocol: http
   xp:
     apiPrefix: "/v1"
+    serviceName: xp-management
     externalPort: "8080"
     vsPrefix: "/api/xp"
     useServiceFqdn: true
