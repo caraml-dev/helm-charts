@@ -41,7 +41,7 @@ global:
     uiServiceName: turing
 
   xp:
-    apiPrefix: "/"
+    apiPrefix: "/v1"
     serviceName: xp-management
     vsPrefix: "/api/xp"
     useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
