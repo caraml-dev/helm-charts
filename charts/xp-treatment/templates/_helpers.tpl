@@ -69,24 +69,34 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 API config related
 */}}
 
-{{- define "treatment-svc.xp-management.server.url" -}}
-{{- $protocol := "http" }}
-{{- $globalXPManagementUrl := "" }}
-{{- if and .Values.global (hasKey .Values.global "managementSvc") }}
-  {{- if .Values.global.managementSvc.serviceName }}
-    {{- $globalXPManagementUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "managementSvc" (list "serviceName")))) }}
-  {{- else -}}
-    {{- $globalXPManagementUrl = (printf "%s://%s-%s:8080/v1" $protocol .Release.Name "xp-management" ) -}}
+{{- define "treatment-svc.get-workload-host" }}
+{{- $global := index . 0}}
+{{- $relNs := index . 1}}
+{{- $key := index . 2}}
+{{- $values := get $global $key}}
+{{- if not (hasKey $global $key) }}
+  {{- printf "" }}
+{{- else }}
+  {{- $values := get $global $key}}
+  {{- $host := "" }}
+  {{- with $values }}
+    {{- if .useServiceFqdn }}
+      {{- $host = printf "http://%s.%s.svc.cluster.local:%s%s" .serviceName $relNs .externalPort .apiPrefix}}
+    {{- else }}
+      {{- $inClusterPrefix := printf "%s%s" .vsPrefix .apiPrefix }}
+      {{- $host = printf "%s://%s%s" $global.protocol (include "common.get-external-hostname" $global) $inClusterPrefix }}
+    {{- end }}
+    {{- end }}
+  {{- printf "%s" $host }}
   {{- end }}
 {{- end }}
-{{- printf "%s" (include "common.set-value" (list .Values.deployment.apiConfig.managementService.url $globalXPManagementUrl)) -}}
-{{- end -}}
 
 {{- define "treatment-svc.defaultConfig" -}}
+{{- $globXpApiHost := include "treatment-svc.get-workload-host" (list .Values.global .Release.Namespace "xp")}}
 deploymentConfig:
   environmentType: dev
 managementService:
-  url: {{ .Values.deployment.apiConfig.managementService.url | default (include "treatment-svc.xp-management.server.url" .) | quote }}
+  url: {{ include "common.set-value" (list .Values.deployment.apiConfig.managementService.url $globXpApiHost) }}
   authorizationEnabled: false
 newRelicConfig:
   enabled: false

@@ -1,9 +1,5 @@
 global:
   protocol: http
-  managementSvc:
-    # -- (string) Global XP Management service name
-    serviceName:
-
 deployment:
   image:
     # -- Docker registry for XP Treatment Service image
