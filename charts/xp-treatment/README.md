@@ -1,7 +1,7 @@
 # xp-treatment
 
 ---
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square)
 ![AppVersion: 0.11.1](https://img.shields.io/badge/AppVersion-0.11.1-informational?style=flat-square)
 
 Treatment service - A part of XP system that is used to obtain the treatment configuration from active experiments
@@ -58,6 +58,7 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | deployment.readinessProbe.periodSeconds | int | `10` |  |
 | deployment.readinessProbe.successThreshold | int | `1` |  |
 | deployment.readinessProbe.timeoutSeconds | int | `5` |  |
+| deployment.replicaCount | int | `1` |  |
 | deployment.resources | object | `{}` | Resources requests and limits for XP Treatment Service API. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | deployment.service.externalPort | int | `8080` | XP Treatment Service Kubernetes service port number |
 | deployment.service.internalPort | int | `8080` | XP Treatment Service container port number |
