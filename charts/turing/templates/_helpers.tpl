@@ -66,9 +66,7 @@ heritage: {{ .Release.Service }}
 {{- end -}}
 
 {{- define "turing.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
 {{- default (include "turing.fullname" .) .Values.serviceAccount.name }}
-{{- end }}
 {{- end }}
 
 {{- define "turing.mlp.encryption.key" -}}
