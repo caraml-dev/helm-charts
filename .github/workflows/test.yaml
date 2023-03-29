@@ -72,11 +72,11 @@ jobs:
         run: |
           ./scripts/install_metallib.sh
 
-      - name: Add cluster credentials as a file if merlin is being installed
+      - name: Add cluster credentials as a file if merlin/turing is being installed
         env:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |
-          if [[ $(echo $CHARTS_CHANGED | grep 'charts/\(merlin\|caraml\)') ]]; then
+          if [[ $(echo $CHARTS_CHANGED | grep 'charts/\(merlin\|turing\|caraml\)') ]]; then
             ./scripts/generate-cluster-creds.sh kind chart-testing
           fi
 

@@ -16,7 +16,6 @@ caraml-authz:
       limits:
         cpu: "150m"
         memory: 512Mi
-
 mlp:
   deployment:
     replicaCount: "1"
@@ -27,7 +26,6 @@ mlp:
       limits:
         cpu: "250m"
         memory: 512Mi
-
 merlin:
   deployment:
     replicaCount: "1"
@@ -38,14 +36,11 @@ merlin:
       limits:
         cpu: "250m"
         memory: 512Mi
-
   imageBuilder:
     clusterName: "chart-testing"
-
   vault:
     enabled: true
     secretName: "vault-secret"
-
     helmChart:
       chart: vault
       repository: https://helm.releases.hashicorp.com
@@ -71,7 +66,6 @@ merlin:
             memory: 128Mi
         affinity: null
         tolerations: null
-
   environmentConfigs:
     - name: "chart-testing"
       is_default: true
@@ -101,7 +95,6 @@ merlin:
         max_replica: 1
         cpu_request: "500m"
         memory_request: "500Mi"
-
   merlin-postgresql:
     resources:
       requests:
@@ -112,7 +105,6 @@ merlin:
         memory: "512Mi"
     persistence:
       size: 5Gi
-
   mlflow:
     resources:
       requests:
@@ -121,7 +113,6 @@ merlin:
       limits:
         cpu: "250m"
         memory: "512Mi"
-
   mlflow-postgresql:
     resources:
       requests:
@@ -133,7 +124,6 @@ merlin:
     persistence:
       enabled: true
       size: 5Gi
-
   minio:
     enabled: false
     resources:
@@ -143,15 +133,12 @@ merlin:
       limits:
         cpu: 50m
         memory: 128Mi
-
   setupScript:
     # -- Image used to for setup scripts job
     image: bitnami/kubectl:latest
     clusterType: kind
-
   kserve:
     enabled: false
-
 postgresql:
   resources:
     requests:
@@ -163,14 +150,12 @@ postgresql:
   persistence:
     enabled: true
     size: 5Gi
-
 base:
   # -- Set to false if there is an existing istio deployment
   enabled: true
   validationURL: ""
   global:
     istioNamespace: "istio-system"
-
 istiod:
   enabled: true
   chartValues:
@@ -181,7 +166,6 @@ istiod:
       limits:
         cpu: 250m
         memory: 512Mi
-
 istioIngressGateway:
   global:
     enabled: false
@@ -193,7 +177,6 @@ istioIngressGateway:
       limits:
         cpu: 250m
         memory: 512Mi
-
 clusterLocalGateway:
   global:
     enabled: false
@@ -205,7 +188,6 @@ clusterLocalGateway:
       limits:
         cpu: 250m
         memory: 512Mi
-
 cert-manager:
   fullnameOverride: cert-manager
   enabled: true

@@ -1,0 +1,62 @@
+{{ template "chart.header" . }}
+---
+{{ template "chart.versionBadge" . }}
+{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+## Introduction
+
+This Helm chart installs Turing. I can also install the dependencies it requires, such as Merlin and MLP.
+See `Chart.yaml` for full list of dependencies.
+
+
+## Prerequisites
+
+To use the charts here, [Helm](https://helm.sh/) must be configured for your
+Kubernetes cluster. Setting up Kubernetes and Helm is outside the scope of
+this README. Please refer to the Kubernetes and Helm documentation.
+
+- **Helm 3.0+** – This chart was tested with Helm v3.9.0, but it is also expected to work with earlier Helm versions
+- **Kubernetes 1.22+** – This chart was tested with Kind v1.22.7 and minikube kubernetes version 1.22.*
+- When installing on minikube, please run in a separate shell:
+  ```sh
+  minikube tunnel
+  ```
+  This is to enable istio loadbalancer services to be allocated an IP address.
+
+
+## Installation
+
+### Add Helm repository
+
+```shell
+helm repo add caraml https://caraml-dev.github.io/helm-charts
+```
+
+### Installing the chart
+
+This command will install Turing release named `turing` in the `default` namespace.
+Default chart values will be used for the installation:
+```shell
+$ helm install caraml/turing
+```
+
+You can (and most likely, should) override the default configuration with values suitable for your installation.
+Refer to [Configuration](#configuration) section for the detailed description of available configuration keys.
+
+### Uninstalling the chart
+
+To uninstall `turing` release:
+```shell
+$ helm uninstall turing
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+This includes the dependencies that were installed by the chart. Note that, any PVCs created by the chart will have to be deleted manually.
+
+## Configuration
+
+The following table lists the configurable parameters of the Turing chart and their default values.
+
+{{ template "chart.valuesTable" . }}
