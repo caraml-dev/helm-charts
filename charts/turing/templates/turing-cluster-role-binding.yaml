@@ -4,7 +4,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ template "turing.serviceAccountName" . }}-role-binding
   labels:
-{{ include "turing.labels" . | indent 4 }}
+    {{- include "turing.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
