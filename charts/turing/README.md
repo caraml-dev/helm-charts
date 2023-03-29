@@ -81,6 +81,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | global.protocol | string | `"http"` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
 | imageBuilder.k8sConfig | string | `""` |  |
+| ingress.annotations | object | `{}` |  |
 | ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule, useful when there are multiple ingress controllers installed |
 | ingress.enabled | bool | `false` | Enable ingress to provision Ingress resource for external access to Turing API |
 | ingress.host | string | `""` | Set host value to enable name based virtual hosting. This allows routing HTTP traffic to multiple host names at the same IP address. If no host is specified, the ingress rule applies to all inbound HTTP traffic through the IP address specified. https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting |

@@ -5,11 +5,12 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: "{{ .Values.ingress.class }}"
+{{ .Values.ingress.annotations | indent 4 }}
   labels:
     app.kubernetes.io/name: {{ include "turing.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{ include "turing.labels" . | indent 4 }}
+    {{- include "turing.labels" . | nindent 4 }}
 {{- if .Values.ingress.useV1Beta1 }}
 apiVersion: networking.k8s.io/v1beta1
 spec:

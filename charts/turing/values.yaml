@@ -158,6 +158,8 @@ ingress:
   class: ""
   # -- Whether to use networking.k8s.io/v1 (k8s version >= 1.19) or networking.k8s.io/v1beta1 (1.16 >= k8s version >= 1.22)
   useV1Beta1: false
+  ## -- Additional annotations for the ingress
+  annotations: {}
 
 sentry:
   # -- Sentry DSN value used by both Turing API and Turing UI

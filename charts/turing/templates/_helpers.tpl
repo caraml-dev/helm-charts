@@ -68,8 +68,6 @@ heritage: {{ .Release.Service }}
 {{- define "turing.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "turing.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
@@ -154,40 +152,6 @@ initContainers:
 {{- end }}
 
 {{/*
-Postgres related
-*/}}
-
-{{- define "turing-postgresql.host" -}}
-{{- if index .Values "turing-postgresql" "enabled" -}}
-  {{- printf "%s-turing-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- else if .Values.turingExternalPostgresql.enabled -}}
-  {{- .Values.turingExternalPostgresql.address -}}
-{{- else -}}
-  {{- printf "%s-postgresql.%s.svc.cluster.local" .Release.Name .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
-
-{{- define "turing-postgresql.database" -}}
-  {{- if index .Values "turing-postgresql" "enabled" -}}
-    {{- index .Values "turing-postgresql" "postgresqlDatabase" -}}
-  {{- else if .Values.turingExternalPostgresql.enabled -}}
-    {{- .Values.turingExternalPostgresql.database -}}
-  {{- else -}}
-    {{- .Values.global.turing.postgresqlDatabase -}}
-  {{- end -}}
-{{- end -}}
-
-{{- define "turing-postgresql.username" -}}
-  {{- if index .Values "turing-postgresql" "enabled" -}}
-    {{- index .Values "turing-postgresql" "postgresqlUsername" -}}
-  {{- else if .Values.turingExternalPostgresql.enabled -}}
-    {{- .Values.turingExternalPostgresql.username -}}
-  {{- else -}}
-    {{- .Values.global.postgresqlUsername -}}
-  {{- end -}}
-{{- end -}}
-
-{{/*
 UI config related
 */}}
 
@@ -228,10 +192,10 @@ ClusterConfig:
   EnsemblingServiceK8sConfig: 
 {{ .Values.imageBuilder.k8sConfig | fromJson | toYaml | indent 4}}
 DbConfig:
-  Host: {{ include "turing-postgresql.host" . | quote }}
+  Host: {{ include "common.postgres-host" (list (index .Values "turing-postgresql") .Values.turingExternalPostgresql .Release .Chart ) }}
   Port: 5432
-  Database:  {{ include "turing-postgresql.database" . }}
-  User:  {{ include "turing-postgresql.username" . }}
+  Database: {{ include "common.postgres-database" (list (index .Values "turing-postgresql") .Values.turingExternalPostgresql .Values.global "turing" "postgresqlDatabase") }}
+  User: {{ include "common.postgres-username" (list (index .Values "turing-postgresql") .Values.turingExternalPostgresql .Values.global ) }}
   ConnMaxIdleTime: {{ .Values.config.DbConfig.ConnMaxIdleTime }}
   ConnMaxLifetime: {{ .Values.config.DbConfig.ConnMaxLifetime }}
   MaxIdleConns: {{ .Values.config.DbConfig.MaxIdleConns }}

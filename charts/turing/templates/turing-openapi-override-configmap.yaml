@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   name: {{ template "turing.fullname" . }}-openapi
   labels:
-{{ include "turing.labels" . | indent 4 }}
+    {{- include "turing.labels" . | nindent 4 }}
 data:
   override.yaml: |
     {{- toYaml .Values.openApiSpecOverrides | nindent 4 -}}
