@@ -1,0 +1,19 @@
+{{- if .Values.swaggerUi.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "treatment-svc.fullname" . }}-swagger
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "treatment-svc.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.swaggerUi.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.swaggerUi.service.externalPort }}
+      targetPort: {{ .Values.swaggerUi.service.internalPort }}
+      protocol: TCP
+  selector:
+    app: {{ template "treatment-svc.fullname" .}}
+    release: {{ .Release.Name }}
+{{- end }}
