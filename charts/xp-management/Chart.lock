@@ -1,0 +1,12 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.helm.sh/stable
+  version: 7.0.2
+- name: mlp
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.4.17
+- name: common
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.8
+digest: sha256:a64fbe7b55f2038b9b75888c8cdcbacc2ee98176d0f52439c2652e2c7ac58844
+generated: "2023-03-14T09:40:36.120702008Z"

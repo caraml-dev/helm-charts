@@ -1,0 +1,19 @@
+global:
+  protocol: http
+  xp:
+    apiPrefix: "/v1"
+    serviceName: xp-management
+    externalPort: "8080"
+    vsPrefix: "/api/xp"
+    useServiceFqdn: true
+    uiPrefix: "/xp"
+    uiServiceName: xp-management
+deployment:
+  replicaCount: "1"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: "500m"
+      memory: 512Mi

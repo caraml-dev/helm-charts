@@ -7,10 +7,8 @@ deployment:
     limits:
       cpu: "500m"
       memory: 512Mi
-
 imageBuilder:
   clusterName: "chart-testing"
-
 environmentConfigs:
   - name: "id-dev"
     is_default: true
@@ -40,7 +38,6 @@ environmentConfigs:
       max_replica: 1
       cpu_request: "500m"
       memory_request: "500Mi"
-
 merlin-postgresql:
   enabled: true
   resources:
@@ -49,7 +46,6 @@ merlin-postgresql:
       memory: 256Mi
   persistence:
     size: 5Gi
-
 mlflow:
   resources:
     requests:
@@ -58,7 +54,6 @@ mlflow:
     limits:
       cpu: "500m"
       memory: "512Mi"
-
 mlflow-postgresql:
   resources:
     requests:
@@ -67,17 +62,14 @@ mlflow-postgresql:
   persistence:
     enabled: true
     size: 5Gi
-
 minio:
   resources:
     requests:
       cpu: 25m
       memory: 64Mi
-
 setupScript:
   # -- Image used to for setup scripts job
   image: bitnami/kubectl:latest
   clusterType: kind
-
 kserve:
   enabled: false

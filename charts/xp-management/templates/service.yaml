@@ -1,0 +1,18 @@
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "xp" (list "serviceName")) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.set-value" (list (include "management-svc.fullname" .) $globServiceName) }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "management-svc.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: {{ .Values.deployment.service.externalPort }}
+      targetPort: {{ .Values.deployment.service.internalPort }}
+      protocol: TCP
+  selector:
+    app: {{ template "management-svc.name" .}}
+    release: {{ .Release.Name }}

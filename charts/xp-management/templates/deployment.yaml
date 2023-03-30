@@ -1,0 +1,136 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "management-svc.fullname" . }}
+  labels:
+    {{- include "management-svc.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "management-svc.name" .}}
+      release: {{ .Release.Name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: {{ template "management-svc.name" .}}
+        release: {{ .Release.Name }}
+        {{- include "management-svc.labels" . | nindent 8 }}
+      {{- with .Values.deployment.annotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with .Values.deployment.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if and .Values.deployment.serviceAccount.create }}
+      serviceAccountName: {{ include "management-svc.serviceAccountName" . }}
+      {{- end }}
+      containers:
+      - name: api
+        image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        env:
+          {{- with .Values.deployment.extraEnvs }}
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.deployment.livenessProbe.path }}
+            port: {{ .Values.deployment.service.internalPort }}
+            scheme: HTTP
+          initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+          successThreshold: {{ .Values.deployment.livenessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.deployment.readinessProbe.path }}
+            port: {{ .Values.deployment.service.internalPort }}
+            scheme: HTTP
+          initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.deployment.readinessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds }}
+        resources:
+          {{- toYaml .Values.deployment.resources | nindent 12 }}
+        # Give time for running pods to terminate existing connection before letting
+        # Kubernetes terminate the pods.
+        # https://blog.sebastian-daschner.com/entries/zero-downtime-updates-kubernetes
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/bash", "-c", "sleep 15"]
+        args:
+        - serve
+        - --config=/etc/xp/config.yaml
+        {{- if .Values.uiConfig }}
+        - -ui-config
+        - /etc/xp/ui.config.json
+        {{- end }}
+        {{- with .Values.deployment.extraArgs }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        volumeMounts:
+        - name: config
+          mountPath: /etc/xp
+        {{- with .Values.deployment.extraVolumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      - name: swagger-ui
+        image: "swaggerapi/swagger-ui:{{ .Values.swaggerUi.image.tag }}"
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: {{ .Values.swaggerUi.service.internalPort }}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 500m
+            memory: 128Mi
+        env:
+        - name: LAYOUT
+          value: "BaseLayout"
+        - name: SWAGGER_JSON
+          value: "/app/experiments.yaml"
+        - name: PORT
+          value: "{{ .Values.swaggerUi.service.internalPort }}"
+        - name: API_SERVER
+          value: "{{ .Values.swaggerUi.apiServer }}"
+        command: ["sh", "-c"]
+        args:
+        - |
+          mkdir /app
+          export LOCAL_API_SERVER="http://127.0.0.1:{{ .Values.deployment.service.internalPort }}"
+          echo "Fetching swagger configuration from ${LOCAL_API_SERVER}/experiments.yaml..."
+          until $$(wget -O $${SWAGGER_JSON} --tries 1 --timeout 1 ${LOCAL_API_SERVER}/experiments.yaml); do
+            printf '.'
+            sleep 10
+          done
+          echo "Fetching swagger configuration from ${LOCAL_API_SERVER}/schema.yaml..."
+          until $$(wget -O /app/schema.yaml --tries 1 --timeout 1 ${LOCAL_API_SERVER}/schema.yaml); do
+            printf '.'
+            sleep 10
+          done
+          echo "Update Swagger config..."
+          sed -r -i 's%^((\s*)-(\s*)url\s*:).*$$%\1 "'$${API_SERVER}'"%' $${SWAGGER_JSON}
+          echo "Running Swagger UI..."
+          /usr/share/nginx/run.sh
+      volumes:
+      - name: config 
+        secret:
+          secretName: {{ template "management-svc.fullname" .}}-api-config
+      {{- with .Values.deployment.extraVolumes }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}

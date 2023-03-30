@@ -1,27 +1,62 @@
 # merlin
 
-![Version: 0.10.10](https://img.shields.io/badge/Version-0.10.10-informational?style=flat-square) ![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
+---
+![Version: 0.10.12](https://img.shields.io/badge/Version-0.10.12-informational?style=flat-square)
+![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
-## Maintainers
+## Introduction
 
-| Name | Email | Url |
-| ---- | ------ | --- |
-| caraml-dev | <caraml-dev@caraml.dev> |  |
+This Helm chart installs Merlin. I can also install the dependencies it requires, such as Kserve, MLP, etc.
+See `Chart.yaml` for full list of dependencies.
 
-## Requirements
+## Prerequisites
 
-| Repository | Name | Version |
-|------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
-| https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.4.16 |
-| https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.2 |
-| https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.2 |
+To use the charts here, [Helm](https://helm.sh/) must be configured for your
+Kubernetes cluster. Setting up Kubernetes and Helm is outside the scope of
+this README. Please refer to the Kubernetes and Helm documentation.
 
-## Values
+- **Helm 3.0+** – This chart was tested with Helm v3.9.0, but it is also expected to work with earlier Helm versions
+- **Kubernetes 1.22+** – This chart was tested with Kind v1.22.7 and minikube kubernetes version 1.22.*
+- When installing on minikube, please run in a separate shell:
+  ```sh
+  minikube tunnel
+  ```
+  This is to enable istio loadbalancer services to be allocated an IP address.
+
+## Installation
+
+### Add Helm repository
+
+```shell
+helm repo add caraml https://caraml-dev.github.io/helm-charts
+```
+
+### Installing the chart
+
+This command will install Merlin release named `merlin` in the `default` namespace.
+Default chart values will be used for the installation:
+```shell
+$ helm install caraml/merlin
+```
+
+You can (and most likely, should) override the default configuration with values suitable for your installation.
+Refer to [Configuration](#configuration) section for the detailed description of available configuration keys.
+
+### Uninstalling the chart
+
+To uninstall `merlin` release:
+```shell
+$ helm uninstall merlin
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+This includes the dependencies that were installed by the chart. Note that, any PVCs created by the chart will have to be deleted manually.
+
+## Configuration
+
+The following table lists the configurable parameters of the Merlin chart and their default values.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -127,12 +162,17 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | merlinExternalPostgresql.connMaxLifetime | string | `"0s"` |  |
 | merlinExternalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. |
 | merlinExternalPostgresql.database | string | `"merlin"` | External postgres database schema |
+| merlinExternalPostgresql.enableProxySidecar | bool | `false` | Enable if you want to configure a sidecar for creating a proxy for your db connections. |
 | merlinExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | merlinExternalPostgresql.maxIdleConns | int | `0` |  |
 | merlinExternalPostgresql.maxOpenConns | int | `0` |  |
 | merlinExternalPostgresql.password | string | `"password"` |  |
+| merlinExternalPostgresql.proxyType | string | `"cloudSqlProxy"` | Type of sidecar to be created, mentioned type needs to have the spec below. |
 | merlinExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | merlinExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
+| merlinExternalPostgresql.sidecarSpec | object | `{"cloudSqlProxy":{"dbConnectionName":"asia-east-1:merlin-db","dbPort":5432,"image":{"tag":"1.33.2"},"resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"spec":[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]}}` | container spec for the sidecar |
+| merlinExternalPostgresql.sidecarSpec.cloudSqlProxy | object | `{"dbConnectionName":"asia-east-1:merlin-db","dbPort":5432,"image":{"tag":"1.33.2"},"resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"spec":[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]}` | container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine |
+| merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.spec | list | `[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:{{ .Values.merlinExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]` | Container spec for the sidecar |
 | merlinExternalPostgresql.username | string | `"merlin"` | External postgres database user |
 | minio.chartValues.defaultBucket.enabled | bool | `true` |  |
 | minio.chartValues.defaultBucket.name | string | `"mlflow"` |  |
@@ -189,21 +229,29 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflow.service.externalPort | int | `80` |  |
 | mlflow.service.internalPort | int | `5000` |  |
 | mlflow.service.type | string | `"ClusterIP"` |  |
+| mlflow.serviceAccount.annotations | object | `{}` |  |
+| mlflow.serviceAccount.create | bool | `true` |  |
+| mlflow.serviceAccount.name | string | `"mlflow"` |  |
 | mlflow.statefulset.updateStrategy | string | `"RollingUpdate"` |  |
 | mlflow.tolerations | list | `[]` |  |
 | mlflow.trackingURL | string | `"http://www.example.com"` |  |
 | mlflowExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | mlflowExternalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. |
 | mlflowExternalPostgresql.database | string | `"mlflow"` | External postgres database schema |
+| mlflowExternalPostgresql.enableProxySidecar | bool | `false` | Enable if you want to configure a sidecar for creating a proxy for your db connections. |
 | mlflowExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | mlflowExternalPostgresql.password | string | `"password"` |  |
+| mlflowExternalPostgresql.proxyType | string | `"cloudSqlProxy"` | Type of sidecar to be created, mentioned type needs to have the spec below. |
 | mlflowExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | mlflowExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
+| mlflowExternalPostgresql.sidecarSpec | object | `{"cloudSqlProxy":{"dbConnectionName":"asia-east-1:mlflow-db","dbPort":5432,"image":{"tag":"1.33.2"},"resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"spec":[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]}}` | container spec for the sidecar |
+| mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy | object | `{"dbConnectionName":"asia-east-1:mlflow-db","dbPort":5432,"image":{"tag":"1.33.2"},"resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"spec":[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]}` | container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine |
+| mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.spec | list | `[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]` | Container spec for the sidecar |
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
-| mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
+| mlpApi.encryptionKey | string | `"secret-encryption"` |  |
 | monitoring.enabled | bool | `false` |  |
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
@@ -213,6 +261,9 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | sentry.enabled | bool | `false` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `"merlin"` |  |
 | swagger.apiHost | string | `"merlin.dev"` |  |
 | swagger.basePath | string | `"/api/merlin/v1"` |  |
 | swagger.enabled | bool | `true` |  |
@@ -250,6 +301,3 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | ui.mlp.apiHost | string | `"/api/v1"` |  |
 | ui.oauthClientID | string | `""` |  |
 | ui.upiDocURL | string | `"https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"` |  |
-
-----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
