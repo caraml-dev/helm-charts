@@ -52,6 +52,36 @@ caramlAuthzExternalPostgresql:
   secretName: ""
   # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
   secretKey: ""
+  # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
+  enableProxySidecar: false
+  # -- Type of sidecar to be created, mentioned type needs to have the spec below.
+  proxyType: cloudSqlProxy
+  # -- container spec for the sidecar
+  sidecarSpec:
+    # -- container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
+    cloudSqlProxy:
+      dbConnectionName: "asia-east-1:caraml-db"
+      dbPort: 5432
+      image:
+        tag: 1.33.2
+      resources: &mlpAuthzCloudCarSpecResource
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1G
+      # -- Container spec for the sidecar
+      spec:
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.caramlAuthzExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-instances={{ .Values.caramlAuthzExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.caramlAuthzExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
+          securityContext:
+            runAsNonRoot: true
+          resources: *mlpAuthzCloudCarSpecResource
 
 caraml-authz-postgresql:
   enabled: true
