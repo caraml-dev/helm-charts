@@ -57,6 +57,12 @@ spec:
           value: {{ template "caraml-authz.postgresql.dsn" . }}
         resources:
 {{- toYaml .Values.deployment.resources | nindent 10 }}
+      {{- if .Values.caramlAuthzExternalPostgresql.enableProxySidecar }}
+      {{- tpl (toYaml (index .Values.caramlAuthzExternalPostgresql.sidecarSpec .Values.caramlAuthzExternalPostgresql.proxyType "spec")) . | nindent 6 }}
+      {{- end }}
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ default "mlp-authz" .Values.serviceAccount.name }}
+      {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
