@@ -64,7 +64,7 @@ caramlAuthzExternalPostgresql:
       dbPort: 5432
       image:
         tag: 1.33.2
-      resources: &mlpAuthzCloudCarSpecResource
+      resources: &authzCloudCarSpecResource
         requests:
           cpu: 200m
           memory: 512Mi
@@ -81,7 +81,7 @@ caramlAuthzExternalPostgresql:
             - "-instances={{ .Values.caramlAuthzExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.caramlAuthzExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
           securityContext:
             runAsNonRoot: true
-          resources: *mlpAuthzCloudCarSpecResource
+          resources: *authzCloudCarSpecResource
 
 caraml-authz-postgresql:
   enabled: true
