@@ -40,7 +40,7 @@ feastCoreApi:
 imageBuilder:
   serviceAccount:
     create: true
-    name: "kaniko-sa"
+    name: "kaniko"
     annotations: {}
     labels: {}
   clusterName: "test"

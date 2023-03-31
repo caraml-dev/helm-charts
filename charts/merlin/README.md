@@ -137,7 +137,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.serviceAccount.annotations | object | `{}` |  |
 | imageBuilder.serviceAccount.create | bool | `true` |  |
 | imageBuilder.serviceAccount.labels | object | `{}` |  |
-| imageBuilder.serviceAccount.name | string | `"kaniko-sa"` |  |
+| imageBuilder.serviceAccount.name | string | `"kaniko"` |  |
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
 | ingress.enabled | bool | `false` |  |
