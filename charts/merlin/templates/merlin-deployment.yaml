@@ -159,10 +159,6 @@ spec:
                 name: {{ template "merlin.fullname" . }}-environments
                 key: imageBuilderK8sConfig
                 {{- end }}
-          {{- if .Values.imageBuilder.serviceAccount.name }}
-          - name: IMG_BUILDER_KANIKO_SERVICE_ACCOUNT
-            value: "{{ template "merlin.kaniko-sa" . }}"
-          {{- end }}
           - name: DEFAULT_FEAST_SERVING_URL
             value: "{{ .Values.transformer.feast.defaultServingURL }}"
           - name: FEAST_SERVING_URLS
@@ -272,6 +268,10 @@ spec:
           {{- end }}
           - name: DEPLOYMENT_LABEL_PREFIX
             value: "{{ .Values.deploymentLabelPrefix }}"
+          {{- if .Values.imageBuilder.serviceAccount.name }}
+          - name: IMG_BUILDER_KANIKO_SERVICE_ACCOUNT
+            value: "{{ template "merlin.kaniko-sa" . }}"
+          {{- end }}
         volumeMounts:
         - mountPath: /opt/config
           name: config
