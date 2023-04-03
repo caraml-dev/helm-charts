@@ -269,8 +269,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | swagger.service.internalPort | int | `8081` |  |
 | transformer.feast.authEnabled | bool | `false` |  |
 | transformer.feast.grpc.keepAliveEnabled | bool | `false` | |
-| transformer.feast.grpc.keepAliveTime | string | `30s` | |
-| transformer.feast.grpc.keepAliveTimeout | string | `5s` | |
+| transformer.feast.grpc.keepAliveTime | string | `"60s"` | |
+| transformer.feast.grpc.keepAliveTimeout | string | `"5s"` | |
 | transformer.feast.bigtableCredential | string | `nil` |  |
 | transformer.feast.coreAuthAudience | string | `"core.feast.dev"` |  |
 | transformer.feast.coreURL | string | `"core.feast.dev"` |  |
@@ -291,8 +291,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | transformer.jaeger.samplerParam | int | `1` |  |
 | transformer.jaeger.samplerType | string | `"const"` |  |
 | transformer.model.grpc.keepAliveEnabled | bool | `false` | |
-| transformer.model.grpc.keepAliveTime | string | `30s` | |
-| transformer.model.grpc.keepAliveTimeout | string | `5s` | |
+| transformer.model.grpc.keepAliveTime | string | `"60s"` | |
+| transformer.model.grpc.keepAliveTimeout | string | `"5s"` | |
 | transformer.simulation.feastBigtableServingURL | string | `"online-serving-bt.feast.dev"` |  |
 | transformer.simulation.feastRedisServingURL | string | `"online-serving-redis.feast.dev"` |  |
 | ui.apiHost | string | `"/api/merlin/v1"` |  |
