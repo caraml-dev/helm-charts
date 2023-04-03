@@ -28,7 +28,7 @@ deployment:
   tolerations: []
 environment: dev
 deploymentLabelPrefix: "gojek.com/"
-pyfuncGRPCOptions : "{}"
+pyfuncGRPCOptions: {}
 loggerDestinationURL: "http://yourDestinationLogger"
 queue:
   numOfWorkers: 1
