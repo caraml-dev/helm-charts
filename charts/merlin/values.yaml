@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: gojek/merlin
-    tag: 0.26.0-rc6
+    tag: v0.27.0-rc1
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -161,7 +161,7 @@ transformer:
       keepAliveTime: 60s
       keepAliveTimeout: 5s
   kafka:
-    # brokers: ""
+    brokers: "kafka-brokers"
     maxMessageSize: "1048588"
 
 # Google service account used to access GCP's resources.
