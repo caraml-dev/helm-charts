@@ -4,6 +4,9 @@ metadata:
   name: {{ template "caraml-authz.fullname" . }}
   labels:
     {{- include "caraml-authz.labels" . | nindent 4 }}
+    {{- with .Values.deployment.extraLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
@@ -57,9 +60,6 @@ spec:
           value: {{ template "caraml-authz.postgresql.dsn" . }}
         resources:
 {{- toYaml .Values.deployment.resources | nindent 10 }}
-      {{- if .Values.caramlAuthzExternalPostgresql.enableProxySidecar }}
-      {{- tpl (toYaml (index .Values.caramlAuthzExternalPostgresql.sidecarSpec .Values.caramlAuthzExternalPostgresql.proxyType "spec")) . | nindent 6 }}
-      {{- end }}
       {{- if .Values.serviceAccount.create }}
       serviceAccountName: {{ default "mlp-authz" .Values.serviceAccount.name }}
       {{- end }}
