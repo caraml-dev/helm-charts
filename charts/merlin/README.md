@@ -293,6 +293,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | transformer.model.grpc.keepAliveEnabled | bool | `false` | |
 | transformer.model.grpc.keepAliveTime | string | `"60s"` | |
 | transformer.model.grpc.keepAliveTimeout | string | `"5s"` | |
+| transformer.kafka.brokers | string | |
+| transformer.kafka.maxMessageSize| int | `1048588` | |
 | transformer.simulation.feastBigtableServingURL | string | `"online-serving-bt.feast.dev"` |  |
 | transformer.simulation.feastRedisServingURL | string | `"online-serving-redis.feast.dev"` |  |
 | ui.apiHost | string | `"/api/merlin/v1"` |  |
