@@ -61,7 +61,7 @@ spec:
         resources:
 {{- toYaml .Values.deployment.resources | nindent 10 }}
       {{- if .Values.serviceAccount.create }}
-      serviceAccountName: {{ default "mlp-authz" .Values.serviceAccount.name }}
+      serviceAccountName: {{ default "caraml-authz" .Values.serviceAccount.name }}
       {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
