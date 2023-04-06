@@ -72,8 +72,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
-| deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"v0.27.0-rc1"` |  |
+| deployment.image.repository | string | `"caraml-dev/merlin"` |  |
+| deployment.image.tag | string | `"0.27.0-rc1"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -252,7 +252,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
 | newrelic.licenseSecretName | string | `"newrelic-license-secret"` |  |
-| pyfuncGRPCOptions | object | `{}` |  |
+| pyfuncGRPCOptions | string | `"{}"` |  |
 | queue.numOfWorkers | int | `1` |  |
 | sentry.dsn | string | `""` |  |
 | sentry.enabled | bool | `false` |  |

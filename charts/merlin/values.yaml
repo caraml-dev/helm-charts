@@ -4,8 +4,8 @@ deployment:
   image:
     pullPolicy: IfNotPresent
     registry: ghcr.io
-    repository: gojek/merlin
-    tag: v0.27.0-rc1
+    repository: caraml-dev/merlin
+    tag: 0.27.0-rc1
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -28,7 +28,7 @@ deployment:
   tolerations: []
 environment: dev
 deploymentLabelPrefix: "gojek.com/"
-pyfuncGRPCOptions: {}
+pyfuncGRPCOptions: "{}"
 loggerDestinationURL: "http://yourDestinationLogger"
 queue:
   numOfWorkers: 1
