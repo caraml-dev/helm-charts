@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "turing.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:
       app: {{ template "turing.fullname" . }}
