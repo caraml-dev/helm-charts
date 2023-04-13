@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.17](https://img.shields.io/badge/Version-0.4.17-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
+![Version: 0.4.18](https://img.shields.io/badge/Version-0.4.18-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
 
 MLP API
 
@@ -30,6 +30,7 @@ MLP API
 | deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components |
 | deployment.environment | string | `"production"` |  |
+| deployment.extraLabels | object | `{}` | Additional labels to apply on the deployment |
 | deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"gojek/mlp","tag":"v1.7.4-build.6-322163a"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |

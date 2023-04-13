@@ -37,6 +37,9 @@ deployment:
   mlflowTrackingUrl: "http://mlflow.mlp"
   environment: "production"
 
+  # -- Additional labels to apply on the deployment
+  extraLabels: {}
+
   # -- Enabled CaraML applications
   applications:
     - name: Merlin
