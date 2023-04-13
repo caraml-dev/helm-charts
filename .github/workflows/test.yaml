@@ -51,13 +51,15 @@ jobs:
         id: unit-tests
         env:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
+          # Pinning the unittest plugin version as the latest master has a regression in matchRegex
+          UNITTEST_PLUGIN_VERSION: v0.2.11
         run: |
-          helm plugin install https://github.com/quintush/helm-unittest > /dev/null 2>&1
+          helm plugin install https://github.com/quintush/helm-unittest --version=$UNITTEST_PLUGIN_VERSION > /dev/null 2>&1
           for chart in $CHARTS_CHANGED; do
             chart=`echo $chart | sed 's/ *$//g'`
             cd $chart
             helm dep build > /dev/null 2>&1
-            helm unittest -u -d .
+            helm unittest --helm3 -u -d .
             cd ../../
           done
 
