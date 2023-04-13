@@ -1,0 +1,39 @@
+suite: Unit tests for turing Ingress
+templates:
+  - turing-ingress.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set default ingress annotation for ingress class correctly
+    set:
+      global: {}
+      ingress:
+        enabled: true
+        host: "http://abc.com"
+        class: istio
+    asserts:
+      - isKind:
+          of: Ingress
+      - equal: # check annotations
+          path: metadata.annotations.[kubernetes.io/ingress.class]
+          value: istio
+
+  - it: should set ingress annotations correctly
+    set:
+      global: {}
+      ingress:
+        enabled: true
+        host: "http://abc.com"
+        class: istio
+        annotations:
+          key1: value1
+    asserts:
+      - isKind:
+          of: Ingress
+      - equal: # check annotations
+          path: metadata.annotations.key1
+          value: value1
+  
