@@ -112,6 +112,11 @@ deployment:
   # - --config=/etc/secrets/experiment.yaml
   # - --config=/etc/secrets/database.yaml
 
+  # -- Extra labels to attach to the deployment.
+  extraLabels: {}
+  # Example
+  # sidecar.custom.inject: "true"
+
   # -- Extra volumes to attach to the Pod. For example, you can mount
   # additional secrets to these volumes
   extraVolumes: []

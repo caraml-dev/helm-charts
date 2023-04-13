@@ -1,7 +1,7 @@
 # xp-management
 
 ---
-![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square)
+![Version: 0.1.7](https://img.shields.io/badge/Version-0.1.7-informational?style=flat-square)
 ![AppVersion: 0.11.1](https://img.shields.io/badge/AppVersion-0.11.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
@@ -36,6 +36,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.apiConfig | object | `{"allowedOrigins":"*","authorizationConfig":{"enabled":false},"dbConfig":{"connMaxIdleTime":"0s","connMaxLifetime":"0s","maxIdleConns":0,"maxOpenConns":0},"deploymentConfig":{"environmentType":"dev"},"mlpConfig":{"url":"http://mlp:8080/v1"},"newRelicConfig":{"appName":"xp-management-service","enabled":false,"license":""},"port":8080,"segmenterConfig":{"s2_ids":{"maxS2CellLevel":14,"minS2CellLevel":10}},"sentryConfig":{"dsn":"","enabled":false,"labels":{"app":"xp-management-service"}},"xpUIConfig":{"appDirectory":"/app/xp-ui"}}` | XP Management Service server configuration. Please refer to https://github.com/caraml-dev/xp/blob/main/management-service/config/example.yaml for the detailed explanation on XP Management API config options |
 | deployment.extraArgs | list | `[]` | List of string containing additional XP Management Service server arguments. For example, multiple "-config" can be specified to use multiple config files |
 | deployment.extraEnvs | list | `[]` | List of extra environment variables to add to XP Management Service server container |
+| deployment.extraLabels | object | `{}` | Extra labels to attach to the deployment. |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts to attach to XP Management Service server container. For example to mount the extra volume containing secrets |
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
