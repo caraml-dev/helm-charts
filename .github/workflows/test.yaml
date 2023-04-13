@@ -52,12 +52,12 @@ jobs:
         env:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |
-          helm plugin install https://github.com/quintush/helm-unittest > /dev/null 2>&1
+          helm plugin install https://github.com/helm-unittest/helm-unittest > /dev/null 2>&1
           for chart in $CHARTS_CHANGED; do
             chart=`echo $chart | sed 's/ *$//g'`
             cd $chart
             helm dep build > /dev/null 2>&1
-            helm unittest --helm3 -u -d .
+            helm unittest -u -d .
             cd ../../
           done
 

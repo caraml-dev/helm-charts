@@ -161,6 +161,12 @@ spec:
                 {{- end }}
           - name: DEFAULT_FEAST_SERVING_URL
             value: "{{ .Values.transformer.feast.defaultServingURL }}"
+          - name: FEAST_SERVING_KEEP_ALIVE_ENABLED
+            value: "{{ .Values.transformer.feast.grpc.keepAliveEnabled }}"
+          - name: FEAST_SERVING_KEEP_ALIVE_TIME
+            value: "{{ .Values.transformer.feast.grpc.keepAliveTime }}"
+          - name: FEAST_SERVING_KEEP_ALIVE_TIMEOUT
+            value: "{{ .Values.transformer.feast.grpc.keepAliveTimeout }}"
           - name: FEAST_SERVING_URLS
             value: {{ .Values.transformer.feast.servingURLs | toJson | quote }}
           {{- if .Values.transformer.feast.redisStorage }}
@@ -187,6 +193,16 @@ spec:
             value: "{{ .Values.transformer.feast.authEnabled }}"
           - name: STANDARD_TRANSFORMER_IMAGE_NAME
             value: "{{ .Values.transformer.image }}"
+          - name: MODEL_CLIENT_KEEP_ALIVE_ENABLED
+            value: "{{ .Values.transformer.model.grpc.keepAliveEnabled }}"
+          - name: MODEL_CLIENT_KEEP_ALIVE_TIME
+            value: "{{ .Values.transformer.model.grpc.keepAliveTime }}"
+          - name: MODEL_CLIENT_KEEP_ALIVE_TIMEOUT
+            value: "{{ .Values.transformer.model.grpc.keepAliveTimeout }}"
+          - name: KAFKA_BROKERS
+            value: "{{ .Values.transformer.kafka.brokers }}"
+          - name: KAFKA_MAX_MESSAGE_SIZE_BYTES
+            value: "{{ .Values.transformer.kafka.maxMessageSize }}"
           - name: JAEGER_AGENT_HOST
             value: "{{ .Values.transformer.jaeger.agentHost }}"
           - name: JAEGER_AGENT_PORT
@@ -197,6 +213,8 @@ spec:
             value: "{{ .Values.transformer.jaeger.samplerParam }}"
           - name: JAEGER_DISABLED
             value: "{{ .Values.transformer.jaeger.disabled }}"
+          - name: PYFUNC_GRPC_OPTIONS
+            value: "{{ .Values.pyfuncGRPCOptions }}"
           - name: DEPLOYMENT_CONFIG_PATH
             value: {{ ternary (printf "/opt/config/%s" "environment.yaml") (printf "/opt/config/%s" .Values.mlp.environmentConfigSecret.envKey) (eq .Values.mlp.environmentConfigSecret.name "")}}
           {{ if .Values.sentry.enabled }}
