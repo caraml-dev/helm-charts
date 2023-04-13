@@ -1,8 +1,8 @@
 # merlin
 
 ---
-![Version: 0.10.12](https://img.shields.io/badge/Version-0.10.12-informational?style=flat-square)
-![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
+![Version: 0.10.13](https://img.shields.io/badge/Version-0.10.13-informational?style=flat-square)
+![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -72,8 +72,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
-| deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.26.0-rc6"` |  |
+| deployment.image.repository | string | `"caraml-dev/merlin"` |  |
+| deployment.image.tag | string | `"0.27.0-rc1"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -252,6 +252,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
 | newrelic.licenseSecretName | string | `"newrelic-license-secret"` |  |
+| pyfuncGRPCOptions | string | `"{}"` |  |
 | queue.numOfWorkers | int | `1` |  |
 | sentry.dsn | string | `""` |  |
 | sentry.enabled | bool | `false` |  |
@@ -272,6 +273,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | transformer.feast.coreURL | string | `"core.feast.dev"` |  |
 | transformer.feast.defaultFeastSource | string | `"BIGTABLE"` |  |
 | transformer.feast.defaultServingURL | string | `"online-serving-redis.feast.dev"` |  |
+| transformer.feast.grpc.keepAliveEnabled | bool | `false` |  |
+| transformer.feast.grpc.keepAliveTime | string | `"60s"` |  |
+| transformer.feast.grpc.keepAliveTimeout | string | `"5s"` |  |
 | transformer.feast.servingURLs[0].host | string | `"online-serving-redis.feast.dev"` |  |
 | transformer.feast.servingURLs[0].icon | string | `"redis"` |  |
 | transformer.feast.servingURLs[0].label | string | `"Online Serving with Redis"` |  |
@@ -286,6 +290,11 @@ The following table lists the configurable parameters of the Merlin chart and th
 | transformer.jaeger.disabled | bool | `false` |  |
 | transformer.jaeger.samplerParam | int | `1` |  |
 | transformer.jaeger.samplerType | string | `"const"` |  |
+| transformer.kafka.brokers | string | `"kafka-brokers"` |  |
+| transformer.kafka.maxMessageSize | string | `"1048588"` |  |
+| transformer.model.grpc.keepAliveEnabled | bool | `false` |  |
+| transformer.model.grpc.keepAliveTime | string | `"60s"` |  |
+| transformer.model.grpc.keepAliveTimeout | string | `"5s"` |  |
 | transformer.simulation.feastBigtableServingURL | string | `"online-serving-bt.feast.dev"` |  |
 | transformer.simulation.feastRedisServingURL | string | `"online-serving-redis.feast.dev"` |  |
 | ui.apiHost | string | `"/api/merlin/v1"` |  |

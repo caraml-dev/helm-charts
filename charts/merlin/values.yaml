@@ -4,8 +4,8 @@ deployment:
   image:
     pullPolicy: IfNotPresent
     registry: ghcr.io
-    repository: gojek/merlin
-    tag: 0.26.0-rc6
+    repository: caraml-dev/merlin
+    tag: 0.27.0-rc1
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -28,6 +28,7 @@ deployment:
   tolerations: []
 environment: dev
 deploymentLabelPrefix: "gojek.com/"
+pyfuncGRPCOptions: "{}"
 loggerDestinationURL: "http://yourDestinationLogger"
 queue:
   numOfWorkers: 1
@@ -143,6 +144,10 @@ transformer:
     coreURL: core.feast.dev
     coreAuthAudience: core.feast.dev
     authEnabled: false
+    grpc:
+      keepAliveEnabled: false
+      keepAliveTime: 60s
+      keepAliveTimeout: 5s
   image: merlin-transformer:1.0.0
   jaeger:
     agentHost: localhost
@@ -150,6 +155,15 @@ transformer:
     samplerType: const
     samplerParam: 1
     disabled: false
+  model:
+    grpc:
+      keepAliveEnabled: false
+      keepAliveTime: 60s
+      keepAliveTimeout: 5s
+  kafka:
+    brokers: "kafka-brokers"
+    maxMessageSize: "1048588"
+
 # Google service account used to access GCP's resources.
 #
 # gcpServiceAccount:
