@@ -58,7 +58,7 @@ spec:
           {{- toYaml .Values.deployment.resources | nindent 12 }}
         args:
         - -config
-        - /etc/turing/config.yaml
+        - /etc/turing/config-yaml
         {{- if .Values.uiConfig }}
         - -ui-config
         - /etc/turing/ui.config.json
