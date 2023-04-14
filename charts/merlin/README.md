@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.10.13](https://img.shields.io/badge/Version-0.10.13-informational?style=flat-square)
+![Version: 0.10.14](https://img.shields.io/badge/Version-0.10.14-informational?style=flat-square)
 ![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -134,6 +134,10 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.resources.requests.cpu | string | `"1"` |  |
 | imageBuilder.resources.requests.memory | string | `"512Mi"` |  |
 | imageBuilder.retention | string | `"48h"` |  |
+| imageBuilder.serviceAccount.annotations | object | `{}` |  |
+| imageBuilder.serviceAccount.create | bool | `true` |  |
+| imageBuilder.serviceAccount.labels | object | `{}` |  |
+| imageBuilder.serviceAccount.name | string | `"kaniko"` |  |
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
 | ingress.enabled | bool | `false` |  |

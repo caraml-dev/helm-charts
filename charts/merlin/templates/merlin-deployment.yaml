@@ -286,6 +286,10 @@ spec:
           {{- end }}
           - name: DEPLOYMENT_LABEL_PREFIX
             value: "{{ .Values.deploymentLabelPrefix }}"
+          {{- if .Values.imageBuilder.serviceAccount.name }}
+          - name: IMG_BUILDER_KANIKO_SERVICE_ACCOUNT
+            value: "{{ template "merlin.kaniko-sa" . }}"
+          {{- end }}
         volumeMounts:
         - mountPath: /opt/config
           name: config
