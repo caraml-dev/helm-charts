@@ -4,6 +4,9 @@ metadata:
   name: {{ include "management-svc.fullname" . }}
   labels:
     {{- include "management-svc.labels" . | nindent 4 }}
+    {{- with .Values.deployment.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
@@ -128,7 +131,7 @@ spec:
           echo "Running Swagger UI..."
           /usr/share/nginx/run.sh
       volumes:
-      - name: config 
+      - name: config
         secret:
           secretName: {{ template "management-svc.fullname" .}}-api-config
       {{- with .Values.deployment.extraVolumes }}

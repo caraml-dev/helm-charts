@@ -1,7 +1,7 @@
 # xp-management
 
 ---
-![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square)
+![Version: 0.1.7](https://img.shields.io/badge/Version-0.1.7-informational?style=flat-square)
 ![AppVersion: 0.11.1](https://img.shields.io/badge/AppVersion-0.11.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
@@ -42,6 +42,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Management Service image |
 | deployment.image.repository | string | `"caraml-dev/xp/xp-management"` | Docker image repository for XP Management Service |
 | deployment.image.tag | string | `"v0.11.2-rc1"` | Docker image tag for XP Management Service |
+| deployment.labels | object | `{}` | Labels to attach to the deployment. |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |
