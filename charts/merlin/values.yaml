@@ -73,7 +73,8 @@ imageBuilder:
   tolerations: []
   nodeSelectors: {}
   maxRetry: 3
-  k8sConfig: ''
+  jobSafeToEvict: false
+  k8sConfig: ""
   # Example json
   # '{
   #   "name": "dev-cluster",
@@ -117,7 +118,21 @@ transformer:
     feastBigtableServingURL: online-serving-bt.feast.dev
   feast:
     defaultServingURL: online-serving-redis.feast.dev
-    servingURLs: [{host: "online-serving-redis.feast.dev", label: "Online Serving with Redis", source_type: "REDIS", icon: "redis"}, {host: "online-serving-bigtable.feast.dev", label: "Online Serving with BigTable", source_type: "BIGTABLE", icon: "bigtable"}]
+    servingURLs:
+      [
+        {
+          host: "online-serving-redis.feast.dev",
+          label: "Online Serving with Redis",
+          source_type: "REDIS",
+          icon: "redis",
+        },
+        {
+          host: "online-serving-bigtable.feast.dev",
+          label: "Online Serving with BigTable",
+          source_type: "BIGTABLE",
+          icon: "bigtable",
+        },
+      ]
     ## Redis storage configuration for feast retrieval
     ##
     # redisStorage:
@@ -235,7 +250,13 @@ ui:
   upiDocURL: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
   mlp:
     apiHost: /api/v1
-  docsURL: [{"href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md", "label": "Getting Started with Merlin"}]
+  docsURL:
+    [
+      {
+        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
+        "label": "Getting Started with Merlin",
+      },
+    ]
   # -- Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
   maxAllowedReplica: 20
@@ -421,7 +442,8 @@ mlflow:
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the fullname template
     name: mlflow
-    annotations: {}
+    annotations:
+      {}
       # example.io/example: example
   ingress:
     enabled: false
