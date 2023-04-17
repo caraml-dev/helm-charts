@@ -4,7 +4,7 @@ metadata:
   name: {{ include "management-svc.fullname" . }}
   labels:
     {{- include "management-svc.labels" . | nindent 4 }}
-    {{- with .Values.deployment.extraLabels }}
+    {{- with .Values.deployment.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:

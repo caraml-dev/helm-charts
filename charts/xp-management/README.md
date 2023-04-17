@@ -36,13 +36,13 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.apiConfig | object | `{"allowedOrigins":"*","authorizationConfig":{"enabled":false},"dbConfig":{"connMaxIdleTime":"0s","connMaxLifetime":"0s","maxIdleConns":0,"maxOpenConns":0},"deploymentConfig":{"environmentType":"dev"},"mlpConfig":{"url":"http://mlp:8080/v1"},"newRelicConfig":{"appName":"xp-management-service","enabled":false,"license":""},"port":8080,"segmenterConfig":{"s2_ids":{"maxS2CellLevel":14,"minS2CellLevel":10}},"sentryConfig":{"dsn":"","enabled":false,"labels":{"app":"xp-management-service"}},"xpUIConfig":{"appDirectory":"/app/xp-ui"}}` | XP Management Service server configuration. Please refer to https://github.com/caraml-dev/xp/blob/main/management-service/config/example.yaml for the detailed explanation on XP Management API config options |
 | deployment.extraArgs | list | `[]` | List of string containing additional XP Management Service server arguments. For example, multiple "-config" can be specified to use multiple config files |
 | deployment.extraEnvs | list | `[]` | List of extra environment variables to add to XP Management Service server container |
-| deployment.extraLabels | object | `{}` | Extra labels to attach to the deployment. |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts to attach to XP Management Service server container. For example to mount the extra volume containing secrets |
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Management Service image |
 | deployment.image.repository | string | `"caraml-dev/xp/xp-management"` | Docker image repository for XP Management Service |
 | deployment.image.tag | string | `"v0.11.2-rc1"` | Docker image tag for XP Management Service |
+| deployment.labels | object | `{}` | Labels to attach to the deployment. |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |

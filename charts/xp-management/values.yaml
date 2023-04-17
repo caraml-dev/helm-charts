@@ -112,8 +112,8 @@ deployment:
   # - --config=/etc/secrets/experiment.yaml
   # - --config=/etc/secrets/database.yaml
 
-  # -- Extra labels to attach to the deployment.
-  extraLabels: {}
+  # -- Labels to attach to the deployment.
+  labels: {}
   # Example
   # sidecar.custom.inject: "true"
 
