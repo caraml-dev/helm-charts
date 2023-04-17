@@ -73,7 +73,7 @@ imageBuilder:
   tolerations: []
   nodeSelectors: {}
   maxRetry: 3
-  jobSafeToEvict: false
+  safeToEvict: false
   k8sConfig: ""
   # Example json
   # '{

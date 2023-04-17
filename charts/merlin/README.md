@@ -119,7 +119,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.baseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
 | imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
-| imageBuilder.jobSafeToEvict | bool | `false` |  |
 | imageBuilder.k8sConfig | string | `""` |  |
 | imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
 | imageBuilder.maxRetry | int | `3` |  |
@@ -135,6 +134,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.resources.requests.cpu | string | `"1"` |  |
 | imageBuilder.resources.requests.memory | string | `"512Mi"` |  |
 | imageBuilder.retention | string | `"48h"` |  |
+| imageBuilder.safeToEvict | bool | `false` |  |
 | imageBuilder.serviceAccount.annotations | object | `{}` |  |
 | imageBuilder.serviceAccount.create | bool | `true` |  |
 | imageBuilder.serviceAccount.labels | object | `{}` |  |
