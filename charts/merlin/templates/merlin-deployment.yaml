@@ -290,6 +290,8 @@ spec:
           - name: IMG_BUILDER_KANIKO_SERVICE_ACCOUNT
             value: "{{ template "merlin.kaniko-sa" . }}"
           {{- end }}
+          - name: IMG_BUILDER_SAFE_TO_EVICT
+            value: "{{ .Values.imageBuilder.safeToEvict }}"
         volumeMounts:
         - mountPath: /opt/config
           name: config
