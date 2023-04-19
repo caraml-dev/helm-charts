@@ -123,33 +123,33 @@ API config related
 {{- end -}}
 
 {{- define "management-svc.defaultConfig" -}}
-port: 8080
-allowedOrigins: "*"
-authorizationConfig:
-  enabled: false
-dbConfig:
-  host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
-  port: 5432
-  database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
-  user: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
-  connMaxIdleTime: {{ .Values.deployment.apiConfig.dbConfig.connMaxIdleTime }}
-  connMaxLifetime: {{ .Values.deployment.apiConfig.dbConfig.connMaxLifetime }}
-  maxIdleConns: {{ .Values.deployment.apiConfig.dbConfig.maxIdleConns }}
-  maxOpenConns: {{ .Values.deployment.apiConfig.dbConfig.maxOpenConns }}
-deploymentConfig:
-  dnvironmentType: dev
-segmenterConfig:
-  s2_ids:
-    minS2CellLevel: 10
-    maxS2CellLevel: 14
-mlpConfig:
-  url: {{ .Values.deployment.apiConfig.mlpConfig.url | default (include "management-svc.mlp.server.url" .) | quote }}
-newRelicConfig:
-  enabled: false
-sentryConfig:
-  enabled: false
-xpUIConfig:
-  appDirectory: /app/xp-ui
+Port: 8080
+AllowedOrigins: "*"
+AuthorizationConfig:
+  Enabled: false
+DbConfig:
+  Host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
+  Port: 5432
+  Database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
+  User: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
+  ConnMaxIdleTime: {{ .Values.deployment.apiConfig.dbConfig.connMaxIdleTime }}
+  ConnMaxLifetime: {{ .Values.deployment.apiConfig.dbConfig.connMaxLifetime }}
+  MaxIdleConns: {{ .Values.deployment.apiConfig.dbConfig.maxIdleConns }}
+  MaxOpenConns: {{ .Values.deployment.apiConfig.dbConfig.maxOpenConns }}
+DeploymentConfig:
+  EnvironmentType: dev
+SegmenterConfig:
+  S2_IDs:
+    MinS2CellLevel: 10
+    MaxS2CellLevel: 14
+MLPConfig:
+  URL: {{ .Values.deployment.apiConfig.mlpConfig.url | default (include "management-svc.mlp.server.url" .) | quote }}
+NewRelicConfig:
+  Enabled: false
+SentryConfig:
+  Enabled: false
+XpUIConfig:
+  AppDirectory: /app/xp-ui
 {{- end -}}
 
 {{- define "management-svc.config" -}}
