@@ -130,7 +130,7 @@ AuthorizationConfig:
 DbConfig:
   Host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
   Port: 5432
-  Database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
+  Database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "xp" "postgresqlDatabase") }}
   User: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
   ConnMaxIdleTime: {{ .Values.deployment.apiConfig.DbConfig.ConnMaxIdleTime }}
   ConnMaxLifetime: {{ .Values.deployment.apiConfig.DbConfig.ConnMaxLifetime }}
@@ -154,5 +154,5 @@ XpUIConfig:
 
 {{- define "management-svc.config" -}}
 {{- $defaultConfig := include "management-svc.defaultConfig" . | fromYaml -}}
-{{ .Values.deployment.apiConfig | merge $defaultConfig | toYaml }}
+{{ .Values.deployment.apiConfig | mergeOverwrite $defaultConfig | toYaml }}
 {{- end -}}
