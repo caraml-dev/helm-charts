@@ -81,7 +81,7 @@ Create the name of the service account to use
 {{- end -}}
 
 {{- define "management-svc.sentry.enabled" -}}
-{{ eq ((.Values.deployment.apiConfig.sentryConfig).enabled | toString) "true" }}
+{{ eq ((.Values.deployment.apiConfig.SentryConfig).enabled | toString) "true" }}
 {{- end -}}
 
 {{- define "management-svc.sentry.dsn" -}}
@@ -119,7 +119,7 @@ API config related
     {{- $globalMLPUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "mlp" (list "serviceName")))) }}
   {{- end }}
 {{- end }}
-{{- printf "%s" (include "common.set-value" (list .Values.deployment.apiConfig.mlpConfig.url $globalMLPUrl)) -}}
+{{- printf "%s" (include "common.set-value" (list .Values.deployment.apiConfig.MlpConfig.URL $globalMLPUrl)) -}}
 {{- end -}}
 
 {{- define "management-svc.defaultConfig" -}}
