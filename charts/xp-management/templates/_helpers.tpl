@@ -132,10 +132,10 @@ DbConfig:
   Port: 5432
   Database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
   User: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
-  ConnMaxIdleTime: {{ .Values.deployment.apiConfig.dbConfig.connMaxIdleTime }}
-  ConnMaxLifetime: {{ .Values.deployment.apiConfig.dbConfig.connMaxLifetime }}
-  MaxIdleConns: {{ .Values.deployment.apiConfig.dbConfig.maxIdleConns }}
-  MaxOpenConns: {{ .Values.deployment.apiConfig.dbConfig.maxOpenConns }}
+  ConnMaxIdleTime: {{ .Values.deployment.apiConfig.DbConfig.ConnMaxIdleTime }}
+  ConnMaxLifetime: {{ .Values.deployment.apiConfig.DbConfig.ConnMaxLifetime }}
+  MaxIdleConns: {{ .Values.deployment.apiConfig.DbConfig.MaxIdleConns }}
+  MaxOpenConns: {{ .Values.deployment.apiConfig.DbConfig.MaxOpenConns }}
 DeploymentConfig:
   EnvironmentType: dev
 SegmenterConfig:
@@ -143,7 +143,7 @@ SegmenterConfig:
     MinS2CellLevel: 10
     MaxS2CellLevel: 14
 MLPConfig:
-  URL: {{ .Values.deployment.apiConfig.mlpConfig.url | default (include "management-svc.mlp.server.url" .) | quote }}
+  URL: {{ .Values.deployment.apiConfig.MlpConfig.URL | default (include "management-svc.mlp.server.url" .) | quote }}
 NewRelicConfig:
   Enabled: false
 SentryConfig:
