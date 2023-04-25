@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.4.43](https://img.shields.io/badge/Version-0.4.43-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.4.44](https://img.shields.io/badge/Version-0.4.44-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -21,7 +21,7 @@ A Helm chart for deploying CaraML components
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | merlin | 0.10.15 |
+| https://caraml-dev.github.io/helm-charts | merlin | 0.10.16 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.4.18 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
 | https://charts.jetstack.io | cert-manager | v1.8.2 |
