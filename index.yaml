@@ -190,6 +190,73 @@ entries:
   caraml:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-04-25T10:34:26.057068661Z"
+    dependencies:
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.18
+    - condition: merlin.enabled
+      name: merlin
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.10.15
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: caraml-authz
+      condition: caraml-authz.enabled
+      name: authz
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.9
+    - condition: caraml-routes.enabled
+      name: caraml-routes
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.2
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.9
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.8.2
+    description: A Helm chart for deploying CaraML components
+    digest: e5e15a715e42de70577c8a4febe702dea655e7e48923cdaeb5698a0bdf2d1f83
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.4.43/caraml-0.4.43.tgz
+    version: 0.4.43
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-03-29T04:28:30.579017445Z"
     dependencies:
     - condition: mlp.enabled
@@ -5276,6 +5343,46 @@ entries:
   merlin:
   - apiVersion: v2
     appVersion: v0.27.0-rc1
+    created: "2023-04-25T10:34:26.251817981Z"
+    dependencies:
+    - alias: merlin-postgresql
+      condition: merlin-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: mlflow-postgresql
+      condition: mlflow-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.18
+    - alias: kserve
+      condition: kserve.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: minio
+      condition: minio.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: Kubernetes-friendly ML model management, deployment, and serving.
+    digest: 6a0317ac9717717a0843343e6c82f8212a4280b38700fc09a9aeb5e0bec64033
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: merlin
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/merlin-0.10.16/merlin-0.10.16.tgz
+    version: 0.10.16
+  - apiVersion: v2
+    appVersion: v0.27.0-rc1
     created: "2023-04-18T03:49:19.37125739Z"
     dependencies:
     - alias: merlin-postgresql
@@ -8176,6 +8283,36 @@ entries:
   turing:
   - apiVersion: v2
     appVersion: 1.9.2
+    created: "2023-04-25T10:34:26.428900499Z"
+    dependencies:
+    - alias: turing-postgresql
+      condition: turing-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.18
+    - condition: merlin.enabled
+      name: merlin
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.10.15
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: Kubernetes-friendly multi-model orchestration and experimentation
+      system.
+    digest: ee80276d4687f34ba47630066d7a254ff8d2c17e7ad4d588154deb4c4b9296d5
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: turing
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/turing-0.2.21/turing-0.2.21.tgz
+    version: 0.2.21
+  - apiVersion: v2
+    appVersion: 1.9.2
     created: "2023-04-13T13:20:49.723306682Z"
     dependencies:
     - alias: turing-postgresql
@@ -8235,6 +8372,32 @@ entries:
     - https://github.com/caraml-dev/helm-charts/releases/download/turing-0.2.18/turing-0.2.18.tgz
     version: 0.2.18
   xp-management:
+  - apiVersion: v2
+    appVersion: 0.11.1
+    created: "2023-04-25T10:34:26.600229252Z"
+    dependencies:
+    - alias: postgresql
+      condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.18
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: Management service - A part of XP system that is used to configure
+      experiments
+    digest: ed50f1d43fbe28281a3ece94ef2a70e8d0786ca3ceb26bce318b1e568805ea96
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: xp-management
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/xp-management-0.1.10/xp-management-0.1.10.tgz
+    version: 0.1.10
   - apiVersion: v2
     appVersion: 0.11.1
     created: "2023-04-19T12:27:39.319453069Z"
@@ -8420,6 +8583,28 @@ entries:
   xp-treatment:
   - apiVersion: v2
     appVersion: 0.11.1
+    created: "2023-04-25T10:34:26.753176995Z"
+    dependencies:
+    - alias: xp-management
+      condition: xp-management.enabled
+      name: xp-management
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.9
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: Treatment service - A part of XP system that is used to obtain the
+      treatment configuration from active experiments
+    digest: b6c59208ee877b8d84bb932dab1af7d4e2ef1e6d1f34bde9228ac28f008d48c5
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: xp-treatment
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.5/xp-treatment-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 0.11.1
     created: "2023-03-20T07:29:47.378325946Z"
     dependencies:
     - alias: xp-management
@@ -8462,4 +8647,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-04-19T12:27:39.319836673Z"
+generated: "2023-04-25T10:34:26.762942706Z"
