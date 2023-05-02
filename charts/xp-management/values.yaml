@@ -17,7 +17,7 @@ deployment:
     # -- Docker image repository for XP Management Service
     repository: caraml-dev/xp/xp-management
     # -- Docker image tag for XP Management Service
-    tag: v0.12.0
+    tag: v0.12.1
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 

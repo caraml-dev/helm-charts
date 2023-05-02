@@ -8,7 +8,7 @@ deployment:
     # -- Docker image repository for XP Treatment Service
     repository: caraml-dev/xp/xp-treatment
     # -- Docker image tag for XP Treatment Service
-    tag: v0.12.0
+    tag: v0.12.1
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
