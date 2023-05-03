@@ -398,3 +398,24 @@ cert-manager:
   # NOTE: disable certmanager if kserve needs to be installed
   fullnameOverride: cert-manager
   enabled: false
+
+###################################################################
+# Turing dependency
+# #################################################################
+turing:
+  enabled: true
+  turing-postgresql:
+    # -- To enable/disable turing specific postgresql
+    enabled: false
+  mlp:
+    enabled: false
+  merlin:
+    enabled: false
+  deployment:
+    resources:
+      requests:
+        cpu: "250m"
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
