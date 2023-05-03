@@ -51,6 +51,8 @@ mlp:
   deployment:
     authorization:
       enabled: true
+  encryption:
+    key: "example-key-here"
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
@@ -419,3 +421,6 @@ turing:
       limits:
         cpu: "500m"
         memory: 512Mi
+  config:
+    MLPConfig:
+      MLPEncryptionKey: "example-key-here"

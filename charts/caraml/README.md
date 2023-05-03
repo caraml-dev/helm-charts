@@ -177,6 +177,7 @@ A Helm chart for deploying CaraML components
 | merlin.mlp.enabled | bool | `false` |  |
 | mlp.deployment.authorization.enabled | bool | `true` |  |
 | mlp.enabled | bool | `true` | To enable/disable MLP chart installation. |
+| mlp.encryption.key | string | `"example-key-here"` |  |
 | mlp.postgresql.enabled | bool | `false` | To enable/disable MLP specific postgres |
 | postgresql.enabled | bool | `true` | To enable/disable CaraML specific postgres |
 | postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\nCREATE DATABASE merlin;\nCREATE DATABASE mlflow;\nCREATE DATABASE authz;\n"` |  |
@@ -184,6 +185,7 @@ A Helm chart for deploying CaraML components
 | postgresql.postgresqlDatabase | string | `"caraml"` | To set the database schema name created in postgres |
 | postgresql.postgresqlUsername | string | `"caraml"` | To set the user name for the database instance |
 | postgresql.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| turing.config.MLPConfig.MLPEncryptionKey | string | `"example-key-here"` |  |
 | turing.deployment.resources.limits.cpu | string | `"500m"` |  |
 | turing.deployment.resources.limits.memory | string | `"512Mi"` |  |
 | turing.deployment.resources.requests.cpu | string | `"250m"` |  |
