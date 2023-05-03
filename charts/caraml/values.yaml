@@ -56,6 +56,9 @@ mlp:
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
+  mlpApi:
+    # encryptionKey must be specified using --set flag.
+    encryptionKey: "example-key-here"
   deployment:
     resources:
       requests:
@@ -242,6 +245,7 @@ postgresql:
       CREATE DATABASE merlin;
       CREATE DATABASE mlflow;
       CREATE DATABASE authz;
+      CREATE DATABASE turing;
 ############################################################
 # Istio Base
 ############################################################
