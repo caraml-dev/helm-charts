@@ -192,3 +192,6 @@ clusterLocalGateway:
 cert-manager:
   fullnameOverride: cert-manager
   enabled: true
+turing:
+  environmentConfigs:
+    - name: chart-testing
