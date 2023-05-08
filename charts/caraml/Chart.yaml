@@ -21,7 +21,7 @@ dependencies:
   condition: caraml-authz.enabled
   name: authz
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.9
+  version: 0.1.10
 - condition: caraml-routes.enabled
   name: caraml-routes
   repository: https://caraml-dev.github.io/helm-charts
