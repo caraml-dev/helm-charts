@@ -83,7 +83,7 @@ jobs:
           fi
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/config/ct.yaml --excluded-charts kserve,common --print-config # TODO: Remove print-config flag when done with testing
+        run: ct install --config .github/config/ct.yaml --excluded-charts kserve,common --print-config
 
       - name: Run chart-testing for kserve (install)
         env:

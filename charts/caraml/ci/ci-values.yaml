@@ -40,33 +40,6 @@ merlin:
     clusterName: "chart-testing"
   vault:
     enabled: false
-    # enabled: true
-    # secretName: "vault-secret"
-    # helmChart:
-    #   chart: vault
-    #   repository: https://helm.releases.hashicorp.com
-    #   version: 0.19.0
-    #   release: vault
-    #   namespace: vault
-    #   createNamespace: true
-    # chartValues:
-    #   injector:
-    #     enabled: false
-    #   server:
-    #     # -- This is just for quick install. For a production, NEVER EVER use the vault server in dev mode.
-    #     dev:
-    #       enabled: true
-    #     dataStore:
-    #       enabled: false
-    #     resources:
-    #       requests:
-    #         cpu: 25m
-    #         memory: 64Mi
-    #       limits:
-    #         cpu: 50m
-    #         memory: 128Mi
-    #     affinity: null
-    #     tolerations: null
   environmentConfigs:
     - name: "chart-testing"
       is_default: true
