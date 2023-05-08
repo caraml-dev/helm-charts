@@ -1,0 +1,27 @@
+{{- if and .Values.registry.enabled .Values.registry.autoscaling.enabled }}
+{{- $fullname := include "caraml-store.registry.fullname" . }}
+{{- if (semverCompare ">=1.23-0" .Capabilities.KubeVersion.GitVersion)}}
+apiVersion: autoscaling/v2
+{{- else }}
+apiVersion: autoscaling/v2beta2
+{{- end }}
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $fullname }}
+  labels:
+    {{- include "caraml-store.registry.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $fullname }}
+  minReplicas: {{ .Values.registry.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.registry.autoscaling.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          averageUtilization: {{ .Values.registry.autoscaling.targetCPUUtilizationPercentage }}
+          type: Utilization
+{{- end }}

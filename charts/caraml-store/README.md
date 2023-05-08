@@ -1,6 +1,6 @@
 # caraml-store
 
-![Version: 0.1.13](https://img.shields.io/badge/Version-0.1.13-informational?style=flat-square) ![AppVersion: 0.1.3](https://img.shields.io/badge/AppVersion-0.1.3-informational?style=flat-square)
+![Version: 0.1.14](https://img.shields.io/badge/Version-0.1.14-informational?style=flat-square) ![AppVersion: 0.1.3](https://img.shields.io/badge/AppVersion-0.1.3-informational?style=flat-square)
 
 CaraML store registry: Feature registry for CaraML store.
 
@@ -34,6 +34,10 @@ CaraML store registry: Feature registry for CaraML store.
 | registry."application.yaml".enabled | bool | `true` | Flag to include the default configuration. Please set `application-override.yaml` to override this configuration. |
 | registry.actuator.port | int | `8080` | Port for Spring actuator endpoint |
 | registry.affinity | object | `{}` |  |
+| registry.autoscaling.enabled | bool | `false` |  |
+| registry.autoscaling.maxReplicas | int | `3` |  |
+| registry.autoscaling.minReplicas | int | `1` |  |
+| registry.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | registry.enabled | bool | `true` |  |
 | registry.env.postgresql | object | `{"enabled":true,"key":"postgres-password","secret":""}` | Existing secret to use for authenticating to a postgres database. Will be provided as environment variable. |
 | registry.envOverrides | object | `{}` |  |
@@ -69,6 +73,10 @@ CaraML store registry: Feature registry for CaraML store.
 | serving."application.yaml".enabled | bool | `true` | Flag to include the default configuration. Please set `application-override.yaml` to override this configuration. |
 | serving.actuator.port | int | `8080` | Port for Spring actuator endpoint |
 | serving.affinity | object | `{}` |  |
+| serving.autoscaling.enabled | bool | `false` |  |
+| serving.autoscaling.maxReplicas | int | `3` |  |
+| serving.autoscaling.minReplicas | int | `1` |  |
+| serving.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | serving.enabled | bool | `true` |  |
 | serving.envOverrides | object | `{}` |  |
 | serving.fullnameOverride | string | `""` |  |

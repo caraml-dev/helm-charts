@@ -80,11 +80,18 @@ registry:
 
   resources: {}
 
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+
   nodeSelector: {}
 
   tolerations: []
 
   affinity: {}
+
 
 serving:
   enabled: true
@@ -158,6 +165,12 @@ serving:
     failureThreshold: 5
 
   resources: {}
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
 
   nodeSelector: {}
 
