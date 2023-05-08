@@ -5,6 +5,7 @@ kind: Job
 metadata:
   name: {{ template "caraml-authz.resource-prefix" . }}-bootstrap-policy
 spec:
+  backoffLimit: 10
   template:
     spec:
       containers:
