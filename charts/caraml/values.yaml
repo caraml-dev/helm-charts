@@ -41,6 +41,11 @@ global:
   mlflow:
     serviceName: merlin-mlflow
     externalPort: "80"
+  turing:
+    postgresqlDatabase: turing
+  xp:
+    postgresqlDatabase: turing
+
 
 mlp:
   # -- To enable/disable MLP chart installation.
@@ -246,6 +251,7 @@ postgresql:
       CREATE DATABASE mlflow;
       CREATE DATABASE authz;
       CREATE DATABASE turing;
+      CREATE DATABASE xp;
 ############################################################
 # Istio Base
 ############################################################
@@ -428,3 +434,15 @@ turing:
   config:
     MLPConfig:
       MLPEncryptionKey: "example-key-here"
+
+###################################################################
+# xp dependency
+# #################################################################
+xp-treatment:
+  enabled: true
+  xp-management:
+    enabled: true
+    postgresql:
+      enabled: false
+    mlp:
+      enabled: false
