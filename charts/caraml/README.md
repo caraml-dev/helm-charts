@@ -102,7 +102,7 @@ A Helm chart for deploying CaraML components
 | global.postgresqlUsername | string | `"caraml"` |  |
 | global.protocol | string | `"http"` |  |
 | global.turing.postgresqlDatabase | string | `"turing"` |  |
-| global.xp.postgresqlDatabase | string | `"turing"` |  |
+| global.xp.postgresqlDatabase | string | `"xp"` |  |
 | istioIngressGateway.chartValues.autoscaling.enabled | bool | `false` |  |
 | istioIngressGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | istioIngressGateway.chartValues.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |

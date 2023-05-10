@@ -44,7 +44,7 @@ global:
   turing:
     postgresqlDatabase: turing
   xp:
-    postgresqlDatabase: turing
+    postgresqlDatabase: xp
 
 
 mlp:
