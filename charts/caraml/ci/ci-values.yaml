@@ -4,17 +4,17 @@ caraml-authz:
     replicaCount: "1"
     resources: &resources
       requests:
-        cpu: 40m
+        cpu: 30m
         memory: 256Mi
       limits:
-        cpu: "150m"
+        cpu: "125m"
         memory: 512Mi
     initResources:
       requests:
-        cpu: 40m
+        cpu: 30m
         memory: 256Mi
       limits:
-        cpu: "150m"
+        cpu: "125m"
         memory: 512Mi
 mlp:
   deployment:
