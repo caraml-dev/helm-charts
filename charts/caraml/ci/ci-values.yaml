@@ -4,14 +4,14 @@ caraml-authz:
     replicaCount: "1"
     resources: &resources
       requests:
-        cpu: 50m
+        cpu: 40m
         memory: 256Mi
       limits:
         cpu: "150m"
         memory: 512Mi
     initResources:
       requests:
-        cpu: 50m
+        cpu: 40m
         memory: 256Mi
       limits:
         cpu: "150m"
@@ -59,33 +59,12 @@ merlin:
         memory_request: "500Mi"
   merlin-postgresql:
     <<: *resources
-    # resources:
-    #   requests:
-    #     cpu: 100m
-    #     memory: 256Mi
-    #   limits:
-    #     cpu: "250m"
-    #     memory: "512Mi"
     persistence:
       size: 5Gi
   mlflow:
     <<: *resources
-    # resources:
-    #   requests:
-    #     cpu: "100m"
-    #     memory: "256Mi"
-    #   limits:
-    #     cpu: "250m"
-    #     memory: "512Mi"
   mlflow-postgresql:
     <<: *resources
-    # resources:
-    #   requests:
-    #     cpu: 100m
-    #     memory: 256Mi
-    #   limits:
-    #     cpu: "250m"
-    #     memory: "512Mi"
     persistence:
       enabled: true
       size: 5Gi
