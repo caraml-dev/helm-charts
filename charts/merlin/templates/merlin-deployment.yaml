@@ -1,6 +1,6 @@
 {{- $globReactAppHomepage := include "common.get-component-value" (list .Values.global "merlin" (list "uiPrefix"))}}
 {{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix"))}}
-{{- $globMlpApi := include "common.get-component-value" (list .Values.global "mlp" (list "vsPrefix" "apiPrefix"))}}
+{{- $globMlpApi := include "common.get-component-value" (list .Values.global "mlp" (list "vsPrefix"))}}
 {{- $globMlpApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
 {{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
 {{- $globFeastApiHost := include "merlin.get-feast-api-host" .Values.global }}

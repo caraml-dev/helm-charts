@@ -249,7 +249,7 @@ ui:
   apiHost: /api/merlin/v1
   upiDocURL: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
   mlp:
-    apiHost: /api/v1
+    apiHost: /api
   docsURL:
     [
       {

@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.10.16](https://img.shields.io/badge/Version-0.10.16-informational?style=flat-square)
+![Version: 0.10.17](https://img.shields.io/badge/Version-0.10.17-informational?style=flat-square)
 ![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -308,6 +308,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | ui.docsURL[0].label | string | `"Getting Started with Merlin"` |  |
 | ui.homepage | string | `"/merlin"` |  |
 | ui.maxAllowedReplica | int | `20` |  |
-| ui.mlp.apiHost | string | `"/api/v1"` |  |
+| ui.mlp.apiHost | string | `"/api"` |  |
 | ui.oauthClientID | string | `""` |  |
 | ui.upiDocURL | string | `"https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"` |  |
