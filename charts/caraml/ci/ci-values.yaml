@@ -2,7 +2,7 @@ caraml-authz:
   enabled: true
   deployment:
     replicaCount: "1"
-    resources:
+    resources: &resources
       requests:
         cpu: 50m
         memory: 256Mi
@@ -19,23 +19,11 @@ caraml-authz:
 mlp:
   deployment:
     replicaCount: "1"
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        cpu: "250m"
-        memory: 512Mi
+    <<: *resources
 merlin:
   deployment:
     replicaCount: "1"
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        cpu: "250m"
-        memory: 512Mi
+    <<: *resources
   imageBuilder:
     clusterName: "chart-testing"
   vault:
@@ -70,31 +58,34 @@ merlin:
         cpu_request: "500m"
         memory_request: "500Mi"
   merlin-postgresql:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        cpu: "250m"
-        memory: "512Mi"
+    <<: *resources
+    # resources:
+    #   requests:
+    #     cpu: 100m
+    #     memory: 256Mi
+    #   limits:
+    #     cpu: "250m"
+    #     memory: "512Mi"
     persistence:
       size: 5Gi
   mlflow:
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "256Mi"
-      limits:
-        cpu: "250m"
-        memory: "512Mi"
+    <<: *resources
+    # resources:
+    #   requests:
+    #     cpu: "100m"
+    #     memory: "256Mi"
+    #   limits:
+    #     cpu: "250m"
+    #     memory: "512Mi"
   mlflow-postgresql:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        cpu: "250m"
-        memory: "512Mi"
+    <<: *resources
+    # resources:
+    #   requests:
+    #     cpu: 100m
+    #     memory: 256Mi
+    #   limits:
+    #     cpu: "250m"
+    #     memory: "512Mi"
     persistence:
       enabled: true
       size: 5Gi
@@ -114,13 +105,7 @@ merlin:
   kserve:
     enabled: false
 postgresql:
-  resources:
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
-      cpu: "250m"
-      memory: "512Mi"
+  <<: *resources
   persistence:
     enabled: true
     size: 5Gi
@@ -144,27 +129,32 @@ istioIngressGateway:
   global:
     enabled: false
   chartValues:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 250m
-        memory: 512Mi
+    <<: *resources
 clusterLocalGateway:
   global:
     enabled: false
   chartValues:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 250m
-        memory: 512Mi
+    <<: *resources
 cert-manager:
   fullnameOverride: cert-manager
   enabled: true
 turing:
+  deployment:
+    replicaCount: "1"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "250m"
+        memory: 512Mi
   environmentConfigs:
     - name: chart-testing
+xp-treatment:
+  xp-management:
+    deployment:
+      <<: *resources
+
+  deployment:
+    replicaCount: "1"
+    <<: *resources
