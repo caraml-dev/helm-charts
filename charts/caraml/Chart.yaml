@@ -15,7 +15,7 @@ dependencies:
   repository: https://caraml-dev.github.io/helm-charts
 - condition: xp-treatment.enabled
   name: xp-treatment
-  version: 0.1.8
+  version: 0.1.9
   repository: file://../xp-treatment  # TODO: Change back to helm-charts repo
 - condition: postgresql.enabled
   name: postgresql

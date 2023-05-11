@@ -14,7 +14,7 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../xp-treatment | xp-treatment | 0.1.8 |
+| file://../xp-treatment | xp-treatment | 0.1.9 |
 | https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.10 |
 | https://caraml-dev.github.io/helm-charts | caraml-routes | 0.2.2 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |

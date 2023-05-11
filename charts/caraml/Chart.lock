@@ -10,7 +10,7 @@ dependencies:
   version: 0.2.23
 - name: xp-treatment
   repository: file://../xp-treatment
-  version: 0.1.8
+  version: 0.1.9
 - name: postgresql
   repository: https://charts.helm.sh/stable
   version: 7.0.2
@@ -41,5 +41,5 @@ dependencies:
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.8.2
-digest: sha256:9173a3a4f4baea0861a85548b01d21018c1a4d881bc1ee940ded5693ff3a501f
-generated: "2023-05-10T17:44:27.233756+08:00"
+digest: sha256:e52905568ac96ec5429c29c1c40750d3831146039b0b7bbd5f49850c669fd564
+generated: "2023-05-11T11:00:18.103773+08:00"
