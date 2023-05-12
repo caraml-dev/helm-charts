@@ -7,14 +7,14 @@ caraml-authz:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
     initResources:
       requests:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
   bootstrap:
     resources:
@@ -22,7 +22,7 @@ caraml-authz:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
 mlp:
   deployment:
@@ -32,7 +32,7 @@ mlp:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
 merlin:
   deployment:
@@ -42,7 +42,7 @@ merlin:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
   swagger:
     enabled:
@@ -86,7 +86,7 @@ merlin:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
     persistence:
       size: 5Gi
@@ -96,7 +96,7 @@ merlin:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
   mlflow-postgresql:
     resources:
@@ -104,7 +104,7 @@ merlin:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
     persistence:
       enabled: true
@@ -130,7 +130,7 @@ postgresql:
       cpu: 25m
       memory: 256Mi
     limits:
-      cpu: "25m"
+      cpu: "50m"
       memory: 512Mi
   persistence:
     enabled: true
@@ -154,25 +154,9 @@ istiod:
 istioIngressGateway:
   global:
     enabled: false
-  chartValues:
-    resources:
-      requests:
-        cpu: 25m
-        memory: 256Mi
-      limits:
-        cpu: "25m"
-        memory: 512Mi
 clusterLocalGateway:
   global:
     enabled: false
-  chartValues:
-    resources:
-      requests:
-        cpu: 25m
-        memory: 256Mi
-      limits:
-        cpu: "25m"
-        memory: 512Mi
 cert-manager:
   fullnameOverride: cert-manager
   enabled: true
@@ -184,7 +168,7 @@ turing:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
   environmentConfigs:
     - name: chart-testing
@@ -196,7 +180,7 @@ xp-treatment:
           cpu: 25m
           memory: 256Mi
         limits:
-          cpu: "25m"
+          cpu: "50m"
           memory: 512Mi
 
   deployment:
@@ -206,5 +190,5 @@ xp-treatment:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "25m"
+        cpu: "50m"
         memory: 512Mi
