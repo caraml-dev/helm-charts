@@ -19,11 +19,23 @@ caraml-authz:
 mlp:
   deployment:
     replicaCount: "1"
-    <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
 merlin:
   deployment:
     replicaCount: "1"
-    <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
   imageBuilder:
     clusterName: "chart-testing"
   vault:
@@ -58,13 +70,31 @@ merlin:
         cpu_request: "500m"
         memory_request: "500Mi"
   merlin-postgresql:
-    <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
     persistence:
       size: 5Gi
   mlflow:
-    <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
   mlflow-postgresql:
-    <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
     persistence:
       enabled: true
       size: 5Gi
@@ -84,7 +114,13 @@ merlin:
   kserve:
     enabled: false
 postgresql:
-  <<: *resources
+  resources:
+    requests:
+      cpu: 25m
+      memory: 256Mi
+    limits:
+      cpu: "25m"
+      memory: 512Mi
   persistence:
     enabled: true
     size: 5Gi
@@ -108,12 +144,24 @@ istioIngressGateway:
   global:
     enabled: false
   chartValues:
-    <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
 clusterLocalGateway:
   global:
     enabled: false
   chartValues:
-    <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
 cert-manager:
   fullnameOverride: cert-manager
   enabled: true
@@ -132,8 +180,20 @@ turing:
 xp-treatment:
   xp-management:
     deployment:
-      <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
 
   deployment:
     replicaCount: "1"
-    <<: *resources
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "25m"
+        memory: 512Mi
