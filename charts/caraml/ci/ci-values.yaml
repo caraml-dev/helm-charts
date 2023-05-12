@@ -93,10 +93,10 @@ merlin:
   mlflow:
     resources:
       requests:
-        cpu: 25m
+        cpu: 100m
         memory: 256Mi
       limits:
-        cpu: "50m"
+        cpu: "150m"
         memory: 512Mi
   mlflow-postgresql:
     resources:
@@ -168,7 +168,7 @@ turing:
         cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "50m"
+        cpu: "70m"
         memory: 512Mi
   environmentConfigs:
     - name: chart-testing
