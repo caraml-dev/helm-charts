@@ -17,7 +17,7 @@ deployment:
     # -- Docker image repository for XP Management Service
     repository: caraml-dev/xp/xp-management
     # -- Docker image tag for XP Management Service
-    tag: v0.12.1
+    tag: v0.12.1-build.1-064655f
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
@@ -165,6 +165,12 @@ externalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
+  # -- Enable this if you need the chart to create a secret when you provide the password above. To be used together with password.
+  createSecret: false
+  # -- Secret name which contains credentials to access externalPostgresql
+  secretName: ""
+  # -- Secret key in Secret which contains postgresql credentials
+  secretKey: ""
 
 # -- Postgresql configuration to be applied to XP Management Service's postgresql database deployment
 # Reference: https://artifacthub.io/packages/helm/bitnami/postgresql/10.16.2#parameters

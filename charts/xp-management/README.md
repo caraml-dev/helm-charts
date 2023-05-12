@@ -1,7 +1,7 @@
 # xp-management
 
 ---
-![Version: 0.1.12](https://img.shields.io/badge/Version-0.1.12-informational?style=flat-square)
+![Version: 0.1.13](https://img.shields.io/badge/Version-0.1.13-informational?style=flat-square)
 ![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
@@ -41,7 +41,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Management Service image |
 | deployment.image.repository | string | `"caraml-dev/xp/xp-management"` | Docker image repository for XP Management Service |
-| deployment.image.tag | string | `"v0.12.1"` | Docker image tag for XP Management Service |
+| deployment.image.tag | string | `"v0.12.1-build.1-064655f"` | Docker image tag for XP Management Service |
 | deployment.labels | object | `{}` | Labels to attach to the deployment. |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
@@ -63,9 +63,12 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.serviceAccount.create | bool | `true` |  |
 | deployment.serviceAccount.name | string | `""` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| externalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. To be used together with password. |
 | externalPostgresql.database | string | `"xp"` | External postgres database schema |
 | externalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | externalPostgresql.password | string | `"password"` |  |
+| externalPostgresql.secretKey | string | `""` | Secret key in Secret which contains postgresql credentials |
+| externalPostgresql.secretName | string | `""` | Secret name which contains credentials to access externalPostgresql |
 | externalPostgresql.username | string | `"xp"` | External postgres database user |
 | global.environment | string | `"dev"` | Environment of Management Service deployment |
 | global.mlp.serviceName | string | `"mlp"` | Global MLP service name |
