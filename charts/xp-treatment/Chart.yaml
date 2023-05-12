@@ -5,7 +5,7 @@ dependencies:
   condition: xp-management.enabled
   name: xp-management
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.11
+  version: 0.1.13
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.8
@@ -15,4 +15,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: xp-treatment
-version: 0.1.8
+version: 0.1.9
