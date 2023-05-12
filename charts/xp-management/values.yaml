@@ -165,6 +165,8 @@ externalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
+  # -- Enable this if you need the chart to create a secret when you provide the password above. To be used together with password.
+  createSecret: false
   # -- Secret name which contains credentials to access externalPostgresql
   secretName: ""
   # -- Secret key in Secret which contains postgresql credentials

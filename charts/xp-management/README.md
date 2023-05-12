@@ -63,6 +63,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.serviceAccount.create | bool | `true` |  |
 | deployment.serviceAccount.name | string | `""` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| externalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. To be used together with password. |
 | externalPostgresql.database | string | `"xp"` | External postgres database schema |
 | externalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | externalPostgresql.password | string | `"password"` |  |
