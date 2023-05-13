@@ -9,7 +9,7 @@ dependencies:
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.23
 - name: xp-treatment
-  repository: file://../xp-treatment
+  repository: https://caraml-dev.github.io/helm-charts
   version: 0.1.9
 - name: postgresql
   repository: https://charts.helm.sh/stable
@@ -41,5 +41,5 @@ dependencies:
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.8.2
-digest: sha256:e52905568ac96ec5429c29c1c40750d3831146039b0b7bbd5f49850c669fd564
-generated: "2023-05-11T11:00:18.103773+08:00"
+digest: sha256:acf20be8462698acb77eda8bdc331770e628b1e23f97f65a98e0c3ffbdaa6f33
+generated: "2023-05-13T09:25:12.977692+08:00"
