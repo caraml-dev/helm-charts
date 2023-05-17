@@ -9,6 +9,14 @@ dependencies:
   name: merlin
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.10.16
+- condition: turing.enabled
+  name: turing
+  version: 0.2.23
+  repository: https://caraml-dev.github.io/helm-charts
+- condition: xp-treatment.enabled
+  name: xp-treatment
+  version: 0.1.9
+  repository: https://caraml-dev.github.io/helm-charts
 - condition: postgresql.enabled
   name: postgresql
   repository: https://charts.helm.sh/stable
@@ -17,7 +25,7 @@ dependencies:
   condition: caraml-authz.enabled
   name: authz
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.9
+  version: 0.1.10
 - condition: caraml-routes.enabled
   name: caraml-routes
   repository: https://caraml-dev.github.io/helm-charts
@@ -60,4 +68,4 @@ maintainers:
   name: caraml-dev
 name: caraml
 type: application
-version: 0.4.44
+version: 0.5.0
