@@ -56,6 +56,9 @@ Generated names
     {{- printf "%s-token" .Values.alerts.alertsRepoPlatform | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "merlin.environment" -}}
+{{- .Values.environment | default "dev" -}}
+{{- end -}}
 
 {{- define "merlin.chart" -}}
     {{- printf "%s-%s" .Chart.Name .Chart.Version -}}
@@ -158,6 +161,21 @@ MLflow Postgres related
 {{- end -}}
 
 
+{{- define "merlin.environments" -}}
+{{ .Values.environmentConfigs | toYaml }}
+{{- end -}}
+
+{{- define "merlin.environments.directory" -}}
+/app/cluster-env
+{{- end -}}
+
+{{- define "merlin.environments.absolutePath" -}}
+{{- $base := include "merlin.environments.directory" . -}}
+{{- $path := ternary .Values.mlp.environmentConfigSecret.envKey .Values.EnvironmentConfigPath (ne "" .Values.mlp.environmentConfigSecret.name) -}}
+{{- printf "%s/%s" $base $path -}}
+{{- end -}}
+
+
 {{- define "merlin.get-workload-host" }}
 {{- $global := index . 0}}
 {{- $relNs := index . 1}}
@@ -218,3 +236,55 @@ MLflow Postgres related
 {{- printf "%s" .Values.imageBuilder.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+
+{{- define "merlin.defaultConfig" -}}
+{{- $globMerlinApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "merlin")}}
+{{- $globMlpApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
+Environment: {{ .Values.config.Environment | default (include "merlin.environment" .) }}
+Port: {{ .Values.service.externalPort | default "8080" }}
+LoggerDestinationURL: {{ .Values.config.LoggerDestinationURL }}
+Sentry:
+  Enabled:  {{ .Values.config.Sentry.Enabled | default "false" }}
+  DSN: {{ .Values.config.Sentry.DSN }}
+NewRelic:
+  Enabled: {{ .Values.config.NewRelic.Enabled | default "false" }}
+  AppName: {{ .Values.config.NewRelic.AppName }}
+  License: {{ .Values.config.NewRelic.License }}
+EnvironmentConfigPath: {{ include "merlin.environments.absolutePath" . }}
+NumOfQueueWorkers: {{ .Values.config.NumOfQueueWorkers | default 2 }}
+DbConfig:
+  Host: {{ include "common.postgres-host" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql.Release .Chart ) }}
+  Port: 5432
+  Database: {{ include "common.postgres-database" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global "merlin" "postgresqlDatabase") }}
+  User: {{ include "common.postgres-username" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global ) }}
+ImageBuilderConfig:
+  ClusterName: {{ .Values.config.ImageBuilderConfig.clusterName }}
+  K8sConfig:
+    {{ .Values.config.ImageBuilderConfig.k8sConfig | fromJson | toYaml | indent 4}}
+AuthorizationConfig:
+  AuthorizationEnabled: {{ .Values.config.AuthorizationConfig.AuthorizationEnabled | default "false" }}
+  AuthorizationServerURL: {{ .Values.config.AuthorizationConfig.AuthorizationServerURL }}
+MlpAPIConfig:
+  APIHost: {{ include "common.set-value" (list .Values.config.MlpAPIConfig.APIHost $globMlpApiHost) }}
+  EncryptionKey: {{ .Values.config.MlpAPIConfig.EncryptionKey }}
+FeatureToggleConfig:
+  MonitoringConfig:
+    MonitoringEnabled: {{ .Values.config.FeatureToggleConfig.MonitoringConfig.MonitoringEnabled | default "false" }}
+  AlertConfig:
+    AlertEnabled: {{ .Values.config.FeatureToggleConfig.AlertConfig.AlertEnabled | default "false" }}
+ReactAppConfig:
+  Environment: {{ .Values.config.ReactAppConfig.Environment | default (include "merlin.environment" .) }}
+StandardTransformerConfig:
+  ImageName: {{ .Values.config.StandardTransformerConfig.ImageName }}
+  DefaultFeastSource: {{ .Values.config.StandardTransformerConfig.DefaultFeastSource | default 2 }}
+  EnableAuth: {{ .Values.config.StandardTransformerConfig.EnableAuth | default false }}
+MlflowConfig:
+  TrackingURL: {{ .Values.config.MlflowConfig.TrackingURL }}
+{{- end -}}
+
+
+{{- define "merlin.config" -}}
+{{- $defaultConfig := include "merlin.defaultConfig" . | fromYaml -}}
+{{ .Values.config | merge $defaultConfig | toYaml }}
+{{- end -}}

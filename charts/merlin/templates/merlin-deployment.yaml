@@ -296,13 +296,18 @@ spec:
           - name: IMG_BUILDER_SAFE_TO_EVICT
             value: "{{ .Values.imageBuilder.safeToEvict }}"
         volumeMounts:
-        - mountPath: /opt/config
-          name: config
+        - name: config
+          mountPath: /etc/merlin
+        - name: environments
+          mountPath: {{ include "merlin.environments.directory" . }}
         {{- if .Values.gcpServiceAccount }}
         - name: gcp-service-account
           mountPath: "/etc/gcp_service_account"
           readOnly: true
         {{- end }}
+        args:
+          - -config
+          - /etc/merlin/config.yaml
 
       {{- if .Values.swagger.enabled }}
       - name: swagger-ui
@@ -352,7 +357,10 @@ spec:
       volumes:
       - name: config
         secret:
-          secretName: {{ template "merlin.environmentsSecretName" . }}
+          secretName: { { template "merlin.fullname" . } }-config
+      - name: environments
+        secret:
+          secretName: {{ ternary (printf "%s-environments" (include "merlin.fullname" .) ) ( .Values.mlp.environmentConfigSecret.name ) (eq .Values.mlp.environmentConfigSecret.name "") }}
       {{- if .Values.gcpServiceAccount }}
       - name: gcp-service-account
         secret:
