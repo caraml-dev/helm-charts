@@ -140,10 +140,6 @@ ingress:
   # Ref for pathTypes https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
   # pathType: "Prefix"
 
-encryption:
-  # encryption.key must be specified using --set flag.
-  key: "example-key-here"
-
 service:
   externalPort: 8080
   internalPort: 8080
