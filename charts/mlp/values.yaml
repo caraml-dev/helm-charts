@@ -5,8 +5,8 @@ deployment:
   image:
     pullPolicy: IfNotPresent
     registry: ghcr.io
-    repository: gojek/mlp
-    tag: v1.7.4-build.6-322163a
+    repository: caraml-dev/mlp
+    tag: v1.7.6-build.58-783ee15
 
   replicaCount: 1
 
@@ -116,6 +116,21 @@ deployment:
 
   # -- OAuth client id for login
   oauthClientID: ""
+
+  # -- Default Secret Storage for storing secrets. Supported values: "vault".
+  # If not specified, secrets will be stored as "internal" secret
+  defaultSecretStorage: {}
+    # name: vault
+    # type: vault
+    # config:
+    #   vaultConfig:
+    #     url: https://localhost:8200
+    #     role: my-role
+    #     mountPath: secret
+    #     pathPrefix: caraml-secret/{{ .Project }}/
+    #     # Only for testing, do not use in production
+    #     authMethod: token
+    #     token: root
 
 ingress:
   enabled: false
