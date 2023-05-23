@@ -38,3 +38,5 @@ data:
     ui:
       clockworkUIHomepage: "{{ .Values.deployment.ui.clockworkHomepage }}"
       kubeflowUIHomepage: "{{ .Values.deployment.ui.kubeflowHomepage }}"
+    defaultSecretStorage:
+      {{- toYaml .Values.deployment.defaultSecretStorage | nindent 6 }}
