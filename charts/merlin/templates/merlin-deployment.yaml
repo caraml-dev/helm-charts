@@ -110,7 +110,7 @@ spec:
           - name: REACT_APP_MERLIN_API
             value: {{ include "common.set-value" (list .Values.ui.apiHost $globMerlinApi) | quote }}
           - name: REACT_APP_MLP_API
-            value: {{ include "common.set-value" (list .Values.ui.mlp.apiHost $globMlpApi) | quote }}
+            value: "{{ .Values.ui.mlp.apiHost }}"
           - name: REACT_APP_FEAST_CORE_API
             value: {{ include "common.set-value" (list .Values.feastCoreApi.apiHost $globFeastApiHost) }}
           - name: REACT_APP_DOCKER_REGISTRIES
