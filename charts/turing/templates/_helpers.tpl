@@ -69,10 +69,6 @@ heritage: {{ .Release.Service }}
 {{- default (include "turing.fullname" .) .Values.serviceAccount.name }}
 {{- end }}
 
-{{- define "turing.mlp.encryption.key" -}}
-{{- .Values.config.MLPConfig.MLPEncryptionKey -}}
-{{- end -}}
-
 {{- define "turing.sentry.dsn" -}}
 {{- .Values.sentry.dsn -}}
 {{- end -}}

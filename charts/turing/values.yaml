@@ -223,9 +223,7 @@ config:
     # Set the Merlin URL if deployed externally
     MerlinURL: http://merlin:8080/v1
     # Set the MLP URL if deployed externally
-    MLPURL: http://mlp:8080/v1
-    # Set the encryption key used by MLP, to de let Turing decrypt the values, if MLP is deployed externally
-    # MLPEncryptionKey:
+    MLPURL: http://mlp:8080
   Sentry:
     Enabled: false
   RouterDefaults:
