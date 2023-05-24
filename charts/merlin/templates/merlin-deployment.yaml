@@ -273,11 +273,6 @@ spec:
           {{- end }}
           - name: MLP_API_HOST
             value: {{ include "common.set-value" (list .Values.mlpApi.apiHost $globMlpApiHost) }}
-          - name: MLP_API_ENCRYPTION_KEY
-            valueFrom:
-              secretKeyRef:
-                name: "{{ template "merlin.mlp-api-encryption-key-name" . }}"
-                key: encryption-key
           - name: MLFLOW_TRACKING_URL
             value: "{{ .Values.mlflow.trackingURL }}"
           {{- if .Values.gcpServiceAccount }}
