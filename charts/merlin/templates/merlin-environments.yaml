@@ -8,12 +8,6 @@ metadata:
   labels:
     {{- include "merlin.labels" . | nindent 4 }}
 stringData:
-  environment.yaml: |-
-{{- if .Values.environmentConfigs }}
-{{ toYaml .Values.environmentConfigs | indent 4 }}
-{{- end }}
-  imageBuilderK8sConfig: |-
-{{- if .Values.imageBuilder.k8sConfig }}
-{{ .Values.imageBuilder.k8sConfig | indent 4 }}
-{{- end }}
+  {{ .Values.config.EnvironmentConfigPath }}: |
+    {{- include "merlin.environments" . | nindent 4 -}}
 {{- end }}
