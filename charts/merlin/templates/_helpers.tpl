@@ -266,9 +266,6 @@ FeatureToggleConfig:
     MonitoringEnabled: {{ .Values.config.FeatureToggleConfig.MonitoringConfig.MonitoringEnabled | default "false" }}
   AlertConfig:
     AlertEnabled: {{ .Values.config.FeatureToggleConfig.AlertConfig.AlertEnabled | default "false" }}
-ReactAppConfig:
-  Environment: {{ .Values.config.ReactAppConfig.Environment | default (include "merlin.environment" .) }}
-  OauthClientID: {{ include "common.set-value" (list .Values.config.ReactAppConfig.OauthClientID $globOauthClientID) | quote }}
 StandardTransformerConfig:
   ImageName: {{ .Values.config.StandardTransformerConfig.ImageName }}
   DefaultFeastSource: {{ .Values.config.StandardTransformerConfig.DefaultFeastSource | default 2 }}
