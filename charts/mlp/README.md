@@ -32,7 +32,7 @@ MLP API
 | deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components |
 | deployment.environment | string | `"production"` |  |
 | deployment.extraLabels | object | `{}` | Additional labels to apply on the deployment |
-| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"caraml-dev/mlp","tag":"v1.7.6-build.58-783ee15"}` | mlp image related configs |
+| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"caraml-dev/mlp","tag":"v1.7.6-build.64-f369fde"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
 | deployment.oauthClientID | string | `""` | OAuth client id for login |
