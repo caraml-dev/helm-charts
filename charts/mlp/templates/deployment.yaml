@@ -71,11 +71,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "common.postgres-password-secret-name" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
                   key: {{ include "common.postgres-password-secret-key" (list .Values.externalPostgresql) }}
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "mlp.encryption-key-name" . | quote}}
-                  key: encryption-key
           volumeMounts:
             - mountPath: /etc/caraml
               name: config
