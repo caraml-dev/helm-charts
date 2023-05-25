@@ -88,6 +88,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | ingress.useV1Beta1 | bool | `false` | Whether to use networking.k8s.io/v1 (k8s version >= 1.19) or networking.k8s.io/v1beta1 (1.16 >= k8s version >= 1.22) |
 | merlin.enabled | bool | `true` |  |
 | merlin.mlp.enabled | bool | `false` |  |
+| mlp.deployment.apiHost | string | `"http://mlp"` |  |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | openApiSpecOverrides | object | `{}` | Override OpenAPI spec as long as it follows the OAS3 specifications. A common use for this is to set the enums of the ExperimentEngineType. See api/api/override-sample.yaml for an example. |
