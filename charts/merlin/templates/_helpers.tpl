@@ -231,9 +231,9 @@ MLflow Postgres related
 
 
 {{- define "merlin.defaultConfig" -}}
-{{- $globMerlinApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "merlin")}}
-{{- $globMlpApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
-{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
+{{- $globMerlinApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "merlin") -}}
+{{- $globMlpApiHost := include "merlin.get-workload-host" (list .Values.global .Release.Namespace "mlp") -}}
+{{- $globOauthClientID := include "common.get-oauth-client" .Values.global -}}
 Environment: {{ .Values.config.Environment | default (include "merlin.environment" .) }}
 Port: {{ .Values.service.internalPort | default "8080" }}
 LoggerDestinationURL: {{ .Values.config.LoggerDestinationURL }}
@@ -266,6 +266,12 @@ FeatureToggleConfig:
     MonitoringEnabled: {{ .Values.config.FeatureToggleConfig.MonitoringConfig.MonitoringEnabled | default "false" }}
   AlertConfig:
     AlertEnabled: {{ .Values.config.FeatureToggleConfig.AlertConfig.AlertEnabled | default "false" }}
+ReactAppConfig:
+  Environment: {{ .Values.config.Environment | default (include "merlin.environment" .) }}
+  Test: {{ .Values.config.Sentry.Enabled }}
+  {{- if .Values.config.Sentry.Enabled }}
+  SentryDSN: {{ .Values.config.Sentry.DSN }}
+  {{- end }}
 StandardTransformerConfig:
   ImageName: {{ .Values.config.StandardTransformerConfig.ImageName }}
   DefaultFeastSource: {{ .Values.config.StandardTransformerConfig.DefaultFeastSource | default 2 }}

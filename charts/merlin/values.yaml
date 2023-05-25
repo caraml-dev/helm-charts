@@ -130,6 +130,22 @@ config:
         AlertBranch: master
       WardenConfig:
         APIHost: ""
+  ReactAppConfig:
+    DocURL:
+      - Label: "Getting Started with Merlin"
+        Href: "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"
+    # -- Comma-separated value of Docker registries that can be chosen in deployment page
+    DockerRegistries: ghcr.io/gojek,ghcr.io/your-company
+    Environment: dev
+    FeastCoreURL: http://feast-core.mlp:8080/v1
+    HomePage: /merlin
+    MaxAllowedReplica: 20
+    MerlinURL: /api/merlin/v1
+    MlpURL: /api
+    OauthClientID: # to be set via CICD pipeline
+    UPIDocumentation: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
+    CPUCost: # Unused
+    MemoryCost: # Unused
   StandardTransformerConfig:
     ImageName: merlin-transformer:1.0.0
     SimulationFeast:
