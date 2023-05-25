@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.19](https://img.shields.io/badge/Version-0.4.19-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
+![Version: 0.4.20](https://img.shields.io/badge/Version-0.4.20-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
 
 MLP API
 
@@ -32,7 +32,7 @@ MLP API
 | deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components |
 | deployment.environment | string | `"production"` |  |
 | deployment.extraLabels | object | `{}` | Additional labels to apply on the deployment |
-| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"caraml-dev/mlp","tag":"v1.7.6-build.58-783ee15"}` | mlp image related configs |
+| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"caraml-dev/mlp","tag":"v1.7.7-build.63-8309142"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
 | deployment.oauthClientID | string | `""` | OAuth client id for login |
@@ -44,7 +44,6 @@ MLP API
 | deployment.tolerations | list | `[]` |  |
 | deployment.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
 | deployment.ui.kubeflowHomepage | string | `"http://kubeflow.org"` |  |
-| encryption.key | string | `"example-key-here"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | externalPostgresql.createSecret | bool | `false` |  |
 | externalPostgresql.database | string | `"mlp"` | External postgres database schema |

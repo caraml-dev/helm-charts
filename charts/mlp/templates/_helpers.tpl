@@ -47,10 +47,6 @@ If release name contains chart name it will be used as a full name.
     {{- printf "%s-config" (include "mlp.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "mlp.encryption-key-name" -}}
-    {{- printf "%s-encryption-key" (include "mlp.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{/*
 Common labels
 */}}

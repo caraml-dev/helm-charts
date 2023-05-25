@@ -6,7 +6,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: caraml-dev/mlp
-    tag: v1.7.6-build.58-783ee15
+    tag: v1.7.7-build.63-8309142
 
   replicaCount: 1
 
@@ -139,10 +139,6 @@ ingress:
   # path: "/"
   # Ref for pathTypes https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
   # pathType: "Prefix"
-
-encryption:
-  # encryption.key must be specified using --set flag.
-  key: "example-key-here"
 
 service:
   externalPort: 8080
