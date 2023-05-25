@@ -4,6 +4,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ template "caraml-authz.resource-prefix" . }}-bootstrap-policy
+  annotations:
+    caraml-authz.cm.shasum: {{ printf "%s%s" (.Values.bootstrap.roles | toJson) (.Values.bootstrap.policies | toJson) | sha1sum }}
 spec:
   backoffLimit: 10
   template:
