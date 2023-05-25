@@ -307,6 +307,8 @@ mlp:
   enabled: true
   environmentConfigSecret:
     name: ""
+  deployment:
+    apiHost: "http://mlp" 
 
 merlin:
   enabled: true
