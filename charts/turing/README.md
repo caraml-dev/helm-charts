@@ -1,8 +1,8 @@
 # turing
 
 ---
-![Version: 0.2.18](https://img.shields.io/badge/Version-0.2.18-informational?style=flat-square)
-![AppVersion: 1.9.2](https://img.shields.io/badge/AppVersion-1.9.2-informational?style=flat-square)
+![Version: 0.2.23](https://img.shields.io/badge/Version-0.2.23-informational?style=flat-square)
+![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
 
@@ -71,7 +71,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for Turing image |
 | deployment.image.repository | string | `"caraml-dev/turing"` | Docker image repository for Turing image |
-| deployment.image.tag | string | `"v1.9.2-build.7-b9139be"` | Docker image tag for Turing image |
+| deployment.image.tag | string | `"v1.11.0"` | Docker image tag for Turing image |
 | deployment.labels | object | `{}` |  |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` | HTTP path for readiness check |

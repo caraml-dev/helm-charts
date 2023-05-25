@@ -1,8 +1,8 @@
 # xp-treatment
 
 ---
-![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square)
-![AppVersion: 0.11.1](https://img.shields.io/badge/AppVersion-0.11.1-informational?style=flat-square)
+![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square)
+![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Treatment service - A part of XP system that is used to obtain the treatment configuration from active experiments
 
@@ -46,7 +46,7 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Treatment Service image |
 | deployment.image.repository | string | `"caraml-dev/xp/xp-treatment"` | Docker image repository for XP Treatment Service |
-| deployment.image.tag | string | `"v0.11.2-rc1"` | Docker image tag for XP Treatment Service |
+| deployment.image.tag | string | `"v0.12.1"` | Docker image tag for XP Treatment Service |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/health/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |

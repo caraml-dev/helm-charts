@@ -81,7 +81,7 @@ Create the name of the service account to use
 {{- end -}}
 
 {{- define "management-svc.sentry.enabled" -}}
-{{ eq ((.Values.deployment.apiConfig.sentryConfig).enabled | toString) "true" }}
+{{ eq ((.Values.deployment.apiConfig.SentryConfig).enabled | toString) "true" }}
 {{- end -}}
 
 {{- define "management-svc.sentry.dsn" -}}
@@ -119,40 +119,40 @@ API config related
     {{- $globalMLPUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "mlp" (list "serviceName")))) }}
   {{- end }}
 {{- end }}
-{{- printf "%s" (include "common.set-value" (list .Values.deployment.apiConfig.mlpConfig.url $globalMLPUrl)) -}}
+{{- printf "%s" (include "common.set-value" (list .Values.deployment.apiConfig.MlpConfig.URL $globalMLPUrl)) -}}
 {{- end -}}
 
 {{- define "management-svc.defaultConfig" -}}
-port: 8080
-allowedOrigins: "*"
-authorizationConfig:
-  enabled: false
-dbConfig:
-  host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
-  port: 5432
-  database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
-  user: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
-  connMaxIdleTime: {{ .Values.deployment.apiConfig.dbConfig.connMaxIdleTime }}
-  connMaxLifetime: {{ .Values.deployment.apiConfig.dbConfig.connMaxLifetime }}
-  maxIdleConns: {{ .Values.deployment.apiConfig.dbConfig.maxIdleConns }}
-  maxOpenConns: {{ .Values.deployment.apiConfig.dbConfig.maxOpenConns }}
-deploymentConfig:
-  dnvironmentType: dev
-segmenterConfig:
-  s2_ids:
-    minS2CellLevel: 10
-    maxS2CellLevel: 14
-mlpConfig:
-  url: {{ .Values.deployment.apiConfig.mlpConfig.url | default (include "management-svc.mlp.server.url" .) | quote }}
-newRelicConfig:
-  enabled: false
-sentryConfig:
-  enabled: false
-xpUIConfig:
-  appDirectory: /app/xp-ui
+Port: 8080
+AllowedOrigins: "*"
+AuthorizationConfig:
+  Enabled: false
+DbConfig:
+  Host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
+  Port: 5432
+  Database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "xp" "postgresqlDatabase") }}
+  User: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
+  ConnMaxIdleTime: {{ .Values.deployment.apiConfig.DbConfig.ConnMaxIdleTime }}
+  ConnMaxLifetime: {{ .Values.deployment.apiConfig.DbConfig.ConnMaxLifetime }}
+  MaxIdleConns: {{ .Values.deployment.apiConfig.DbConfig.MaxIdleConns }}
+  MaxOpenConns: {{ .Values.deployment.apiConfig.DbConfig.MaxOpenConns }}
+DeploymentConfig:
+  EnvironmentType: dev
+SegmenterConfig:
+  S2_IDs:
+    MinS2CellLevel: 10
+    MaxS2CellLevel: 14
+MLPConfig:
+  URL: {{ .Values.deployment.apiConfig.MlpConfig.URL | default (include "management-svc.mlp.server.url" .) | quote }}
+NewRelicConfig:
+  Enabled: false
+SentryConfig:
+  Enabled: false
+XpUIConfig:
+  AppDirectory: /app/xp-ui
 {{- end -}}
 
 {{- define "management-svc.config" -}}
 {{- $defaultConfig := include "management-svc.defaultConfig" . | fromYaml -}}
-{{ .Values.deployment.apiConfig | merge $defaultConfig | toYaml }}
+{{ .Values.deployment.apiConfig | mergeOverwrite $defaultConfig | toYaml }}
 {{- end -}}

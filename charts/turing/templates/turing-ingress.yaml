@@ -5,7 +5,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: "{{ .Values.ingress.class }}"
-{{ .Values.ingress.annotations | indent 4 }}
+    {{- if .Values.ingress.annotations }}
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    {{ end }}
   labels:
     app.kubernetes.io/name: {{ include "turing.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

@@ -1,8 +1,8 @@
 # xp-management
 
 ---
-![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square)
-![AppVersion: 0.11.1](https://img.shields.io/badge/AppVersion-0.11.1-informational?style=flat-square)
+![Version: 0.1.13](https://img.shields.io/badge/Version-0.1.13-informational?style=flat-square)
+![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
 
@@ -33,7 +33,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | deployment.annotations | object | `{}` | Annotations to add to Management Service pod |
-| deployment.apiConfig | object | `{"allowedOrigins":"*","authorizationConfig":{"enabled":false},"dbConfig":{"connMaxIdleTime":"0s","connMaxLifetime":"0s","maxIdleConns":0,"maxOpenConns":0},"deploymentConfig":{"environmentType":"dev"},"mlpConfig":{"url":"http://mlp:8080/v1"},"newRelicConfig":{"appName":"xp-management-service","enabled":false,"license":""},"port":8080,"segmenterConfig":{"s2_ids":{"maxS2CellLevel":14,"minS2CellLevel":10}},"sentryConfig":{"dsn":"","enabled":false,"labels":{"app":"xp-management-service"}},"xpUIConfig":{"appDirectory":"/app/xp-ui"}}` | XP Management Service server configuration. Please refer to https://github.com/caraml-dev/xp/blob/main/management-service/config/example.yaml for the detailed explanation on XP Management API config options |
+| deployment.apiConfig | object | `{"AllowedOrigins":"*","AuthorizationConfig":{"Enabled":false},"DbConfig":{"ConnMaxIdleTime":"0s","ConnMaxLifetime":"0s","MaxIdleConns":0,"MaxOpenConns":0},"DeploymentConfig":{"EnvironmentType":"dev"},"MlpConfig":{"URL":"http://mlp:8080/v1"},"NewRelicConfig":{"AppName":"xp-management-service","Enabled":false,"License":""},"Port":8080,"SegmenterConfig":{"S2_IDs":{"MaxS2CellLevel":14,"MinS2CellLevel":10}},"SentryConfig":{"DSN":"","Enabled":false,"Labels":{"App":"xp-management-service"}},"XpUIConfig":{"appDirectory":"/app/xp-ui"}}` | XP Management Service server configuration. Please refer to https://github.com/caraml-dev/xp/blob/main/management-service/config/example.yaml for the detailed explanation on XP Management API config options |
 | deployment.extraArgs | list | `[]` | List of string containing additional XP Management Service server arguments. For example, multiple "-config" can be specified to use multiple config files |
 | deployment.extraEnvs | list | `[]` | List of extra environment variables to add to XP Management Service server container |
 | deployment.extraVolumeMounts | list | `[]` | Extra volume mounts to attach to XP Management Service server container. For example to mount the extra volume containing secrets |
@@ -41,7 +41,8 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | Docker image pull policy |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for XP Management Service image |
 | deployment.image.repository | string | `"caraml-dev/xp/xp-management"` | Docker image repository for XP Management Service |
-| deployment.image.tag | string | `"v0.11.2-rc1"` | Docker image tag for XP Management Service |
+| deployment.image.tag | string | `"v0.12.1-build.1-064655f"` | Docker image tag for XP Management Service |
+| deployment.labels | object | `{}` | Labels to attach to the deployment. |
 | deployment.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe delay and thresholds |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.livenessProbe.periodSeconds | int | `10` |  |
@@ -62,9 +63,12 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.serviceAccount.create | bool | `true` |  |
 | deployment.serviceAccount.name | string | `""` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| externalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. To be used together with password. |
 | externalPostgresql.database | string | `"xp"` | External postgres database schema |
 | externalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
 | externalPostgresql.password | string | `"password"` |  |
+| externalPostgresql.secretKey | string | `""` | Secret key in Secret which contains postgresql credentials |
+| externalPostgresql.secretName | string | `""` | Secret name which contains credentials to access externalPostgresql |
 | externalPostgresql.username | string | `"xp"` | External postgres database user |
 | global.environment | string | `"dev"` | Environment of Management Service deployment |
 | global.mlp.serviceName | string | `"mlp"` | Global MLP service name |

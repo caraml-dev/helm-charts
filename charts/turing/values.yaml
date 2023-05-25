@@ -8,7 +8,7 @@ deployment:
     # -- Docker image repository for Turing image
     repository: caraml-dev/turing
     # -- Docker image tag for Turing image
-    tag: v1.9.2-build.7-b9139be
+    tag: v1.11.0
   labels: {}
   # -- Resources requests and limits for Turing API. This should be set
   # according to your cluster capacity and service level objectives.
@@ -229,7 +229,7 @@ config:
   Sentry:
     Enabled: false
   RouterDefaults:
-    Image: ghcr.io/caraml-dev/turing/turing-router:v1.9.2-build.7-b9139be
+    Image: ghcr.io/caraml-dev/turing/turing-router:v1.11.0
     FluentdConfig:
       Image: ghcr.io/caraml-dev/turing/fluentd:v1.8.0
 
