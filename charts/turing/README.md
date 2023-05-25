@@ -1,7 +1,7 @@
 # turing
 
 ---
-![Version: 0.2.23](https://img.shields.io/badge/Version-0.2.23-informational?style=flat-square)
+![Version: 0.2.24](https://img.shields.io/badge/Version-0.2.24-informational?style=flat-square)
 ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
@@ -71,7 +71,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for Turing image |
 | deployment.image.repository | string | `"caraml-dev/turing"` | Docker image repository for Turing image |
-| deployment.image.tag | string | `"v1.11.0"` | Docker image tag for Turing image |
+| deployment.image.tag | string | `"v1.11.0-build.6-5695fb3"` | Docker image tag for Turing image |
 | deployment.labels | object | `{}` |  |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` | HTTP path for readiness check |
@@ -88,6 +88,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | ingress.useV1Beta1 | bool | `false` | Whether to use networking.k8s.io/v1 (k8s version >= 1.19) or networking.k8s.io/v1beta1 (1.16 >= k8s version >= 1.22) |
 | merlin.enabled | bool | `true` |  |
 | merlin.mlp.enabled | bool | `false` |  |
+| mlp.deployment.apiHost | string | `"http://mlp"` |  |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | openApiSpecOverrides | object | `{}` | Override OpenAPI spec as long as it follows the OAS3 specifications. A common use for this is to set the enums of the ExperimentEngineType. See api/api/override-sample.yaml for an example. |

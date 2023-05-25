@@ -8,7 +8,7 @@ deployment:
     # -- Docker image repository for Turing image
     repository: caraml-dev/turing
     # -- Docker image tag for Turing image
-    tag: v1.11.0
+    tag: v1.11.0-build.6-5695fb3
   labels: {}
   # -- Resources requests and limits for Turing API. This should be set
   # according to your cluster capacity and service level objectives.
@@ -223,9 +223,7 @@ config:
     # Set the Merlin URL if deployed externally
     MerlinURL: http://merlin:8080/v1
     # Set the MLP URL if deployed externally
-    MLPURL: http://mlp:8080/v1
-    # Set the encryption key used by MLP, to de let Turing decrypt the values, if MLP is deployed externally
-    # MLPEncryptionKey:
+    MLPURL: http://mlp:8080
   Sentry:
     Enabled: false
   RouterDefaults:
