@@ -6,7 +6,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: caraml-dev/mlp
-    tag: v1.7.6-build.64-f369fde
+    tag: v1.7.7-build.63-8309142
 
   replicaCount: 1
 
