@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.10.17](https://img.shields.io/badge/Version-0.10.17-informational?style=flat-square)
+![Version: 0.10.18](https://img.shields.io/badge/Version-0.10.18-informational?style=flat-square)
 ![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -73,7 +73,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.27.0-rc1"` |  |
+| deployment.image.tag | string | `"0.28.0-1-g07b5aaa"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -83,7 +83,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | deployment.tolerations | list | `[]` |  |
 | deploymentLabelPrefix | string | `"gojek.com/"` |  |
-| encryption.key | string | `"password"` |  |
 | environment | string | `"dev"` |  |
 | environmentConfigs[0].cluster | string | `"test"` |  |
 | environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
@@ -251,8 +250,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
-| mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
-| mlpApi.encryptionKey | string | `"secret-encryption"` |  |
+| mlpApi.apiHost | string | `"http://mlp.mlp:8080"` |  |
 | monitoring.enabled | bool | `false` |  |
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
