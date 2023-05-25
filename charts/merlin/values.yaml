@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: caraml-dev/merlin
-    tag: 0.27.0-rc1
+    tag: 0.0.0-ab7ad8e7040997dc3bd6f440b1b82aedb00fdfe9
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -33,9 +33,7 @@ loggerDestinationURL: "http://yourDestinationLogger"
 queue:
   numOfWorkers: 1
 mlpApi:
-  apiHost: http://mlp.mlp:8080/v1
-  # encryptionKey must be specified using --set flag.
-  encryptionKey: secret-encryption
+  apiHost: http://mlp.mlp:8080
 feastCoreApi:
   apiHost: http://feast-core.mlp:8080/v1
 imageBuilder:
@@ -241,8 +239,6 @@ newrelic:
 authorization:
   enabled: true
   serverUrl: http://mlp-authorization-keto
-encryption:
-  key: "password"
 ui:
   oauthClientID: ""
   homepage: /merlin
