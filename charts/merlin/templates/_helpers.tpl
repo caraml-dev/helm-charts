@@ -44,10 +44,6 @@ Generated names
     {{- printf "%s-scripts" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "merlin.mlp-api-encryption-key-name" -}}
-    {{- printf "%s-mlp-api-encryption-key" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "merlin.swagger-name" -}}
     {{- printf "%s-swagger" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
