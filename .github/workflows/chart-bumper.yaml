@@ -39,12 +39,11 @@ jobs:
 
       - name: Run chart bumper script & update docs
         run: |
+          export BUMP_MINOR=true
           python scripts/chart_bumper.py
           rm -f manifest.yaml
           rm -f manifest_gdi_dependant.yaml
           bash scripts/helm-docs.sh
-        with:
-          BUMP_MINOR: true
 
       - name: Run chart-testing (list-changed)
         id: list-changed
