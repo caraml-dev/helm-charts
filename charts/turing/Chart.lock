@@ -4,12 +4,12 @@ dependencies:
   version: 7.0.2
 - name: mlp
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.4.18
+  version: 0.4.20
 - name: merlin
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.10.16
+  version: 0.10.18
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.8
-digest: sha256:be423558bb80c1c1081642a833037c1a36c2eaa981575973acc22a7e3af6ab34
-generated: "2023-04-25T10:35:23.391259801Z"
+digest: sha256:d130a737c5a9cac6ddf527e78d9c40f6afda8b087909607e321161a7652fd215
+generated: "2023-05-26T03:40:36.865685785Z"

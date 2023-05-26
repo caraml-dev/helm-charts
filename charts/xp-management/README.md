@@ -1,7 +1,7 @@
 # xp-management
 
 ---
-![Version: 0.1.13](https://img.shields.io/badge/Version-0.1.13-informational?style=flat-square)
+![Version: 0.1.14](https://img.shields.io/badge/Version-0.1.14-informational?style=flat-square)
 ![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
