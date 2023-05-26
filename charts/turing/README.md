@@ -71,7 +71,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for Turing image |
 | deployment.image.repository | string | `"caraml-dev/turing"` | Docker image repository for Turing image |
-| deployment.image.tag | string | `"v1.11.0"` | Docker image tag for Turing image |
+| deployment.image.tag | string | `"v1.11.0-build.6-5695fb3"` | Docker image tag for Turing image |
 | deployment.labels | object | `{}` |  |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` | HTTP path for readiness check |

@@ -69,10 +69,6 @@ heritage: {{ .Release.Service }}
 {{- default (include "turing.fullname" .) .Values.serviceAccount.name }}
 {{- end }}
 
-{{- define "turing.mlp.encryption.key" -}}
-{{- .Values.config.MLPConfig.MLPEncryptionKey -}}
-{{- end -}}
-
 {{- define "turing.sentry.dsn" -}}
 {{- .Values.sentry.dsn -}}
 {{- end -}}
@@ -205,7 +201,6 @@ KubernetesLabelConfigs:
 MLPConfig:
   MerlinURL: {{ include "common.set-value" (list .Values.config.MLPConfig.MerlinURL $globMerlinApiHost) }}
   MLPURL: {{ include "common.set-value" (list .Values.config.MLPConfig.MLPURL $globMlpApiHost) }}
-  MLPEncryptionKey: {{ include "turing.mlp.encryption.key" . | quote }}
 TuringEncryptionKey: {{ include "turing.encryption.key" . | quote }}
 Sentry:
   DSN: {{ .Values.config.Sentry.DSN | default (include "turing.sentry.dsn" .) | quote }}
