@@ -81,7 +81,7 @@ def update_chart(chart_path: str):
 
         # bump major or minor depending on set env variable
         version_major = f"{dependency['version'].split('.')[0]}" if not BUMP_MAJOR else "*"
-        version_minor = f"{dependency['version'].split('.')[1]}" if not BUMP_MAJOR else "*"
+        version_minor = f"{dependency['version'].split('.')[1]}" if not BUMP_MINOR else "*"
         version = f"{version_major}.{version_minor}.*"
         manifest = f"""
 sources:
