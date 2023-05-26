@@ -154,7 +154,7 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | knativeServingCore.autoscalerHpa.image.tag | string | `"v1.7.4"` | Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.autoscalerHpa.replicaCount | int | `1` | Number of replicas for the autoscaler deployment. |
 | knativeServingCore.autoscalerHpa.resources | object | `{"limits":{"cpu":"1000m","memory":"128Mi"},"requests":{"cpu":"500m","memory":"128Mi"}}` | Resources requests and limits for autoscaler. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
-| knativeServingCore.config | object | `{"autoscaler":{},"buckets":"1","defaults":{},"deployment":{"queueSidecarImage":"gcr.io/knative-releases/knative.dev/serving/cmd/queue:v1.7.4"},"domain":{},"features":{},"gc":{},"leaderElection":{"lease-duration":"15s","renew-deadline":"10s","retry-period":"2s"},"logging":{"logging.request-log-template":""},"network":{},"observability":{},"tracing":{}}` | Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml |
+| knativeServingCore.config | object | `{"autoscaler":{},"buckets":"1","defaults":{},"deployment":{"queueSidecarImage":"gcr.io/knative-releases/knative.dev/serving/cmd/queue:v1.7.4"},"domain":{},"features":{},"gc":{},"leaderElection":{"lease-duration":"60s","renew-deadline":"40s","retry-period":"10s"},"logging":{"logging.request-log-template":""},"network":{},"observability":{},"tracing":{}}` | Please check out the Knative documentation in https://github.com/knative/serving/releases/download/knative-v1.0.1/serving-core.yaml |
 | knativeServingCore.controller.autoscaling.enabled | bool | `false` | Enables autoscaling for controller deployment. |
 | knativeServingCore.controller.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/controller"` | Repository of the controller image |
 | knativeServingCore.controller.image.sha | string | `""` | SHA256 of the controller image, either provide tag or SHA (SHA will be given priority) |
@@ -176,7 +176,13 @@ The following table lists the configurable parameters of the Knative Net Istio c
 | knativeServingCore.global.extraPodLabels | object | `{}` | Extra pod labels in a map[string]string format, most likely to be used for the costing labels. |
 | knativeServingCore.global.nodeSelector | object | `{}` | Define which Nodes the Pods are scheduled on. ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | knativeServingCore.global.tolerations | list | `[]` | If specified, the pod's tolerations. ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
+| knativeServingCore.monitoring.allNamespaces | bool | `true` |  |
 | knativeServingCore.monitoring.enabled | bool | `false` |  |
+| knativeServingCore.monitoring.podMonitor.metricPortName | string | `"metrics"` |  |
+| knativeServingCore.monitoring.podMonitor.metricRelabelings | object | `{}` |  |
+| knativeServingCore.monitoring.podMonitor.selector.matchExpressions[0].key | string | `"{{ .Values.monitoring.selectorKey }}"` |  |
+| knativeServingCore.monitoring.podMonitor.selector.matchExpressions[0].operator | string | `"Exists"` |  |
+| knativeServingCore.monitoring.selectorKey | string | `"serving.knative.dev/release"` |  |
 | knativeServingCore.queueProxy.image.repository | string | `"gcr.io/knative-releases/knative.dev/serving/cmd/queue"` | Repository of the queue proxy image |
 | knativeServingCore.queueProxy.image.sha | string | `""` | SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority) |
 | knativeServingCore.queueProxy.image.tag | string | `"v1.7.4"` | Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority) |

@@ -100,9 +100,9 @@ knativeServingCore:
     features: {}
     gc: {}
     leaderElection:
-      lease-duration: "15s"
-      renew-deadline: "10s"
-      retry-period: "2s"
+      lease-duration: "60s"
+      renew-deadline: "40s"
+      retry-period: "10s"
     buckets: "1"
     logging:
       logging.request-log-template: ""
@@ -266,6 +266,15 @@ knativeServingCore:
       sha: ""
   monitoring:
     enabled: false
+    podMonitor:
+      metricPortName: metrics
+      selector:
+        matchExpressions:
+          - key: "{{ .Values.monitoring.selectorKey }}"
+            operator: Exists
+      metricRelabelings: {}
+    selectorKey: serving.knative.dev/release
+    allNamespaces: true
   autoscalerHpa:
     enabled: true
     image:
