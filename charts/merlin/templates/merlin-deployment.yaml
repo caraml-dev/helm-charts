@@ -76,6 +76,9 @@ spec:
           {{- end }}
           - name: IMG_BUILDER_SAFE_TO_EVICT
             value: "{{ .Values.imageBuilder.safeToEvict }}"
+          {{- with .Values.deployment.extraEnvs }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
         volumeMounts:
         - name: config
           mountPath: /etc/merlin
@@ -86,10 +89,15 @@ spec:
           mountPath: "/etc/gcp_service_account"
           readOnly: true
         {{- end }}
+        {{- with .Values.deployment.extraVolumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         args:
-          - -config
-          - /etc/merlin/config.yaml
-
+        - -config
+        - /etc/merlin/config.yaml
+        {{- with .Values.deployment.extraArgs }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- if .Values.swagger.enabled }}
       - name: swagger-ui
         image: "swaggerapi/swagger-ui:{{ .Values.swagger.image.tag }}"
@@ -149,6 +157,9 @@ spec:
           items:
             - key: {{ .Values.gcpServiceAccount.secretKey }}
               path: service-account.json
+      {{- end }}
+      {{- with .Values.deployment.extraVolumes }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
 
 {{- if .Values.imagePullSecrets }}

@@ -27,6 +27,59 @@ deployment:
   #     effect: NoSchedule
   tolerations: []
 
+  # -- List of string containing additional Merlin API server arguments. For
+  # example, multiple "-config" can be specified to use multiple config files
+  extraArgs: []
+  # Example
+  # - -config=/etc/secrets/experiment.yaml
+  # - -config=/etc/secrets/database.yaml
+
+  # -- List of extra environment variables to add to Merlin API server container
+  extraEnvs: []
+  # Example:
+  # - name: DEMO_GREETING
+  #   value: "Hello from the environment"
+  # - name: DEMO_FAREWELL
+  #   value: "Such a sweet sorrow"
+
+  # -- List of extra initContainers to add to the Pod. For example, you
+  # need to run some init scripts to fetch credentials from a remote server
+  extraInitContainers: []
+  # Example:
+  # - name: init-myservice
+  #   image: busybox:1.28
+  #   command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
+
+  # -- List of sidecar containers to attach to the Pod. For example, you can
+  # attach sidecar container that forward logs or dynamically update some
+  # configuration files.
+  extraContainers: []
+  # Example:
+  # - name: count-agent
+  #   image: k8s.gcr.io/fluentd-gcp:1.30
+  #   env:
+  #   - name: FLUENTD_ARGS
+  #     value: -c /etc/fluentd-config/fluentd.conf
+  #   volumeMounts:
+  #   - name: varlog
+  #     mountPath: /var/log
+  #   - name: config-volume
+  #     mountPath: /etc/fluentd-config
+
+  # -- Extra volumes to attach to the Pod. For example, you can mount
+  # additional secrets to these volumes
+  extraVolumes: []
+  # Example:
+  # - name: varlog
+  #   emptyDir: {}
+
+  # -- Extra volume mounts to attach to Merlin API server container. For example
+  # to mount the extra volume containing secrets
+  extraVolumeMounts: []
+  # Example:
+  # - name: varlog
+  #   mountPath: /var/log
+
 config:
   DeploymentLabelPrefix: "gojek.com/"
   Environment: dev
