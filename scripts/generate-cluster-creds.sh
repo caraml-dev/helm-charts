@@ -7,8 +7,11 @@ set -ex
 
 show_help() {
   cat <<EOF
-Usage: $(basename "$0") <clusterType> [clusterName: Caraml.Merlin.Values.ImageBuilder.ClusterName]
-    -h, --help               Display help
+Usage: $(basename "$0") <clusterType> <clusterName>
+  Positional arguments:
+    clusterType - the type of the local cluster [minikube|k3d|kind]
+    clusterName - the name of the cluster set in the CaraML app
+  -h, --help               Display help
 EOF
 }
 
@@ -23,7 +26,7 @@ validate_parameters() {
     exit 1
   fi
   if [ "$1" != "minikube" ] && [ "$1" != "kind" ] && [ "$1" != "k3d" ]; then
-    echo "Credentials generations is supported only for (minikube|k3d|kind). Given: $1"
+    echo "Credentials generation is supported only for (minikube|k3d|kind). Given: $1"
     show_help
     exit 1
   fi
@@ -40,7 +43,7 @@ main() {
   SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
   if [ "$CLUSTER_TYPE" == "minikube" ]; then
-cat <<EOF | yq e -P - > k8s_config.yaml
+cat <<EOF | yq e -P - > /tmp/temp_k8sconfig.yaml
 {
   "k8s_config": {
     "name": "$CLUSTER_NAME",
@@ -89,9 +92,12 @@ EOF
   output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
   # NOTE: Write to ci/ files as these files will be used in ci tests! Consider looping through all files
   # in ci dir
-  # Write to merlin chart and caraml chart ci-values.yaml
-  output="$output" yq '.environmentConfigs[0] *= load("/tmp/temp_k8sconfig.yaml") | .imageBuilder.k8sConfig |= strenv(output)' -i "${SCRIPT_DIR}/../charts/merlin/ci/ci-values.yaml"
-  output="$output" yq '.merlin.environmentConfigs[0] *= load("/tmp/temp_k8sconfig.yaml") | .merlin.imageBuilder.k8sConfig |= strenv(output)' -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
+  for APP in merlin turing
+  do
+    # Write to app chart and caraml chart ci-values.yaml
+    output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= strenv(output)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
+    output="$output" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= strenv(output)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
+  done
 }
 
 main "$@"

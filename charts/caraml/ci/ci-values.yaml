@@ -2,76 +2,55 @@ caraml-authz:
   enabled: true
   deployment:
     replicaCount: "1"
-    resources:
+    resources: &resources
       requests:
-        cpu: 50m
+        cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "150m"
+        cpu: "50m"
         memory: 512Mi
     initResources:
       requests:
-        cpu: 50m
+        cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "150m"
+        cpu: "50m"
         memory: 512Mi
-
+  bootstrap:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "50m"
+        memory: 512Mi
 mlp:
   deployment:
     replicaCount: "1"
     resources:
       requests:
-        cpu: 100m
+        cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "250m"
+        cpu: "50m"
         memory: 512Mi
-
 merlin:
   deployment:
     replicaCount: "1"
     resources:
       requests:
-        cpu: 100m
+        cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "250m"
+        cpu: "50m"
         memory: 512Mi
-
+  swagger:
+    enabled:
+      false
   imageBuilder:
     clusterName: "chart-testing"
-
   vault:
-    enabled: true
-    secretName: "vault-secret"
-
-    helmChart:
-      chart: vault
-      repository: https://helm.releases.hashicorp.com
-      version: 0.19.0
-      release: vault
-      namespace: vault
-      createNamespace: true
-    chartValues:
-      injector:
-        enabled: false
-      server:
-        # -- This is just for quick install. For a production, NEVER EVER use the vault server in dev mode.
-        dev:
-          enabled: true
-        dataStore:
-          enabled: false
-        resources:
-          requests:
-            cpu: 25m
-            memory: 64Mi
-          limits:
-            cpu: 50m
-            memory: 128Mi
-        affinity: null
-        tolerations: null
-
+    enabled: false
   environmentConfigs:
     - name: "chart-testing"
       is_default: true
@@ -101,39 +80,35 @@ merlin:
         max_replica: 1
         cpu_request: "500m"
         memory_request: "500Mi"
-
   merlin-postgresql:
     resources:
       requests:
-        cpu: 100m
+        cpu: 25m
         memory: 256Mi
       limits:
-        cpu: "250m"
-        memory: "512Mi"
+        cpu: "50m"
+        memory: 512Mi
     persistence:
       size: 5Gi
-
   mlflow:
     resources:
       requests:
-        cpu: "100m"
-        memory: "256Mi"
-      limits:
-        cpu: "250m"
-        memory: "512Mi"
-
-  mlflow-postgresql:
-    resources:
-      requests:
         cpu: 100m
         memory: 256Mi
       limits:
-        cpu: "250m"
-        memory: "512Mi"
+        cpu: "150m"
+        memory: 512Mi
+  mlflow-postgresql:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "50m"
+        memory: 512Mi
     persistence:
       enabled: true
       size: 5Gi
-
   minio:
     enabled: false
     resources:
@@ -143,34 +118,29 @@ merlin:
       limits:
         cpu: 50m
         memory: 128Mi
-
   setupScript:
     # -- Image used to for setup scripts job
     image: bitnami/kubectl:latest
     clusterType: kind
-
   kserve:
     enabled: false
-
 postgresql:
   resources:
     requests:
-      cpu: 100m
+      cpu: 25m
       memory: 256Mi
     limits:
-      cpu: "250m"
-      memory: "512Mi"
+      cpu: "50m"
+      memory: 512Mi
   persistence:
     enabled: true
     size: 5Gi
-
 base:
   # -- Set to false if there is an existing istio deployment
   enabled: true
   validationURL: ""
   global:
     istioNamespace: "istio-system"
-
 istiod:
   enabled: true
   chartValues:
@@ -181,31 +151,44 @@ istiod:
       limits:
         cpu: 250m
         memory: 512Mi
-
 istioIngressGateway:
   global:
     enabled: false
-  chartValues:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 250m
-        memory: 512Mi
-
 clusterLocalGateway:
   global:
     enabled: false
-  chartValues:
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 250m
-        memory: 512Mi
-
 cert-manager:
   fullnameOverride: cert-manager
   enabled: true
+turing:
+  deployment:
+    replicaCount: "1"
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "70m"
+        memory: 512Mi
+  environmentConfigs:
+    - name: chart-testing
+xp-treatment:
+  xp-management:
+    deployment:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 256Mi
+        limits:
+          cpu: "50m"
+          memory: 512Mi
+
+  deployment:
+    replicaCount: "1"
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "50m"
+        memory: 512Mi

@@ -17,7 +17,7 @@ deployment:
     # -- Docker image repository for XP Management Service
     repository: caraml-dev/xp/xp-management
     # -- Docker image tag for XP Management Service
-    tag: v0.11.2-rc1
+    tag: v0.12.1-build.1-064655f
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
 
@@ -28,38 +28,38 @@ deployment:
   # Please refer to https://github.com/caraml-dev/xp/blob/main/management-service/config/example.yaml
   # for the detailed explanation on XP Management API config options
   apiConfig:
-    allowedOrigins: "*"
-    authorizationConfig:
-      enabled: false
-    dbConfig:
+    AllowedOrigins: "*"
+    AuthorizationConfig:
+      Enabled: false
+    DbConfig:
       # The maximum amount of time a connection may be idle. For more info see: https://pkg.go.dev/database/sql#DB.SetConnMaxIdleTime
-      connMaxIdleTime: 0s
+      ConnMaxIdleTime: 0s
       # The maximum amount of time a connection may be reused. For more info see: https://pkg.go.dev/database/sql#DB.SetConnMaxLifetime
-      connMaxLifetime: 0s
+      ConnMaxLifetime: 0s
       # The maximum number of connections in the idle connection pool. For more info see: https://pkg.go.dev/database/sql#DB.SetMaxIdleConns
-      maxIdleConns: 0
+      MaxIdleConns: 0
       # The maximum number of open connections to the database. For more info see: https://pkg.go.dev/database/sql#DB.SetMaxOpenConns
-      maxOpenConns: 0
-    deploymentConfig:
-      environmentType: dev
-    mlpConfig:
+      MaxOpenConns: 0
+    DeploymentConfig:
+      EnvironmentType: dev
+    MlpConfig:
       # Set the MLP URL if deployed externally
-      url: http://mlp:8080/v1
-    newRelicConfig:
-      enabled: false
-      appName: xp-management-service
-      license: ""
-    sentryConfig:
-      enabled: false
-      dsn: ""
-      labels:
-        app: xp-management-service
-    segmenterConfig:
-      s2_ids:
-        minS2CellLevel: 10
-        maxS2CellLevel: 14
-    port: 8080
-    xpUIConfig:
+      URL: http://mlp:8080/v1
+    NewRelicConfig:
+      Enabled: false
+      AppName: xp-management-service
+      License: ""
+    SentryConfig:
+      Enabled: false
+      DSN: ""
+      Labels:
+        App: xp-management-service
+    SegmenterConfig:
+      S2_IDs:
+        MinS2CellLevel: 10
+        MaxS2CellLevel: 14
+    Port: 8080
+    XpUIConfig:
       appDirectory: /app/xp-ui
 
   # -- Resources requests and limits for XP Management Service. This should be set
@@ -112,6 +112,11 @@ deployment:
   # - --config=/etc/secrets/experiment.yaml
   # - --config=/etc/secrets/database.yaml
 
+  # -- Labels to attach to the deployment.
+  labels: {}
+  # Example
+  # sidecar.custom.inject: "true"
+
   # -- Extra volumes to attach to the Pod. For example, you can mount
   # additional secrets to these volumes
   extraVolumes: []
@@ -160,6 +165,12 @@ externalPostgresql:
   password: password
   # -- Host address for the External postgres
   address: 127.0.0.1
+  # -- Enable this if you need the chart to create a secret when you provide the password above. To be used together with password.
+  createSecret: false
+  # -- Secret name which contains credentials to access externalPostgresql
+  secretName: ""
+  # -- Secret key in Secret which contains postgresql credentials
+  secretKey: ""
 
 # -- Postgresql configuration to be applied to XP Management Service's postgresql database deployment
 # Reference: https://artifacthub.io/packages/helm/bitnami/postgresql/10.16.2#parameters

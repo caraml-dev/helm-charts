@@ -4,8 +4,8 @@ deployment:
   image:
     pullPolicy: IfNotPresent
     registry: ghcr.io
-    repository: gojek/merlin
-    tag: 0.26.0-rc6
+    repository: caraml-dev/merlin
+    tag: 0.28.0-1-g07b5aaa
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -28,16 +28,20 @@ deployment:
   tolerations: []
 environment: dev
 deploymentLabelPrefix: "gojek.com/"
+pyfuncGRPCOptions: "{}"
 loggerDestinationURL: "http://yourDestinationLogger"
 queue:
   numOfWorkers: 1
 mlpApi:
-  apiHost: http://mlp.mlp:8080/v1
-  # encryptionKey must be specified using --set flag.
-  encryptionKey: secret-encyrption
+  apiHost: http://mlp.mlp:8080
 feastCoreApi:
   apiHost: http://feast-core.mlp:8080/v1
 imageBuilder:
+  serviceAccount:
+    create: true
+    name: "kaniko"
+    annotations: {}
+    labels: {}
   clusterName: "test"
   baseImages:
     3.7.*:
@@ -67,7 +71,8 @@ imageBuilder:
   tolerations: []
   nodeSelectors: {}
   maxRetry: 3
-  k8sConfig: ''
+  safeToEvict: false
+  k8sConfig: ""
   # Example json
   # '{
   #   "name": "dev-cluster",
@@ -111,7 +116,21 @@ transformer:
     feastBigtableServingURL: online-serving-bt.feast.dev
   feast:
     defaultServingURL: online-serving-redis.feast.dev
-    servingURLs: [{host: "online-serving-redis.feast.dev", label: "Online Serving with Redis", source_type: "REDIS", icon: "redis"}, {host: "online-serving-bigtable.feast.dev", label: "Online Serving with BigTable", source_type: "BIGTABLE", icon: "bigtable"}]
+    servingURLs:
+      [
+        {
+          host: "online-serving-redis.feast.dev",
+          label: "Online Serving with Redis",
+          source_type: "REDIS",
+          icon: "redis",
+        },
+        {
+          host: "online-serving-bigtable.feast.dev",
+          label: "Online Serving with BigTable",
+          source_type: "BIGTABLE",
+          icon: "bigtable",
+        },
+      ]
     ## Redis storage configuration for feast retrieval
     ##
     # redisStorage:
@@ -143,6 +162,10 @@ transformer:
     coreURL: core.feast.dev
     coreAuthAudience: core.feast.dev
     authEnabled: false
+    grpc:
+      keepAliveEnabled: false
+      keepAliveTime: 60s
+      keepAliveTimeout: 5s
   image: merlin-transformer:1.0.0
   jaeger:
     agentHost: localhost
@@ -150,6 +173,15 @@ transformer:
     samplerType: const
     samplerParam: 1
     disabled: false
+  model:
+    grpc:
+      keepAliveEnabled: false
+      keepAliveTime: 60s
+      keepAliveTimeout: 5s
+  kafka:
+    brokers: "kafka-brokers"
+    maxMessageSize: "1048588"
+
 # Google service account used to access GCP's resources.
 #
 # gcpServiceAccount:
@@ -207,16 +239,20 @@ newrelic:
 authorization:
   enabled: true
   serverUrl: http://mlp-authorization-keto
-encryption:
-  key: "password"
 ui:
   oauthClientID: ""
   homepage: /merlin
   apiHost: /api/merlin/v1
   upiDocURL: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
   mlp:
-    apiHost: /api/v1
-  docsURL: [{"href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md", "label": "Getting Started with Merlin"}]
+    apiHost: /api
+  docsURL:
+    [
+      {
+        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
+        "label": "Getting Started with Merlin",
+      },
+    ]
   # -- Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
   maxAllowedReplica: 20
@@ -402,7 +438,8 @@ mlflow:
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the fullname template
     name: mlflow
-    annotations: {}
+    annotations:
+      {}
       # example.io/example: example
   ingress:
     enabled: false

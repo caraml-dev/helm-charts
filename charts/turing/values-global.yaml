@@ -1,11 +1,11 @@
 global:
   ingressIP: ""
   oauthClientID: "global-client-123"
-  protocol: "https"
   # -- istioIngressIP takes precedence over domain. Used for local deployment
   istioLookUp:
     namespace: istio-system
     name: istio-ingressgateway
+  protocol: https
 
   # Domain used to configure gateway and virtual service
   domain: ""
@@ -15,11 +15,11 @@ global:
     mlflow: ["mlflow"]
 
   mlp:
-    apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
+    apiPrefix: "/"  # path prefix to where mlp endpoints lie if running on localhost
     serviceName: mlp
     externalPort: "8080"
     vsPrefix: "/api"
-    useServiceFqdn: false  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/"
     uiServiceName: mlp
 
@@ -35,7 +35,6 @@ global:
   turing:
     apiPrefix: "/v1"
     serviceName: turing
-    externalPort: "8080"
     vsPrefix: "/api/turing"
     useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/turing"
@@ -44,7 +43,6 @@ global:
   xp:
     apiPrefix: "/"
     serviceName: xp-management
-    externalPort: "8080"
     vsPrefix: "/api/xp"
     useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/xp"
@@ -53,20 +51,17 @@ global:
   pipeline:
     uiPrefix: "/pipeline"
     serviceName: pipeline-ui
-    externalPort: "8080"
 
   feast:
     apiPrefix: "/api"
     serviceName: feast-ui
-    externalPort: "8080"
     vsPrefix: "/feast"
+    uiPrefix: "/feast"
     useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiServiceName: feast-ui
 
   mlflow:
     serviceName: merlin-mlflow
-    externalPort: "80"
-
-  authz:
-    serviceName: caraml-authz
+    # NOTE: port and externalPort are the same, just different types
+    port: 80
     externalPort: "80"

@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.4.39](https://img.shields.io/badge/Version-0.4.39-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -14,15 +14,17 @@ A Helm chart for deploying CaraML components
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.7 |
+| https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.10 |
 | https://caraml-dev.github.io/helm-charts | caraml-routes | 0.2.2 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
-| https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | merlin | 0.10.11 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.4.17 |
+| https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
+| https://caraml-dev.github.io/helm-charts | merlin | 0.10.17 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.4.18 |
+| https://caraml-dev.github.io/helm-charts | turing | 0.2.23 |
+| https://caraml-dev.github.io/helm-charts | xp-treatment | 0.1.9 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
 | https://charts.jetstack.io | cert-manager | v1.8.2 |
 | https://istio-release.storage.googleapis.com/charts | base(base) | 1.13.9 |
@@ -99,6 +101,15 @@ A Helm chart for deploying CaraML components
 | global.postgresqlDatabase | string | `"caraml"` |  |
 | global.postgresqlUsername | string | `"caraml"` |  |
 | global.protocol | string | `"http"` |  |
+| global.turing.postgresqlDatabase | string | `"turing"` |  |
+| global.xp.apiPrefix | string | `"/v1"` |  |
+| global.xp.externalPort | string | `"8080"` |  |
+| global.xp.postgresqlDatabase | string | `"xp"` |  |
+| global.xp.serviceName | string | `"xp-management"` |  |
+| global.xp.uiPrefix | string | `"/xp"` |  |
+| global.xp.uiServiceName | string | `"xp-management"` |  |
+| global.xp.useServiceFqdn | bool | `true` |  |
+| global.xp.vsPrefix | string | `"/api/xp"` |  |
 | istioIngressGateway.chartValues.autoscaling.enabled | bool | `false` |  |
 | istioIngressGateway.chartValues.env.ISTIO_METAJSON_STATS | string | `"{\\\"sidecar.istio.io/statsInclusionSuffixes\\\": \\\"upstream_rq_1xx,upstream_rq_2xx,upstream_rq_3xx,upstream_rq_4xx,upstream_rq_5xx,upstream_rq_time,upstream_cx_tx_bytes_total,upstream_cx_rx_bytes_total,upstream_cx_total,downstream_rq_1xx,downstream_rq_2xx,downstream_rq_3xx,downstream_rq_4xx,downstream_rq_5xx,downstream_rq_time,downstream_cx_tx_bytes_total,downstream_cx_rx_bytes_total,downstream_cx_total\\\"}\n"` |  |
 | istioIngressGateway.chartValues.env.ISTIO_META_ROUTER_MODE | string | `"standard"` |  |
@@ -174,15 +185,30 @@ A Helm chart for deploying CaraML components
 | merlin.mlflow.resources.requests.cpu | string | `"250m"` |  |
 | merlin.mlflow.resources.requests.memory | string | `"256Mi"` |  |
 | merlin.mlp.enabled | bool | `false` |  |
+| merlin.mlpApi.encryptionKey | string | `"example-key-here"` |  |
 | mlp.deployment.authorization.enabled | bool | `true` |  |
 | mlp.enabled | bool | `true` | To enable/disable MLP chart installation. |
+| mlp.encryption.key | string | `"example-key-here"` |  |
 | mlp.postgresql.enabled | bool | `false` | To enable/disable MLP specific postgres |
 | postgresql.enabled | bool | `true` | To enable/disable CaraML specific postgres |
-| postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\nCREATE DATABASE merlin;\nCREATE DATABASE mlflow;\nCREATE DATABASE authz;\n"` |  |
+| postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\nCREATE DATABASE merlin;\nCREATE DATABASE mlflow;\nCREATE DATABASE authz;\nCREATE DATABASE turing;\nCREATE DATABASE xp;\n"` |  |
 | postgresql.persistence.size | string | `"10Gi"` |  |
 | postgresql.postgresqlDatabase | string | `"caraml"` | To set the database schema name created in postgres |
 | postgresql.postgresqlUsername | string | `"caraml"` | To set the user name for the database instance |
 | postgresql.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| turing.config.MLPConfig.MLPEncryptionKey | string | `"example-key-here"` |  |
+| turing.deployment.resources.limits.cpu | string | `"500m"` |  |
+| turing.deployment.resources.limits.memory | string | `"512Mi"` |  |
+| turing.deployment.resources.requests.cpu | string | `"250m"` |  |
+| turing.deployment.resources.requests.memory | string | `"256Mi"` |  |
+| turing.enabled | bool | `true` |  |
+| turing.merlin.enabled | bool | `false` |  |
+| turing.mlp.enabled | bool | `false` |  |
+| turing.turing-postgresql.enabled | bool | `false` | To enable/disable turing specific postgresql |
+| xp-treatment.enabled | bool | `true` |  |
+| xp-treatment.xp-management.enabled | bool | `true` |  |
+| xp-treatment.xp-management.mlp.enabled | bool | `false` |  |
+| xp-treatment.xp-management.postgresql.enabled | bool | `false` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

@@ -5,6 +5,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "mlp.labels" . | nindent 4 }}
+    {{- with .Values.deployment.extraLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
@@ -68,11 +71,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "common.postgres-password-secret-name" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
                   key: {{ include "common.postgres-password-secret-key" (list .Values.externalPostgresql) }}
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "mlp.encryption-key-name" . | quote}}
-                  key: encryption-key
           volumeMounts:
             - mountPath: /etc/caraml
               name: config

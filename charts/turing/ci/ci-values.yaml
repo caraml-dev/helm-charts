@@ -1,0 +1,125 @@
+global:
+  oauthClientID: "global-client-123"
+  mlp:
+    apiPrefix: "/"
+    serviceName: mlp
+    externalPort: "8080"
+    vsPrefix: "/api"
+    useServiceFqdn: true
+    uiPrefix: "/"
+    uiServiceName: mlp
+  merlin:
+    apiPrefix: "/v1"
+    serviceName: merlin
+    externalPort: "8080"
+    vsPrefix: "/api/merlin"
+    useServiceFqdn: true
+    uiPrefix: "/merlin"
+    uiServiceName: merlin
+deployment:
+  replicaCount: "1"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: "500m"
+      memory: 512Mi
+imageBuilder: &imageBuilder
+  clusterName: "chart-testing"
+environmentConfigs: &environmentConfigs
+  - name: "id-dev"
+    is_default: true
+    cluster: "chart-testing"
+    region: "id"
+    gcp_project: "gcp-project"
+    deployment_timeout: "10m"
+    namespace_timeout: "2m"
+    max_cpu: "8"
+    max_memory: "8Gi"
+    queue_resource_percentage: "20"
+    is_prediction_job_enabled: true
+    is_default_prediction_job: true
+    default_prediction_job_config:
+      executor_replica: 3
+      driver_cpu_request: "2"
+      driver_memory_request: "2Gi"
+      executor_cpu_request: "2"
+      executor_memory_request: "2Gi"
+    default_deployment_config:
+      min_replica: 0
+      max_replica: 1
+      cpu_request: "500m"
+      memory_request: "500Mi"
+    default_transformer_config:
+      min_replica: 0
+      max_replica: 1
+      cpu_request: "500m"
+      memory_request: "500Mi"
+turing-postgresql:
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  persistence:
+    size: 5Gi
+merlin:
+  deployment:
+    replicaCount: "1"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
+  authorization:
+    enabled: false
+  imageBuilder: *imageBuilder
+  environmentConfigs: *environmentConfigs
+  merlin-postgresql:
+    enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    persistence:
+      enabled: false
+  mlflow:
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+  mlflow-postgresql:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    persistence:
+      enabled: false
+  minio:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+  setupScript:
+    # -- Image used to for setup scripts job
+    image: bitnami/kubectl:latest
+    clusterType: kind
+  kserve:
+    enabled: false
+mlp:
+  authorization:
+    enabled: false
+  mlp-postgresql:
+    enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    persistence:
+      enabled: false

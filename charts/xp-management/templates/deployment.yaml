@@ -4,6 +4,9 @@ metadata:
   name: {{ include "management-svc.fullname" . }}
   labels:
     {{- include "management-svc.labels" . | nindent 4 }}
+    {{- with .Values.deployment.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
@@ -37,6 +40,11 @@ spec:
         image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         env:
+          - name: "DBCONFIG_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "common.postgres-password-secret-name" (list (index .Values "postgresql") .Values.externalPostgresql .Release .Chart ) }}
+                key: {{ include "common.postgres-password-secret-key" (list .Values.externalPostgresql) }}
           {{- with .Values.deployment.extraEnvs }}
           {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -128,7 +136,7 @@ spec:
           echo "Running Swagger UI..."
           /usr/share/nginx/run.sh
       volumes:
-      - name: config 
+      - name: config
         secret:
           secretName: {{ template "management-svc.fullname" .}}-api-config
       {{- with .Values.deployment.extraVolumes }}

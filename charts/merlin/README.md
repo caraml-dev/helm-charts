@@ -1,27 +1,62 @@
 # merlin
 
-![Version: 0.10.11](https://img.shields.io/badge/Version-0.10.11-informational?style=flat-square) ![AppVersion: 0.26.0-rc6](https://img.shields.io/badge/AppVersion-0.26.0--rc6-informational?style=flat-square)
+---
+![Version: 0.10.18](https://img.shields.io/badge/Version-0.10.18-informational?style=flat-square)
+![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
-## Maintainers
+## Introduction
 
-| Name | Email | Url |
-| ---- | ------ | --- |
-| caraml-dev | <caraml-dev@caraml.dev> |  |
+This Helm chart installs Merlin. I can also install the dependencies it requires, such as Kserve, MLP, etc.
+See `Chart.yaml` for full list of dependencies.
 
-## Requirements
+## Prerequisites
 
-| Repository | Name | Version |
-|------------|------|---------|
-| https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
-| https://caraml-dev.github.io/helm-charts | kserve(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | minio(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.4.17 |
-| https://charts.helm.sh/stable | merlin-postgresql(postgresql) | 7.0.2 |
-| https://charts.helm.sh/stable | mlflow-postgresql(postgresql) | 7.0.2 |
+To use the charts here, [Helm](https://helm.sh/) must be configured for your
+Kubernetes cluster. Setting up Kubernetes and Helm is outside the scope of
+this README. Please refer to the Kubernetes and Helm documentation.
 
-## Values
+- **Helm 3.0+** – This chart was tested with Helm v3.9.0, but it is also expected to work with earlier Helm versions
+- **Kubernetes 1.22+** – This chart was tested with Kind v1.22.7 and minikube kubernetes version 1.22.*
+- When installing on minikube, please run in a separate shell:
+  ```sh
+  minikube tunnel
+  ```
+  This is to enable istio loadbalancer services to be allocated an IP address.
+
+## Installation
+
+### Add Helm repository
+
+```shell
+helm repo add caraml https://caraml-dev.github.io/helm-charts
+```
+
+### Installing the chart
+
+This command will install Merlin release named `merlin` in the `default` namespace.
+Default chart values will be used for the installation:
+```shell
+$ helm install caraml/merlin
+```
+
+You can (and most likely, should) override the default configuration with values suitable for your installation.
+Refer to [Configuration](#configuration) section for the detailed description of available configuration keys.
+
+### Uninstalling the chart
+
+To uninstall `merlin` release:
+```shell
+$ helm uninstall merlin
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+This includes the dependencies that were installed by the chart. Note that, any PVCs created by the chart will have to be deleted manually.
+
+## Configuration
+
+The following table lists the configurable parameters of the Merlin chart and their default values.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -37,8 +72,8 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
-| deployment.image.repository | string | `"gojek/merlin"` |  |
-| deployment.image.tag | string | `"0.26.0-rc6"` |  |
+| deployment.image.repository | string | `"caraml-dev/merlin"` |  |
+| deployment.image.tag | string | `"0.28.0-1-g07b5aaa"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -48,7 +83,6 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | deployment.tolerations | list | `[]` |  |
 | deploymentLabelPrefix | string | `"gojek.com/"` |  |
-| encryption.key | string | `"password"` |  |
 | environment | string | `"dev"` |  |
 | environmentConfigs[0].cluster | string | `"test"` |  |
 | environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
@@ -99,6 +133,11 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | imageBuilder.resources.requests.cpu | string | `"1"` |  |
 | imageBuilder.resources.requests.memory | string | `"512Mi"` |  |
 | imageBuilder.retention | string | `"48h"` |  |
+| imageBuilder.safeToEvict | bool | `false` |  |
+| imageBuilder.serviceAccount.annotations | object | `{}` |  |
+| imageBuilder.serviceAccount.create | bool | `true` |  |
+| imageBuilder.serviceAccount.labels | object | `{}` |  |
+| imageBuilder.serviceAccount.name | string | `"kaniko"` |  |
 | imageBuilder.timeout | string | `"30m"` |  |
 | imageBuilder.tolerations | list | `[]` |  |
 | ingress.enabled | bool | `false` |  |
@@ -211,12 +250,12 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
-| mlpApi.apiHost | string | `"http://mlp.mlp:8080/v1"` |  |
-| mlpApi.encryptionKey | string | `"secret-encyrption"` |  |
+| mlpApi.apiHost | string | `"http://mlp.mlp:8080"` |  |
 | monitoring.enabled | bool | `false` |  |
 | newrelic.appname | string | `"merlin-api-dev"` |  |
 | newrelic.enabled | bool | `false` |  |
 | newrelic.licenseSecretName | string | `"newrelic-license-secret"` |  |
+| pyfuncGRPCOptions | string | `"{}"` |  |
 | queue.numOfWorkers | int | `1` |  |
 | sentry.dsn | string | `""` |  |
 | sentry.enabled | bool | `false` |  |
@@ -237,6 +276,9 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | transformer.feast.coreURL | string | `"core.feast.dev"` |  |
 | transformer.feast.defaultFeastSource | string | `"BIGTABLE"` |  |
 | transformer.feast.defaultServingURL | string | `"online-serving-redis.feast.dev"` |  |
+| transformer.feast.grpc.keepAliveEnabled | bool | `false` |  |
+| transformer.feast.grpc.keepAliveTime | string | `"60s"` |  |
+| transformer.feast.grpc.keepAliveTimeout | string | `"5s"` |  |
 | transformer.feast.servingURLs[0].host | string | `"online-serving-redis.feast.dev"` |  |
 | transformer.feast.servingURLs[0].icon | string | `"redis"` |  |
 | transformer.feast.servingURLs[0].label | string | `"Online Serving with Redis"` |  |
@@ -251,6 +293,11 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | transformer.jaeger.disabled | bool | `false` |  |
 | transformer.jaeger.samplerParam | int | `1` |  |
 | transformer.jaeger.samplerType | string | `"const"` |  |
+| transformer.kafka.brokers | string | `"kafka-brokers"` |  |
+| transformer.kafka.maxMessageSize | string | `"1048588"` |  |
+| transformer.model.grpc.keepAliveEnabled | bool | `false` |  |
+| transformer.model.grpc.keepAliveTime | string | `"60s"` |  |
+| transformer.model.grpc.keepAliveTimeout | string | `"5s"` |  |
 | transformer.simulation.feastBigtableServingURL | string | `"online-serving-bt.feast.dev"` |  |
 | transformer.simulation.feastRedisServingURL | string | `"online-serving-redis.feast.dev"` |  |
 | ui.apiHost | string | `"/api/merlin/v1"` |  |
@@ -259,9 +306,6 @@ Kubernetes-friendly ML model management, deployment, and serving.
 | ui.docsURL[0].label | string | `"Getting Started with Merlin"` |  |
 | ui.homepage | string | `"/merlin"` |  |
 | ui.maxAllowedReplica | int | `20` |  |
-| ui.mlp.apiHost | string | `"/api/v1"` |  |
+| ui.mlp.apiHost | string | `"/api"` |  |
 | ui.oauthClientID | string | `""` |  |
 | ui.upiDocURL | string | `"https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"` |  |
-
-----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

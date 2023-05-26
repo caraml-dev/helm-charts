@@ -41,6 +41,18 @@ global:
   mlflow:
     serviceName: merlin-mlflow
     externalPort: "80"
+  turing:
+    postgresqlDatabase: turing
+  xp:
+    apiPrefix: "/v1"
+    serviceName: xp-management
+    externalPort: "8080"
+    vsPrefix: "/api/xp"
+    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    uiPrefix: "/xp"
+    uiServiceName: xp-management
+    postgresqlDatabase: xp
+
 
 mlp:
   # -- To enable/disable MLP chart installation.
@@ -51,9 +63,14 @@ mlp:
   deployment:
     authorization:
       enabled: true
+  encryption:
+    key: "example-key-here"
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
+  mlpApi:
+    # encryptionKey must be specified using --set flag.
+    encryptionKey: "example-key-here"
   deployment:
     resources:
       requests:
@@ -240,6 +257,8 @@ postgresql:
       CREATE DATABASE merlin;
       CREATE DATABASE mlflow;
       CREATE DATABASE authz;
+      CREATE DATABASE turing;
+      CREATE DATABASE xp;
 ############################################################
 # Istio Base
 ############################################################
@@ -398,3 +417,39 @@ cert-manager:
   # NOTE: disable certmanager if kserve needs to be installed
   fullnameOverride: cert-manager
   enabled: false
+
+###################################################################
+# Turing dependency
+# #################################################################
+turing:
+  enabled: true
+  turing-postgresql:
+    # -- To enable/disable turing specific postgresql
+    enabled: false
+  mlp:
+    enabled: false
+  merlin:
+    enabled: false
+  deployment:
+    resources:
+      requests:
+        cpu: "250m"
+        memory: 256Mi
+      limits:
+        cpu: "500m"
+        memory: 512Mi
+  config:
+    MLPConfig:
+      MLPEncryptionKey: "example-key-here"
+
+###################################################################
+# xp dependency
+# #################################################################
+xp-treatment:
+  enabled: true
+  xp-management:
+    enabled: true
+    postgresql:
+      enabled: false
+    mlp:
+      enabled: false

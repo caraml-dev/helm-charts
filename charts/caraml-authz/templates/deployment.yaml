@@ -4,6 +4,9 @@ metadata:
   name: {{ template "caraml-authz.fullname" . }}
   labels:
     {{- include "caraml-authz.labels" . | nindent 4 }}
+    {{- with .Values.deployment.extraLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
@@ -27,6 +30,8 @@ spec:
             secretKeyRef:
               name: {{ include "common.postgres-password-secret-name" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Release .Chart ) | quote }}
               key: {{ include "common.postgres-password-secret-key" (list .Values.caramlAuthzExternalPostgresql (default "password" .Values.global.dbSecretKey)) | quote }}
+        - name: DATABASE_HOST
+          value: {{ include "common.postgres-host" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Release .Chart ) }}
         - name: DSN
           value: {{ template "caraml-authz.postgresql.dsn" . }}
         resources:
@@ -53,10 +58,15 @@ spec:
             secretKeyRef:
               name: {{ include "common.postgres-password-secret-name" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Release .Chart ) | quote }}
               key: {{ include "common.postgres-password-secret-key" (list .Values.caramlAuthzExternalPostgresql (default "password" .Values.global.dbSecretKey)) | quote }}
+        - name: DATABASE_HOST
+          value: {{ include "common.postgres-host" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Release .Chart ) }}
         - name: DSN
           value: {{ template "caraml-authz.postgresql.dsn" . }}
         resources:
 {{- toYaml .Values.deployment.resources | nindent 10 }}
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ default "caraml-authz" .Values.serviceAccount.name }}
+      {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

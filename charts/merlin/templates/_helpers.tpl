@@ -44,10 +44,6 @@ Generated names
     {{- printf "%s-scripts" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "merlin.mlp-api-encryption-key-name" -}}
-    {{- printf "%s-mlp-api-encryption-key" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "merlin.swagger-name" -}}
     {{- printf "%s-swagger" (include "merlin.resource-prefix" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
@@ -213,3 +209,12 @@ MLflow Postgres related
 {{- printf "%s-environments" (include "merlin.fullname" .) }}
 {{- end -}}
 {{- end -}}
+
+
+{{- define "merlin.kaniko-sa" -}}
+{{- if .Values.imageBuilder.serviceAccount.create }}
+{{- printf  "%s-%s" (default "kaniko" .Values.imageBuilder.serviceAccount.name) (include "merlin.fullname" . ) }}
+{{- else }}
+{{- printf "%s" .Values.imageBuilder.serviceAccount.name }}
+{{- end }}
+{{- end }}

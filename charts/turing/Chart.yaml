@@ -1,0 +1,25 @@
+apiVersion: v2
+appVersion: 1.11.0
+dependencies:
+- alias: turing-postgresql
+  condition: turing-postgresql.enabled
+  name: postgresql
+  repository: https://charts.helm.sh/stable
+  version: 7.0.2
+- condition: mlp.enabled
+  name: mlp
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.4.20
+- condition: merlin.enabled
+  name: merlin
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.10.16
+- name: common
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.8
+description: Kubernetes-friendly multi-model orchestration and experimentation system.
+maintainers:
+- email: caraml-dev@caraml.dev
+  name: caraml-dev
+name: turing
+version: 0.2.24
