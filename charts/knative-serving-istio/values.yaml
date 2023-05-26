@@ -95,7 +95,7 @@ knativeServingCore:
     autoscaler: {}
     defaults: {}
     deployment:
-      queueSidecarImage: gcr.io/knative-releases/knative.dev/serving/cmd/queue@v1.7.4
+      queueSidecarImage: gcr.io/knative-releases/knative.dev/serving/cmd/queue:v1.7.4
     domain: {}
     features: {}
     gc: {}
