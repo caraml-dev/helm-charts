@@ -34,9 +34,9 @@ controller:
     # -- Repository of the controller image
     repository: "gcr.io/knative-releases/knative.dev/net-istio/cmd/controller"
     # -- Tag of the controller image, either provide tag or SHA (SHA will be given priority)
-    tag: ""
+    tag: "v1.7.1"
     # -- SHA256 of the controller image, either provide tag or SHA (SHA will be given priority)
-    sha: "c110b0b5d545561f220d23bdb48a6c75f5591d068de9fb079baad47c82903e28"
+    sha: ""
   # -- Number of replicas for the net-istio-controller deployment.
   replicaCount: 1
   # -- Resources requests and limits for net-istio-controller. This should be set
@@ -54,9 +54,9 @@ webhook:
     # -- Repository of the webhook image
     repository: "gcr.io/knative-releases/knative.dev/net-istio/cmd/webhook"
     # -- Tag of the webhook image, either provide tag or SHA (SHA will be given priority)
-    tag: ""
+    tag: "v1.7.1"
     # -- SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority)
-    sha: "d74e79f7db426c1d24e060009e31344cad2d6e8c7e161184f121fde78b2f4a1d"
+    sha: ""
   # -- Number of replicas for the net-istio-webhook deployment.
   replicaCount: 1
   # -- Resources requests and limits for net-istio-webhook. This should be set
@@ -95,14 +95,14 @@ knativeServingCore:
     autoscaler: {}
     defaults: {}
     deployment:
-      queueSidecarImage: gcr.io/knative-releases/knative.dev/serving/cmd/queue@sha256:80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe
+      queueSidecarImage: gcr.io/knative-releases/knative.dev/serving/cmd/queue:v1.7.4
     domain: {}
     features: {}
     gc: {}
     leaderElection:
-      lease-duration: "15s"
-      renew-deadline: "10s"
-      retry-period: "2s"
+      lease-duration: "60s"
+      renew-deadline: "40s"
+      retry-period: "10s"
     buckets: "1"
     logging:
       logging.request-log-template: ""
@@ -123,9 +123,9 @@ knativeServingCore:
       # -- Repository of the activator image
       repository: "gcr.io/knative-releases/knative.dev/serving/cmd/activator"
       # -- Tag of the activator image, either provide tag or SHA (SHA will be given priority)
-      tag: ""
+      tag: "v1.7.4"
       # -- SHA256 of the activator image, either provide tag or SHA (SHA will be given priority)
-      sha: "ca607f73e5daef7f3db0358e145220f8423e93c20ee7ea9f5595f13bd508289a"
+      sha: ""
     # -- Number of replicas for the activator deployment.
     replicaCount: 1
     # -- Resources requests and limits for activator. This should be set
@@ -143,9 +143,9 @@ knativeServingCore:
       # -- Repository of the autoscaler image
       repository: "gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler"
       # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
-      tag: ""
+      tag: "v1.7.4"
       # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
-      sha: "31aed8b5b241147585cb0e48366451a96354fc6036d6a5667997237c1d302d98"
+      sha: ""
     # -- Number of replicas for the autoscaler deployment.
     replicaCount: 1
     # -- Resources requests and limits for autoscaler. This should be set
@@ -172,9 +172,9 @@ knativeServingCore:
       # -- Repository of the controller image
       repository: "gcr.io/knative-releases/knative.dev/serving/cmd/controller"
       # -- Tag of the controller image, either provide tag or SHA (SHA will be given priority)
-      tag: ""
+      tag: "v1.7.4"
       # -- SHA256 of the controller image, either provide tag or SHA (SHA will be given priority)
-      sha: "c5a77d5642065ff3452d9b043a7226b85bfc81dc068f8dded905abf88d917a4d"
+      sha: ""
     # -- Number of replicas for the controller deployment.
     replicaCount: 1
     # -- Resources requests and limits for controller. This should be set
@@ -192,9 +192,9 @@ knativeServingCore:
       # -- Repository of the domain mapping image
       repository: "gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping"
       # -- Tag of the domain mapping image, either provide tag or SHA (SHA will be given priority)
-      tag: ""
+      tag: "v1.7.4"
       # -- SHA256 of the domain mapping image, either provide tag or SHA (SHA will be given priority)
-      sha: "6b5356cf3a2b64d52cbbf1bc0de376b816c4d3f610ccc8ff2dabf3d259c0996b"
+      sha: ""
     # -- Number of replicas for the domain mapping deployment.
     replicaCount: 1
     # -- Resources requests and limits for domain mapping. This should be set
@@ -212,9 +212,9 @@ knativeServingCore:
       # -- Repository of the domain mapping webhook image
       repository: "gcr.io/knative-releases/knative.dev/serving/cmd/domain-mapping-webhook"
       # -- Tag of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority)
-      tag: ""
+      tag: "v1.7.4"
       # -- SHA256 of the domain mapping webhook image, either provide tag or SHA (SHA will be given priority)
-      sha: "d0cc86f2002660c4804f6e0aed8218d39384c73a8b5006c9ac558becd8f48aa6"
+      sha: ""
     # -- Number of replicas for the domain mapping webhook deployment.
     replicaCount: 1
     # -- Resources requests and limits for domain mapping webhook. This should be set
@@ -241,9 +241,9 @@ knativeServingCore:
       # -- Repository of the webhook image
       repository: "gcr.io/knative-releases/knative.dev/serving/cmd/webhook"
       # -- Tag of the webhook image, either provide tag or SHA (SHA will be given priority)
-      tag: ""
+      tag: "v1.7.4"
       # -- SHA256 of the webhook image, either provide tag or SHA (SHA will be given priority)
-      sha: "bd954ec8ced56e359bd4f60ee1886b20000df14126688c796383a3ae40cfffc0"
+      sha: ""
     # -- Number of replicas for the webhook deployment.
     replicaCount: 1
     # -- Resources requests and limits for webhook. This should be set
@@ -261,20 +261,29 @@ knativeServingCore:
       # -- Repository of the queue proxy image
       repository: "gcr.io/knative-releases/knative.dev/serving/cmd/queue"
       # -- Tag of the queue proxy image, either provide tag or SHA (SHA will be given priority)
-      tag: ""
+      tag: "v1.7.4"
       # -- SHA256 of the queue proxy image, either provide tag or SHA (SHA will be given priority)
-      sha: "80dfb4568e08e43093f93b2cae9401f815efcb67ad8442d1f7f4c8a41e071fbe"
+      sha: ""
   monitoring:
     enabled: false
+    podMonitor:
+      metricPortName: metrics
+      selector:
+        matchExpressions:
+          - key: "{{ .Values.monitoring.selectorKey }}"
+            operator: Exists
+      metricRelabelings: {}
+    selectorKey: serving.knative.dev/release
+    allNamespaces: true
   autoscalerHpa:
     enabled: true
     image:
       # -- Repository of the autoscaler image
       repository: "gcr.io/knative-releases/knative.dev/serving/cmd/autoscaler-hpa"
       # -- Tag of the autoscaler image, either provide tag or SHA (SHA will be given priority)
-      tag: ""
+      tag: "v1.7.4"
       # -- SHA256 of the autoscaler image, either provide tag or SHA (SHA will be given priority)
-      sha: "c7020d14b51862fae8e92da7b0442aa7843eb81c32699d158a3b24c19d5af8d4"
+      sha: ""
     # -- Number of replicas for the autoscaler deployment.
     replicaCount: 1
     # -- Resources requests and limits for autoscaler. This should be set
