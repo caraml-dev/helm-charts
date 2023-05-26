@@ -30,7 +30,7 @@ def update_gdi_dependency(chart_path: str, dependency: dict):
     # bump major or minor depending on set env variable
     chart_version = chart_values[dependency["alias"]]["helmChart"]["version"]
     version_major = f"{chart_version.split('.')[0]}" if not BUMP_MAJOR else "*"
-    version_minor = f"{chart_version.split('.')[1]}" if not BUMP_MAJOR else "*"
+    version_minor = f"{chart_version.split('.')[1]}" if not BUMP_MINOR else "*"
     version = f"{version_major}.{version_minor}.*"
     manifest = f"""
 sources:
