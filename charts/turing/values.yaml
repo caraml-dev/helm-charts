@@ -136,8 +136,7 @@ service:
   internalPort: 8080
 
 serviceAccount:
-  # Specifies whether a ServiceAccount should be created. If disabled and clusterConfig.useInClusterConfig is set,
-  # a service account will be created nonetheless.
+  # Specifies whether a ServiceAccount should be created. If set to false, the service account is expected to exist.
   create: true
   # The name of the ServiceAccount to use.
   name: turing
