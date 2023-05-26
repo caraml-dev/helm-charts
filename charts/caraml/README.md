@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.5.4](https://img.shields.io/badge/Version-0.5.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -21,9 +21,9 @@ A Helm chart for deploying CaraML components
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | merlin | 0.10.17 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.4.18 |
-| https://caraml-dev.github.io/helm-charts | turing | 0.2.23 |
+| https://caraml-dev.github.io/helm-charts | merlin | 0.10.18 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.4.20 |
+| https://caraml-dev.github.io/helm-charts | turing | 0.2.24 |
 | https://caraml-dev.github.io/helm-charts | xp-treatment | 0.1.9 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
 | https://charts.jetstack.io | cert-manager | v1.8.2 |
