@@ -194,7 +194,7 @@ A Helm chart for deploying CaraML components
 | postgresql.postgresqlDatabase | string | `"caraml"` | To set the database schema name created in postgres |
 | postgresql.postgresqlUsername | string | `"caraml"` | To set the user name for the database instance |
 | postgresql.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| turing.config.MLPConfig | string | `nil` |  |
+| turing.config | object | `{}` |  |
 | turing.deployment.resources.limits.cpu | string | `"500m"` |  |
 | turing.deployment.resources.limits.memory | string | `"512Mi"` |  |
 | turing.deployment.resources.requests.cpu | string | `"250m"` |  |

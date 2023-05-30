@@ -433,8 +433,7 @@ turing:
       limits:
         cpu: "500m"
         memory: 512Mi
-  config:
-    MLPConfig:
+  config: {}
 
 ###################################################################
 # xp dependency
