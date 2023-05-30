@@ -63,14 +63,9 @@ mlp:
   deployment:
     authorization:
       enabled: true
-  encryption:
-    key: "example-key-here"
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
-  mlpApi:
-    # encryptionKey must be specified using --set flag.
-    encryptionKey: "example-key-here"
   deployment:
     resources:
       requests:
@@ -440,7 +435,6 @@ turing:
         memory: 512Mi
   config:
     MLPConfig:
-      MLPEncryptionKey: "example-key-here"
 
 ###################################################################
 # xp dependency

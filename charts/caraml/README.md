@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.5.4](https://img.shields.io/badge/Version-0.5.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.5.5](https://img.shields.io/badge/Version-0.5.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -185,10 +185,8 @@ A Helm chart for deploying CaraML components
 | merlin.mlflow.resources.requests.cpu | string | `"250m"` |  |
 | merlin.mlflow.resources.requests.memory | string | `"256Mi"` |  |
 | merlin.mlp.enabled | bool | `false` |  |
-| merlin.mlpApi.encryptionKey | string | `"example-key-here"` |  |
 | mlp.deployment.authorization.enabled | bool | `true` |  |
 | mlp.enabled | bool | `true` | To enable/disable MLP chart installation. |
-| mlp.encryption.key | string | `"example-key-here"` |  |
 | mlp.postgresql.enabled | bool | `false` | To enable/disable MLP specific postgres |
 | postgresql.enabled | bool | `true` | To enable/disable CaraML specific postgres |
 | postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\nCREATE DATABASE merlin;\nCREATE DATABASE mlflow;\nCREATE DATABASE authz;\nCREATE DATABASE turing;\nCREATE DATABASE xp;\n"` |  |
@@ -196,7 +194,7 @@ A Helm chart for deploying CaraML components
 | postgresql.postgresqlDatabase | string | `"caraml"` | To set the database schema name created in postgres |
 | postgresql.postgresqlUsername | string | `"caraml"` | To set the user name for the database instance |
 | postgresql.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| turing.config.MLPConfig.MLPEncryptionKey | string | `"example-key-here"` |  |
+| turing.config.MLPConfig | string | `nil` |  |
 | turing.deployment.resources.limits.cpu | string | `"500m"` |  |
 | turing.deployment.resources.limits.memory | string | `"512Mi"` |  |
 | turing.deployment.resources.requests.cpu | string | `"250m"` |  |
