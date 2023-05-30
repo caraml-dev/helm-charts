@@ -23,7 +23,7 @@ A Helm chart for deploying CaraML components
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | merlin | 0.10.18 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.4.20 |
-| https://caraml-dev.github.io/helm-charts | turing | 0.2.24 |
+| https://caraml-dev.github.io/helm-charts | turing | 0.2.25 |
 | https://caraml-dev.github.io/helm-charts | xp-treatment | 0.1.9 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
 | https://charts.jetstack.io | cert-manager | v1.8.2 |
@@ -90,7 +90,7 @@ A Helm chart for deploying CaraML components
 | global.merlin.vsPrefix | string | `"/api/merlin"` |  |
 | global.mlflow.externalPort | string | `"80"` |  |
 | global.mlflow.serviceName | string | `"merlin-mlflow"` |  |
-| global.mlp.apiPrefix | string | `"/v1"` |  |
+| global.mlp.apiPrefix | string | `"/"` |  |
 | global.mlp.externalPort | string | `"8080"` |  |
 | global.mlp.postgresqlDatabase | string | `"mlp"` |  |
 | global.mlp.serviceName | string | `"mlp"` |  |
