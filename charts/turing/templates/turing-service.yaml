@@ -1,7 +1,8 @@
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "turing" (list "serviceName")) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "turing.fullname" . }}
+  name: {{ include "common.set-value" (list (include "turing.fullname" .) $globServiceName) }}
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ template "turing.fullname" . }}
