@@ -12,7 +12,7 @@ dependencies:
 - condition: turing.enabled
   name: turing
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.25
+  version: 0.2.26
 - condition: xp-treatment.enabled
   name: xp-treatment
   repository: https://caraml-dev.github.io/helm-charts
@@ -68,4 +68,4 @@ maintainers:
   name: caraml-dev
 name: caraml
 type: application
-version: 0.5.5
+version: 0.5.6
