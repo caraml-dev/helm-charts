@@ -260,7 +260,6 @@ AuthorizationConfig:
   AuthorizationServerURL: {{ .Values.config.AuthorizationConfig.AuthorizationServerURL }}
 MlpAPIConfig:
   APIHost: {{ include "common.set-value" (list .Values.config.MlpAPIConfig.APIHost $globMlpApiHost) }}
-  EncryptionKey: {{ .Values.config.MlpAPIConfig.EncryptionKey }}
 FeatureToggleConfig:
   MonitoringConfig:
     MonitoringEnabled: {{ .Values.config.FeatureToggleConfig.MonitoringConfig.MonitoringEnabled | default "false" }}
