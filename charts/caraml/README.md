@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.5.6](https://img.shields.io/badge/Version-0.5.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.5.7](https://img.shields.io/badge/Version-0.5.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -90,7 +90,7 @@ A Helm chart for deploying CaraML components
 | global.merlin.vsPrefix | string | `"/api/merlin"` |  |
 | global.mlflow.externalPort | string | `"80"` |  |
 | global.mlflow.serviceName | string | `"merlin-mlflow"` |  |
-| global.mlp.apiPrefix | string | `"/"` |  |
+| global.mlp.apiPrefix | string | `""` |  |
 | global.mlp.externalPort | string | `"8080"` |  |
 | global.mlp.postgresqlDatabase | string | `"mlp"` |  |
 | global.mlp.serviceName | string | `"mlp"` |  |
