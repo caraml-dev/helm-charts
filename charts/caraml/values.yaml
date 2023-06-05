@@ -20,7 +20,7 @@ global:
     serviceName: caraml-authz
   mlp:
     postgresqlDatabase: mlp
-    apiPrefix: "/"  # path prefix to where mlp endpoints lie if running on localhost
+    apiPrefix: ""  # path prefix to where mlp endpoints lie if running on localhost
     serviceName: mlp
     externalPort: "8080"
     vsPrefix: "/api"
