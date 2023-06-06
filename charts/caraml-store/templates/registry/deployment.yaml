@@ -72,7 +72,7 @@ spec:
           - name: {{ printf "%s" $key | replace "." "_" | upper | quote }}
             {{- if eq (kindOf $value) "map" }}
             valueFrom:
-              {{- toYaml $value | nindent 12}}
+              {{- toYaml $value | nindent 14}}
             {{- else }}
             value: {{ $value | quote }}
             {{- end}}
