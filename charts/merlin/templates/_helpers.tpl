@@ -252,7 +252,7 @@ DbConfig:
   Database: {{ include "common.postgres-database" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global "merlin" "postgresqlDatabase") }}
   User: {{ include "common.postgres-username" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global ) }}
 ImageBuilderConfig:
-  ClusterName: {{ .Values.config.ImageBuilderConfig.clusterName }}
+  ClusterName: {{ .Values.config.ImageBuilderConfig.ClusterName }}
   K8sConfig:
 {{ .Values.config.ImageBuilderConfig.K8sConfig | fromJson | toYaml | indent 4 }}
 AuthorizationConfig:
