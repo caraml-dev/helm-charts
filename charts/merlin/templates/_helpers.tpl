@@ -209,7 +209,7 @@ MLflow Postgres related
             {{- $globalAuthzUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "authz" (list "serviceName")))) }}
         {{- end }}
     {{- end }}
-    {{- printf "%s" (include "common.set-value" (list .Values.authorization.serverUrl $globalAuthzUrl)) -}}
+    {{- printf "%s" (include "common.set-value" (list .Values.config.AuthorizationConfig.AuthorizationServerURL $globalAuthzUrl)) -}}
 {{- end -}}
 
 {{- define "merlin.environmentsSecretName" -}}
@@ -256,8 +256,7 @@ ImageBuilderConfig:
   K8sConfig:
 {{ .Values.config.ImageBuilderConfig.K8sConfig | fromJson | toYaml | indent 4 }}
 AuthorizationConfig:
-  AuthorizationEnabled: {{ .Values.config.AuthorizationConfig.AuthorizationEnabled | default "false" }}
-  AuthorizationServerURL: {{ .Values.config.AuthorizationConfig.AuthorizationServerURL }}
+  AuthorizationServerURL: {{ include "merlin.authorization.server.url" . | quote }}
 MlpAPIConfig:
   APIHost: {{ include "common.set-value" (list .Values.config.MlpAPIConfig.APIHost $globMlpApiHost) }}
 FeatureToggleConfig:
