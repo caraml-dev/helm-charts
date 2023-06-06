@@ -64,6 +64,11 @@ spec:
         resources:
           {{- toYaml .Values.deployment.resources | nindent 10 }}
         env:
+          - name: DBCONFIG_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "common.postgres-password-secret-name" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Release .Chart ) }}
+                key: {{ include "common.postgres-password-secret-key" (list .Values.merlinExternalPostgresql) }}
           {{- if .Values.gcpServiceAccount }}
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /etc/gcp_service_account/service-account.json
