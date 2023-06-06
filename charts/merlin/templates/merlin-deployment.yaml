@@ -275,6 +275,8 @@ spec:
             value: {{ include "common.set-value" (list .Values.mlpApi.apiHost $globMlpApiHost) }}
           - name: MLFLOW_TRACKING_URL
             value: "{{ .Values.mlflow.trackingURL }}"
+          - name: ARTIFACT_SERVICE_TYPE
+            value: "{{ .Values.mlflow.artifactServiceType }}"
           {{- if .Values.gcpServiceAccount }}
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /etc/gcp_service_account/service-account.json
