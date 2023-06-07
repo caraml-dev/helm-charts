@@ -60,23 +60,142 @@ The following table lists the configurable parameters of the Merlin chart and th
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| alerts.alertBranch | string | `"master"` |  |
-| alerts.alertRepository | string | `"lens/artillery/datascience"` |  |
-| alerts.alertsRepoPlatform | string | `"gitlab"` | Repository platform where the created Alerts and Dashboards need to be pushed. Platforms supported as of now: Gitlab |
-| alerts.baseURL | string | `"https://gitlab.com/"` |  |
-| alerts.dashboardBranch | string | `"master"` |  |
-| alerts.dashboardRepository | string | `"data-science/slo-specs"` |  |
-| alerts.enabled | bool | `false` | To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin. |
-| alerts.warden.apiHost | string | `""` |  |
-| authorization.caching.cacheCleanUpIntervalSeconds | int | `900` | Cache clean up interval, after which expired keys are removed |
-| authorization.caching.enabled | bool | `false` | Whether local in-memory caching of authorization responses should be enabled |
-| authorization.caching.keyExpirySeconds | int | `600` | Cache key expiry duration |
-| authorization.enabled | bool | `true` |  |
-| authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
+| config.AuthorizationConfig.AuthorizationEnabled | bool | `true` |  |
+| config.AuthorizationConfig.AuthorizationServerURL | string | `"http://mlp-authorization-keto"` |  |
+| config.DbConfig.Database | string | `"merlin"` |  |
+| config.DbConfig.Host | string | `"localhost"` |  |
+| config.DbConfig.Password | string | `"merlin"` |  |
+| config.DbConfig.Port | int | `5432` |  |
+| config.DbConfig.User | string | `"merlin"` |  |
+| config.DeploymentLabelPrefix | string | `"gojek.com/"` |  |
+| config.Environment | string | `"dev"` |  |
+| config.EnvironmentConfigPath | string | `"environments.yaml"` |  |
+| config.EnvironmentConfigs[0].Cluster | string | `"test"` |  |
+| config.EnvironmentConfigs[0].DefaultDeploymentConfig.CPURequest | string | `"500m"` |  |
+| config.EnvironmentConfigs[0].DefaultDeploymentConfig.MaxReplica | int | `1` |  |
+| config.EnvironmentConfigs[0].DefaultDeploymentConfig.MemoryRequest | string | `"500Mi"` |  |
+| config.EnvironmentConfigs[0].DefaultDeploymentConfig.MinReplica | int | `0` |  |
+| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.DriverCPURequest | string | `"2"` |  |
+| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.DriverMemoryRequest | string | `"2Gi"` |  |
+| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.ExecutorCPURequest | string | `"2"` |  |
+| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.ExecutorMemoryRequest | string | `"2Gi"` |  |
+| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.ExecutorReplica | int | `3` |  |
+| config.EnvironmentConfigs[0].DefaultTransformerConfig.CPURequest | string | `"500m"` |  |
+| config.EnvironmentConfigs[0].DefaultTransformerConfig.MaxReplica | int | `1` |  |
+| config.EnvironmentConfigs[0].DefaultTransformerConfig.MemoryRequest | string | `"500Mi"` |  |
+| config.EnvironmentConfigs[0].DefaultTransformerConfig.MinReplica | int | `0` |  |
+| config.EnvironmentConfigs[0].DeploymentTimeout | string | `"10m"` |  |
+| config.EnvironmentConfigs[0].GcpProject | string | `"gcp-project"` |  |
+| config.EnvironmentConfigs[0].IsDefault | bool | `true` |  |
+| config.EnvironmentConfigs[0].IsDefaultPredictionJob | bool | `true` |  |
+| config.EnvironmentConfigs[0].IsPredictionJobEnabled | bool | `true` |  |
+| config.EnvironmentConfigs[0].K8sConfig | string | `nil` |  |
+| config.EnvironmentConfigs[0].MaxCPU | string | `"8"` |  |
+| config.EnvironmentConfigs[0].MaxMemory | string | `"8Gi"` |  |
+| config.EnvironmentConfigs[0].Name | string | `"id-dev"` |  |
+| config.EnvironmentConfigs[0].NamespaceTimeout | string | `"2m"` |  |
+| config.EnvironmentConfigs[0].QueueResourcePercentage | string | `"20"` |  |
+| config.EnvironmentConfigs[0].Region | string | `"id"` |  |
+| config.FeatureToggleConfig.AlertConfig.AlertEnabled | bool | `false` | To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin. |
+| config.FeatureToggleConfig.AlertConfig.GitlabConfig.AlertBranch | string | `"master"` |  |
+| config.FeatureToggleConfig.AlertConfig.GitlabConfig.AlertRepository | string | `"lens/artillery/datascience"` |  |
+| config.FeatureToggleConfig.AlertConfig.GitlabConfig.BaseURL | string | `"https://gitlab.com/"` |  |
+| config.FeatureToggleConfig.AlertConfig.GitlabConfig.DashboardBranch | string | `"master"` |  |
+| config.FeatureToggleConfig.AlertConfig.GitlabConfig.DashboardRepository | string | `"data-science/slo-specs"` |  |
+| config.FeatureToggleConfig.AlertConfig.WardenConfig.APIHost | string | `""` |  |
+| config.FeatureToggleConfig.MonitoringConfig.MonitoringBaseURL | string | `""` |  |
+| config.FeatureToggleConfig.MonitoringConfig.MonitoringEnabled | bool | `false` |  |
+| config.FeatureToggleConfig.MonitoringConfig.MonitoringJobBaseURL | string | `""` |  |
+| config.ImageBuilderConfig.BaseImages."3.7.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
+| config.ImageBuilderConfig.BaseImages."3.7.*".DockerfilePath | string | `"docker/Dockerfile"` |  |
+| config.ImageBuilderConfig.BaseImages."3.7.*".ImageName | string | `"pyfunc-py37:v0.1.0"` |  |
+| config.ImageBuilderConfig.BaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| config.ImageBuilderConfig.BuildNamespace | string | `"mlp"` |  |
+| config.ImageBuilderConfig.BuildTimeout | string | `"30m"` |  |
+| config.ImageBuilderConfig.ClusterName | string | `"test"` |  |
+| config.ImageBuilderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
+| config.ImageBuilderConfig.K8sConfig | string | `""` |  |
+| config.ImageBuilderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
+| config.ImageBuilderConfig.KanikoServiceAccount | string | `"kaniko"` |  |
+| config.ImageBuilderConfig.MaximumRetry | int | `3` |  |
+| config.ImageBuilderConfig.NodeSelectors | object | `{}` |  |
+| config.ImageBuilderConfig.PredictionJobBaseImages."3.7.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
+| config.ImageBuilderConfig.PredictionJobBaseImages."3.7.*".DockerfilePath | string | `"docker/app.Dockerfile"` |  |
+| config.ImageBuilderConfig.PredictionJobBaseImages."3.7.*".ImageName | string | `"pyspark-py37:v0.1.0"` |  |
+| config.ImageBuilderConfig.PredictionJobBaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| config.ImageBuilderConfig.Resources.Limits.CPU | string | `"1"` |  |
+| config.ImageBuilderConfig.Resources.Limits.Memory | string | `"1Gi"` |  |
+| config.ImageBuilderConfig.Resources.Requests.CPU | string | `"1"` |  |
+| config.ImageBuilderConfig.Resources.Requests.Memory | string | `"512Mi"` |  |
+| config.ImageBuilderConfig.Retention | string | `"48h"` |  |
+| config.ImageBuilderConfig.Tolerations | list | `[]` |  |
+| config.LoggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
+| config.MlpAPIConfig.APIHost | string | `"http://mlp.mlp:8080/v1"` |  |
+| config.MlpAPIConfig.EncryptionKey | string | `"secret-encryption"` |  |
+| config.NewRelic.AppName | string | `"merlin-api-dev"` |  |
+| config.NewRelic.Enabled | bool | `false` |  |
+| config.NewRelic.IgnoreStatusCodes[0] | int | `400` |  |
+| config.NewRelic.IgnoreStatusCodes[1] | int | `401` |  |
+| config.NewRelic.IgnoreStatusCodes[2] | int | `403` |  |
+| config.NewRelic.IgnoreStatusCodes[3] | int | `404` |  |
+| config.NewRelic.IgnoreStatusCodes[4] | int | `405` |  |
+| config.NewRelic.IgnoreStatusCodes[5] | int | `412` |  |
+| config.NewRelic.License | string | `"newrelic-license-secret"` |  |
+| config.NumOfQueueWorkers | int | `2` |  |
+| config.Port | int | `8080` |  |
+| config.PyfuncGRPCOptions | string | `"{}"` |  |
+| config.ReactAppConfig.CPUCost | string | `nil` |  |
+| config.ReactAppConfig.DocURL[0].Href | string | `"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"` |  |
+| config.ReactAppConfig.DocURL[0].Label | string | `"Getting Started with Merlin"` |  |
+| config.ReactAppConfig.DockerRegistries | string | `"ghcr.io/gojek,ghcr.io/your-company"` | Comma-separated value of Docker registries that can be chosen in deployment page |
+| config.ReactAppConfig.Environment | string | `"dev"` |  |
+| config.ReactAppConfig.FeastCoreURL | string | `"http://feast-core.mlp:8080/v1"` |  |
+| config.ReactAppConfig.HomePage | string | `"/merlin"` |  |
+| config.ReactAppConfig.MaxAllowedReplica | int | `20` |  |
+| config.ReactAppConfig.MemoryCost | string | `nil` |  |
+| config.ReactAppConfig.MerlinURL | string | `"/api/merlin/v1"` |  |
+| config.ReactAppConfig.MlpURL | string | `"/api"` |  |
+| config.ReactAppConfig.OauthClientID | string | `nil` |  |
+| config.ReactAppConfig.UPIDocumentation | string | `"https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"` |  |
+| config.Sentry.DSN | string | `""` |  |
+| config.Sentry.Enabled | bool | `false` |  |
+| config.StandardTransformerConfig.BigtableCredential | string | `nil` |  |
+| config.StandardTransformerConfig.DefaultFeastSource | string | `"BIGTABLE"` |  |
+| config.StandardTransformerConfig.DefaultServingURL | string | `"online-serving-redis.feast.dev"` |  |
+| config.StandardTransformerConfig.EnableAuth | bool | `false` |  |
+| config.StandardTransformerConfig.FeastCoreAuthAudience | string | `"core.feast.dev"` |  |
+| config.StandardTransformerConfig.FeastCoreURL | string | `"core.feast.dev"` |  |
+| config.StandardTransformerConfig.FeastServingKeepAlive.Enabled | bool | `false` |  |
+| config.StandardTransformerConfig.FeastServingKeepAlive.Time | string | `"60s"` |  |
+| config.StandardTransformerConfig.FeastServingKeepAlive.Timeout | string | `"5s"` |  |
+| config.StandardTransformerConfig.FeastServingURLs[0].Host | string | `"online-serving-redis.feast.dev"` |  |
+| config.StandardTransformerConfig.FeastServingURLs[0].Icon | string | `"redis"` |  |
+| config.StandardTransformerConfig.FeastServingURLs[0].Label | string | `"Online Serving with Redis"` |  |
+| config.StandardTransformerConfig.FeastServingURLs[0].SourceType | string | `"REDIS"` |  |
+| config.StandardTransformerConfig.FeastServingURLs[1].Host | string | `"online-serving-bigtable.feast.dev"` |  |
+| config.StandardTransformerConfig.FeastServingURLs[1].Icon | string | `"bigtable"` |  |
+| config.StandardTransformerConfig.FeastServingURLs[1].Label | string | `"Online Serving with BigTable"` |  |
+| config.StandardTransformerConfig.FeastServingURLs[1].SourceType | string | `"BIGTABLE"` |  |
+| config.StandardTransformerConfig.ImageName | string | `"merlin-transformer:1.0.0"` |  |
+| config.StandardTransformerConfig.Jaeger.AgentHost | string | `"localhost"` |  |
+| config.StandardTransformerConfig.Jaeger.AgentPort | int | `6831` |  |
+| config.StandardTransformerConfig.Jaeger.Disabled | bool | `false` |  |
+| config.StandardTransformerConfig.Jaeger.SamplerParam | int | `1` |  |
+| config.StandardTransformerConfig.Jaeger.SamplerType | string | `"const"` |  |
+| config.StandardTransformerConfig.Kafka.Brokers | string | `"kafka-brokers"` |  |
+| config.StandardTransformerConfig.Kafka.MaxMessageSizeBytes | string | `"1048588"` |  |
+| config.StandardTransformerConfig.SimulationFeast.FeastBigtableURL | string | `"online-serving-bt.feast.dev"` |  |
+| config.StandardTransformerConfig.SimulationFeast.FeastRedisURL | string | `"online-serving-redis.feast.dev"` |  |
+| deployment.extraArgs | list | `[]` | List of string containing additional Merlin API server arguments. For example, multiple "-config" can be specified to use multiple config files |
+| deployment.extraContainers | list | `[]` | List of sidecar containers to attach to the Pod. For example, you can attach sidecar container that forward logs or dynamically update some configuration files. |
+| deployment.extraEnvs | list | `[]` | List of extra environment variables to add to Merlin API server container |
+| deployment.extraInitContainers | list | `[]` | List of extra initContainers to add to the Pod. For example, you need to run some init scripts to fetch credentials from a remote server |
+| deployment.extraVolumeMounts | list | `[]` | Extra volume mounts to attach to Merlin API server container. For example to mount the extra volume containing secrets |
+| deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.28.0-1-g07b5aaa"` |  |
+| deployment.image.tag | string | `"0.0.0-3c9a23ff6faa6e5a22804e867402c8f749fa3697"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -85,64 +204,12 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.resources.requests.cpu | string | `"500m"` |  |
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | deployment.tolerations | list | `[]` |  |
-| deploymentLabelPrefix | string | `"gojek.com/"` |  |
-| environment | string | `"dev"` |  |
-| environmentConfigs[0].cluster | string | `"test"` |  |
-| environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
-| environmentConfigs[0].default_deployment_config.max_replica | int | `1` |  |
-| environmentConfigs[0].default_deployment_config.memory_request | string | `"500Mi"` |  |
-| environmentConfigs[0].default_deployment_config.min_replica | int | `0` |  |
-| environmentConfigs[0].default_prediction_job_config.driver_cpu_request | string | `"2"` |  |
-| environmentConfigs[0].default_prediction_job_config.driver_memory_request | string | `"2Gi"` |  |
-| environmentConfigs[0].default_prediction_job_config.executor_cpu_request | string | `"2"` |  |
-| environmentConfigs[0].default_prediction_job_config.executor_memory_request | string | `"2Gi"` |  |
-| environmentConfigs[0].default_prediction_job_config.executor_replica | int | `3` |  |
-| environmentConfigs[0].default_transformer_config.cpu_request | string | `"500m"` |  |
-| environmentConfigs[0].default_transformer_config.max_replica | int | `1` |  |
-| environmentConfigs[0].default_transformer_config.memory_request | string | `"500Mi"` |  |
-| environmentConfigs[0].default_transformer_config.min_replica | int | `0` |  |
-| environmentConfigs[0].deployment_timeout | string | `"10m"` |  |
-| environmentConfigs[0].gcp_project | string | `"gcp-project"` |  |
-| environmentConfigs[0].is_default | bool | `true` |  |
-| environmentConfigs[0].is_default_prediction_job | bool | `true` |  |
-| environmentConfigs[0].is_prediction_job_enabled | bool | `true` |  |
-| environmentConfigs[0].k8s_config | object | `{}` |  |
-| environmentConfigs[0].max_cpu | string | `"8"` |  |
-| environmentConfigs[0].max_memory | string | `"8Gi"` |  |
-| environmentConfigs[0].name | string | `"id-dev"` |  |
-| environmentConfigs[0].namespace_timeout | string | `"2m"` |  |
-| environmentConfigs[0].queue_resource_percentage | string | `"20"` |  |
-| environmentConfigs[0].region | string | `"id"` |  |
-| feastCoreApi.apiHost | string | `"http://feast-core.mlp:8080/v1"` |  |
+| encryption.key | string | `"password"` |  |
 | global.protocol | string | `"http"` |  |
-| imageBuilder.baseImages."3.7.*".buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.baseImages."3.7.*".dockerfilePath | string | `"docker/Dockerfile"` |  |
-| imageBuilder.baseImages."3.7.*".imageName | string | `"pyfunc-py37:v0.1.0"` |  |
-| imageBuilder.baseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
-| imageBuilder.clusterName | string | `"test"` |  |
-| imageBuilder.dockerRegistry | string | `"dockerRegistry"` |  |
-| imageBuilder.k8sConfig | string | `""` |  |
-| imageBuilder.kanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
-| imageBuilder.maxRetry | int | `3` |  |
-| imageBuilder.namespace | string | `"mlp"` |  |
-| imageBuilder.nodeSelectors | object | `{}` |  |
-| imageBuilder.predictionJobBaseImages."3.7.*".buildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.predictionJobBaseImages."3.7.*".dockerfilePath | string | `"docker/app.Dockerfile"` |  |
-| imageBuilder.predictionJobBaseImages."3.7.*".imageName | string | `"pyspark-py37:v0.1.0"` |  |
-| imageBuilder.predictionJobBaseImages."3.7.*".mainAppPath | string | `"/merlin-spark-app/main.py"` |  |
-| imageBuilder.predictionJobContextSubPath | string | `""` |  |
-| imageBuilder.resources.limits.cpu | string | `"1"` |  |
-| imageBuilder.resources.limits.memory | string | `"1Gi"` |  |
-| imageBuilder.resources.requests.cpu | string | `"1"` |  |
-| imageBuilder.resources.requests.memory | string | `"512Mi"` |  |
-| imageBuilder.retention | string | `"48h"` |  |
-| imageBuilder.safeToEvict | bool | `false` |  |
 | imageBuilder.serviceAccount.annotations | object | `{}` |  |
 | imageBuilder.serviceAccount.create | bool | `true` |  |
 | imageBuilder.serviceAccount.labels | object | `{}` |  |
 | imageBuilder.serviceAccount.name | string | `"kaniko"` |  |
-| imageBuilder.timeout | string | `"30m"` |  |
-| imageBuilder.tolerations | list | `[]` |  |
 | ingress.enabled | bool | `false` |  |
 | kserve.chartValues.knativeServingIstio.chartValues.istioIngressGateway.helmChart.namespace | string | `"istio-system"` |  |
 | kserve.enabled | bool | `true` |  |
@@ -151,9 +218,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | kserve.helmChart.namespace | string | `"kserve"` |  |
 | kserve.helmChart.release | string | `"kserve"` |  |
 | kserve.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| kserve.helmChart.version | string | `"0.8.22"` |  |
+| kserve.helmChart.version | string | `"0.8.20"` |  |
 | kserve.hook.weight | string | `"-2"` |  |
-| loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
 | merlin-postgresql.persistence.size | string | `"10Gi"` |  |
 | merlin-postgresql.postgresqlDatabase | string | `"merlin"` |  |
@@ -254,15 +320,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
-| mlpApi.apiHost | string | `"http://mlp.mlp:8080"` |  |
-| monitoring.enabled | bool | `false` |  |
-| newrelic.appname | string | `"merlin-api-dev"` |  |
-| newrelic.enabled | bool | `false` |  |
-| newrelic.licenseSecretName | string | `"newrelic-license-secret"` |  |
-| pyfuncGRPCOptions | string | `"{}"` |  |
-| queue.numOfWorkers | int | `1` |  |
-| sentry.dsn | string | `""` |  |
-| sentry.enabled | bool | `false` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |
@@ -274,36 +331,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | swagger.image.tag | string | `"v3.23.5"` |  |
 | swagger.service.externalPort | int | `8080` |  |
 | swagger.service.internalPort | int | `8081` |  |
-| transformer.feast.authEnabled | bool | `false` |  |
-| transformer.feast.bigtableCredential | string | `nil` |  |
-| transformer.feast.coreAuthAudience | string | `"core.feast.dev"` |  |
-| transformer.feast.coreURL | string | `"core.feast.dev"` |  |
-| transformer.feast.defaultFeastSource | string | `"BIGTABLE"` |  |
-| transformer.feast.defaultServingURL | string | `"online-serving-redis.feast.dev"` |  |
-| transformer.feast.grpc.keepAliveEnabled | bool | `false` |  |
-| transformer.feast.grpc.keepAliveTime | string | `"60s"` |  |
-| transformer.feast.grpc.keepAliveTimeout | string | `"5s"` |  |
-| transformer.feast.servingURLs[0].host | string | `"online-serving-redis.feast.dev"` |  |
-| transformer.feast.servingURLs[0].icon | string | `"redis"` |  |
-| transformer.feast.servingURLs[0].label | string | `"Online Serving with Redis"` |  |
-| transformer.feast.servingURLs[0].source_type | string | `"REDIS"` |  |
-| transformer.feast.servingURLs[1].host | string | `"online-serving-bigtable.feast.dev"` |  |
-| transformer.feast.servingURLs[1].icon | string | `"bigtable"` |  |
-| transformer.feast.servingURLs[1].label | string | `"Online Serving with BigTable"` |  |
-| transformer.feast.servingURLs[1].source_type | string | `"BIGTABLE"` |  |
-| transformer.image | string | `"merlin-transformer:1.0.0"` |  |
-| transformer.jaeger.agentHost | string | `"localhost"` |  |
-| transformer.jaeger.agentPort | int | `6831` |  |
-| transformer.jaeger.disabled | bool | `false` |  |
-| transformer.jaeger.samplerParam | int | `1` |  |
-| transformer.jaeger.samplerType | string | `"const"` |  |
-| transformer.kafka.brokers | string | `"kafka-brokers"` |  |
-| transformer.kafka.maxMessageSize | string | `"1048588"` |  |
-| transformer.model.grpc.keepAliveEnabled | bool | `false` |  |
-| transformer.model.grpc.keepAliveTime | string | `"60s"` |  |
-| transformer.model.grpc.keepAliveTimeout | string | `"5s"` |  |
-| transformer.simulation.feastBigtableServingURL | string | `"online-serving-bt.feast.dev"` |  |
-| transformer.simulation.feastRedisServingURL | string | `"online-serving-redis.feast.dev"` |  |
 | ui.apiHost | string | `"/api/merlin/v1"` |  |
 | ui.dockerRegistries | string | `"ghcr.io/gojek,ghcr.io/your-company"` | Comma-separated value of Docker registries that can be chosen in deployment page |
 | ui.docsURL[0].href | string | `"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"` |  |
