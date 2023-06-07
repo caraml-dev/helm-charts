@@ -23,8 +23,8 @@ A Helm chart for deploying CaraML components
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | merlin | 0.10.18 |
 | https://caraml-dev.github.io/helm-charts | mlp | 0.4.20 |
-| https://caraml-dev.github.io/helm-charts | turing | 0.2.26 |
-| https://caraml-dev.github.io/helm-charts | xp-treatment | 0.1.10 |
+| https://caraml-dev.github.io/helm-charts | turing | 0.2.28 |
+| https://caraml-dev.github.io/helm-charts | xp-treatment | 0.1.11 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
 | https://charts.jetstack.io | cert-manager | v1.8.2 |
 | https://istio-release.storage.googleapis.com/charts | base(base) | 1.13.9 |
