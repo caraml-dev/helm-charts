@@ -147,3 +147,7 @@ spec:
       nodeSelector:
 {{- toYaml .Values.deployment.nodeSelector | nindent 8 }}
 {{- end -}}
+{{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+{{- end }}
