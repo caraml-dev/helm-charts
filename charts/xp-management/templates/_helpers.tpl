@@ -89,11 +89,12 @@ Create the name of the service account to use
 {{- end -}}
 
 {{- define "management-svc.ui.defaultConfig" -}}
+{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
 {{- if .Values.uiConfig -}}
 appConfig:
   environment: {{ .Values.uiConfig.appConfig.environment | default (include "management-svc.environment" .) }}
 authConfig:
-  oauthClientId: {{ .Values.global.oauthClientId | default .Values.uiConfig.authConfig.oauthClientId | quote }}
+  oauthClientId: {{ include "common.set-value" (list .Values.uiConfig.authConfig.oauthClientId $globOauthClientID) | quote }}
 {{- if (include "management-svc.sentry.enabled" .) }}
 sentryConfig:
   environment: {{ .Values.uiConfig.sentryConfig.environment | default (include "management-svc.environment" .) }}
