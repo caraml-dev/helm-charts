@@ -125,7 +125,7 @@ spec:
           /usr/share/nginx/run.sh
       {{- end }}
       volumes:
-      - name: config 
+      - name: config
         secret:
           secretName: {{ template "treatment-svc.fullname" .}}-config
       {{- with .Values.deployment.extraVolumes }}
@@ -136,3 +136,7 @@ spec:
       nodeSelector:
 {{ toYaml .Values.deployment.nodeSelector | nindent 8 }}
 {{ end -}}
+{{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+{{- end }}
