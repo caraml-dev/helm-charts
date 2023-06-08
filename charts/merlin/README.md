@@ -60,6 +60,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| clusterConfig.environmentConfigPath | string | `"environments.yaml"` | environmentConfigPath is a path to a file that contains environmentConfigs. See api/environments-dev.yaml for example contents |
+| clusterConfig.useInClusterConfig | bool | `false` | Configuration to tell Merlin API how it should authenticate with deployment k8s cluster By default, Merlin API expects to use a remote k8s cluster for deployment and to do so, it requires cluster access configurations to be configured as part of values.yaml |
 | config.AuthorizationConfig.AuthorizationEnabled | bool | `true` |  |
 | config.AuthorizationConfig.AuthorizationServerURL | string | `"http://mlp-authorization-keto"` |  |
 | config.DbConfig.Database | string | `"merlin"` |  |
@@ -69,33 +71,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.DbConfig.User | string | `"merlin"` |  |
 | config.DeploymentLabelPrefix | string | `"gojek.com/"` |  |
 | config.Environment | string | `"dev"` |  |
-| config.EnvironmentConfigPath | string | `"environments.yaml"` |  |
-| config.EnvironmentConfigs[0].Cluster | string | `"test"` |  |
-| config.EnvironmentConfigs[0].DefaultDeploymentConfig.CPURequest | string | `"500m"` |  |
-| config.EnvironmentConfigs[0].DefaultDeploymentConfig.MaxReplica | int | `1` |  |
-| config.EnvironmentConfigs[0].DefaultDeploymentConfig.MemoryRequest | string | `"500Mi"` |  |
-| config.EnvironmentConfigs[0].DefaultDeploymentConfig.MinReplica | int | `0` |  |
-| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.DriverCPURequest | string | `"2"` |  |
-| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.DriverMemoryRequest | string | `"2Gi"` |  |
-| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.ExecutorCPURequest | string | `"2"` |  |
-| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.ExecutorMemoryRequest | string | `"2Gi"` |  |
-| config.EnvironmentConfigs[0].DefaultPredictionJobConfig.ExecutorReplica | int | `3` |  |
-| config.EnvironmentConfigs[0].DefaultTransformerConfig.CPURequest | string | `"500m"` |  |
-| config.EnvironmentConfigs[0].DefaultTransformerConfig.MaxReplica | int | `1` |  |
-| config.EnvironmentConfigs[0].DefaultTransformerConfig.MemoryRequest | string | `"500Mi"` |  |
-| config.EnvironmentConfigs[0].DefaultTransformerConfig.MinReplica | int | `0` |  |
-| config.EnvironmentConfigs[0].DeploymentTimeout | string | `"10m"` |  |
-| config.EnvironmentConfigs[0].GcpProject | string | `"gcp-project"` |  |
-| config.EnvironmentConfigs[0].IsDefault | bool | `true` |  |
-| config.EnvironmentConfigs[0].IsDefaultPredictionJob | bool | `true` |  |
-| config.EnvironmentConfigs[0].IsPredictionJobEnabled | bool | `true` |  |
-| config.EnvironmentConfigs[0].K8sConfig | string | `nil` |  |
-| config.EnvironmentConfigs[0].MaxCPU | string | `"8"` |  |
-| config.EnvironmentConfigs[0].MaxMemory | string | `"8Gi"` |  |
-| config.EnvironmentConfigs[0].Name | string | `"id-dev"` |  |
-| config.EnvironmentConfigs[0].NamespaceTimeout | string | `"2m"` |  |
-| config.EnvironmentConfigs[0].QueueResourcePercentage | string | `"20"` |  |
-| config.EnvironmentConfigs[0].Region | string | `"id"` |  |
 | config.FeatureToggleConfig.AlertConfig.AlertEnabled | bool | `false` | To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin. |
 | config.FeatureToggleConfig.AlertConfig.GitlabConfig.AlertBranch | string | `"master"` |  |
 | config.FeatureToggleConfig.AlertConfig.GitlabConfig.AlertRepository | string | `"lens/artillery/datascience"` |  |
@@ -112,9 +87,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.ImageBuilderConfig.BaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | config.ImageBuilderConfig.BuildNamespace | string | `"mlp"` |  |
 | config.ImageBuilderConfig.BuildTimeout | string | `"30m"` |  |
-| config.ImageBuilderConfig.ClusterName | string | `"test"` |  |
 | config.ImageBuilderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
-| config.ImageBuilderConfig.K8sConfig | string | `""` |  |
 | config.ImageBuilderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
 | config.ImageBuilderConfig.KanikoServiceAccount | string | `"kaniko"` |  |
 | config.ImageBuilderConfig.MaximumRetry | int | `3` |  |
@@ -160,9 +133,13 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.Sentry.DSN | string | `""` |  |
 | config.Sentry.Enabled | bool | `false` |  |
 | config.StandardTransformerConfig.BigtableCredential | string | `nil` |  |
-| config.StandardTransformerConfig.DefaultFeastSource | string | `"BIGTABLE"` |  |
+| config.StandardTransformerConfig.DefaultFeastSource | int | `2` |  |
 | config.StandardTransformerConfig.DefaultServingURL | string | `"online-serving-redis.feast.dev"` |  |
 | config.StandardTransformerConfig.EnableAuth | bool | `false` |  |
+| config.StandardTransformerConfig.FeastBigtableConfig.Instance | string | `"instance"` |  |
+| config.StandardTransformerConfig.FeastBigtableConfig.PoolSize | int | `5` |  |
+| config.StandardTransformerConfig.FeastBigtableConfig.Project | string | `"gcp-project"` |  |
+| config.StandardTransformerConfig.FeastBigtableConfig.ServingURL | string | `"online-serving-bigtable.feast.dev"` |  |
 | config.StandardTransformerConfig.FeastCoreAuthAudience | string | `"core.feast.dev"` |  |
 | config.StandardTransformerConfig.FeastCoreURL | string | `"core.feast.dev"` |  |
 | config.StandardTransformerConfig.FeastServingKeepAlive.Enabled | bool | `false` |  |
@@ -195,7 +172,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.0.0-3c9a23ff6faa6e5a22804e867402c8f749fa3697"` |  |
+| deployment.image.tag | string | `"0.0.0-f1457ecd909cec8981fc6b92bdeaefd17e93bfef"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -205,7 +182,48 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | deployment.tolerations | list | `[]` |  |
 | encryption.key | string | `"password"` |  |
+| environmentConfigs[0].cluster | string | `"test"` |  |
+| environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
+| environmentConfigs[0].default_deployment_config.max_replica | int | `1` |  |
+| environmentConfigs[0].default_deployment_config.memory_request | string | `"500Mi"` |  |
+| environmentConfigs[0].default_deployment_config.min_replica | int | `0` |  |
+| environmentConfigs[0].default_prediction_job_config.driver_cpu_request | string | `"2"` |  |
+| environmentConfigs[0].default_prediction_job_config.driver_memory_request | string | `"2Gi"` |  |
+| environmentConfigs[0].default_prediction_job_config.executor_cpu_request | string | `"2"` |  |
+| environmentConfigs[0].default_prediction_job_config.executor_memory_request | string | `"2Gi"` |  |
+| environmentConfigs[0].default_prediction_job_config.executor_replica | int | `3` |  |
+| environmentConfigs[0].default_transformer_config.cpu_request | string | `"500m"` |  |
+| environmentConfigs[0].default_transformer_config.max_replica | int | `1` |  |
+| environmentConfigs[0].default_transformer_config.memory_request | string | `"500Mi"` |  |
+| environmentConfigs[0].default_transformer_config.min_replica | int | `0` |  |
+| environmentConfigs[0].deployment_timeout | string | `"10m"` |  |
+| environmentConfigs[0].gcp_project | string | `"gcp-project"` |  |
+| environmentConfigs[0].is_default | bool | `true` |  |
+| environmentConfigs[0].is_default_prediction_job | bool | `true` |  |
+| environmentConfigs[0].is_prediction_job_enabled | bool | `true` |  |
+| environmentConfigs[0].k8s_config.cluster.certificate-authority-data | string | `"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlRENDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdGMyVnkKZG1WeUxXTmhRREUyT0RZeE1qRXlOREV3SGhjTk1qTXdOakEzTURjd01EUXhXaGNOTXpNd05qQTBNRGN3TURReApXakFqTVNFd0h3WURWUVFEREJock0zTXRjMlZ5ZG1WeUxXTmhRREUyT0RZeE1qRXlOREV3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFTV3NLd3U1QVZzcVltck5ab1dZTlFkZmh3SGJjKzFWeVRNZlVwS2hqSTMKS01iazVNbVIrdUhSTUk0VGlNU1dZci9UMTNER0ZYOGw0QVQ3UC8yVldycndvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUQzNHhNb0VmbmVLV2trWHVzQklkCmlyUFY4UGN3Q2dZSUtvWkl6ajBFQXdJRFNRQXdSZ0loQUxEeHNoQ1NZQ2hqZ0ZvbHpteGJDSnBSakdwYXNFdVgKd3dqVkx1SGVCd3Z0QWlFQXNpbGhja1F3WWh0bDBTYTdhNU9LRGpYbXYzOG9WUS9OallJQ1Uwb3RmTTg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"` |  |
+| environmentConfigs[0].k8s_config.cluster.server | string | `"https://kubernetes.default.svc.cluster.local:443"` |  |
+| environmentConfigs[0].k8s_config.name | string | `"k3d-merlin-cluster"` |  |
+| environmentConfigs[0].k8s_config.user.client-certificate-data | string | `"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJrVENDQVRlZ0F3SUJBZ0lJUU5qVVQyZXYwRkl3Q2dZSUtvWkl6ajBFQXdJd0l6RWhNQjhHQTFVRUF3d1kKYXpOekxXTnNhV1Z1ZEMxallVQXhOamcyTVRJeE1qUXhNQjRYRFRJek1EWXdOekEzTURBME1Wb1hEVEkwTURZdwpOakEzTURBME1Wb3dNREVYTUJVR0ExVUVDaE1PYzNsemRHVnRPbTFoYzNSbGNuTXhGVEFUQmdOVkJBTVRESE41CmMzUmxiVHBoWkcxcGJqQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJOVFdRSjVvdVJic0JpTEMKVk5YdkRRYnJqU1diVjdFTTl4YTFHZDhDcHpyYWF0MUkrbm15MUl4c3hBOUthZEsyV1hobm1GVW1jK3BtUGtvRAp3b3ZldFNlalNEQkdNQTRHQTFVZER3RUIvd1FFQXdJRm9EQVRCZ05WSFNVRUREQUtCZ2dyQmdFRkJRY0RBakFmCkJnTlZIU01FR0RBV2dCUk5hZHNyRVBrWjFDOHBHSmp5Skc1VUliTm81akFLQmdncWhrak9QUVFEQWdOSUFEQkYKQWlFQXNNMithcGNMSWptbzFublZtZzlHOGJHV0krYzRWY2FXbjE1M3VZL1lPN29DSUFzSm1jSmRPbnZVTTJhbgpOY3hsVzZvREhyTlZvbElZbW50K0c4MWpPWWd5Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkekNDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdFkyeHAKWlc1MExXTmhRREUyT0RZeE1qRXlOREV3SGhjTk1qTXdOakEzTURjd01EUXhXaGNOTXpNd05qQTBNRGN3TURReApXakFqTVNFd0h3WURWUVFEREJock0zTXRZMnhwWlc1MExXTmhRREUyT0RZeE1qRXlOREV3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFUMEVIWEVYTnoyd0ZLVStoMGpPbkUzY1FKcGp0WjdCSEEwK3VpeUxuZE8KNHJkYklzeTA5a1kvbFhDZGFWSmFSRlpCbGVFUVRHQXpEVDR0cHRncS9vL3FvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVVRXbmJLeEQ1R2RRdktSaVk4aVJ1ClZDR3phT1l3Q2dZSUtvWkl6ajBFQXdJRFNBQXdSUUloQUkwT1l4SEl3cW1ncXRseGZiQjd5VTFNQlFrQkgzTFYKcTdaV0hIUkxHWE5MQWlCSmQ5WnNwa0EwZ0g0Z1RXamFVenRnWmZoei85UWsxUzlqNW1tK2hjVm15QT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"` |  |
+| environmentConfigs[0].k8s_config.user.client-key-data | string | `"LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUNUZnhaZWJzY05ka0ZPWXBGaE1tZE5QS2VpTEREQXh3aFFScy9jaDVPeVdvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFMU5aQW5taTVGdXdHSXNKVTFlOE5CdXVOSlp0WHNRejNGclVaM3dLbk90cHEzVWo2ZWJMVQpqR3pFRDBwcDByWlplR2VZVlNaejZtWStTZ1BDaTk2MUp3PT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="` |  |
+| environmentConfigs[0].k8s_config.user.exec.apiVersion | string | `"client.authentication.k8s.io/v1beta1"` |  |
+| environmentConfigs[0].k8s_config.user.exec.args[0] | string | `"--use_application_default_credentials"` |  |
+| environmentConfigs[0].k8s_config.user.exec.command | string | `"gke-gcloud-auth-plugin"` |  |
+| environmentConfigs[0].k8s_config.user.exec.interactiveMode | string | `"IfAvailable"` |  |
+| environmentConfigs[0].k8s_config.user.exec.provideClusterInfo | bool | `true` |  |
+| environmentConfigs[0].max_cpu | string | `"8"` |  |
+| environmentConfigs[0].max_memory | string | `"8Gi"` |  |
+| environmentConfigs[0].name | string | `"id-dev"` |  |
+| environmentConfigs[0].namespace_timeout | string | `"2m"` |  |
+| environmentConfigs[0].queue_resource_rercentage | string | `"20"` |  |
+| environmentConfigs[0].region | string | `"id"` |  |
 | global.protocol | string | `"http"` |  |
+| imageBuilder.clusterName | string | `"test"` |  |
+| imageBuilder.k8sConfig.cluster.certificate-authority-data | string | `"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlRENDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdGMyVnkKZG1WeUxXTmhRREUyT0RZeE1qRXlOREV3SGhjTk1qTXdOakEzTURjd01EUXhXaGNOTXpNd05qQTBNRGN3TURReApXakFqTVNFd0h3WURWUVFEREJock0zTXRjMlZ5ZG1WeUxXTmhRREUyT0RZeE1qRXlOREV3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFTV3NLd3U1QVZzcVltck5ab1dZTlFkZmh3SGJjKzFWeVRNZlVwS2hqSTMKS01iazVNbVIrdUhSTUk0VGlNU1dZci9UMTNER0ZYOGw0QVQ3UC8yVldycndvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUQzNHhNb0VmbmVLV2trWHVzQklkCmlyUFY4UGN3Q2dZSUtvWkl6ajBFQXdJRFNRQXdSZ0loQUxEeHNoQ1NZQ2hqZ0ZvbHpteGJDSnBSakdwYXNFdVgKd3dqVkx1SGVCd3Z0QWlFQXNpbGhja1F3WWh0bDBTYTdhNU9LRGpYbXYzOG9WUS9OallJQ1Uwb3RmTTg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"` |  |
+| imageBuilder.k8sConfig.cluster.server | string | `"https://kubernetes.default.svc.cluster.local:443"` |  |
+| imageBuilder.k8sConfig.name | string | `"k3d-merlin-cluster"` |  |
+| imageBuilder.k8sConfig.user.client-certificate-data | string | `"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJrVENDQVRlZ0F3SUJBZ0lJUU5qVVQyZXYwRkl3Q2dZSUtvWkl6ajBFQXdJd0l6RWhNQjhHQTFVRUF3d1kKYXpOekxXTnNhV1Z1ZEMxallVQXhOamcyTVRJeE1qUXhNQjRYRFRJek1EWXdOekEzTURBME1Wb1hEVEkwTURZdwpOakEzTURBME1Wb3dNREVYTUJVR0ExVUVDaE1PYzNsemRHVnRPbTFoYzNSbGNuTXhGVEFUQmdOVkJBTVRESE41CmMzUmxiVHBoWkcxcGJqQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJOVFdRSjVvdVJic0JpTEMKVk5YdkRRYnJqU1diVjdFTTl4YTFHZDhDcHpyYWF0MUkrbm15MUl4c3hBOUthZEsyV1hobm1GVW1jK3BtUGtvRAp3b3ZldFNlalNEQkdNQTRHQTFVZER3RUIvd1FFQXdJRm9EQVRCZ05WSFNVRUREQUtCZ2dyQmdFRkJRY0RBakFmCkJnTlZIU01FR0RBV2dCUk5hZHNyRVBrWjFDOHBHSmp5Skc1VUliTm81akFLQmdncWhrak9QUVFEQWdOSUFEQkYKQWlFQXNNMithcGNMSWptbzFublZtZzlHOGJHV0krYzRWY2FXbjE1M3VZL1lPN29DSUFzSm1jSmRPbnZVTTJhbgpOY3hsVzZvREhyTlZvbElZbW50K0c4MWpPWWd5Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkekNDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdFkyeHAKWlc1MExXTmhRREUyT0RZeE1qRXlOREV3SGhjTk1qTXdOakEzTURjd01EUXhXaGNOTXpNd05qQTBNRGN3TURReApXakFqTVNFd0h3WURWUVFEREJock0zTXRZMnhwWlc1MExXTmhRREUyT0RZeE1qRXlOREV3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFUMEVIWEVYTnoyd0ZLVStoMGpPbkUzY1FKcGp0WjdCSEEwK3VpeUxuZE8KNHJkYklzeTA5a1kvbFhDZGFWSmFSRlpCbGVFUVRHQXpEVDR0cHRncS9vL3FvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVVRXbmJLeEQ1R2RRdktSaVk4aVJ1ClZDR3phT1l3Q2dZSUtvWkl6ajBFQXdJRFNBQXdSUUloQUkwT1l4SEl3cW1ncXRseGZiQjd5VTFNQlFrQkgzTFYKcTdaV0hIUkxHWE5MQWlCSmQ5WnNwa0EwZ0g0Z1RXamFVenRnWmZoei85UWsxUzlqNW1tK2hjVm15QT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"` |  |
+| imageBuilder.k8sConfig.user.client-key-data | string | `"LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUNUZnhaZWJzY05ka0ZPWXBGaE1tZE5QS2VpTEREQXh3aFFScy9jaDVPeVdvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFMU5aQW5taTVGdXdHSXNKVTFlOE5CdXVOSlp0WHNRejNGclVaM3dLbk90cHEzVWo2ZWJMVQpqR3pFRDBwcDByWlplR2VZVlNaejZtWStTZ1BDaTk2MUp3PT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo="` |  |
 | imageBuilder.serviceAccount.annotations | object | `{}` |  |
 | imageBuilder.serviceAccount.create | bool | `true` |  |
 | imageBuilder.serviceAccount.labels | object | `{}` |  |

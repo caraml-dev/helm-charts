@@ -8,6 +8,6 @@ metadata:
   labels:
     {{- include "merlin.labels" . | nindent 4 }}
 stringData:
-  {{ .Values.config.EnvironmentConfigPath }}: |
+  {{ .Values.clusterConfig.environmentConfigPath }}: |
     {{- include "merlin.environments" . | nindent 4 -}}
 {{- end }}

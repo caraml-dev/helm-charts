@@ -104,7 +104,6 @@ MLflow Postgres related
 {{- end -}}
 {{- end -}}
 
-
 {{- define "mlflow-postgresql.username" -}}
     {{- if index .Values "mlflow-postgresql" "enabled" -}}
         {{- index .Values "mlflow-postgresql" "postgresqlUsername" -}}
@@ -163,7 +162,7 @@ MLflow Postgres related
 
 {{- define "merlin.environments.absolutePath" -}}
 {{- $base := include "merlin.environments.directory" . -}}
-{{- $path := ternary .Values.mlp.environmentConfigSecret.envKey .Values.EnvironmentConfigPath (ne "" .Values.mlp.environmentConfigSecret.name) -}}
+{{- $path := ternary .Values.mlp.environmentConfigSecret.envKey .Values.clusterConfig.environmentConfigPath (ne "" .Values.mlp.environmentConfigSecret.name) -}}
 {{- printf "%s/%s" $base $path -}}
 {{- end -}}
 
@@ -252,9 +251,9 @@ DbConfig:
   Database: {{ include "common.postgres-database" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global "merlin" "postgresqlDatabase") }}
   User: {{ include "common.postgres-username" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global ) }}
 ImageBuilderConfig:
-  ClusterName: {{ .Values.config.ImageBuilderConfig.ClusterName }}
+  ClusterName: {{ .Values.imageBuilder.clusterName }}
   K8sConfig:
-{{ .Values.config.ImageBuilderConfig.K8sConfig | fromJson | toYaml | indent 4 }}
+{{ .Values.imageBuilder.k8sConfig | toYaml | indent 4 }}
 AuthorizationConfig:
   AuthorizationServerURL: {{ include "merlin.authorization.server.url" . | quote }}
 MlpAPIConfig:
