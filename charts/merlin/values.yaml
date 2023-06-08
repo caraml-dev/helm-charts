@@ -360,6 +360,8 @@ mlp:
 mlflow:
   # This should be the actual DNS registered
   trackingURL: "http://www.example.com"
+  # Type of artifact service storage
+  artifactServiceType: nop
   ## mlflow container name
   ##
   name: mlflow
