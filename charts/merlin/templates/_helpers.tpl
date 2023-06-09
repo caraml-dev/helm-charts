@@ -52,6 +52,10 @@ Generated names
 {{- .Values.environment | default "dev" -}}
 {{- end -}}
 
+{{- define "merlin.serviceAccountName" -}}
+{{- default (include "merlin.fullname" .) .Values.serviceAccount.name }}
+{{- end }}
+
 {{- define "merlin.chart" -}}
     {{- printf "%s-%s" .Chart.Name .Chart.Version -}}
 {{- end -}}
@@ -149,6 +153,14 @@ MLflow Postgres related
     {{- else -}}
         {{- printf "postgresql-password" -}}
     {{- end -}}
+{{- end -}}
+
+
+{{- define "merlin.initContainers" -}}
+initContainers:
+{{ with .Values.deployment.extraInitContainers }}
+{{- toYaml . -}}
+{{- end }}
 {{- end -}}
 
 

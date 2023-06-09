@@ -37,6 +37,12 @@ spec:
         prometheus.io/scrape: 'true'
         prometheus.io/port: "{{ .Values.service.internalPort }}"
     spec:
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ template "merlin.serviceAccountName" . }}
+      {{- end }}
+      {{- with (include "merlin.initContainers" . | fromYaml) }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: merlin
         image: "{{- if .Values.deployment.image.registry -}}{{ .Values.deployment.image.registry }}/{{- end -}}{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
@@ -128,8 +134,8 @@ spec:
       {{- if .Values.merlinExternalPostgresql.enableProxySidecar }}
       {{- tpl (toYaml (index .Values.merlinExternalPostgresql.sidecarSpec .Values.merlinExternalPostgresql.proxyType "spec")) . | nindent 6 }}
       {{- end }}
-      {{- if .Values.serviceAccount.create }}
-      serviceAccountName: {{ default "merlin" .Values.serviceAccount.name }}
+      {{- with .Values.deployment.extraContainers }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
       volumes:
       - name: config
