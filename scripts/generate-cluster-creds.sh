@@ -108,10 +108,6 @@ EOF
     # TODO: TO REMOVE AFTER MERLN CHART HAS BEEN UPDATED
     # Use JSON creds for Merlin in the overarching CaraML chart values as its chart is not merged yet
     json_creds="$json_creds" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= strenv(json_creds)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
-
-    echo $APP
-    cat ${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml
-    cat ${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml
   done
 }
 
