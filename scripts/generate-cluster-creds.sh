@@ -89,14 +89,26 @@ EOF
     rm kubeconfig.yaml
   fi
 
-  output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
   # NOTE: Write to ci/ files as these files will be used in ci tests! Consider looping through all files
   # in ci dir
   for APP in merlin turing
   do
-    # Write to app chart and caraml chart ci-values.yaml
-    output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= strenv(output)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
+    # Write to Merlin/ Turing app chart values
+    if [ $APP == "merlin" ]; then
+      output=$(yq '.k8s_config' /tmp/temp_k8sconfig.yaml)
+      output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= env(output)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
+    else
+      output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
+      output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= strenv(output)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
+    fi
+
+    # Get the JSON-formatted credentials and append them to the overarching CaraML chart values
+    output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
     output="$output" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= strenv(output)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
+
+    echo $APP
+    cat ${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml
+    cat ${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml
   done
 }
 
