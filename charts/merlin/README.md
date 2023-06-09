@@ -182,7 +182,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.resources.requests.cpu | string | `"500m"` |  |
 | deployment.resources.requests.memory | string | `"1Gi"` |  |
 | deployment.tolerations | list | `[]` |  |
-| encryption.key | string | `"password"` |  |
 | environmentConfigs[0].cluster | string | `"test"` |  |
 | environmentConfigs[0].default_deployment_config.cpu_request | string | `"500m"` |  |
 | environmentConfigs[0].default_deployment_config.max_replica | int | `1` |  |

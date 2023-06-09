@@ -311,8 +311,6 @@ environmentConfigs:
     #     interactiveMode: IfAvailable
     #     provideClusterInfo: true
 
-encryption:
-  key: "password"
 ui:
   oauthClientID: ""
   homepage: /merlin
