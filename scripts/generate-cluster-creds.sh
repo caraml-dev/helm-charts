@@ -89,22 +89,25 @@ EOF
     rm kubeconfig.yaml
   fi
 
+  yaml_creds=$(yq '.k8s_config' /tmp/temp_k8sconfig.yaml)
+  json_creds=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
+
   # NOTE: Write to ci/ files as these files will be used in ci tests! Consider looping through all files
   # in ci dir
   for APP in merlin turing
   do
-    # Write to Merlin/ Turing app chart values
+    # Write to Merlin/ Turing image builder app chart values
     if [ $APP == "merlin" ]; then
-      output=$(yq '.k8s_config' /tmp/temp_k8sconfig.yaml)
-      output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= env(output)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
+      yaml_creds="$yaml_creds" yq ".imageBuilder.k8sConfig |= env(yaml_creds)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
     else
-      output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
-      output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= strenv(output)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
+      json_creds="$json_creds" yq ".imageBuilder.k8sConfig |= strenv(json_creds)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
     fi
+    # Write to Merlin/ Turing env configs app chart values
+    yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\")" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
 
-    # Get the JSON-formatted credentials and append them to the overarching CaraML chart values
-    output=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
-    output="$output" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= strenv(output)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
+    # TODO: TO REMOVE AFTER MERLN CHART HAS BEEN UPDATED
+    # Use JSON creds for Merlin in the overarching CaraML chart values as its chart is not merged yet
+    json_creds="$json_creds" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= strenv(json_creds)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
 
     echo $APP
     cat ${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml
