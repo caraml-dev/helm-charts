@@ -254,6 +254,9 @@ ImageBuilderConfig:
   ClusterName: {{ .Values.imageBuilder.clusterName }}
   K8sConfig:
 {{ .Values.imageBuilder.k8sConfig | toYaml | indent 4 }}
+  {{- if .Values.imageBuilder.serviceAccount.name }}
+  KanikoServiceAccount: "{{ template "merlin.kaniko-sa" . }}"
+  {{- end }}
 AuthorizationConfig:
   AuthorizationServerURL: {{ include "merlin.authorization.server.url" . | quote }}
 MlpAPIConfig:

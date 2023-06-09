@@ -101,6 +101,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.ImageBuilderConfig.Resources.Requests.CPU | string | `"1"` |  |
 | config.ImageBuilderConfig.Resources.Requests.Memory | string | `"512Mi"` |  |
 | config.ImageBuilderConfig.Retention | string | `"48h"` |  |
+| config.ImageBuilderConfig.SafeToEvict | bool | `false` |  |
 | config.ImageBuilderConfig.Tolerations | list | `[]` |  |
 | config.LoggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | config.MlpAPIConfig.APIHost | string | `"http://mlp.mlp:8080/v1"` |  |

@@ -69,18 +69,6 @@ spec:
               secretKeyRef:
                 name: {{ include "common.postgres-password-secret-name" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Release .Chart ) }}
                 key: {{ include "common.postgres-password-secret-key" (list .Values.merlinExternalPostgresql) }}
-          {{- if .Values.gcpServiceAccount }}
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: /etc/gcp_service_account/service-account.json
-          {{- end }}
-          - name: DEPLOYMENT_LABEL_PREFIX
-            value: "{{ .Values.deploymentLabelPrefix }}"
-          {{- if .Values.imageBuilder.serviceAccount.name }}
-          - name: IMG_BUILDER_KANIKO_SERVICE_ACCOUNT
-            value: "{{ template "merlin.kaniko-sa" . }}"
-          {{- end }}
-          - name: IMG_BUILDER_SAFE_TO_EVICT
-            value: "{{ .Values.imageBuilder.safeToEvict }}"
           {{- with .Values.deployment.extraEnvs }}
           {{- toYaml . | nindent 8 }}
           {{- end }}
@@ -89,11 +77,6 @@ spec:
           mountPath: /etc/merlin
         - name: environments
           mountPath: {{ include "merlin.environments.directory" . }}
-        {{- if .Values.gcpServiceAccount }}
-        - name: gcp-service-account
-          mountPath: "/etc/gcp_service_account"
-          readOnly: true
-        {{- end }}
         {{- with .Values.deployment.extraVolumeMounts }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -155,14 +138,6 @@ spec:
       - name: environments
         secret:
           secretName: {{ ternary (printf "%s-environments" (include "merlin.fullname" .) ) ( .Values.mlp.environmentConfigSecret.name ) (eq .Values.mlp.environmentConfigSecret.name "") }}
-      {{- if .Values.gcpServiceAccount }}
-      - name: gcp-service-account
-        secret:
-          secretName: {{ .Values.gcpServiceAccount.secretName }}
-          items:
-            - key: {{ .Values.gcpServiceAccount.secretKey }}
-              path: service-account.json
-      {{- end }}
       {{- with .Values.deployment.extraVolumes }}
       {{- toYaml . | nindent 6 }}
       {{- end }}

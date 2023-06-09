@@ -129,6 +129,7 @@ config:
     MaximumRetry: 3
     KanikoServiceAccount: "kaniko"
     Retention: "48h"
+    SafeToEvict: false
   AuthorizationConfig:
     AuthorizationEnabled: true
     AuthorizationServerURL: http://mlp-authorization-keto
@@ -310,11 +311,6 @@ environmentConfigs:
     #     interactiveMode: IfAvailable
     #     provideClusterInfo: true
 
-# Google service account used to access GCP's resources.
-#
-# gcpServiceAccount:
-#   secretName: merlin-secret
-#   secretKey: service-account.json
 encryption:
   key: "password"
 ui:
