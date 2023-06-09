@@ -81,7 +81,7 @@ tests:
           value: secret-key
 
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are not set
-    set:  # DELETE?
+    set:
       global: {}
       merlin-postgresql:
         enabled: false
