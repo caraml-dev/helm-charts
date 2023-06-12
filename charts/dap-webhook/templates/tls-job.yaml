@@ -10,9 +10,8 @@ metadata:
       "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
     labels:
       {{- include "dap-webhook.labels" . | nindent 4 }}
-{{ end }}
 ---
-
+{{ end }}
 {{- if .Values.rbac.create -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -32,9 +31,7 @@ rules:
     verbs:
       - get
       - create
-
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -53,9 +50,7 @@ subjects:
   - kind: ServiceAccount
     name:  {{ include "dap-webhook.name" . }}-tls-sa
     namespace: {{ .Release.Namespace }}
-
 ---
-
 apiVersion: batch/v1
 kind: Job
 metadata:
