@@ -55,4 +55,8 @@ tls:
   # -- If not set and create is true, a name is generated using the template
   # -- Service account is expected to be in the same namespace as the webhook and job
   serviceAccountName: ""
-  
+  # -- The name of the tls secret to use.
+  # -- If not set and create is true, a name is generated using the template
+  # -- If create is false, existing tls secret with corresponding env var configured for
+  # -- webhook is required
+  secretName: ""
