@@ -22,7 +22,7 @@ deployment:
     value: /etc/tls-certs/serverKey.pem
   - name: TLS_CA_CERT_FILE
     value: /etc/tls-certs/caCert.pem
- 
+
   resources:
     requests:
       cpu: 250m
@@ -44,7 +44,7 @@ serviceAccount:
   name: ""
 
 rbac:
-  # -- Specifies whether roles should be granted to 
+  # -- Specifies whether roles should be granted to
   create: true
 
 tls:
@@ -55,3 +55,4 @@ tls:
   # -- If not set and create is true, a name is generated using the template
   # -- Service account is expected to be in the same namespace as the webhook and job
   serviceAccountName: ""
+  
