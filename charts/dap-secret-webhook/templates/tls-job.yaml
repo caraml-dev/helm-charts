@@ -58,7 +58,6 @@ spec:
   template:
     metadata:
       name: {{ include "dap-secret-webhook.fullname" . }}-certgen
-      release: {{ .Release.Name }}
     spec:
       serviceAccountName: {{ include "dap-secret-webhook.name" . }}-tls-sa
       restartPolicy: Never
