@@ -1,0 +1,57 @@
+# Default values for dap-webhook.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+deployment:
+  replicaCount: 1
+
+  service:
+    type: ClusterIP
+    port: 443
+  # -- Env var of webhook, see https://github.com/caraml-dev/dap-secret-webhook for full list of configurable
+  # -- The values for TLS assume secrets is created from the tls job
+  env:
+  - name: MLP_API_HOST
+    value: http://mlp.default.svc.cluster.local:8080
+  - name: TLS_SERVER_CERT_FILE
+    value: /etc/tls-certs/serverCert.pem
+  - name: TLS_SERVER_KEY_FILE
+    value: /etc/tls-certs/serverKey.pem
+  - name: TLS_CA_CERT_FILE
+    value: /etc/tls-certs/caCert.pem
+ 
+  resources:
+    requests:
+      cpu: 250m
+      memory: 128Mi
+
+  image:
+    repository: ghcr.io/caraml-dev/dap-secret-webhook
+    tag: 0.0.1
+    pullPolicy: IfNotPresent
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # -- If not set and create is true, a name is generated using the template
+  # -- If create is false, existing service account name is required in the release namespace
+  name: ""
+
+rbac:
+  # -- Specifies whether roles should be granted to 
+  create: true
+
+tls:
+  # -- Specifies whether a tls job that generate certs in secrets should be created
+  # -- This can be set as false and the corresponding certs mounted in deployment.env
+  create: true
+  # -- Specifies which service account to run the tls job
+  # -- If not set and create is true, a name is generated using the template
+  # -- Service account is expected to be in the same namespace as the webhook and job
+  serviceAccountName: ""
