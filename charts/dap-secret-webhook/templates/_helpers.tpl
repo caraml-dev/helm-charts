@@ -3,7 +3,7 @@ Generated names
 */}}
 
 
-{{- define "dap-webhook.resource-prefix-with-release-name" -}}
+{{- define "dap-secret-webhook.resource-prefix-with-release-name" -}}
     {{- if .Values.fullnameOverride -}}
         {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
@@ -16,7 +16,7 @@ Generated names
     {{- end -}}
 {{- end -}}
 
-{{- define "dap-webhook.resource-prefix" -}}
+{{- define "dap-secret-webhook.resource-prefix" -}}
     {{- if .Values.nameOverride -}}
         {{- .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
@@ -26,27 +26,27 @@ Generated names
 {{- end -}}
 
 
-{{- define "dap-webhook.name" -}}
-    {{- printf "%s" (include "dap-webhook.resource-prefix" .) -}}
+{{- define "dap-secret-webhook.name" -}}
+    {{- printf "%s" (include "dap-secret-webhook.resource-prefix" .) -}}
 {{- end -}}
 
-{{- define "dap-webhook.fullname" -}}
-    {{- printf "%s" (include "dap-webhook.resource-prefix-with-release-name" .) -}}
+{{- define "dap-secret-webhook.fullname" -}}
+    {{- printf "%s" (include "dap-secret-webhook.resource-prefix-with-release-name" .) -}}
 {{- end -}}
 
 
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "dap-webhook.chart" -}}
+{{- define "dap-secret-webhook.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "dap-webhook.labels" -}}
-app.kubernetes.io/name: {{ template "dap-webhook.name" . }}
+{{- define "dap-secret-webhook.labels" -}}
+app.kubernetes.io/name: {{ template "dap-secret-webhook.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -54,16 +54,4 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
-{{- end }}
-
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "dap-webhook.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "dap-webhook.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
 {{- end }}

@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "dap-webhook.fullname" . }}
+  name: {{ include "dap-secret-webhook.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "dap-webhook.labels" . | nindent 4 }}
+    {{- include "dap-secret-webhook.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "dap-webhook.name" . }}
+      app: {{ template "dap-secret-webhook.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       name: dap-secret-webhook
       labels:
-        app: {{ include "dap-webhook.name" . }}
+        app: {{ include "dap-secret-webhook.name" . }}
         release: {{ .Release.Name }}
     spec:
-      serviceAccountName: {{ default (printf "%s" (include "dap-webhook.name" .)) .Values.serviceAccount.name }}
+      serviceAccountName: {{ default (printf "%s" (include "dap-secret-webhook.name" .)) .Values.serviceAccount.name }}
       containers:
         - name: app
           image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
@@ -35,4 +35,4 @@ spec:
       volumes:
         - name: tls-certs
           secret:
-            secretName: {{ default "dap-webhook-tls-certs"  .Values.tls.secretName }}
+            secretName: {{ default "dap-secret-webhook-tls-certs"  .Values.tls.secretName }}

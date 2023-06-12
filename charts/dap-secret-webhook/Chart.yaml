@@ -1,5 +1,5 @@
 apiVersion: v2
-name: dap-webhook
+name: dap-secret-webhook
 description: dap-secret-webhook is a Kubernetes pod mutating webhook for using CaraML Secrets in Flyte.
 type: application
 version: 0.1.0
