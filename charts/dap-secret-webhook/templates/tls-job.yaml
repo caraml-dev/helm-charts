@@ -8,8 +8,6 @@ metadata:
       "helm.sh/hook": pre-install, pre-upgrade
       "helm.sh/hook-weight": "1"
       "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
-    labels:
-      {{- include "dap-secret-webhook.labels" . | nindent 4 }}
 ---
 {{ end }}
 {{- if .Values.rbac.create -}}
@@ -21,8 +19,6 @@ metadata:
     "helm.sh/hook": pre-install, pre-upgrade
     "helm.sh/hook-weight": "1"
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-  labels:
-    {{- include "dap-secret-webhook.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - ""
@@ -40,8 +36,6 @@ metadata:
     "helm.sh/hook": pre-install, pre-upgrade
     "helm.sh/hook-weight": "2"
     "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
-  labels:
-    {{- include "dap-secret-webhook.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -56,8 +50,6 @@ kind: Job
 metadata:
   name: {{ include "dap-secret-webhook.fullname" . }}-certgen
   namespace: {{ .Release.Namespace }}
-  labels:
-    {{- include "dap-secret-webhook.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-install, pre-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded
