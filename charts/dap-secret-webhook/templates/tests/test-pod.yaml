@@ -61,6 +61,8 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded, hook-failed	
     "helm.sh/hook-weight": "30"
 spec:
+  backoffLimit: 3
+  activeDeadlineSeconds: 100
   template:
     metadata:
       name: test-pod-secret-job
@@ -106,5 +108,3 @@ spec:
               kubectl delete pod pod-with-secret
               exit 1
             fi
-  backoffLimit: 3
-    activeDeadlineSeconds: 100
