@@ -39,7 +39,7 @@ The following table lists the configurable parameters of the Observation Service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| deployment.env | list | `[{"name":"MLP_API_HOST","value":"http://mlp.default.svc.cluster.local:8080"},{"name":"TLS_SERVER_CERT_FILE","value":"/etc/tls-certs/serverCert.pem"},{"name":"TLS_SERVER_KEY_FILE","value":"/etc/tls-certs/serverKey.pem"},{"name":"TLS_CA_CERT_FILE","value":"/etc/tls-certs/caCert.pem"}]` | The values for TLS assume secrets is created from the tls job |
+| deployment.extraEnvs | list | `[]` | Additional env var for webhook, see https://github.com/caraml-dev/dap-secret-webhook for full list of configurable |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.repository | string | `"ghcr.io/caraml-dev/dap-secret-webhook"` |  |
 | deployment.image.tag | string | `"0.0.1"` |  |
@@ -48,7 +48,12 @@ The following table lists the configurable parameters of the Observation Service
 | deployment.resources.requests.memory | string | `"128Mi"` |  |
 | deployment.service.port | int | `443` |  |
 | deployment.service.type | string | `"ClusterIP"` |  |
+| deployment.webhook.caCertPath | string | `"/etc/tls-certs/caCert.pem"` |  |
+| deployment.webhook.mlpApiHost | string | `""` | The endpoint of MLP API. Default will be set with to mlp local cluster |
+| deployment.webhook.serverCertPath | string | `"/etc/tls-certs/serverCert.pem"` |  |
+| deployment.webhook.serverKeyPath | string | `"/etc/tls-certs/serverKey.pem"` |  |
 | fullnameOverride | string | `""` |  |
+| mlp.enabled | bool | `true` |  |
 | nameOverride | string | `""` |  |
 | rbac.create | bool | `true` | Specifies whether roles should be granted to |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
