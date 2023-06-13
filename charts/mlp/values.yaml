@@ -33,12 +33,176 @@ deployment:
   readinessProbe:
     path: "/v1/internal/ready"
 
-  apiHost: "http://mlp/v1"
-  mlflowTrackingUrl: "http://mlflow.mlp"
-  environment: "production"
-
   # -- Additional labels to apply on the deployment
   extraLabels: {}
+
+service:
+  externalPort: 8080
+  internalPort: 8080
+
+serviceAccount:
+  # Specifies whether a ServiceAccount should be created
+  create: true
+  # The name of the ServiceAccount to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: mlp
+  annotations: {}
+    # example.io/example: example
+
+ingress:
+  enabled: false
+  # class: "nginx"
+  # host: "localhost"
+  # path: "/"
+  # Ref for pathTypes https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
+  # pathType: "Prefix"
+
+sentry:
+  # -- Sentry DSN value used by both Turing API and Turing UI
+  dsn: ""
+
+externalPostgresql:
+  # -- If you would like to use an external postgres database, enable it here using this
+  enabled: false
+  # -- External postgres database user
+  username: mlp
+  # -- External postgres database schema
+  database: mlp
+  # -- Set the External postgres db password using this value at runtime (using --set flag) to create a secret
+  password: password
+  # -- Host address for the External postgres
+  address: 127.0.0.1
+  createSecret: false
+  # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
+  secretName: ""
+  # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
+  secretKey: "postgresql-password"
+  # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
+  enableProxySidecar: false
+  # -- Type of sidecar to be created, mentioned type needs to have the spec below.
+  proxyType: cloudSqlProxy
+  # -- container spec for the sidecar
+  sidecarSpec:
+    # -- container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
+    cloudSqlProxy:
+      dbConnectionName: "asia-east-1:mlp-db"
+      dbPort: 5432
+      image:
+        tag: 1.33.2
+      resources: &cloudCarSpecResource
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1G
+      spec:
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout"
+            - "-instances={{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
+          securityContext:
+            runAsNonRoot: true
+          resources: *cloudCarSpecResource
+
+postgresql:
+  # -- Enable creating mlp specific postgres instance
+  enabled: true
+
+  # -- Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  resources: {}
+  #   requests:
+  #     cpu: 100m
+  #     memory: 128Mi
+
+  persistence:
+    size: 10Gi
+
+  # -- override the name here so that db gets created like <release_name>-mlp-postgresql
+  nameOverride: mlp-postgresql
+
+  postgresqlUsername: mlp
+  postgresqlDatabase: mlp
+  # metrics:
+  #   enabled: true
+  #   serviceMonitor:
+  #     enabled: true
+  # replication:
+  #   enabled: true
+  #   user: repl_user
+  #   password: repl_password
+  #   slaveReplicas: 2
+  #   ## Set synchronous commit mode: on, off, remote_apply, remote_write and local
+  #   ## ref: https://www.postgresql.org/docs/9.6/runtime-config-wal.html#GUC-WAL-LEVEL
+  #   synchronousCommit: "on"
+  #   ## From the number of `slaveReplicas` defined above, set the number of those that will have synchronous replication
+  #   ## NOTE: It cannot be > slaveReplicas
+  #   numSynchronousReplicas: 2
+  #   ## Replication Cluster application name. Useful for defining multiple replication policies
+  #   applicationName: mlp
+
+caramlEnvironments:
+  enabled: true
+  environmentConfigs: {}
+    # Example
+    # - name: "id-dev"
+    #   is_default: true
+    #   cluster: "test"
+    #   region: "id"
+    #   gcp_project: "gcp-project"
+    #   deployment_timeout: "10m"
+    #   namespace_timeout: "2m"
+    #   max_cpu: "8"
+    #   max_memory: "8Gi"
+    #   queue_resource_percentage: "20"
+    #   is_prediction_job_enabled: true
+    #   is_default_prediction_job: true
+    #   default_prediction_job_config:
+    #     executor_replica: 3
+    #     driver_cpu_request: "2"
+    #     driver_memory_request: "2Gi"
+    #     executor_cpu_request: "2"
+    #     executor_memory_request: "2Gi"
+    #   default_deployment_config:
+    #     min_replica: 0
+    #     max_replica: 1
+    #     cpu_request: "500m"
+    #     memory_request: "500Mi"
+    #   default_transformer_config:
+    #     min_replica: 0
+    #     max_replica: 1
+    #     cpu_request: "500m"
+    #     memory_request: "500Mi"
+    #   k8s_config: {}
+  imageBuilderConfigs: ''
+      # Example
+      # '{
+      #   "name": "dev-cluster",
+      #   "cluster": {
+      #     "server": "https://k8s.cluster",
+      #     "certificate-authority-data": "some_cert_data"
+      #   },
+      #   "user": {
+      #     "exec": {
+      #       "apiVersion": "client.authentication.k8s.io/v1beta1",
+      #       "args": [
+      #         "--use_application_default_credentials"
+      #       ],
+      #       "command": "gke-gcloud-auth-plugin",
+      #       "interactiveMode": "IfAvailable",
+      #       "provideClusterInfo": true
+      #     }
+      #   }
+      # }'
+
+config:
+  apiHost: "http://mlp/v1"
+  mlflow:
+    trackingUrl: "http://mlflow.mlp"
+  environment: "production"
 
   # -- Enabled CaraML applications
   applications:
@@ -131,160 +295,3 @@ deployment:
     #     # Only for testing, do not use in production
     #     authMethod: token
     #     token: root
-
-ingress:
-  enabled: false
-  # class: "nginx"
-  # host: "localhost"
-  # path: "/"
-  # Ref for pathTypes https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
-  # pathType: "Prefix"
-
-service:
-  externalPort: 8080
-  internalPort: 8080
-
-serviceAccount:
-  # Specifies whether a ServiceAccount should be created
-  create: true
-  # The name of the ServiceAccount to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: mlp
-  annotations: {}
-    # example.io/example: example
-
-externalPostgresql:
-  # -- If you would like to use an external postgres database, enable it here using this
-  enabled: false
-  # -- External postgres database user
-  username: mlp
-  # -- External postgres database schema
-  database: mlp
-  # -- Set the External postgres db password using this value at runtime (using --set flag) to create a secret
-  password: password
-  # -- Host address for the External postgres
-  address: 127.0.0.1
-  createSecret: false
-  # -- If a secret is created by external systems (eg. Vault)., mention the secret name here
-  secretName: ""
-  # -- If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password)
-  secretKey: "postgresql-password"
-  # -- Enable if you want to configure a sidecar for creating a proxy for your db connections.
-  enableProxySidecar: false
-  # -- Type of sidecar to be created, mentioned type needs to have the spec below.
-  proxyType: cloudSqlProxy
-  # -- container spec for the sidecar
-  sidecarSpec:
-    # -- container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
-    cloudSqlProxy:
-      dbConnectionName: "asia-east-1:mlp-db"
-      dbPort: 5432
-      image:
-        tag: 1.33.2
-      resources: &cloudCarSpecResource
-        requests:
-          cpu: 200m
-          memory: 512Mi
-        limits:
-          cpu: 1000m
-          memory: 1G
-      spec:
-        - name: cloud-sql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}
-          command:
-            - "/cloud_sql_proxy"
-            - "-ip_address_types=PRIVATE"
-            - "-log_debug_stdout"
-            - "-instances={{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.externalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"
-          securityContext:
-            runAsNonRoot: true
-          resources: *cloudCarSpecResource
-
-postgresql:
-  # -- Enable creating mlp specific postgres instance
-  enabled: true
-
-  # -- Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  resources: {}
-  #   requests:
-  #     cpu: 100m
-  #     memory: 128Mi
-
-  persistence:
-    size: 10Gi
-
-  # -- override the name here so that db gets created like <release_name>-mlp-postgresql
-  nameOverride: mlp-postgresql
-
-  postgresqlUsername: mlp
-  postgresqlDatabase: mlp
-  # metrics:
-  #   enabled: true
-  #   serviceMonitor:
-  #     enabled: true
-  # replication:
-  #   enabled: true
-  #   user: repl_user
-  #   password: repl_password
-  #   slaveReplicas: 2
-  #   ## Set synchronous commit mode: on, off, remote_apply, remote_write and local
-  #   ## ref: https://www.postgresql.org/docs/9.6/runtime-config-wal.html#GUC-WAL-LEVEL
-  #   synchronousCommit: "on"
-  #   ## From the number of `slaveReplicas` defined above, set the number of those that will have synchronous replication
-  #   ## NOTE: It cannot be > slaveReplicas
-  #   numSynchronousReplicas: 2
-  #   ## Replication Cluster application name. Useful for defining multiple replication policies
-  #   applicationName: mlp
-caramlEnvironments:
-  enabled: true
-  environmentConfigs: {}
-    # Example
-    # - name: "id-dev"
-    #   is_default: true
-    #   cluster: "test"
-    #   region: "id"
-    #   gcp_project: "gcp-project"
-    #   deployment_timeout: "10m"
-    #   namespace_timeout: "2m"
-    #   max_cpu: "8"
-    #   max_memory: "8Gi"
-    #   queue_resource_percentage: "20"
-    #   is_prediction_job_enabled: true
-    #   is_default_prediction_job: true
-    #   default_prediction_job_config:
-    #     executor_replica: 3
-    #     driver_cpu_request: "2"
-    #     driver_memory_request: "2Gi"
-    #     executor_cpu_request: "2"
-    #     executor_memory_request: "2Gi"
-    #   default_deployment_config:
-    #     min_replica: 0
-    #     max_replica: 1
-    #     cpu_request: "500m"
-    #     memory_request: "500Mi"
-    #   default_transformer_config:
-    #     min_replica: 0
-    #     max_replica: 1
-    #     cpu_request: "500m"
-    #     memory_request: "500Mi"
-    #   k8s_config: {}
-  imageBuilderConfigs: ''
-      # Example
-      # '{
-      #   "name": "dev-cluster",
-      #   "cluster": {
-      #     "server": "https://k8s.cluster",
-      #     "certificate-authority-data": "some_cert_data"
-      #   },
-      #   "user": {
-      #     "exec": {
-      #       "apiVersion": "client.authentication.k8s.io/v1beta1",
-      #       "args": [
-      #         "--use_application_default_credentials"
-      #       ],
-      #       "command": "gke-gcloud-auth-plugin",
-      #       "interactiveMode": "IfAvailable",
-      #       "provideClusterInfo": true
-      #     }
-      #   }
-      # }'

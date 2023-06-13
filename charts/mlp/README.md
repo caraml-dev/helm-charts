@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.4.20](https://img.shields.io/badge/Version-0.4.20-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
+![Version: 0.4.21](https://img.shields.io/badge/Version-0.4.21-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
 
 MLP API
 
@@ -24,26 +24,26 @@ MLP API
 | caramlEnvironments.enabled | bool | `true` |  |
 | caramlEnvironments.environmentConfigs | object | `{}` |  |
 | caramlEnvironments.imageBuilderConfigs | string | `""` |  |
-| deployment.apiHost | string | `"http://mlp/v1"` |  |
-| deployment.applications | list | `[{"configuration":{"api":"/api/merlin/v1","iconName":"machineLearningApp","navigation":[{"destination":"/models","label":"Models"},{"destination":"/transformer-simulator","label":"Transformer Simulator"}]},"description":"Platform for deploying machine learning models","homepage":"/merlin","name":"Merlin"},{"configuration":{"api":"/api/turing/v1","iconName":"graphApp","navigation":[{"destination":"/routers","label":"Routers"},{"destination":"/ensemblers","label":"Ensemblers"},{"destination":"/jobs","label":"Ensembling Jobs"},{"destination":"/experiments","label":"Experiments"}]},"description":"Platform for setting up ML experiments","homepage":"/turing","name":"Turing"},{"configuration":{"api":"/feast/api","iconName":"appSearchApp","navigation":[{"destination":"/entities","label":"Entities"},{"destination":"/featuretables","label":"Feature Tables"},{"destination":"/jobs/batch","label":"Batch Ingestion Jobs"},{"destination":"/jobs/stream","label":"Stream Ingestion Jobs"}]},"description":"Platform for managing and serving ML features","homepage":"/feast","name":"Feast"},{"configuration":{"iconName":"pipelineApp"},"description":"Platform for managing ML pipelines","homepage":"/pipeline","name":"Pipelines"}]` | Enabled CaraML applications |
-| deployment.authorization.enabled | bool | `false` |  |
-| deployment.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
-| deployment.defaultSecretStorage | object | `{}` | Default Secret Storage for storing secrets. Supported values: "vault". If not specified, secrets will be stored as "internal" secret |
-| deployment.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components |
-| deployment.environment | string | `"production"` |  |
+| config.apiHost | string | `"http://mlp/v1"` |  |
+| config.applications | list | `[{"configuration":{"api":"/api/merlin/v1","iconName":"machineLearningApp","navigation":[{"destination":"/models","label":"Models"},{"destination":"/transformer-simulator","label":"Transformer Simulator"}]},"description":"Platform for deploying machine learning models","homepage":"/merlin","name":"Merlin"},{"configuration":{"api":"/api/turing/v1","iconName":"graphApp","navigation":[{"destination":"/routers","label":"Routers"},{"destination":"/ensemblers","label":"Ensemblers"},{"destination":"/jobs","label":"Ensembling Jobs"},{"destination":"/experiments","label":"Experiments"}]},"description":"Platform for setting up ML experiments","homepage":"/turing","name":"Turing"},{"configuration":{"api":"/feast/api","iconName":"appSearchApp","navigation":[{"destination":"/entities","label":"Entities"},{"destination":"/featuretables","label":"Feature Tables"},{"destination":"/jobs/batch","label":"Batch Ingestion Jobs"},{"destination":"/jobs/stream","label":"Stream Ingestion Jobs"}]},"description":"Platform for managing and serving ML features","homepage":"/feast","name":"Feast"},{"configuration":{"iconName":"pipelineApp"},"description":"Platform for managing ML pipelines","homepage":"/pipeline","name":"Pipelines"}]` | Enabled CaraML applications |
+| config.authorization.enabled | bool | `false` |  |
+| config.authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
+| config.defaultSecretStorage | object | `{}` | Default Secret Storage for storing secrets. Supported values: "vault". If not specified, secrets will be stored as "internal" secret |
+| config.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components |
+| config.environment | string | `"production"` |  |
+| config.mlflow.trackingUrl | string | `"http://mlflow.mlp"` |  |
+| config.oauthClientID | string | `""` | OAuth client id for login |
+| config.streams | object | `{}` | Streams list |
+| config.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
+| config.ui.kubeflowHomepage | string | `"http://kubeflow.org"` |  |
 | deployment.extraLabels | object | `{}` | Additional labels to apply on the deployment |
 | deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"caraml-dev/mlp","tag":"v1.7.7-build.63-8309142"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
-| deployment.mlflowTrackingUrl | string | `"http://mlflow.mlp"` |  |
-| deployment.oauthClientID | string | `""` | OAuth client id for login |
 | deployment.podLabels | object | `{}` | Additional labels to apply on the pod level |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` |  |
 | deployment.replicaCount | int | `1` |  |
 | deployment.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| deployment.streams | object | `{}` | Streams list |
 | deployment.tolerations | list | `[]` |  |
-| deployment.ui.clockworkHomepage | string | `"http://clockwork.dev"` |  |
-| deployment.ui.kubeflowHomepage | string | `"http://kubeflow.org"` |  |
 | externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
 | externalPostgresql.createSecret | bool | `false` |  |
 | externalPostgresql.database | string | `"mlp"` | External postgres database schema |
@@ -64,6 +64,7 @@ MLP API
 | postgresql.postgresqlDatabase | string | `"mlp"` |  |
 | postgresql.postgresqlUsername | string | `"mlp"` |  |
 | postgresql.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |

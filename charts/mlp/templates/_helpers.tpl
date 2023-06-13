@@ -70,17 +70,17 @@ app.kubernetes.io/part-of: caraml
             {{- $globalAuthzUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "authz" (list "serviceName")))) }}
         {{- end }}
     {{- end }}
-    {{- printf "%s" (include "common.set-value" (list .Values.deployment.authorization.serverUrl $globalAuthzUrl)) -}}
+    {{- printf "%s" (include "common.set-value" (list .Values.config.authorization.serverUrl $globalAuthzUrl)) -}}
 {{- end -}}
 
-{{- define "mlp.deployment.applications" -}}
+{{- define "mlp.config.applications" -}}
     {{- $globFeastApi := include "common.get-component-value" (list .Values.global "feast" (list "vsPrefix" "apiPrefix")) }}
     {{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix")) }}
     {{- $globTuringApi := include "common.get-component-value" (list .Values.global "turing" (list "vsPrefix" "apiPrefix")) }}
     {{- $globFeastUI := include "common.get-component-value" (list .Values.global "feast" (list "uiPrefix")) }}
     {{- $globMerlinUI := include "common.get-component-value" (list .Values.global "merlin" (list "uiPrefix")) }}
     {{- $globTuringUI := include "common.get-component-value" (list .Values.global "turing" (list "uiPrefix")) }}
-    {{- $applications := default (list) .Values.deployment.applications -}}
+    {{- $applications := default (list) .Values.config.applications -}}
     {{- $modifiedApps := (list) -}}
     {{- range $applications -}}
         {{- $name := .name -}}
@@ -100,4 +100,30 @@ app.kubernetes.io/part-of: caraml
         {{- $_ := set .configuration "api" $api -}}
     {{- end -}}
     {{ toYaml $applications }}
+{{- end -}}
+
+{{- define "mlp.defaultConfig" -}}
+apiHost: {{ include "common.set-value" (list .Values.config.apiHost $globApiHost) | quote }}
+port: {{ .Values.service.internalPort }}
+sentryDSN: {{ .Values.sentry.dsn }}
+oauthClientID: {{ include "common.set-value" (list .Values.config.oauthClientID $globOauthClientID) | quote }}
+applications:
+      {{- include "mlp.config.applications" . | nindent 6 }}
+authorization:
+    enabled: {{ .Values.config.authorization.enabled }}
+    {{- if .Values.config.authorization.enabled }}
+    ketoServerURL: {{ include "authorization.server.url" . | quote}}
+    {{- end }}
+database:
+    host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
+    user: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
+    database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
+ui:
+    clockworkUIHomepage: "{{ .Values.config.ui.clockworkHomepage }}"
+    kubeflowUIHomepage: "{{ .Values.config.ui.kubeflowHomepage }}"
+{{- end -}}
+
+{{- define "mlp.config" -}}
+{{- $defaultConfig := include "mlp.defaultConfig" . | fromYaml -}}
+{{ .Values.config | merge $defaultConfig | toYaml }}
 {{- end -}}
