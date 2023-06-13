@@ -200,10 +200,10 @@ caramlEnvironments:
 
 config:
   apiHost: "http://mlp/v1"
-  
+
   # -- OAuth client id for login
   oauthClientID: ""
-  
+
   environment: "production"
 
   # -- Enabled CaraML applications
