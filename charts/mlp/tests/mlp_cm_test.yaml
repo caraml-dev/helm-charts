@@ -10,8 +10,8 @@ tests:
   - it: should set the configs from values if no global values found
     set:
       global: {}
-      deployment.apiHost: "http://mlp/v1"
-      deployment.oauthClientID: "oauthId"
+      config.apiHost: "http://mlp/v1"
+      config.oauthClientID: "oauthId"
     asserts:
       - isKind:
           of: ConfigMap
@@ -21,8 +21,7 @@ tests:
       - matchRegex:
           path: data.[mlp-config.yaml]
           pattern: |
-            (?s).*apiHost: "http://mlp/v1"
-            .*oauthClientID: "oauthId"
+            (?s).*apiHost: http://mlp/v1
             .*applications:
             .*api: \/api\/merlin\/v1
             .*homepage: \/merlin
@@ -33,6 +32,7 @@ tests:
             .*api: \/feast\/api
             .*homepage: \/feast
             .*name: Feast
+            .*oauthClientID: oauthId
   - it: should set the configs from global if global values found
     set:
       global:
@@ -62,8 +62,7 @@ tests:
       - matchRegex:
           path: data.[mlp-config.yaml]
           pattern: |
-            (?s).*apiHost: "/api"
-            .*oauthClientID: "test-client-123"
+            (?s).*apiHost: /api
             .*applications:
             .*api: \/api\/merlin\/v1
             .*homepage: \/merlin
@@ -74,9 +73,10 @@ tests:
             .*api: \/feast\/api
             .*homepage: \/feast
             .*name: Feast
+            .*oauthClientID: test-client-123
   - it: should not set the authorization server url when it is not enabled
     set:
-      deployment:
+      config:
         authorization:
           enabled: false
     asserts:
@@ -99,7 +99,7 @@ tests:
     set:
       global:
         protocol: http
-      deployment:
+      config:
         authorization:
           enabled: true
           serverUrl: "http://authz-url"
@@ -114,13 +114,13 @@ tests:
           pattern: |
             (?s).*authorization:
             .*enabled: true
-            .*ketoServerURL: "http://authz-url"
+            .*ketoServerURL: http://authz-url
   - it: should set the authorization server url from values when it is enabled and no serviceName in authz config in global values
     set:
       global:
         protocol: http
         authz: {}
-      deployment:
+      config:
         authorization:
           enabled: true
           serverUrl: "http://authz-url"
@@ -135,14 +135,14 @@ tests:
           pattern: |
             (?s).*authorization:
             .*enabled: true
-            .*ketoServerURL: "http://authz-url"
+            .*ketoServerURL: http://authz-url
   - it: should set the authorization server url from global when it is enabled and serviceName in authz config in global values
     set:
       global:
         protocol: http
         authz:
           serviceName: "caraml-authz"
-      deployment:
+      config:
         authorization:
           enabled: true
           serverUrl: "http://authz-url"
@@ -157,10 +157,10 @@ tests:
           pattern: |
             (?s).*authorization:
             .*enabled: true
-            .*ketoServerURL: "http://caraml-authz"
+            .*ketoServerURL: http://caraml-authz
   - it: should set streams config when exists
     set:
-      deployment:
+      config:
         streams:
           marketing:
             - promotions
@@ -177,20 +177,17 @@ tests:
           path: data.[mlp-config.yaml]
           pattern: |
             (?s).*streams.*
-  - it: should not set streams config when it doesn't exist
-    set:
-      deployment:
-        streams: {}
+  - it: should set empty streams when it doesn't exist
     asserts:
       - isKind:
           of: ConfigMap
       - matchRegex:
           path: metadata.name
           pattern: mlp-*-config$
-      - notMatchRegex:
+      - matchRegex:
           path: data.[mlp-config.yaml]
           pattern: |
-            (?s).*streams.*
+            (?s).*streams: \{\}.*
   - it: should set database config from values if chart specific db is enabled
     set:
       global:
@@ -215,9 +212,9 @@ tests:
           path: data.[mlp-config.yaml]
           pattern: |
             (?s).*database:
+            .*database: mlp
             .*host: my-release-mlp-postgresql.my-namespace.svc.cluster.local
             .*user: mlp
-            .*database: mlp
   - it: should set database config from values if chart specific db is disabled, external db is enabled
     set:
       global:
@@ -242,9 +239,9 @@ tests:
           path: data.[mlp-config.yaml]
           pattern: |
             (?s).*database:
+            .*database: mlp-ext
             .*host: postgresql
             .*user: mlp-ext
-            .*database: mlp-ext
   - it: should set database config from global values if chart specific db is disabled, external db is disabled
     set:
       global:
@@ -270,6 +267,6 @@ tests:
           path: data.[mlp-config.yaml]
           pattern: |
             (?s).*database:
+            .*database: mlp-global
             .*host: my-release-postgresql.my-namespace.svc.cluster.local
             .*user: mlp-global
-            .*database: mlp-global

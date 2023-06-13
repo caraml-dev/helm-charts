@@ -103,6 +103,8 @@ app.kubernetes.io/part-of: caraml
 {{- end -}}
 
 {{- define "mlp.defaultConfig" -}}
+{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
+{{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix")) }}
 apiHost: {{ include "common.set-value" (list .Values.config.apiHost $globApiHost) | quote }}
 port: {{ .Values.service.internalPort }}
 sentryDSN: {{ .Values.sentry.dsn }}

@@ -200,8 +200,10 @@ caramlEnvironments:
 
 config:
   apiHost: "http://mlp/v1"
-  mlflow:
-    trackingUrl: "http://mlflow.mlp"
+  
+  # -- OAuth client id for login
+  oauthClientID: ""
+  
   environment: "production"
 
   # -- Enabled CaraML applications
@@ -278,9 +280,6 @@ config:
     clockworkHomepage: "http://clockwork.dev"
     kubeflowHomepage: "http://kubeflow.org"
 
-  # -- OAuth client id for login
-  oauthClientID: ""
-
   # -- Default Secret Storage for storing secrets. Supported values: "vault".
   # If not specified, secrets will be stored as "internal" secret
   defaultSecretStorage: {}
@@ -295,3 +294,6 @@ config:
     #     # Only for testing, do not use in production
     #     authMethod: token
     #     token: root
+
+  mlflow:
+    trackingUrl: "http://mlflow.mlp"
