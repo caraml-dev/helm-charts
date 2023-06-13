@@ -27,6 +27,8 @@ rules:
       - get
       - create
       - delete
+      - list
+      - watch
   - apiGroups: 
       - ""
     resources: 
@@ -61,6 +63,7 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded, hook-failed	
     "helm.sh/hook-weight": "30"
 spec:
+  backoffLimit: 3
   template:
     metadata:
       name: test-pod-secret-job
