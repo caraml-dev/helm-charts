@@ -7,7 +7,7 @@ metadata:
     annotations:
       "helm.sh/hook": pre-install, pre-upgrade
       "helm.sh/hook-weight": "1"
-      "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
+      "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
 ---
 {{ end }}
 {{- if .Values.rbac.create -}}
@@ -18,7 +18,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install, pre-upgrade
     "helm.sh/hook-weight": "1"
-    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
 rules:
   - apiGroups:
       - ""
@@ -35,7 +35,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install, pre-upgrade
     "helm.sh/hook-weight": "2"
-    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
+    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -75,8 +75,8 @@ spec:
             set -o nounset
             set -o pipefail
             apk --update add openssl
-            CN_BASE="{{ include "dap-secret-webhook.name" . }}_webhook_ca"
-            DNS_BASE="{{ include "dap-secret-webhook.name" . }}.{{ .Release.Namespace }}.svc"
+            CN_BASE="{{ include "dap-secret-webhook.fullname" . }}_webhook_ca"
+            DNS_BASE="{{ include "dap-secret-webhook.fullname" . }}.{{ .Release.Namespace }}.svc"
             TMP_DIR="/tmp/dap-secret-webhook-certs"
             if kubectl get secret -n {{ .Release.Namespace }} {{ include "dap-secret-webhook.name" . }}-tls-certs; then
               echo "Secret dap-secret-webhook-tls-secrets already exists in namespace {{ .Release.Namespace }}"
@@ -110,7 +110,7 @@ spec:
             openssl req -new -key ${TMP_DIR}/serverKey.pem -out ${TMP_DIR}/server.csr -subj "/CN=${DNS_BASE}" -config ${TMP_DIR}/server.conf -addext "subjectAltName = DNS:${DNS_BASE}"
             openssl x509 -req -in ${TMP_DIR}/server.csr -CA ${TMP_DIR}/caCert.pem -CAkey ${TMP_DIR}/caKey.pem -CAcreateserial -out ${TMP_DIR}/serverCert.pem -days 100000 -extensions SAN -extensions v3_req -extfile ${TMP_DIR}/server.conf
             echo "Uploading certs to the cluster."
-            kubectl create secret -n {{ .Release.Namespace }} generic dap-secret-webhook-tls-certs --from-file=${TMP_DIR}/caKey.pem --from-file=${TMP_DIR}/caCert.pem --from-file=${TMP_DIR}/serverKey.pem --from-file=${TMP_DIR}/serverCert.pem
+            kubectl create secret -n {{ .Release.Namespace }} generic {{ include "dap-secret-webhook.name" . }}-tls-certs --from-file=${TMP_DIR}/caKey.pem --from-file=${TMP_DIR}/caCert.pem --from-file=${TMP_DIR}/serverKey.pem --from-file=${TMP_DIR}/serverCert.pem
             # Clean up after we're done.
             echo "Deleting ${TMP_DIR}."
             rm -rf ${TMP_DIR}

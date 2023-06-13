@@ -11,17 +11,19 @@ deployment:
   service:
     type: ClusterIP
     port: 443
-  # -- Env var of webhook, see https://github.com/caraml-dev/dap-secret-webhook for full list of configurable
-  # -- The values for TLS assume secrets is created from the tls job
-  env:
-  - name: MLP_API_HOST
-    value: http://mlp.default.svc.cluster.local:8080
-  - name: TLS_SERVER_CERT_FILE
-    value: /etc/tls-certs/serverCert.pem
-  - name: TLS_SERVER_KEY_FILE
-    value: /etc/tls-certs/serverKey.pem
-  - name: TLS_CA_CERT_FILE
-    value: /etc/tls-certs/caCert.pem
+
+  webhook:
+    # -- The endpoint of MLP API. Default will be set with to mlp local cluster
+    mlpApiHost: ""
+    serverCertPath: /etc/tls-certs/serverCert.pem
+    serverKeyPath: /etc/tls-certs/serverKey.pem
+    caCertPath: /etc/tls-certs/caCert.pem
+
+  # -- Additional env var for webhook, see https://github.com/caraml-dev/dap-secret-webhook for full list of configurable
+  extraEnvs: []
+  # Example:
+  # - name: DEMO_GREETING
+  #   value: "Hello from the environment"
 
   resources:
     requests:
@@ -60,3 +62,7 @@ tls:
   # -- If create is false, existing tls secret with corresponding env var configured for
   # -- webhook is required
   secretName: ""
+
+mlp:
+  enabled: true
+

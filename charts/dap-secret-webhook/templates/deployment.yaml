@@ -4,6 +4,7 @@ metadata:
   name: {{ include "dap-secret-webhook.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
+    app: {{ include "dap-secret-webhook.name" . }}
     {{- include "dap-secret-webhook.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
@@ -23,7 +24,27 @@ spec:
         - name: app
           image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
           env:
-          {{- toYaml .Values.deployment.env | nindent 10 }}
+          - name: MLP_API_HOST
+            value: {{ .Values.deployment.webhook.mlpApiHost  | default (include "default.mlp.host" .) }}
+          - name: TLS_SERVER_CERT_FILE
+            value: {{ .Values.deployment.webhook.serverCertPath }}
+          - name: TLS_SERVER_KEY_FILE
+            value: {{ .Values.deployment.webhook.serverKeyPath }}
+          - name: TLS_CA_CERT_FILE
+            value: {{ .Values.deployment.webhook.caCertPath }}
+          - name: WEBHOOK_NAME
+            value: {{ include "dap-secret-webhook.fullname" . }}
+          - name: WEBHOOK_NAMESPACE
+            value: {{ .Release.Namespace }}
+          - name: WEBHOOK_WEBHOOK_NAME
+            value: {{ include "dap-secret-webhook.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+          - name: WEBHOOK_SERVICE_NAME
+            value: {{ include "dap-secret-webhook.fullname" . }}
+          - name: WEBHOOK_SERVICE_NAMESPACE
+            value: {{ .Release.Namespace }}
+          {{- with .Values.deployment.extraEnvs }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
           args:
           - webhook
           resources:

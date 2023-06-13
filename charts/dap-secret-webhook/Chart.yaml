@@ -4,6 +4,11 @@ description: dap-secret-webhook is a Kubernetes pod mutating webhook for using C
 type: application
 version: 0.1.0
 appVersion: 0.0.1
+dependencies:
+- condition: mlp.enabled
+  name: mlp
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.4.20
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev

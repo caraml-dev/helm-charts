@@ -55,3 +55,8 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
 {{- end }}
+
+
+{{- define "default.mlp.host" -}}
+http://{{ .Release.Name }}-mlp.{{ .Release.Namespace }}.svc.cluster.local:8080
+{{- end }}

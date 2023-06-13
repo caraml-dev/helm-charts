@@ -1,0 +1,110 @@
+{{- $mlpHost := .Values.deployment.webhook.mlpApiHost  | default (include "default.mlp.host" .) }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: {{ include "dap-secret-webhook.name" . }}-test-sa
+    namespace: {{ .Release.Namespace }}
+    annotations:
+      "helm.sh/hook": test
+      "helm.sh/hook-weight": "10"
+      "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "dap-secret-webhook.name" . }}-test-cluster-role
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "10"
+    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+      - pods
+    verbs:
+      - get
+      - create
+      - delete
+  - apiGroups: 
+      - ""
+    resources: 
+      - pods/exec
+    verbs:
+      - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "dap-secret-webhook.name" . }}-test-role-binding
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "20"
+    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "dap-secret-webhook.name" . }}-test-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name:  {{ include "dap-secret-webhook.name" . }}-test-sa
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-pod-secret-job
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded, hook-failed	
+    "helm.sh/hook-weight": "30"
+spec:
+  template:
+    metadata:
+      name: test-pod-secret-job
+    spec:
+      serviceAccountName: {{ include "dap-secret-webhook.name" . }}-test-sa
+      backoffLimit: 3
+      activeDeadlineSeconds: 100
+      restartPolicy: Never
+      containers:
+      - name: script
+        image: "quay.io/reactiveops/ci-images:v11-alpine"
+        command: ["bash"]
+        args:
+          - -c
+          - |
+            kubectl apply -f - <<EOF
+            apiVersion: v1
+            kind: Pod
+            metadata:
+              name: pod-with-secret
+              namespace: {{ .Release.Namespace }}
+              labels:
+                inject-flyte-secrets: "true"
+              annotations:
+                "helm.sh/hook": test
+                "helm.sh/hook-weight": "2"
+                # flyte.secrets/s0 is encoded using Group: 'testgroup', Key: 'testsecretkey'
+                flyte.secrets/s0: "m4zg54lqhiqce4dfon1go3tpovycectlmv3tuibcorsxg4dtmvrxezlunnsxsiqknvxxk2tul4zgk3lvnfzgk2lfnz1duicfjzlf5vsbkifa"
+            spec:
+              containers:
+                - name: pod-with-secret
+                  image: nginx
+            EOF
+            echo "created pod and waiting..."
+            kubectl wait pod pod-with-secret --for condition=Ready --timeout=3m
+            echo "checking secrets"
+            # hardcoded here to use TESTGROUP instead of {{ .Release.Namespace }} since the encrypted annotation will give this key
+            mounted_secret=$(kubectl exec pod-with-secret -- printenv _FSEC_TESTGROUP_TESTSECRETKEY | tr -d '\r')
+            if [[ "$mounted_secret" = "testsecretdata" ]]; then
+              echo "mounted secret matches the expected value"
+              kubectl delete pod pod-with-secret
+            else
+              echo "mounted secret does not match the expected value, retrieved value = $mounted_secret"
+              kubectl get pod pod-with-secret -o json | jq '.spec.containers[].env[]'
+              kubectl delete pod pod-with-secret
+              exit 1
+            fi
