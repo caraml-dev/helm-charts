@@ -66,8 +66,6 @@ spec:
       name: test-pod-secret-job
     spec:
       serviceAccountName: {{ include "dap-secret-webhook.name" . }}-test-sa
-      backoffLimit: 3
-      activeDeadlineSeconds: 100
       restartPolicy: Never
       containers:
       - name: script
@@ -108,3 +106,5 @@ spec:
               kubectl delete pod pod-with-secret
               exit 1
             fi
+  backoffLimit: 3
+    activeDeadlineSeconds: 100
