@@ -1,50 +1,4 @@
 {{- if .Values.tls.create -}}
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-    name: {{ include "dap-secret-webhook.name" . }}-tls-sa
-    namespace: {{ .Release.Namespace }}
-    annotations:
-      "helm.sh/hook": pre-install, pre-upgrade
-      "helm.sh/hook-weight": "1"
-      "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
----
-{{ end }}
-{{- if .Values.rbac.create -}}
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: {{ include "dap-secret-webhook.name" . }}-tls-cluster-role
-  annotations:
-    "helm.sh/hook": pre-install, pre-upgrade
-    "helm.sh/hook-weight": "1"
-    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
-rules:
-  - apiGroups:
-      - ""
-    resources:
-      - secrets
-    verbs:
-      - get
-      - create
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: {{ include "dap-secret-webhook.name" . }}-tls-role-binding
-  annotations:
-    "helm.sh/hook": pre-install, pre-upgrade
-    "helm.sh/hook-weight": "2"
-    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed	
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: {{ include "dap-secret-webhook.name" . }}-tls-cluster-role
-subjects:
-  - kind: ServiceAccount
-    name:  {{ include "dap-secret-webhook.name" . }}-tls-sa
-    namespace: {{ .Release.Namespace }}
----
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -53,7 +7,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install, pre-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded
-    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-weight": "30"
 spec:
   template:
     metadata:
