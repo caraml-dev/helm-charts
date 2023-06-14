@@ -8,9 +8,19 @@ fullnameOverride: ""
 deployment:
   replicaCount: 1
 
+  image:
+    repository: ghcr.io/caraml-dev/dap-secret-webhook
+    tag: 0.0.1
+    pullPolicy: IfNotPresent
+
   service:
     type: ClusterIP
     port: 443
+
+  resources:
+    requests:
+      cpu: 250m
+      memory: 128Mi
 
   webhook:
     # -- The endpoint of MLP API. Default will be set with to mlp local cluster
@@ -19,21 +29,14 @@ deployment:
     serverKeyPath: /etc/tls-certs/serverKey.pem
     caCertPath: /etc/tls-certs/caCert.pem
 
+  extraLabels: {}
+
   # -- Additional env var for webhook, see https://github.com/caraml-dev/dap-secret-webhook for full list of configurable
   extraEnvs: []
   # Example:
   # - name: DEMO_GREETING
   #   value: "Hello from the environment"
 
-  resources:
-    requests:
-      cpu: 250m
-      memory: 128Mi
-
-  image:
-    repository: ghcr.io/caraml-dev/dap-secret-webhook
-    tag: 0.0.1
-    pullPolicy: IfNotPresent
 
 serviceAccount:
   # -- Specifies whether a service account should be created
@@ -46,7 +49,7 @@ serviceAccount:
   name: ""
 
 rbac:
-  # -- Specifies whether roles should be granted to
+  # -- Specifies whether roles should be granted to the service account
   create: true
 
 tls:

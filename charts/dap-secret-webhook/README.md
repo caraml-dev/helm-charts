@@ -40,6 +40,7 @@ The following table lists the configurable parameters of the Observation Service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | deployment.extraEnvs | list | `[]` | Additional env var for webhook, see https://github.com/caraml-dev/dap-secret-webhook for full list of configurable |
+| deployment.extraLabels | object | `{}` |  |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.repository | string | `"ghcr.io/caraml-dev/dap-secret-webhook"` |  |
 | deployment.image.tag | string | `"0.0.1"` |  |
@@ -55,7 +56,7 @@ The following table lists the configurable parameters of the Observation Service
 | fullnameOverride | string | `""` |  |
 | mlp.enabled | bool | `true` |  |
 | nameOverride | string | `""` |  |
-| rbac.create | bool | `true` | Specifies whether roles should be granted to |
+| rbac.create | bool | `true` | Specifies whether roles should be granted to the service account |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | If create is false, existing service account name is required in the release namespace |
