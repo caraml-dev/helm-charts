@@ -15,7 +15,6 @@ spec:
     matchLabels:
       app: {{ template "dap-secret-webhook.name" . }}
       release: {{ .Release.Name }}
-      {{- include "dap-secret-webhook.labels" . | nindent 4 }}
   template:
     metadata:
       name: dap-secret-webhook
