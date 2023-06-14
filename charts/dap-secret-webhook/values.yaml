@@ -67,4 +67,5 @@ tls:
   secretName: ""
 
 mlp:
+  # -- Flag to install subchart MLP. Not required if MLP is installed separately
   enabled: true

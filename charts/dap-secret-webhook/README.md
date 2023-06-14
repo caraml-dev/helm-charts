@@ -54,7 +54,7 @@ The following table lists the configurable parameters of the Observation Service
 | deployment.webhook.serverCertPath | string | `"/etc/tls-certs/serverCert.pem"` |  |
 | deployment.webhook.serverKeyPath | string | `"/etc/tls-certs/serverKey.pem"` |  |
 | fullnameOverride | string | `""` |  |
-| mlp.enabled | bool | `true` |  |
+| mlp.enabled | bool | `true` | Flag to install subchart MLP. Not required if MLP is installed separately |
 | nameOverride | string | `""` |  |
 | rbac.create | bool | `true` | Specifies whether roles should be granted to the service account |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
