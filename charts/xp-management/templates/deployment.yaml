@@ -43,7 +43,7 @@ spec:
           - name: "DBCONFIG_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ include "common.postgres-password-secret-name" (list (index .Values "xp-management-postgresql") .Values.xpManagementExternalPostgresql .Release .Chart ) | quote }}
+                name: {{ include "common.postgres-password-secret-name" (list (index .Values "xp-management-postgresql") .Values.xpManagementExternalPostgresql .Release .Chart ) }}
                 key: {{ include "common.postgres-password-secret-key" (list .Values.xpManagementExternalPostgresql) }}
           {{- with .Values.deployment.extraEnvs }}
           {{- toYaml . | nindent 12 }}
