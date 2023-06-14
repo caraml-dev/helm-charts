@@ -243,9 +243,9 @@ spec:
             value: {{ include "merlin.authorization.server.url" . | quote }}
           - name: AUTHORIZATION_CACHING_ENABLED
             value: {{ .Values.authorization.caching.enabled }}
-            name: AUTHORIZATIONCONFIG_CACHING_KEYEXPIRYSECONDS
+          - name: AUTHORIZATIONCONFIG_CACHING_KEYEXPIRYSECONDS
             value: {{ .Values.authorization.caching.keyExpirySeconds }}
-            name: AUTHORIZATIONCONFIG_CACHING_CACHECLEANUPINTERVALSECONDS
+          - name: AUTHORIZATIONCONFIG_CACHING_CACHECLEANUPINTERVALSECONDS
             value: {{ .Values.authorization.caching.cacheCleanUpIntervalSeconds }}
           {{- end }}
           - name: MONITORING_DASHBOARD_ENABLED
