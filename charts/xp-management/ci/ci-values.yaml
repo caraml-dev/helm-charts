@@ -7,7 +7,7 @@ deployment:
     limits:
       cpu: "500m"
       memory: 512Mi
-postgresql:
+xp-management-postgresql:
   enabled: true
   resources:
     requests:

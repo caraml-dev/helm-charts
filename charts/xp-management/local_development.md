@@ -42,7 +42,7 @@ This will generate a cluster-credentials.json file under `charts/xp-management/f
 # Set postgresql persistence to false to ensure PVC gets deleted
 helm install xp-management caraml/xp-management \
   --set xp.uiConfig.authConfig.oauthClientID=${OAUTH_CLIENT_ID} \
-  --set xp-postgresql.persistence.enabled=false \
+  --set xp-management-postgresql.persistence.enabled=false \
   --set mlp.postgresql.persistence.enabled=false \
   -f xp-management/values-global.yaml \
   --timeout=5m \
