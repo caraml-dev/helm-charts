@@ -1,0 +1,80 @@
+suite: Unit tests for xp-management Deployment
+templates:
+  - deployment.yaml
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set database secret key and name from values if chart specific db is enabled
+    set:
+      global: {}
+      xp-management-postgresql:
+        enabled: true
+        postgresqlDatabase: xp
+        postgresqlUsername: xp
+      xpManagementExternalPostgresql:
+        enabled: false
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-xp-management
+      - equal: # check database secret name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-xp-management-postgresql
+      - equal: # check database secret key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: postgresql-password
+  
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, createSecret is set
+    set:
+      global: {}
+      xp-management-postgresql:
+        enabled: false
+      xpManagementExternalPostgresql:
+        enabled: true
+        address: xp-management-ext-db-address
+        username: xp-management-ext
+        database: xp-management-ext
+        password: xp-management-ext-password
+        createSecret: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-xp-management$
+      - equal: # check database secret name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-xp-management-external-postgresql
+      - equal: # check database secret key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: postgresql-password
+
+  - it: should use database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
+    set:
+      global: {}
+      xp-management-postgresql:
+        enabled: false
+      xpManagementExternalPostgresql:
+        enabled: true
+        address: xp-management-ext-db-address
+        username: xp-management-ext
+        database: xp-management-ext
+        secretName: secret-name
+        secretKey: secret-key
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-xp-management$
+      - equal: # check database secret name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: secret-name
+      - equal: # check database secret key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: secret-key

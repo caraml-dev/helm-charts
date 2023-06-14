@@ -1,7 +1,7 @@
 # xp-management
 
 ---
-![Version: 0.1.16](https://img.shields.io/badge/Version-0.1.16-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
 ![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
@@ -62,24 +62,24 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.serviceAccount.annotations | object | `{}` |  |
 | deployment.serviceAccount.create | bool | `true` |  |
 | deployment.serviceAccount.name | string | `""` |  |
-| externalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
-| externalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. To be used together with password. |
-| externalPostgresql.database | string | `"xp"` | External postgres database schema |
-| externalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
-| externalPostgresql.password | string | `"password"` |  |
-| externalPostgresql.secretKey | string | `""` | Secret key in Secret which contains postgresql credentials |
-| externalPostgresql.secretName | string | `""` | Secret name which contains credentials to access externalPostgresql |
-| externalPostgresql.username | string | `"xp"` | External postgres database user |
 | global.environment | string | `"dev"` | Environment of Management Service deployment |
 | global.mlp.serviceName | string | `"mlp"` | Global MLP service name |
 | global.sentry.dsn | string | `nil` | Global Sentry DSN value |
-| postgresql | object | `{"containerPorts":{"postgresql":5432},"enabled":true,"nameOverride":"xp-management-postgresql","persistence":{"enabled":true,"size":"10Gi"},"postgresqlDatabase":"xp","postgresqlPassword":"xp","postgresqlUsername":"xp","resources":{"requests":{"cpu":"100m","memory":"256Mi"}},"tls":{"enabled":false}}` | Postgresql configuration to be applied to XP Management Service's postgresql database deployment Reference: https://artifacthub.io/packages/helm/bitnami/postgresql/10.16.2#parameters |
-| postgresql.persistence.enabled | bool | `true` | Persist Postgresql data in a Persistent Volume Claim |
-| postgresql.postgresqlPassword | string | `"xp"` | Password for XP Management Service Postgresql database |
-| postgresql.resources | object | `{"requests":{"cpu":"100m","memory":"256Mi"}}` | Resources requests and limits for XP Management Service database. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | swaggerUi.apiServer | string | `"http://127.0.0.1/v1"` | URL of API server |
 | swaggerUi.enabled | bool | `true` |  |
 | swaggerUi.image | object | `{"tag":"v3.47.1"}` | Docker tag for Swagger UI https://hub.docker.com/r/swaggerapi/swagger-ui |
 | swaggerUi.service.externalPort | int | `3000` | Swagger UI Kubernetes service port number |
 | swaggerUi.service.internalPort | int | `8081` | Swagger UI container port number |
 | uiConfig | object | `{"apiConfig":{"mlpApiUrl":"/api/v1","xpApiUrl":"/api/xp/v1"},"appConfig":{"docsUrl":[{"href":"https://github.com/caraml-dev/xp/tree/main/docs","label":"XP User Guide"}]},"authConfig":{"oauthClientId":""},"sentryConfig":{}}` | XP UI configuration. |
+| xp-management-postgresql | object | `{"containerPorts":{"postgresql":5432},"enabled":true,"persistence":{"enabled":true,"size":"10Gi"},"postgresqlDatabase":"xp","postgresqlPassword":"xp","postgresqlUsername":"xp","resources":{"requests":{"cpu":"100m","memory":"256Mi"}},"tls":{"enabled":false}}` | Postgresql configuration to be applied to XP Management Service's postgresql database deployment Reference: https://artifacthub.io/packages/helm/bitnami/postgresql/10.16.2#parameters |
+| xp-management-postgresql.persistence.enabled | bool | `true` | Persist Postgresql data in a Persistent Volume Claim |
+| xp-management-postgresql.postgresqlPassword | string | `"xp"` | Password for XP Management Service Postgresql database |
+| xp-management-postgresql.resources | object | `{"requests":{"cpu":"100m","memory":"256Mi"}}` | Resources requests and limits for XP Management Service database. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| xpManagementExternalPostgresql.address | string | `"127.0.0.1"` | Host address for the External postgres |
+| xpManagementExternalPostgresql.createSecret | bool | `false` | Enable this if you need the chart to create a secret when you provide the password above. To be used together with password. |
+| xpManagementExternalPostgresql.database | string | `"xp"` | External postgres database schema |
+| xpManagementExternalPostgresql.enabled | bool | `false` | If you would like to use an external postgres database, enable it here using this |
+| xpManagementExternalPostgresql.password | string | `"password"` |  |
+| xpManagementExternalPostgresql.secretKey | string | `""` | Secret key in Secret which contains postgresql credentials |
+| xpManagementExternalPostgresql.secretName | string | `""` | Secret name which contains credentials to access externalPostgresql |
+| xpManagementExternalPostgresql.username | string | `"xp"` | External postgres database user |

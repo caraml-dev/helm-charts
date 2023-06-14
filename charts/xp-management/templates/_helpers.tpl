@@ -129,10 +129,10 @@ AllowedOrigins: "*"
 AuthorizationConfig:
   Enabled: false
 DbConfig:
-  Host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
+  Host: {{ include "common.postgres-host" (list (index .Values "xp-management-postgresql") .Values.xpManagementExternalPostgresql .Release .Chart ) }}
   Port: 5432
-  Database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "xp" "postgresqlDatabase") }}
-  User: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
+  Database: {{ include "common.postgres-database" (list (index .Values "xp-management-postgresql") .Values.xpManagementExternalPostgresql .Values.global "xp" "postgresqlDatabase") }}
+  User: {{ include "common.postgres-username" (list (index .Values "xp-management-postgresql") .Values.xpManagementExternalPostgresql .Values.global ) }}
   ConnMaxIdleTime: {{ .Values.deployment.apiConfig.DbConfig.ConnMaxIdleTime }}
   ConnMaxLifetime: {{ .Values.deployment.apiConfig.DbConfig.ConnMaxLifetime }}
   MaxIdleConns: {{ .Values.deployment.apiConfig.DbConfig.MaxIdleConns }}
