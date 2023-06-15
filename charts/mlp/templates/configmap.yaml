@@ -1,5 +1,3 @@
-{{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
-{{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix")) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -9,34 +7,4 @@ metadata:
     {{- include "mlp.labels" . | nindent 4 }}
 data:
   mlp-config.yaml: |
-    apiHost: {{ include "common.set-value" (list .Values.deployment.apiHost $globApiHost) | quote }}
-    environment: {{ .Values.deployment.environment }}
-    port: {{ .Values.service.internalPort }}
-    sentryDSN: {{ .Values.deployment.sentryDSN }}
-    oauthClientID: {{ include "common.set-value" (list .Values.deployment.oauthClientID $globOauthClientID) | quote }}
-    applications:
-      {{- include "mlp.deployment.applications" . | nindent 6 }}
-    authorization:
-      enabled: {{ .Values.deployment.authorization.enabled }}
-      {{- if .Values.deployment.authorization.enabled }}
-      ketoServerURL: {{ include "authorization.server.url" . | quote}}
-      {{- end }}
-    database:
-      host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
-      user: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
-      database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
-    {{- if .Values.deployment.docs }}
-    docs:
-      {{- toYaml .Values.deployment.docs | nindent 6 }}
-    {{- end }}
-    mlflow:
-      trackingURL: {{ .Values.deployment.mlflowTrackingUrl }}
-    {{- if .Values.deployment.streams }}
-    streams:
-      {{- toYaml .Values.deployment.streams | nindent 6 }}
-    {{- end }}
-    ui:
-      clockworkUIHomepage: "{{ .Values.deployment.ui.clockworkHomepage }}"
-      kubeflowUIHomepage: "{{ .Values.deployment.ui.kubeflowHomepage }}"
-    defaultSecretStorage:
-      {{- toYaml .Values.deployment.defaultSecretStorage | nindent 6 }}
+    {{- include "mlp.config" . | nindent 4 -}}

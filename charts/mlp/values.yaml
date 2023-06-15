@@ -33,112 +33,8 @@ deployment:
   readinessProbe:
     path: "/v1/internal/ready"
 
-  apiHost: "http://mlp/v1"
-  mlflowTrackingUrl: "http://mlflow.mlp"
-  environment: "production"
-
   # -- Additional labels to apply on the deployment
   extraLabels: {}
-
-  # -- Enabled CaraML applications
-  applications:
-    - name: Merlin
-      description: Platform for deploying machine learning models
-      homepage: /merlin
-      configuration:
-        api: /api/merlin/v1
-        iconName: machineLearningApp
-        navigation:
-          - label: Models
-            destination: /models
-          - label: Transformer Simulator
-            destination: /transformer-simulator
-    - name: Turing
-      description: Platform for setting up ML experiments
-      homepage: /turing
-      configuration:
-        api: /api/turing/v1
-        iconName: graphApp
-        navigation:
-          - label: Routers
-            destination: /routers
-          - label: Ensemblers
-            destination: /ensemblers
-          - label: Ensembling Jobs
-            destination: /jobs
-          - label: Experiments
-            destination: /experiments
-    - name: Feast
-      description: Platform for managing and serving ML features
-      homepage: /feast
-      configuration:
-        api: /feast/api
-        iconName: appSearchApp
-        navigation:
-          - label: Entities
-            destination: /entities
-          - label: Feature Tables
-            destination: /featuretables
-          - label: Batch Ingestion Jobs
-            destination: /jobs/batch
-          - label: Stream Ingestion Jobs
-            destination: /jobs/stream
-    - name: Pipelines
-      description: Platform for managing ML pipelines
-      homepage: /pipeline
-      configuration:
-        iconName: pipelineApp
-
-  authorization:
-    enabled: false
-    serverUrl: http://mlp-authorization-keto
-
-  # -- Streams list
-  streams: {}
-  #   marketing:
-  #     - promotions
-  #     - growth
-  #   business:
-  #     - operations
-
-  # -- Documentation list for caraml components
-  docs:
-    - label: "Merlin User Guide"
-      href: "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"
-    - label: "Turing User Guide"
-      href: "https://github.com/gojek/turing"
-    - label: "Feast User Guide"
-      href: "https://docs.feast.dev/user-guide/overview"
-
-  ui:
-    clockworkHomepage: "http://clockwork.dev"
-    kubeflowHomepage: "http://kubeflow.org"
-
-  # -- OAuth client id for login
-  oauthClientID: ""
-
-  # -- Default Secret Storage for storing secrets. Supported values: "vault".
-  # If not specified, secrets will be stored as "internal" secret
-  defaultSecretStorage: {}
-    # name: vault
-    # type: vault
-    # config:
-    #   vaultConfig:
-    #     url: https://localhost:8200
-    #     role: my-role
-    #     mountPath: secret
-    #     pathPrefix: caraml-secret/{{ .Project }}/
-    #     # Only for testing, do not use in production
-    #     authMethod: token
-    #     token: root
-
-ingress:
-  enabled: false
-  # class: "nginx"
-  # host: "localhost"
-  # path: "/"
-  # Ref for pathTypes https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
-  # pathType: "Prefix"
 
 service:
   externalPort: 8080
@@ -152,6 +48,18 @@ serviceAccount:
   name: mlp
   annotations: {}
     # example.io/example: example
+
+ingress:
+  enabled: false
+  # class: "nginx"
+  # host: "localhost"
+  # path: "/"
+  # Ref for pathTypes https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
+  # pathType: "Prefix"
+
+sentry:
+  # -- Sentry DSN value used by both Turing API and Turing UI
+  dsn: ""
 
 externalPostgresql:
   # -- If you would like to use an external postgres database, enable it here using this
@@ -235,6 +143,7 @@ postgresql:
   #   numSynchronousReplicas: 2
   #   ## Replication Cluster application name. Useful for defining multiple replication policies
   #   applicationName: mlp
+
 caramlEnvironments:
   enabled: true
   environmentConfigs: {}
@@ -288,3 +197,103 @@ caramlEnvironments:
       #     }
       #   }
       # }'
+
+config:
+  apiHost: "http://mlp/v1"
+
+  # -- OAuth client id for login
+  oauthClientID: ""
+
+  environment: "production"
+
+  # -- Enabled CaraML applications
+  applications:
+    - name: Merlin
+      description: Platform for deploying machine learning models
+      homepage: /merlin
+      configuration:
+        api: /api/merlin/v1
+        iconName: machineLearningApp
+        navigation:
+          - label: Models
+            destination: /models
+          - label: Transformer Simulator
+            destination: /transformer-simulator
+    - name: Turing
+      description: Platform for setting up ML experiments
+      homepage: /turing
+      configuration:
+        api: /api/turing/v1
+        iconName: graphApp
+        navigation:
+          - label: Routers
+            destination: /routers
+          - label: Ensemblers
+            destination: /ensemblers
+          - label: Ensembling Jobs
+            destination: /jobs
+          - label: Experiments
+            destination: /experiments
+    - name: Feast
+      description: Platform for managing and serving ML features
+      homepage: /feast
+      configuration:
+        api: /feast/api
+        iconName: appSearchApp
+        navigation:
+          - label: Entities
+            destination: /entities
+          - label: Feature Tables
+            destination: /featuretables
+          - label: Batch Ingestion Jobs
+            destination: /jobs/batch
+          - label: Stream Ingestion Jobs
+            destination: /jobs/stream
+    - name: Pipelines
+      description: Platform for managing ML pipelines
+      homepage: /pipeline
+      configuration:
+        iconName: pipelineApp
+
+  authorization:
+    enabled: false
+    serverUrl: http://mlp-authorization-keto
+
+  # -- Streams list
+  streams: {}
+  #   marketing:
+  #     - promotions
+  #     - growth
+  #   business:
+  #     - operations
+
+  # -- Documentation list for caraml components
+  docs:
+    - label: "Merlin User Guide"
+      href: "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"
+    - label: "Turing User Guide"
+      href: "https://github.com/gojek/turing"
+    - label: "Feast User Guide"
+      href: "https://docs.feast.dev/user-guide/overview"
+
+  ui:
+    clockworkHomepage: "http://clockwork.dev"
+    kubeflowHomepage: "http://kubeflow.org"
+
+  # -- Default Secret Storage for storing secrets. Supported values: "vault".
+  # If not specified, secrets will be stored as "internal" secret
+  defaultSecretStorage: {}
+    # name: vault
+    # type: vault
+    # config:
+    #   vaultConfig:
+    #     url: https://localhost:8200
+    #     role: my-role
+    #     mountPath: secret
+    #     pathPrefix: caraml-secret/{{ .Project }}/
+    #     # Only for testing, do not use in production
+    #     authMethod: token
+    #     token: root
+
+  mlflow:
+    trackingUrl: "http://mlflow.mlp"
