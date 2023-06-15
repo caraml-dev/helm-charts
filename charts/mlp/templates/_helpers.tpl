@@ -70,7 +70,7 @@ app.kubernetes.io/part-of: caraml
             {{- $globalAuthzUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "authz" (list "serviceName")))) }}
         {{- end }}
     {{- end }}
-    {{- printf "%s" (include "common.set-value" (list .Values.config.authorization.serverUrl $globalAuthzUrl)) -}}
+    {{- printf "%s" (include "common.set-value" (list .Values.config.authorization.ketoServerURL $globalAuthzUrl)) -}}
 {{- end -}}
 
 {{- define "mlp.config.applications" -}}
@@ -120,9 +120,6 @@ database:
     host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
     user: {{ include "common.postgres-username" (list .Values.postgresql .Values.externalPostgresql .Values.global ) }}
     database: {{ include "common.postgres-database" (list .Values.postgresql .Values.externalPostgresql .Values.global "mlp" "postgresqlDatabase") }}
-ui:
-    clockworkUIHomepage: "{{ .Values.config.ui.clockworkHomepage }}"
-    kubeflowUIHomepage: "{{ .Values.config.ui.kubeflowHomepage }}"
 {{- end -}}
 
 {{- define "mlp.config" -}}

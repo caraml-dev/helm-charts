@@ -257,7 +257,7 @@ config:
 
   authorization:
     enabled: false
-    serverUrl: http://mlp-authorization-keto
+    ketoServerURL: http://mlp-authorization-keto
 
   # -- Streams list
   streams: {}
@@ -277,8 +277,8 @@ config:
       href: "https://docs.feast.dev/user-guide/overview"
 
   ui:
-    clockworkHomepage: "http://clockwork.dev"
-    kubeflowHomepage: "http://kubeflow.org"
+    clockworkUIHomepage: "http://clockwork.dev"
+    kubeflowUIHomepage: "http://kubeflow.org"
 
   # -- Default Secret Storage for storing secrets. Supported values: "vault".
   # If not specified, secrets will be stored as "internal" secret
@@ -296,4 +296,4 @@ config:
     #     token: root
 
   mlflow:
-    trackingUrl: "http://mlflow.mlp"
+    trackingURL: "http://mlflow.mlp"

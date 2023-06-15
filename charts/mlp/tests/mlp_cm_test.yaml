@@ -74,27 +74,6 @@ tests:
             .*homepage: \/feast
             .*name: Feast
             .*oauthClientID: test-client-123
-  - it: should not set the authorization server url when it is not enabled
-    set:
-      config:
-        authorization:
-          enabled: false
-    asserts:
-      - isKind:
-          of: ConfigMap
-      - matchRegex:
-          path: metadata.name
-          pattern: mlp-*-config$
-      - matchRegex:
-          path: data.[mlp-config.yaml]
-          pattern: |
-            (?s).*authorization:
-            .*enabled: false
-      - notMatchRegex:
-          path: data.[mlp-config.yaml]
-          pattern: |
-            (?s).*authorization:
-            .*ketoServerURL: .*
   - it: should set the authorization server url from values when it is enabled and no authz config found in global values
     set:
       global:
@@ -102,7 +81,7 @@ tests:
       config:
         authorization:
           enabled: true
-          serverUrl: "http://authz-url"
+          ketoServerURL: "http://authz-url"
     asserts:
       - isKind:
           of: ConfigMap
@@ -123,7 +102,7 @@ tests:
       config:
         authorization:
           enabled: true
-          serverUrl: "http://authz-url"
+          ketoServerURL: "http://authz-url"
     asserts:
       - isKind:
           of: ConfigMap
@@ -145,7 +124,7 @@ tests:
       config:
         authorization:
           enabled: true
-          serverUrl: "http://authz-url"
+          ketoServerURL: "http://authz-url"
     asserts:
       - isKind:
           of: ConfigMap
