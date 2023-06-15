@@ -1,6 +1,6 @@
 # authz
 
-![Version: 0.1.10](https://img.shields.io/badge/Version-0.1.10-informational?style=flat-square) ![AppVersion: 0.4.3](https://img.shields.io/badge/AppVersion-0.4.3-informational?style=flat-square)
+![Version: 0.1.11](https://img.shields.io/badge/Version-0.1.11-informational?style=flat-square) ![AppVersion: 0.4.3](https://img.shields.io/badge/AppVersion-0.4.3-informational?style=flat-square)
 
 Helm chart for deploying Ory Keto
 
@@ -15,7 +15,7 @@ Helm chart for deploying Ory Keto
 | Repository | Name | Version |
 |------------|------|---------|
 | https://caraml-dev.github.io/helm-charts | common | 0.2.8 |
-| https://charts.bitnami.com/bitnami | caraml-authz-postgresql(postgresql) | 11.8.2 |
+| https://charts.bitnami.com/bitnami | caraml-authz-postgresql(postgresql) | 11.9.13 |
 
 ## Values
 

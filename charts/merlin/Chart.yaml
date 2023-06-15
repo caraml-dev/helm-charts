@@ -5,12 +5,12 @@ dependencies:
   condition: merlin-postgresql.enabled
   name: postgresql
   repository: https://charts.helm.sh/stable
-  version: 7.0.2
+  version: 7.7.3
 - alias: mlflow-postgresql
   condition: mlflow-postgresql.enabled
   name: postgresql
   repository: https://charts.helm.sh/stable
-  version: 7.0.2
+  version: 7.7.3
 - condition: mlp.enabled
   name: mlp
   repository: https://caraml-dev.github.io/helm-charts
@@ -33,4 +33,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: merlin
-version: 0.10.20
+version: 0.10.23

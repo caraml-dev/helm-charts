@@ -314,7 +314,7 @@ istiod:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: istiod
-    version: 1.13.9
+    version: 1.18.0
     release: istiod
     namespace: "istio-system"
   hook:
@@ -344,7 +344,6 @@ istiod:
         targetAverageUtilization: 80
     meshConfig:
       enableTracing: false
-
 ############################################################
 # istioIngressGateway - installed using helm-dep-installer chart
 ############################################################
@@ -355,7 +354,7 @@ istioIngressGateway:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: gateway
-    version: 1.13.9
+    version: 1.18.0
     release: istio-ingress-gateway
     namespace: "istio-system"
     createNamespace: false
@@ -397,7 +396,7 @@ clusterLocalGateway:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: gateway
-    version: 1.13.9
+    version: 1.18.0
     release: cluster-local-gateway
     namespace: "istio-system"
     createNamespace: false
@@ -442,7 +441,6 @@ clusterLocalGateway:
           name: http2
         - port: 443
           name: https
-
 ############################################################
 # Monitoring related - Prometheus Service Monitors and Pod Monitors
 ############################################################

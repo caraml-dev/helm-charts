@@ -4,7 +4,7 @@ dependencies:
 - condition: postgresql.enabled
   name: postgresql
   repository: https://charts.helm.sh/stable
-  version: 7.0.2
+  version: 7.7.3
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.8
@@ -13,4 +13,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: mlp
-version: 0.4.20
+version: 0.4.21

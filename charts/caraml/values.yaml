@@ -20,11 +20,11 @@ global:
     serviceName: caraml-authz
   mlp:
     postgresqlDatabase: mlp
-    apiPrefix: ""  # path prefix to where mlp endpoints lie if running on localhost
+    apiPrefix: "" # path prefix to where mlp endpoints lie if running on localhost
     serviceName: mlp
     externalPort: "8080"
     vsPrefix: "/api"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/"
     uiServiceName: mlp
   merlin:
@@ -32,7 +32,7 @@ global:
     serviceName: merlin
     externalPort: "8080"
     vsPrefix: "/api/merlin"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/merlin"
     uiServiceName: merlin
     postgresqlDatabase: merlin
@@ -48,12 +48,10 @@ global:
     serviceName: xp-management
     externalPort: "8080"
     vsPrefix: "/api/xp"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/xp"
     uiServiceName: xp-management
     postgresqlDatabase: xp
-
-
 mlp:
   # -- To enable/disable MLP chart installation.
   enabled: true
@@ -144,7 +142,7 @@ merlin:
             global:
               enabled: false
             helmChart:
-              namespace: "istio-system"  #  NOTE: Need to set this for the helm tests in kserve to run successfully.
+              namespace: "istio-system" #  NOTE: Need to set this for the helm tests in kserve to run successfully.
           clusterLocalGateway:
             global:
               enabled: false
@@ -272,7 +270,7 @@ istiod:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: istiod
-    version: 1.13.9
+    version: 1.18.0
     release: istiod
     namespace: "istio-system"
   hook:
@@ -312,7 +310,7 @@ istioIngressGateway:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: gateway
-    version: 1.13.9
+    version: 1.18.0
     release: istio-ingress-gateway
     namespace: "istio-system"
     createNamespace: false
@@ -354,7 +352,7 @@ clusterLocalGateway:
   helmChart:
     repository: "https://istio-release.storage.googleapis.com/charts"
     chart: gateway
-    version: 1.13.9
+    version: 1.18.0
     release: cluster-local-gateway
     namespace: "istio-system"
     createNamespace: false
@@ -412,7 +410,6 @@ cert-manager:
   # NOTE: disable certmanager if kserve needs to be installed
   fullnameOverride: cert-manager
   enabled: false
-
 ###################################################################
 # Turing dependency
 # #################################################################
@@ -434,7 +431,6 @@ turing:
         cpu: "500m"
         memory: 512Mi
   config: {}
-
 ###################################################################
 # xp dependency
 # #################################################################

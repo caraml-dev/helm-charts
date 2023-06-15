@@ -1,0 +1,6 @@
+dependencies:
+- name: mlp
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.4.20
+digest: sha256:27b4c8f1464f41c4e6c1567cfe003a6fdd8677bece3fdac6b5b54dd3988a7df7
+generated: "2023-06-15T05:36:38.2400031Z"

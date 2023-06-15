@@ -14,11 +14,11 @@ dependencies:
 - condition: cert-manager.enabled
   name: cert-manager
   repository: https://charts.jetstack.io
-  version: v1.8.2
+  version: v1.12.1
 description: A Helm chart for installing Kserve
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: kserve
 type: application
-version: 0.8.20
+version: 0.8.22
