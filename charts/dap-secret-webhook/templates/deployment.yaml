@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dap-secret-webhook.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "dap-secret-webhook.name" . }}
+    {{- include "dap-secret-webhook.labels" . | nindent 4 }}
+    {{- with .Values.deployment.extraLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "dap-secret-webhook.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      name: dap-secret-webhook
+      labels:
+        app: {{ include "dap-secret-webhook.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      serviceAccountName: {{ default (printf "%s" (include "dap-secret-webhook.name" .)) .Values.serviceAccount.name }}
+      containers:
+        - name: app
+          image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
+          env:
+          - name: MLP_API_HOST
+            value: {{ .Values.deployment.webhook.mlpApiHost  | default (include "default.mlp.host" .) }}
+          - name: TLS_SERVER_CERT_FILE
+            value: {{ .Values.deployment.webhook.serverCertPath }}
+          - name: TLS_SERVER_KEY_FILE
+            value: {{ .Values.deployment.webhook.serverKeyPath }}
+          - name: TLS_CA_CERT_FILE
+            value: {{ .Values.deployment.webhook.caCertPath }}
+          - name: WEBHOOK_NAME
+            value: {{ include "dap-secret-webhook.fullname" . }}
+          - name: WEBHOOK_NAMESPACE
+            value: {{ .Release.Namespace }}
+          - name: WEBHOOK_WEBHOOK_NAME
+            value: {{ include "dap-secret-webhook.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+          - name: WEBHOOK_SERVICE_NAME
+            value: {{ include "dap-secret-webhook.fullname" . }}
+          - name: WEBHOOK_SERVICE_NAMESPACE
+            value: {{ .Release.Namespace }}
+          {{- with .Values.deployment.extraEnvs }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          args:
+          - webhook
+          resources:
+          {{- toYaml .Values.deployment.resources | nindent 12 }}
+          volumeMounts:
+            - name: tls-certs
+              mountPath: /etc/tls-certs
+              readOnly: true
+      volumes:
+        - name: tls-certs
+          secret:
+            secretName: {{ default "dap-secret-webhook-tls-certs"  .Values.tls.secretName }}

@@ -1,0 +1,71 @@
+{{- if .Values.tls.create -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "dap-secret-webhook.fullname" . }}-certgen
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-install, pre-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "30"
+spec:
+  template:
+    metadata:
+      name: {{ include "dap-secret-webhook.fullname" . }}-certgen
+    spec:
+      serviceAccountName: {{ include "dap-secret-webhook.name" . }}-tls-sa
+      restartPolicy: Never
+      containers:
+      - name: certgen
+        image: "quay.io/reactiveops/ci-images:v11-alpine"
+        command: ["bash"]
+        args:
+          - -c
+          - |
+            # Generates the a CA cert, a server key, and a server cert signed by the CA.
+            # reference:
+            # https://github.com/kubernetes/kubernetes/blob/master/plugin/pkg/admission/webhook/gencerts.sh
+            set -o errexit
+            set -o nounset
+            set -o pipefail
+            apk --update add openssl
+            CN_BASE="{{ include "dap-secret-webhook.fullname" . }}_webhook_ca"
+            DNS_BASE="{{ include "dap-secret-webhook.fullname" . }}.{{ .Release.Namespace }}.svc"
+            TMP_DIR="/tmp/dap-secret-webhook-certs"
+            if kubectl get secret -n {{ .Release.Namespace }} {{ include "dap-secret-webhook.name" . }}-tls-certs; then
+              echo "Secret dap-secret-webhook-tls-secrets already exists in namespace {{ .Release.Namespace }}"
+              exit 0
+            fi
+            echo "Generating certs for the dap-secret-webhook Admission Controller in ${TMP_DIR}."
+            mkdir -p ${TMP_DIR}
+            cat > ${TMP_DIR}/server.conf << EOF
+            [req]
+            req_extensions = v3_req
+            distinguished_name = req_distinguished_name
+            [req_distinguished_name]
+            [ v3_req ]
+            basicConstraints = CA:FALSE
+            keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+            extendedKeyUsage = clientAuth, serverAuth
+            subjectAltName = DNS:${DNS_BASE}
+            EOF
+            # Create a certificate authority
+            openssl genrsa -out ${TMP_DIR}/caKey.pem 2048
+            set +o errexit
+            openssl req -x509 -new -nodes -key ${TMP_DIR}/caKey.pem -days 100000 -out ${TMP_DIR}/caCert.pem -subj "/CN=${CN_BASE}" -addext "subjectAltName = DNS:${CN_BASE}"
+            if [[ $? -ne 0 ]]; then
+              echo "ERROR: Failed to create CA certificate for self-signing. If the error is \"unknown option -addext\", update your openssl version or deploy dap-secret-webhook from the dap-secret-webhook-release-0.8 branch."
+              exit 1
+            fi
+            set -o errexit
+            # Create a server certificate
+            openssl genrsa -out ${TMP_DIR}/serverKey.pem 2048
+            # Note the CN is the DNS name of the service of the webhook.
+            openssl req -new -key ${TMP_DIR}/serverKey.pem -out ${TMP_DIR}/server.csr -subj "/CN=${DNS_BASE}" -config ${TMP_DIR}/server.conf -addext "subjectAltName = DNS:${DNS_BASE}"
+            openssl x509 -req -in ${TMP_DIR}/server.csr -CA ${TMP_DIR}/caCert.pem -CAkey ${TMP_DIR}/caKey.pem -CAcreateserial -out ${TMP_DIR}/serverCert.pem -days 100000 -extensions SAN -extensions v3_req -extfile ${TMP_DIR}/server.conf
+            echo "Uploading certs to the cluster."
+            kubectl create secret -n {{ .Release.Namespace }} generic {{ include "dap-secret-webhook.name" . }}-tls-certs --from-file=${TMP_DIR}/caKey.pem --from-file=${TMP_DIR}/caCert.pem --from-file=${TMP_DIR}/serverKey.pem --from-file=${TMP_DIR}/serverCert.pem
+            # Clean up after we're done.
+            echo "Deleting ${TMP_DIR}."
+            rm -rf ${TMP_DIR}
+{{- end }}

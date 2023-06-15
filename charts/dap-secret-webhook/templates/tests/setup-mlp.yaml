@@ -1,0 +1,32 @@
+{{- $mlpHost := .Values.deployment.webhook.mlpApiHost  | default (include "default.mlp.host" .) }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: setup-mlp
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded, hook-failed	
+    "helm.sh/hook-weight": "0"
+spec:
+  template:
+    metadata:
+      name: setup-mlp
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: script
+        image: "quay.io/curl/curl:latest"
+        command: ["/bin/sh"]
+        args:
+          - -c
+          - |
+            curl -v \
+            --header 'Content-Type: application/json' \
+            --request POST \
+            --data '{"name": "{{ .Release.Namespace }}","team": "myteam","stream": "mystream"}' \
+            {{ $mlpHost }}/v1/projects
+            curl -v --header 'Content-Type: application/json' \
+            --request POST \
+            --data '{"Name": "testsecretkey","Data": "testsecretdata"}' \
+            {{ $mlpHost }}/v1/projects/1/secrets
