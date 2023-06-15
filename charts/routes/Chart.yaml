@@ -5,7 +5,7 @@ dependencies:
   condition: istiod.enabled
   name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.1
+  version: 0.2.1
 - alias: base
   condition: base.enabled
   name: base
@@ -35,4 +35,4 @@ maintainers:
   name: caraml-dev
 name: caraml-routes
 type: application
-version: 0.2.2
+version: 0.2.3

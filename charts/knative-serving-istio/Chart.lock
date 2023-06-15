@@ -7,12 +7,12 @@ dependencies:
   version: 0.2.1
 - name: base
   repository: https://istio-release.storage.googleapis.com/charts
-  version: 1.13.9
+  version: 1.18.0
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.1
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.1
-digest: sha256:99e26e7766d1149b29b4a79fb9f4ff68db00f71454bb38a235ae00d9586b95cb
-generated: "2023-01-25T13:28:12.553676+08:00"
+digest: sha256:03a85a1a5ea7fd98fa7e6ff080fa1bb207113f918ebf0460fae3dca1446a2fb4
+generated: "2023-06-15T06:12:28.097152959Z"

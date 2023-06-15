@@ -4,11 +4,11 @@ dependencies:
 - condition: mlp.enabled
   name: mlp
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.4.20
+  version: 0.5.0
 - condition: merlin.enabled
   name: merlin
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.10.18
+  version: 0.10.20
 - condition: turing.enabled
   name: turing
   repository: https://caraml-dev.github.io/helm-charts
@@ -20,7 +20,7 @@ dependencies:
 - condition: postgresql.enabled
   name: postgresql
   repository: https://charts.helm.sh/stable
-  version: 7.0.2
+  version: 7.7.3
 - alias: caraml-authz
   condition: caraml-authz.enabled
   name: authz
@@ -37,7 +37,7 @@ dependencies:
   condition: base.enabled
   name: base
   repository: https://istio-release.storage.googleapis.com/charts
-  version: 1.13.9
+  version: 1.18.0
 - alias: istiod
   condition: istiod.enabled
   name: generic-dep-installer
@@ -61,11 +61,11 @@ dependencies:
 - condition: cert-manager.enabled
   name: cert-manager
   repository: https://charts.jetstack.io
-  version: v1.8.2
+  version: v1.12.1
 description: A Helm chart for deploying CaraML components
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: caraml
 type: application
-version: 0.5.9
+version: 0.5.17

@@ -15,7 +15,7 @@ dependencies:
   condition: base.enabled
   name: base
   repository: https://istio-release.storage.googleapis.com/charts
-  version: 1.13.9
+  version: 1.18.0
 - alias: istioIngressGateway
   condition: istioIngressGateway.global.enabled
   name: generic-dep-installer
@@ -32,4 +32,4 @@ maintainers:
   name: caraml-dev
 name: knative-serving-istio
 type: application
-version: 1.7.4
+version: 1.7.8
