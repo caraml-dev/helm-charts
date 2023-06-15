@@ -154,7 +154,7 @@ uiConfig:
   sentryConfig: {}
 
 # If you would like to use an external postgres database for XP Management Service, you can connect using these credentials
-externalPostgresql:
+xpManagementExternalPostgresql:
   # -- If you would like to use an external postgres database, enable it here using this
   enabled: false
   # -- External postgres database user
@@ -174,9 +174,8 @@ externalPostgresql:
 
 # -- Postgresql configuration to be applied to XP Management Service's postgresql database deployment
 # Reference: https://artifacthub.io/packages/helm/bitnami/postgresql/10.16.2#parameters
-postgresql:
+xp-management-postgresql:
   enabled: true
-  nameOverride: xp-management-postgresql
   postgresqlDatabase: xp
   postgresqlUsername: xp
   # -- Password for XP Management Service Postgresql database
