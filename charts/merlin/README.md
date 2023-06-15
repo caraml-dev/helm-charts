@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.10.19](https://img.shields.io/badge/Version-0.10.19-informational?style=flat-square)
+![Version: 0.10.20](https://img.shields.io/badge/Version-0.10.20-informational?style=flat-square)
 ![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -68,6 +68,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | alerts.dashboardRepository | string | `"data-science/slo-specs"` |  |
 | alerts.enabled | bool | `false` | To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin. |
 | alerts.warden.apiHost | string | `""` |  |
+| authorization.caching.cacheCleanUpIntervalSeconds | int | `900` | Cache clean up interval, after which expired keys are removed |
+| authorization.caching.enabled | bool | `false` | Whether local in-memory caching of authorization responses should be enabled |
+| authorization.caching.keyExpirySeconds | int | `600` | Cache key expiry duration |
 | authorization.enabled | bool | `true` |  |
 | authorization.serverUrl | string | `"http://mlp-authorization-keto"` |  |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |

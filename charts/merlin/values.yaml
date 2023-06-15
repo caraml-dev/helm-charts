@@ -239,6 +239,13 @@ newrelic:
 authorization:
   enabled: true
   serverUrl: http://mlp-authorization-keto
+  caching:
+    # -- Whether local in-memory caching of authorization responses should be enabled
+    enabled: false
+    # -- Cache key expiry duration
+    keyExpirySeconds: 600
+    # -- Cache clean up interval, after which expired keys are removed
+    cacheCleanUpIntervalSeconds: 900
 ui:
   oauthClientID: ""
   homepage: /merlin
