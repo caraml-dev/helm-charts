@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.10.20](https://img.shields.io/badge/Version-0.10.20-informational?style=flat-square)
+![Version: 0.10.21](https://img.shields.io/badge/Version-0.10.21-informational?style=flat-square)
 ![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -151,7 +151,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | kserve.helmChart.namespace | string | `"kserve"` |  |
 | kserve.helmChart.release | string | `"kserve"` |  |
 | kserve.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| kserve.helmChart.version | string | `"0.8.20"` |  |
+| kserve.helmChart.version | string | `"0.8.22"` |  |
 | kserve.hook.weight | string | `"-2"` |  |
 | loggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
