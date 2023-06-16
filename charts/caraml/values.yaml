@@ -441,8 +441,14 @@ turing:
 xp-treatment:
   enabled: true
   xp-management:
-    enabled: true
-    postgresql:
-      enabled: false
-    mlp:
-      enabled: false
+    enabled: false
+
+##################################################################
+# xp management
+##################################################################
+xp-management:
+  enabled: true
+  xp-management-postgresql:
+    enabled: false
+  mlp:
+    enabled: false
