@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.10.20](https://img.shields.io/badge/Version-0.10.20-informational?style=flat-square)
+![Version: 0.10.22](https://img.shields.io/badge/Version-0.10.22-informational?style=flat-square)
 ![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -64,6 +64,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | clusterConfig.useInClusterConfig | bool | `false` | Configuration to tell Merlin API how it should authenticate with deployment k8s cluster By default, Merlin API expects to use a remote k8s cluster for deployment and to do so, it requires cluster access configurations to be configured as part of values.yaml |
 | config.AuthorizationConfig.AuthorizationEnabled | bool | `true` |  |
 | config.AuthorizationConfig.AuthorizationServerURL | string | `"http://mlp-authorization-keto"` |  |
+| config.AuthorizationConfig.Caching.CacheCleanUpIntervalSeconds | int | `900` | Cache clean up interval, after which expired keys are removed |
+| config.AuthorizationConfig.Caching.Enabled | bool | `false` | Whether local in-memory caching of authorization responses should be enabled |
+| config.AuthorizationConfig.Caching.KeyExpirySeconds | int | `600` | Cache key expiry duration |
 | config.DbConfig.Database | string | `"merlin"` |  |
 | config.DbConfig.Host | string | `"localhost"` |  |
 | config.DbConfig.Password | string | `"merlin"` |  |
@@ -223,7 +226,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | kserve.helmChart.namespace | string | `"kserve"` |  |
 | kserve.helmChart.release | string | `"kserve"` |  |
 | kserve.helmChart.repository | string | `"https://caraml-dev.github.io/helm-charts"` |  |
-| kserve.helmChart.version | string | `"0.8.20"` |  |
+| kserve.helmChart.version | string | `"0.8.22"` |  |
 | kserve.hook.weight | string | `"-2"` |  |
 | merlin-postgresql.enabled | bool | `true` |  |
 | merlin-postgresql.persistence.size | string | `"10Gi"` |  |
