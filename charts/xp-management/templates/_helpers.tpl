@@ -144,7 +144,7 @@ SegmenterConfig:
     MinS2CellLevel: 10
     MaxS2CellLevel: 14
 MLPConfig:
-  URL: {{ .Values.deployment.apiConfig.MlpConfig.URL | default (include "management-svc.mlp.server.url" .) | quote }}
+  URL: {{ include "management-svc.mlp.server.url" . | quote }}
 NewRelicConfig:
   Enabled: false
 SentryConfig:
