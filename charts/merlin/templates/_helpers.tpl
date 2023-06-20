@@ -255,13 +255,15 @@ NewRelic:
   Enabled: {{ .Values.config.NewRelic.Enabled | default "false" }}
   AppName: {{ .Values.config.NewRelic.AppName }}
   License: {{ .Values.config.NewRelic.License }}
-EnvironmentConfigPath: {{ include "merlin.environments.absolutePath" . }}
 NumOfQueueWorkers: {{ .Values.config.NumOfQueueWorkers | default 2 }}
 DbConfig:
   Host: {{ include "common.postgres-host" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Release .Chart ) }}
   Port: 5432
   Database: {{ include "common.postgres-database" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global "merlin" "postgresqlDatabase") }}
   User: {{ include "common.postgres-username" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Values.global ) }}
+ClusterConfig:
+  InClusterConfig: {{ .Values.clusterConfig.useInClusterConfig }}
+  EnvironmentConfigPath: {{ include "merlin.environments.absolutePath" . }}
 ImageBuilderConfig:
   ClusterName: {{ .Values.imageBuilder.clusterName }}
   K8sConfig:
