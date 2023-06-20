@@ -167,5 +167,5 @@ XpUIConfig:
 
 {{- define "management-svc.config" -}}
 {{- $defaultConfig := include "management-svc.defaultConfig" . | fromYaml -}}
-{{ .Values.deployment.apiConfig | mergeOverwrite $defaultConfig | toYaml }}
+{{  merge .Values.deployment.apiConfig $defaultConfig | toYaml }}
 {{- end -}}
