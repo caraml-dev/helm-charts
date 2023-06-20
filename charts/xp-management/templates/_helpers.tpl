@@ -155,7 +155,7 @@ SegmenterConfig:
   S2_IDs:
     MinS2CellLevel: 10
     MaxS2CellLevel: 14
-MLPConfig:
+MlpConfig:
   URL: {{ include "common.set-value" (list .Values.deployment.apiConfig.MlpConfig.URL $globMlpApiHost) }}
 NewRelicConfig:
   Enabled: false

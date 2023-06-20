@@ -43,8 +43,8 @@ deployment:
     DeploymentConfig:
       EnvironmentType: dev
     MlpConfig:
-      # Set the MLP URL if deployed externally
-      URL: http://mlp:8080/v1
+      # Set the MLP URL if deployed externally, eg: http://mlp:8080/v1
+      URL: ""
     NewRelicConfig:
       Enabled: false
       AppName: xp-management-service
