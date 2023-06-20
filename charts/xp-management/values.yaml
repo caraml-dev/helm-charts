@@ -1,14 +1,10 @@
 global:
   # -- Environment of Management Service deployment
   environment: dev
-
+  protocol: http
   sentry:
     # -- (string) Global Sentry DSN value
     dsn:
-
-  mlp:
-    # -- (string) Global MLP service name
-    serviceName: mlp
 
 deployment:
   image:
@@ -44,7 +40,7 @@ deployment:
       EnvironmentType: dev
     MlpConfig:
       # Set the MLP URL if deployed externally, eg: http://mlp:8080/v1
-      URL: ""
+      URL: "http://mlp:8080"
     NewRelicConfig:
       Enabled: false
       AppName: xp-management-service
