@@ -10515,6 +10515,28 @@ entries:
   xp-treatment:
   - apiVersion: v2
     appVersion: 0.12.1
+    created: "2023-06-20T09:15:18.418631748Z"
+    dependencies:
+    - alias: xp-management
+      condition: xp-management.enabled
+      name: xp-management
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.2
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.8
+    description: Treatment service - A part of XP system that is used to obtain the
+      treatment configuration from active experiments
+    digest: b785052bccb7c4f9ffe411f637ca85855b50fb062e8aa909f4e47e6ae4877f22
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: xp-treatment
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.14/xp-treatment-0.1.14.tgz
+    version: 0.1.14
+  - apiVersion: v2
+    appVersion: 0.12.1
     created: "2023-06-20T07:20:49.531966368Z"
     dependencies:
     - alias: xp-management
@@ -10755,4 +10777,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-06-20T09:11:56.883631594Z"
+generated: "2023-06-20T09:15:18.419133455Z"
