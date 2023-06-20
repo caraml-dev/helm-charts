@@ -136,6 +136,7 @@ API config related
 
 {{- define "management-svc.defaultConfig" -}}
 {{- $globMlpApiHost := include "management-svc.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
+Glob: {{ include "common.set-value" (list .Values.deployment.apiConfig.MlpConfig.URL $globMlpApiHost) }}
 Port: 8080
 AllowedOrigins: "*"
 AuthorizationConfig:

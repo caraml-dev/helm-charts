@@ -63,6 +63,10 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.serviceAccount.create | bool | `true` |  |
 | deployment.serviceAccount.name | string | `""` |  |
 | global.environment | string | `"dev"` | Environment of Management Service deployment |
+| global.mlp.apiPrefix | string | `""` |  |
+| global.mlp.externalPort | string | `"8080"` |  |
+| global.mlp.serviceName | string | `"mlp"` |  |
+| global.mlp.useServiceFqdn | bool | `true` |  |
 | global.protocol | string | `"http"` |  |
 | global.sentry.dsn | string | `nil` | Global Sentry DSN value |
 | swaggerUi.apiServer | string | `"http://127.0.0.1/v1"` | URL of API server |
