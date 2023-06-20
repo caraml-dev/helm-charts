@@ -112,18 +112,31 @@ sentryConfig:
 API config related
 */}}
 
-{{- define "management-svc.mlp.server.url" -}}
-{{- $protocol := (default "http" .Values.global.protocol ) }}
-{{- $globalMLPUrl := "" }}
-{{- if and .Values.global (hasKey .Values.global "mlp") }}
-  {{- if .Values.global.mlp.serviceName }}
-    {{- $globalMLPUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "mlp" (list "serviceName")))) }}
+{{- define "management-svc.get-workload-host" }}
+{{- $global := index . 0}}
+{{- $relNs := index . 1}}
+{{- $key := index . 2}}
+{{- $values := get $global $key}}
+{{- if not (hasKey $global $key) }}
+  {{- printf "" }}
+{{- else }}
+  {{- $values := get $global $key}}
+  {{- $host := "" }}
+  {{- with $values }}
+    {{- if .useServiceFqdn }}
+      {{- $host = printf "http://%s.%s.svc.cluster.local:%s%s" .serviceName $relNs .externalPort .apiPrefix}}
+    {{- else }}
+      {{- $inClusterPrefix := printf "%s%s" .vsPrefix .apiPrefix }}
+      {{- $host = printf "%s://%s%s" $global.protocol (include "common.get-external-hostname" $global) $inClusterPrefix }}
+    {{- end }}
+    {{- end }}
+  {{- printf "%s" $host }}
   {{- end }}
 {{- end }}
-{{- printf "%s" (include "common.set-value" (list .Values.deployment.apiConfig.MlpConfig.URL $globalMLPUrl)) -}}
-{{- end -}}
 
 {{- define "management-svc.defaultConfig" -}}
+{{- $globMlpApiHost := include "management-svc.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
+Glob: {{ include "common.set-value" (list .Values.deployment.apiConfig.MlpConfig.URL $globMlpApiHost) }}
 Port: 8080
 AllowedOrigins: "*"
 AuthorizationConfig:
@@ -143,8 +156,8 @@ SegmenterConfig:
   S2_IDs:
     MinS2CellLevel: 10
     MaxS2CellLevel: 14
-MLPConfig:
-  URL: {{ .Values.deployment.apiConfig.MlpConfig.URL | default (include "management-svc.mlp.server.url" .) | quote }}
+MlpConfig:
+  URL: {{ include "common.set-value" (list .Values.deployment.apiConfig.MlpConfig.URL $globMlpApiHost) }}
 NewRelicConfig:
   Enabled: false
 SentryConfig:

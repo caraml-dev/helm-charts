@@ -1,3 +1,15 @@
+global:
+  protocol: http
+
+  mlp:
+    apiPrefix: ""
+    serviceName: mlp
+    externalPort: "8080"
+    vsPrefix: "/api"
+    useServiceFqdn: true
+    uiPrefix: "/"
+    uiServiceName: mlp
+
 deployment:
   replicaCount: "1"
   resources:
