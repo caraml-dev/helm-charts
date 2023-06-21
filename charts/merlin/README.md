@@ -107,7 +107,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.ImageBuilderConfig.SafeToEvict | bool | `false` |  |
 | config.ImageBuilderConfig.Tolerations | list | `[]` |  |
 | config.LoggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
-| config.MlpAPIConfig.APIHost | string | `"http://mlp.mlp:8080/v1"` |  |
+| config.MlpAPIConfig.APIHost | string | `"http://mlp:8080"` |  |
 | config.MlpAPIConfig.EncryptionKey | string | `"secret-encryption"` |  |
 | config.NewRelic.AppName | string | `"merlin-api-dev"` |  |
 | config.NewRelic.Enabled | bool | `false` |  |

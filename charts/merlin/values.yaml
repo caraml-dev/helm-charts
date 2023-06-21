@@ -141,7 +141,7 @@ config:
       # -- Cache clean up interval, after which expired keys are removed
       CacheCleanUpIntervalSeconds: 900
   MlpAPIConfig:
-    APIHost: http://mlp.mlp:8080/v1
+    APIHost: http://mlp:8080
     # EncryptionKey must be specified using --set flag.
     EncryptionKey: secret-encryption
   FeatureToggleConfig:
