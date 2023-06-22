@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square)
+![Version: 0.11.1](https://img.shields.io/badge/Version-0.11.1-informational?style=flat-square)
 ![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -215,7 +215,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
 | imageBuilder.builderConfig.Tolerations | list | `[]` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
-| imageBuilder.k8s_config | object | `{}` |  |
+| imageBuilder.k8sConfig | object | `{}` |  |
 | imageBuilder.serviceAccount.annotations | object | `{}` |  |
 | imageBuilder.serviceAccount.create | bool | `true` |  |
 | imageBuilder.serviceAccount.labels | object | `{}` |  |

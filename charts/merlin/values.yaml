@@ -224,8 +224,8 @@ imageBuilder:
     annotations: {}
     labels: {}
   clusterName: "test"
-  k8s_config: {}
-  # Example k8s_config to connect to cluster using gke-gcloud-auth-plugin
+  k8sConfig: {}
+  # Example k8sConfig to connect to cluster using gke-gcloud-auth-plugin
   # name: dev-cluster
   # cluster:
   #   server: https://k8s.cluster
