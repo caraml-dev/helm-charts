@@ -25,6 +25,11 @@ tests:
       - equal:
           path: spec.template.spec.serviceAccountName
           value: my_sa
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            app: dap-secret-webhook
+            test: label
       - equal:
           path: spec.template.spec.containers[0].image
           value: ghcr.io/caraml-dev/dsw:0.0.2
