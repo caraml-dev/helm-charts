@@ -88,6 +88,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.ImageBuilderConfig.BaseImages."3.7.*".DockerfilePath | string | `"docker/Dockerfile"` |  |
 | config.ImageBuilderConfig.BaseImages."3.7.*".ImageName | string | `"pyfunc-py37:v0.1.0"` |  |
 | config.ImageBuilderConfig.BaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| config.ImageBuilderConfig.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/heads/main"` |  |
 | config.ImageBuilderConfig.BuildNamespace | string | `"mlp"` |  |
 | config.ImageBuilderConfig.BuildTimeout | string | `"30m"` |  |
 | config.ImageBuilderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
@@ -99,6 +100,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.ImageBuilderConfig.PredictionJobBaseImages."3.7.*".DockerfilePath | string | `"docker/app.Dockerfile"` |  |
 | config.ImageBuilderConfig.PredictionJobBaseImages."3.7.*".ImageName | string | `"pyspark-py37:v0.1.0"` |  |
 | config.ImageBuilderConfig.PredictionJobBaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| config.ImageBuilderConfig.PredictionJobBuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/heads/main"` |  |
 | config.ImageBuilderConfig.Resources.Limits.CPU | string | `"1"` |  |
 | config.ImageBuilderConfig.Resources.Limits.Memory | string | `"1Gi"` |  |
 | config.ImageBuilderConfig.Resources.Requests.CPU | string | `"1"` |  |
@@ -176,7 +178,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.0.0-f08ca748962b28ed69b7670c057086c0253dbaa1"` |  |
+| deployment.image.tag | string | `"0.0.0-2b56c6fdebc54f7f711292564a709ca4feff7a00"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |

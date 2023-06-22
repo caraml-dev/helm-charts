@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: caraml-dev/merlin
-    tag: 0.0.0-f08ca748962b28ed69b7670c057086c0253dbaa1
+    tag: 0.0.0-2b56c6fdebc54f7f711292564a709ca4feff7a00
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -114,6 +114,8 @@ config:
         BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
         MainAppPath: /merlin-spark-app/main.py
     BuildNamespace: "mlp"
+    BuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
+    PredictionJobBuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
     DockerRegistry: "dockerRegistry"
     BuildTimeout: "30m"
     KanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
