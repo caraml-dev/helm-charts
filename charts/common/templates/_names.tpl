@@ -1,7 +1,7 @@
 {{/* vim: set filetype=mustache: */}}
 
 {{/*
-Get postgres host name in the following order of precendence: Chart specific postgresql > Chart external Postgresql > Global postgresql, Arguments:
+Get postgres host name in the following order of precedence: Chart specific postgresql > Chart external Postgresql > Global postgresql, Arguments:
 1) postgresql object
 2) external postgresql object
 3) Release object
