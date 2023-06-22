@@ -2,58 +2,60 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "dsw"
 
 deployment:
-  replicaCount: 1
+  replicaCount: 2
 
   image:
-    repository: ghcr.io/caraml-dev/dap-secret-webhook
-    tag: 0.0.1
-    pullPolicy: IfNotPresent
+    repository: ghcr.io/caraml-dev/dsw
+    tag: 0.0.2
+    pullPolicy: Always
 
   service:
     type: ClusterIP
-    port: 443
+    port: 123
 
   resources:
     requests:
-      cpu: 250m
-      memory: 128Mi
+      cpu: 2
+      memory: 256mi
 
   webhook:
     # -- The endpoint of MLP API. Default will be set with to mlp local cluster
-    mlpApiHost: ""
-    serverCertPath: /etc/tls-certs/serverCert.pem
-    serverKeyPath: /etc/tls-certs/serverKey.pem
-    caCertPath: /etc/tls-certs/caCert.pem
+    mlpApiHost: "test.com"
+    serverCertPath: serverCert.pem
+    serverKeyPath: serverKey.pem
+    caCertPath: caCert.pem
 
   prometheus:
     # -- Flag to enable prometheus monitoring
-    enabled: false
+    enabled: true
     # -- Specifics the port to listen for promethus
     # -- If not set and enable is true, default to 10254
-    port: ""
+    port: "1234"
 
-  extraLabels: {}
+  extraLabels: {
+    "test":"label"
+  }
 
   # -- Additional env var for webhook, see https://github.com/caraml-dev/dap-secret-webhook for full list of configurable
-  extraEnvs: []
-  # Example:
-  # - name: DEMO_GREETING
-  #   value: "Hello from the environment"
+  extraEnvs: 
+  - name: DEMO_GREETING
+    value: "Hello from the environment"
 
 
 serviceAccount:
   # -- Specifies whether a service account should be created
-  create: true
+  create: false
   # -- Annotations to add to the service account
-  annotations: {}
+  annotations: {
+    "test":"annotations"
+  }
   # -- The name of the service account to use.
   # -- If not set and create is true, a name is generated using the template
   # -- If create is false, existing service account name is required in the release namespace
-  name: ""
+  name: "my_sa"
 
 rbac:
   # -- Specifies whether roles should be granted to the service account
@@ -62,17 +64,17 @@ rbac:
 tls:
   # -- Specifies whether a tls job that generate certs in secrets should be created
   # -- This can be set as false and the corresponding certs mounted in deployment.env
-  create: true
+  create: false
   # -- Specifies which service account to run the tls job
   # -- If not set and create is true, a name is generated using the template
   # -- Service account is expected to be in the same namespace as the webhook and job
-  serviceAccountName: ""
+  serviceAccountName: "my_sa"
   # -- The name of the tls secret to use.
   # -- If not set and create is true, a name is generated using the template
   # -- If create is false, existing tls secret with corresponding env var configured for
   # -- webhook is required
-  secretName: ""
+  secretName: "my_secret"
 
 mlp:
   # -- Flag to install subchart MLP. Not required if MLP is installed separately
-  enabled: true
+  enabled: false
