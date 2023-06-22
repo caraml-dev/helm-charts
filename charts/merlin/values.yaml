@@ -244,12 +244,12 @@ imageBuilder:
         DockerfilePath: "docker/Dockerfile"
         BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
         MainAppPath: /merlin-spark-app/main.py
-      PredictionJobBaseImages:
-        3.7.*:
-          ImageName: pyspark-py37:v0.1.0
-          DockerfilePath: "docker/app.Dockerfile"
-          BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-          MainAppPath: /merlin-spark-app/main.py
+    PredictionJobBaseImages:
+      3.7.*:
+        ImageName: pyspark-py37:v0.1.0
+        DockerfilePath: "docker/app.Dockerfile"
+        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
+        MainAppPath: /merlin-spark-app/main.py
     BuildNamespace: "mlp"
     BuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
     PredictionJobBuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
