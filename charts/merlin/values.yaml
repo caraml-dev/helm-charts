@@ -100,38 +100,6 @@ config:
     Database: merlin
     User: merlin
     Password: merlin
-  ImageBuilderConfig:
-    BaseImages:
-      3.7.*:
-        ImageName: pyfunc-py37:v0.1.0
-        DockerfilePath: "docker/Dockerfile"
-        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-        MainAppPath: /merlin-spark-app/main.py
-    PredictionJobBaseImages:
-      3.7.*:
-        ImageName: pyspark-py37:v0.1.0
-        DockerfilePath: "docker/app.Dockerfile"
-        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-        MainAppPath: /merlin-spark-app/main.py
-    BuildNamespace: "mlp"
-    BuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
-    PredictionJobBuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
-    DockerRegistry: "dockerRegistry"
-    BuildTimeout: "30m"
-    KanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
-    Resources:
-      Requests:
-        CPU: "1"
-        Memory: 512Mi
-      Limits:
-        CPU: "1"
-        Memory: 1Gi
-    Tolerations: []
-    NodeSelectors: {}
-    MaximumRetry: 3
-    KanikoServiceAccount: "kaniko"
-    Retention: "48h"
-    SafeToEvict: false
   AuthorizationConfig:
     AuthorizationEnabled: true
     AuthorizationServerURL: http://mlp-authorization-keto
@@ -269,6 +237,38 @@ imageBuilder:
   #     command: gke-gcloud-auth-plugin
   #     interactiveMode: IfAvailable
   #     provideClusterInfo: true
+  builderConfig:
+    BaseImages:
+      3.7.*:
+        ImageName: pyfunc-py37:v0.1.0
+        DockerfilePath: "docker/Dockerfile"
+        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
+        MainAppPath: /merlin-spark-app/main.py
+      PredictionJobBaseImages:
+        3.7.*:
+          ImageName: pyspark-py37:v0.1.0
+          DockerfilePath: "docker/app.Dockerfile"
+          BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
+          MainAppPath: /merlin-spark-app/main.py
+    BuildNamespace: "mlp"
+    BuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
+    PredictionJobBuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
+    DockerRegistry: "dockerRegistry"
+    BuildTimeout: "30m"
+    KanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
+    Resources:
+      Requests:
+        CPU: "1"
+        Memory: 512Mi
+      Limits:
+        CPU: "1"
+        Memory: 1Gi
+    Tolerations: []
+    NodeSelectors: {}
+    MaximumRetry: 3
+    KanikoServiceAccount: "kaniko"
+    Retention: "48h"
+    SafeToEvict: false
 
 environmentConfigs:
   - name: "id-dev"

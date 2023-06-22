@@ -271,6 +271,7 @@ ImageBuilderConfig:
   {{- if .Values.imageBuilder.serviceAccount.name }}
   KanikoServiceAccount: "{{ template "merlin.kaniko-sa" . }}"
   {{- end }}
+{{ .Values.imageBuilder.builderConfig | toYaml | indent 2 }}
 AuthorizationConfig:
   AuthorizationServerURL: {{ include "merlin.authorization.server.url" . | quote }}
 MlpAPIConfig:
