@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: caraml-dev/merlin
-    tag: 0.0.0-2b56c6fdebc54f7f711292564a709ca4feff7a00
+    tag: 0.0.0-2de575c41980f5584e099aa31a78653610eb727f
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}

@@ -178,7 +178,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.0.0-2b56c6fdebc54f7f711292564a709ca4feff7a00"` |  |
+| deployment.image.tag | string | `"0.0.0-2de575c41980f5584e099aa31a78653610eb727f"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
