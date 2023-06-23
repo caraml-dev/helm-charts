@@ -5079,6 +5079,25 @@ entries:
     version: 0.1.0
   dap-secret-webhook:
   - apiVersion: v2
+    appVersion: 0.0.2
+    created: "2023-06-23T09:56:12.529543853Z"
+    dependencies:
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.20
+    description: dap-secret-webhook is a Kubernetes pod mutating webhook for using
+      CaraML Secrets in Flyte.
+    digest: 37e78180948ee712275f98f8a135373ae09378165fa0620cd5fb61252970c3ac
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: dap-secret-webhook
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/dap-secret-webhook-0.1.2/dap-secret-webhook-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2023-06-15T13:44:27.871606341Z"
     dependencies:
@@ -10924,4 +10943,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-06-23T03:41:44.085440791Z"
+generated: "2023-06-23T09:56:12.530115851Z"
