@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: caraml-dev/merlin
-    tag: 0.28.0-1-g07b5aaa
+    tag: 0.0.0-2de575c41980f5584e099aa31a78653610eb727f
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -26,16 +26,197 @@ deployment:
   #     value: master
   #     effect: NoSchedule
   tolerations: []
-environment: dev
-deploymentLabelPrefix: "gojek.com/"
-pyfuncGRPCOptions: "{}"
-loggerDestinationURL: "http://yourDestinationLogger"
-queue:
-  numOfWorkers: 1
-mlpApi:
-  apiHost: http://mlp.mlp:8080
-feastCoreApi:
-  apiHost: http://feast-core.mlp:8080/v1
+
+  # -- List of string containing additional Merlin API server arguments. For
+  # example, multiple "-config" can be specified to use multiple config files
+  extraArgs: []
+  # Example
+  # - -config=/etc/secrets/experiment.yaml
+  # - -config=/etc/secrets/database.yaml
+
+  # -- List of extra environment variables to add to Merlin API server container
+  extraEnvs: []
+  # Example:
+  # - name: DEMO_GREETING
+  #   value: "Hello from the environment"
+  # - name: DEMO_FAREWELL
+  #   value: "Such a sweet sorrow"
+
+  # -- List of extra initContainers to add to the Pod. For example, you
+  # need to run some init scripts to fetch credentials from a remote server
+  extraInitContainers: []
+  # Example:
+  # - name: init-myservice
+  #   image: busybox:1.28
+  #   command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
+
+  # -- List of sidecar containers to attach to the Pod. For example, you can
+  # attach sidecar container that forward logs or dynamically update some
+  # configuration files.
+  extraContainers: []
+  # Example:
+  # - name: count-agent
+  #   image: k8s.gcr.io/fluentd-gcp:1.30
+  #   env:
+  #   - name: FLUENTD_ARGS
+  #     value: -c /etc/fluentd-config/fluentd.conf
+  #   volumeMounts:
+  #   - name: varlog
+  #     mountPath: /var/log
+  #   - name: config-volume
+  #     mountPath: /etc/fluentd-config
+
+  # -- Extra volumes to attach to the Pod. For example, you can mount
+  # additional secrets to these volumes
+  extraVolumes: []
+  # Example:
+  # - name: varlog
+  #   emptyDir: {}
+
+  # -- Extra volume mounts to attach to Merlin API server container. For example
+  # to mount the extra volume containing secrets
+  extraVolumeMounts: []
+  # Example:
+  # - name: varlog
+  #   mountPath: /var/log
+
+config:
+  DeploymentLabelPrefix: "gojek.com/"
+  Environment: dev
+  Port: 8080
+  LoggerDestinationURL: "http://yourDestinationLogger"
+  Sentry:
+    Enabled: false
+    DSN: ""
+  NewRelic:
+    Enabled: false
+    AppName: "merlin-api-dev"
+    License: "newrelic-license-secret"
+    IgnoreStatusCodes: [400, 401, 403, 404, 405, 412]
+  NumOfQueueWorkers: 2
+  DbConfig:
+    Host: localhost
+    Port: 5432
+    Database: merlin
+    User: merlin
+    Password: merlin
+  AuthorizationConfig:
+    AuthorizationEnabled: true
+    AuthorizationServerURL: http://mlp-authorization-keto
+    Caching:
+      # -- Whether local in-memory caching of authorization responses should be enabled
+      Enabled: false
+      # -- Cache key expiry duration
+      KeyExpirySeconds: 600
+      # -- Cache clean up interval, after which expired keys are removed
+      CacheCleanUpIntervalSeconds: 900
+  MlpAPIConfig:
+    APIHost: http://mlp:8080
+    # EncryptionKey must be specified using --set flag.
+    EncryptionKey: secret-encryption
+  FeatureToggleConfig:
+    MonitoringConfig:
+      MonitoringEnabled: false
+      MonitoringBaseURL: ""
+      MonitoringJobBaseURL: ""
+    AlertConfig:
+      # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
+      AlertEnabled: false
+      GitlabConfig:
+        BaseURL: https://gitlab.com/
+        # Access token must be specified using --set flag.
+        # Token:
+        DashboardRepository: data-science/slo-specs
+        DashboardBranch: master
+        AlertRepository: lens/artillery/datascience
+        AlertBranch: master
+      WardenConfig:
+        APIHost: ""
+  ReactAppConfig:
+    DocURL:
+      - Label: "Getting Started with Merlin"
+        Href: "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"
+    # -- Comma-separated value of Docker registries that can be chosen in deployment page
+    DockerRegistries: ghcr.io/gojek,ghcr.io/your-company
+    Environment: dev
+    FeastCoreURL: http://feast-core.mlp:8080/v1
+    HomePage: /merlin
+    MaxAllowedReplica: 20
+    MerlinURL: /api/merlin/v1
+    MlpURL: /api
+    OauthClientID:  # to be set via CICD pipeline
+    UPIDocumentation: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
+    CPUCost:  # Unused
+    MemoryCost:  # Unused
+  StandardTransformerConfig:
+    ImageName: merlin-transformer:1.0.0
+    SimulationFeast:
+      FeastRedisURL: online-serving-redis.feast.dev
+      FeastBigtableURL: online-serving-bt.feast.dev
+    FeastServingURLs:
+      - Host: "online-serving-redis.feast.dev"
+        Label: "Online Serving with Redis"
+        Icon: "redis"
+        SourceType: "REDIS"
+      - Host: "online-serving-bigtable.feast.dev"
+        Label: "Online Serving with BigTable"
+        Icon: "bigtable"
+        SourceType: "BIGTABLE"
+    DefaultServingURL: online-serving-redis.feast.dev
+    ## Redis storage configuration for feast retrieval
+    # FeastRedisConfig:
+    #   IsRedisCluster: true
+    #   IsUsingDirectStorage: false
+    #   ServingURL: "online-serving-redis.feast.dev"
+    #   RedisAddresses:
+    #     - 10.1.1.2
+    #     - 10.1.1.3
+    #   PoolSize: 5
+    #   MaxRetries: 0
+    #   ReadTimeout: "1s"
+    #   WriteTimeout: "1s"
+    #   IdleTimeout: "15s"
+    #   IdleCheckFrequency: "5s"
+    #   MinIdleConn: 2
+    FeastBigtableConfig:
+      ServingURL: "online-serving-bigtable.feast.dev"
+      Project: gcp-project
+      Instance: instance
+      PoolSize: 5
+    ## Bigtable storage configuration for feast retrieval
+    #   IsUsingDirectStorage: false
+    #   AppProfile: default
+    #   KeepAliveInterval: 2m
+    #   KeepAliveTimeout: 1m
+    BigtableCredential:
+    FeastServingKeepAlive:
+      Enabled: false
+      Time: 60s
+      Timeout: 5s
+    DefaultFeastSource: 2
+    FeastCoreURL: core.feast.dev
+    FeastCoreAuthAudience: core.feast.dev
+    EnableAuth: false
+    Jaeger:
+      AgentHost: localhost
+      AgentPort: 6831
+      SamplerType: const
+      SamplerParam: 1
+      Disabled: false
+    Kafka:
+      Brokers: "kafka-brokers"
+      MaxMessageSizeBytes: "1048588"
+  PyfuncGRPCOptions: "{}"
+
+clusterConfig:
+  # -- (bool) Configuration to tell Merlin API how it should authenticate with deployment k8s cluster
+  # By default, Merlin API expects to use a remote k8s cluster for deployment and to do so, it requires
+  # cluster access configurations to be configured as part of values.yaml
+  useInClusterConfig: false
+  # -- environmentConfigPath is a path to a file that contains environmentConfigs.
+  # See api/environments-dev.yaml for example contents
+  environmentConfigPath: "environments.yaml"
+
 imageBuilder:
   serviceAccount:
     create: true
@@ -43,135 +224,52 @@ imageBuilder:
     annotations: {}
     labels: {}
   clusterName: "test"
-  baseImages:
-    3.7.*:
-      imageName: pyfunc-py37:v0.1.0
-      dockerfilePath: "docker/Dockerfile"
-      buildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-      mainAppPath: /merlin-spark-app/main.py
-  predictionJobBaseImages:
-    3.7.*:
-      imageName: pyspark-py37:v0.1.0
-      dockerfilePath: "docker/app.Dockerfile"
-      buildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-      mainAppPath: /merlin-spark-app/main.py
-  predictionJobContextSubPath: ""
-  namespace: "mlp"
-  dockerRegistry: "dockerRegistry"
-  timeout: "30m"
-  retention: "48h"
-  kanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
-  resources:
-    requests:
-      cpu: "1"
-      memory: 512Mi
-    limits:
-      cpu: "1"
-      memory: 1Gi
-  tolerations: []
-  nodeSelectors: {}
-  maxRetry: 3
-  safeToEvict: false
-  k8sConfig: ""
-  # Example json
-  # '{
-  #   "name": "dev-cluster",
-  #   "cluster": {
-  #     "server": "https://k8s.cluster",
-  #     "certificate-authority-data": "some_cert_data"
-  #   },
-  #   "user": {
-  #     "exec": {
-  #       "apiVersion": "client.authentication.k8s.io/v1beta1",
-  #       "args": [
-  #         "--use_application_default_credentials"
-  #       ],
-  #       "command": "gke-gcloud-auth-plugin",
-  #       "interactiveMode": "IfAvailable",
-  #       "provideClusterInfo": true
-  #     }
-  #   }
-  # }'
-alerts:
-  # -- To enable/disable creation/modification of the alerts and dashboards for the deployed models via merlin.
-  enabled: false
-  # -- Repository platform where the created Alerts and Dashboards need to be pushed. Platforms supported as of now: Gitlab
-  alertsRepoPlatform: gitlab
-  baseURL: https://gitlab.com/
-  # Access token must be specified using --set flag.
-  # token:
-  dashboardRepository: data-science/slo-specs
-  dashboardBranch: master
-  alertRepository: lens/artillery/datascience
-  alertBranch: master
-  warden:
-    apiHost: ""
-monitoring:
-  enabled: false
-  # baseURL: ""
-  # jobBaseURL: ""
-transformer:
-  simulation:
-    feastRedisServingURL: online-serving-redis.feast.dev
-    feastBigtableServingURL: online-serving-bt.feast.dev
-  feast:
-    defaultServingURL: online-serving-redis.feast.dev
-    servingURLs: [{host: "online-serving-redis.feast.dev", label: "Online Serving with Redis", source_type: "REDIS", icon: "redis"}, {host: "online-serving-bigtable.feast.dev", label: "Online Serving with BigTable", source_type: "BIGTABLE", icon: "bigtable"}]
-    ## Redis storage configuration for feast retrieval
-    ##
-    # redisStorage:
-    #   is_using_direct_storage: false
-    #   is_redis_cluster: true
-    #   serving_url: "online-serving-redis.feast.dev"
-    #   redis_addresses:
-    #     - 10.1.1.2
-    #     - 10.1.1.3
-    #   pool_size: 5
-    #   max_retries: 0
-    #   read_timeout: "1s"
-    #   write_timeout: "1s"
-    #   min_idle_conn: 2
+  k8s_config: {}
+  # Example k8s_config to connect to cluster using gke-gcloud-auth-plugin
+  # name: dev-cluster
+  # cluster:
+  #   server: https://k8s.cluster
+  #   certificate-authority-data: some_cert_data
+  # user:
+  #   exec:
+  #     apiVersion: client.authentication.k8s.io/v1beta1
+  #     args: ["--use_application_default_credentials"]
+  #     command: gke-gcloud-auth-plugin
+  #     interactiveMode: IfAvailable
+  #     provideClusterInfo: true
+  builderConfig:
+    BaseImages:
+      3.7.*:
+        ImageName: pyfunc-py37:v0.1.0
+        DockerfilePath: "docker/Dockerfile"
+        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
+        MainAppPath: /merlin-spark-app/main.py
+      PredictionJobBaseImages:
+        3.7.*:
+          ImageName: pyspark-py37:v0.1.0
+          DockerfilePath: "docker/app.Dockerfile"
+          BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
+          MainAppPath: /merlin-spark-app/main.py
+    BuildNamespace: "mlp"
+    BuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
+    PredictionJobBuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
+    DockerRegistry: "dockerRegistry"
+    BuildTimeout: "30m"
+    KanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
+    Resources:
+      Requests:
+        CPU: "1"
+        Memory: 512Mi
+      Limits:
+        CPU: "1"
+        Memory: 1Gi
+    Tolerations: []
+    NodeSelectors: {}
+    MaximumRetry: 3
+    KanikoServiceAccount: "kaniko"
+    Retention: "48h"
+    SafeToEvict: false
 
-    ## Bigtable storage configuration for feast retrieval
-    ##
-    # bigtableStorage:
-    #   serving_url: "online-serving-bigtable.feast.dev"
-    #   is_using_direct_storage: false
-    #   project: "gcp-project"
-    #   instance: instance
-    #   app_profile: default
-    #   pool_size: 5
-    #   keep_alive_interval: "2m"
-    #   keep_alive_timeout: "1m"
-    defaultFeastSource: BIGTABLE
-    bigtableCredential:
-    coreURL: core.feast.dev
-    coreAuthAudience: core.feast.dev
-    authEnabled: false
-    grpc:
-      keepAliveEnabled: false
-      keepAliveTime: 60s
-      keepAliveTimeout: 5s
-  image: merlin-transformer:1.0.0
-  jaeger:
-    agentHost: localhost
-    agentPort: 6831
-    samplerType: const
-    samplerParam: 1
-    disabled: false
-  model:
-    grpc:
-      keepAliveEnabled: false
-      keepAliveTime: 60s
-      keepAliveTimeout: 5s
-  kafka:
-    brokers: "kafka-brokers"
-    maxMessageSize: "1048588"
-# Google service account used to access GCP's resources.
-#
-# gcpServiceAccount:
-#   secretName: merlin-secret
-#   secretKey: service-account.json
 environmentConfigs:
   - name: "id-dev"
     is_default: true
@@ -214,23 +312,7 @@ environmentConfigs:
     #     command: gke-gcloud-auth-plugin
     #     interactiveMode: IfAvailable
     #     provideClusterInfo: true
-sentry:
-  enabled: false
-  dsn: ""
-newrelic:
-  enabled: false
-  appname: "merlin-api-dev"
-  licenseSecretName: "newrelic-license-secret"
-authorization:
-  enabled: true
-  serverUrl: http://mlp-authorization-keto
-  caching:
-    # -- Whether local in-memory caching of authorization responses should be enabled
-    enabled: false
-    # -- Cache key expiry duration
-    keyExpirySeconds: 600
-    # -- Cache clean up interval, after which expired keys are removed
-    cacheCleanUpIntervalSeconds: 900
+
 ui:
   oauthClientID: ""
   homepage: /merlin
@@ -238,7 +320,13 @@ ui:
   upiDocURL: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
   mlp:
     apiHost: /api
-  docsURL: [{"href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md", "label": "Getting Started with Merlin"}]
+  docsURL:
+    [
+      {
+        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
+        "label": "Getting Started with Merlin",
+      },
+    ]
   # -- Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
   maxAllowedReplica: 20
@@ -315,7 +403,6 @@ merlin-postgresql:
   postgresqlDatabase: merlin
   # -- By default postgres will generate a password, if you wish to choose the password, secret will be created using this password, must be specified using --set flag.
   # postgresqlPassword: merlin
-
   resources:
     requests:
       cpu: 100m
