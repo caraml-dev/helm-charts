@@ -35,23 +35,20 @@ deployment:
     # -- If not set and enable is true, default to 10254
     port: "1234"
 
-  extraLabels: {
-    "test":"label"
-  }
+  extraLabels: 
+    test: label
 
   # -- Additional env var for webhook, see https://github.com/caraml-dev/dap-secret-webhook for full list of configurable
   extraEnvs: 
   - name: DEMO_GREETING
     value: "Hello from the environment"
-
-
+    
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: false
   # -- Annotations to add to the service account
-  annotations: {
-    "test":"annotations"
-  }
+  annotations: 
+    test: annotations
   # -- The name of the service account to use.
   # -- If not set and create is true, a name is generated using the template
   # -- If create is false, existing service account name is required in the release namespace
