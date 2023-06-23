@@ -21,11 +21,19 @@ spec:
       labels:
         app: {{ include "dap-secret-webhook.name" . }}
         release: {{ .Release.Name }}
+        {{- with .Values.deployment.extraLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       serviceAccountName: {{ default (printf "%s" (include "dap-secret-webhook.name" .)) .Values.serviceAccount.name }}
       containers:
-        - name: app
+        - name: dap-secret-webhook
           image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
+          ports:
+          - containerPort: {{ .Values.deployment.service.port }}
+          {{- if .Values.deployment.prometheus.enabled }}
+          - containerPort: {{ .Values.deployment.prometheus.port | default 10254}}
+          {{- end }}
           env:
           - name: MLP_API_HOST
             value: {{ .Values.deployment.webhook.mlpApiHost  | default (include "default.mlp.host" .) }}
@@ -45,6 +53,14 @@ spec:
             value: {{ include "dap-secret-webhook.fullname" . }}
           - name: WEBHOOK_SERVICE_NAMESPACE
             value: {{ .Release.Namespace }}
+          {{- if .Values.deployment.prometheus.enabled }}
+          - name: PROMETHEUS_ENABLED
+            value: "true"
+          {{- if .Values.deployment.prometheus.port }}
+          - name: PROMETHEUS_PORT
+            value: {{ .Values.deployment.prometheus.port }}
+          {{- end }}
+          {{- end }}
           {{- with .Values.deployment.extraEnvs }}
           {{- toYaml . | nindent 10 }}
           {{- end }}

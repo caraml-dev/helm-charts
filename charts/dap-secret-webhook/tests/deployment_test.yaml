@@ -1,0 +1,77 @@
+suite: Unit tests for DSW Deployment
+release:
+  name: my-release
+  namespace: my-namespace
+  revision: 1
+tests:
+  - it: should work
+    values:
+    - ./deployment_test_values.yaml
+    templates:
+      - deployment.yaml
+    set:
+      image.tag: latest
+    asserts:
+      - isKind:
+          of: Deployment
+      - equal:
+          path: metadata.name
+          value: dsw
+      - isSubset:
+          path: metadata.labels
+          content:
+            app: dap-secret-webhook
+            test: label
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: my_sa
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            app: dap-secret-webhook
+            test: label
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: ghcr.io/caraml-dev/dsw:0.0.2
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            containerPort: 123
+            containerPort: 1234
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MLP_API_HOST
+            value: test.com   
+            name: TLS_SERVER_CERT_FILE
+            value: serverCert.pem
+            name: TLS_SERVER_KEY_FILE
+            value: serverKey.pem
+            name: TLS_CA_CERT_FILE
+            value: caCert.pem
+            name: WEBHOOK_NAME
+            value: dsw
+            name: WEBHOOK_NAMESPACE
+            value: my-namespace
+            name: WEBHOOK_SERVICE_NAME
+            value: dsw.my-namespace.svc.cluster.local
+            name: WEBHOOK_SERVICE_NAMESPACE
+            value: my-namespace
+            name: PROMETHEUS_ENABLED
+            value: "true"
+            name: PROMETHEUS_PORT
+            value: 1234
+            name: DEMO_GREETING
+            value: Hello from the environment
+      - isSubset:
+          path: spec.template.spec.containers[0].resources
+          content:
+            requests:
+              cpu: 2
+              memory: 256mi
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: tls-certs
+            secret: 
+              secretName: my_secret
