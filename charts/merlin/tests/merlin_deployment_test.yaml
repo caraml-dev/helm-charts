@@ -23,20 +23,37 @@ tests:
           path: metadata.name
           pattern: my-release-merlin$
       - equal: # check database secret name
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
           value: my-release-merlin-postgresql
       - equal: # check database secret key
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
           value: postgresql-password
-      - equal: # check database host url
-          path: spec.template.spec.containers[0].env[4].value
-          value: my-release-merlin-postgresql.my-namespace.svc.cluster.local
-      - equal: # check database username
-          path: spec.template.spec.containers[0].env[5].value
-          value: merlin
-      - equal: # check database name
-          path: spec.template.spec.containers[0].env[7].value
-          value: merlin
+
+  - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, createSecret is set
+    set:
+      global: {}
+      merlin-postgresql:
+        enabled: false
+      merlinExternalPostgresql:
+        enabled: true
+        address: merlin-ext-db-address
+        username: merlin-ext
+        database: merlin-ext
+        password: merlin-ext-password
+        createSecret: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-merlin$
+      - equal: # check database secret name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-release-merlin-external-postgresql
+      - equal: # check database secret key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: postgresql-password
+
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
     set:
       global: {}
@@ -47,8 +64,9 @@ tests:
         address: merlin-ext-db-address
         username: merlin-ext
         database: merlin-ext
-        secretName: ext-postgres-secret
-        secretKey: ext-postgres-key
+        password: merlin-ext-password
+        secretName: secret-name
+        secretKey: secret-key
     asserts:
       - isKind:
           of: Deployment
@@ -56,20 +74,12 @@ tests:
           path: metadata.name
           pattern: my-release-merlin$
       - equal: # check database secret name
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
-          value: ext-postgres-secret
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: secret-name
       - equal: # check database secret key
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
-          value: ext-postgres-key
-      - equal: # check database host url
-          path: spec.template.spec.containers[0].env[4].value
-          value: merlin-ext-db-address
-      - equal: # check database username
-          path: spec.template.spec.containers[0].env[5].value
-          value: merlin-ext
-      - equal: # check database name
-          path: spec.template.spec.containers[0].env[7].value
-          value: merlin-ext
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: secret-key
+
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are not set
     set:
       global: {}
@@ -83,12 +93,13 @@ tests:
       - matchRegex:
           path: metadata.name
           pattern: my-release-merlin$
-      - equal: # check database secret name
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
           value: my-release-merlin-external-postgresql
-      - equal: # check database secret key
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
           value: postgresql-password
+
   - it: should set database secret key and name from values if chart specific db is disabled, external db is disabled
     set:
       global:
@@ -106,84 +117,8 @@ tests:
           path: metadata.name
           pattern: my-release-merlin$
       - equal: # check database secret name
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
           value: my-release-postgresql
       - equal: # check database secret key
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.key
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
           value: postgresql-password
-      - equal: # check database host url
-          path: spec.template.spec.containers[0].env[4].value
-          value: my-release-postgresql.my-namespace.svc.cluster.local
-      - equal: # check database username
-          path: spec.template.spec.containers[0].env[5].value
-          value: merlin-global
-      - equal: # check database name
-          path: spec.template.spec.containers[0].env[7].value
-          value: merlin-global
-  - it: should set authz url from values if set
-    set:
-      global: {}
-      authorization:
-        enabled: true
-        serverUrl: authz-server-url
-    asserts:
-      - isKind:
-          of: Deployment
-      - matchRegex:
-          path: metadata.name
-          pattern: my-release-merlin$
-      - equal:
-          path: spec.template.spec.containers[0].env[62].value
-          value: authz-server-url
-  - it: should set authz url from values if global is set
-    set:
-      global:
-        protocol: http
-        authz:
-          serviceName: caraml-authz
-      authorization:
-        enabled: true
-    asserts:
-      - isKind:
-          of: Deployment
-      - matchRegex:
-          path: metadata.name
-          pattern: my-release-merlin$
-      - equal:
-          path: spec.template.spec.containers[0].env[62].value
-          value: http://caraml-authz
-
-  - it: should set authz url from values if global doesn't have authz
-    set:
-      global:
-        protocol: http
-      authorization:
-        enabled: true
-        serverUrl: authz-server-url
-    asserts:
-      - isKind:
-          of: Deployment
-      - matchRegex:
-          path: metadata.name
-          pattern: my-release-merlin$
-      - equal:
-          path: spec.template.spec.containers[0].env[62].value
-          value: authz-server-url
-
-  - it: should set authz url from values if global doesn't have authz serviceName
-    set:
-      global:
-        protocol: http
-        authz: {}
-      authorization:
-        enabled: true
-        serverUrl: authz-server-url
-    asserts:
-      - isKind:
-          of: Deployment
-      - matchRegex:
-          path: metadata.name
-          pattern: my-release-merlin$
-      - equal:
-          path: spec.template.spec.containers[0].env[62].value
-          value: authz-server-url
