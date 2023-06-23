@@ -2,7 +2,7 @@
 
 ---
 ![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square)
-![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
+![AppVersion: 0.0.2](https://img.shields.io/badge/AppVersion-0.0.2-informational?style=flat-square)
 
 dap-secret-webhook is a Kubernetes pod mutating webhook for using CaraML Secrets in Flyte.
 
@@ -43,7 +43,7 @@ The following table lists the configurable parameters of the Observation Service
 | deployment.extraLabels | object | `{}` |  |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.repository | string | `"ghcr.io/caraml-dev/dap-secret-webhook"` |  |
-| deployment.image.tag | string | `"0.0.1"` |  |
+| deployment.image.tag | string | `"0.0.2"` |  |
 | deployment.prometheus.enabled | bool | `false` | Flag to enable prometheus monitoring |
 | deployment.prometheus.port | string | `""` | If not set and enable is true, default to 10254 |
 | deployment.replicaCount | int | `1` |  |
