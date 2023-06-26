@@ -172,19 +172,20 @@ turing:
         memory: 512Mi
   environmentConfigs:
     - name: chart-testing
-xp-treatment:
-  xp-management:
-    deployment:
-      resources:
-        requests:
-          cpu: 25m
-          memory: 256Mi
-        limits:
-          cpu: "50m"
-          memory: 512Mi
 
+xp-treatment:
   deployment:
     replicaCount: "1"
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        cpu: "50m"
+        memory: 512Mi
+
+xp-management:
+  deployment:
     resources:
       requests:
         cpu: 25m

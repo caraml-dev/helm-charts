@@ -17,6 +17,10 @@ dependencies:
   name: xp-treatment
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.1.14
+- condition: xp-management.enabled
+  name: xp-management
+  repository: https://caraml-dev.github.io/helm-charts
+  version: 0.2.2
 - condition: postgresql.enabled
   name: postgresql
   repository: https://charts.helm.sh/stable
@@ -68,4 +72,4 @@ maintainers:
   name: caraml-dev
 name: caraml
 type: application
-version: 0.5.15
+version: 0.6.0
