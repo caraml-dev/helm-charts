@@ -12,10 +12,10 @@ dependencies:
   version: 0.4.20
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.8
+  version: 0.2.9
 description: Management service - A part of XP system that is used to configure experiments
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: xp-management
-version: 0.2.2
+version: 0.2.3

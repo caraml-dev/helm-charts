@@ -16,10 +16,10 @@ dependencies:
   version: 0.10.21
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.8
+  version: 0.2.9
 description: Kubernetes-friendly multi-model orchestration and experimentation system.
 maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: turing
-version: 0.2.31
+version: 0.2.32
