@@ -293,6 +293,7 @@ StandardTransformerConfig:
   EnableAuth: {{ .Values.config.StandardTransformerConfig.EnableAuth | default false }}
 MlflowConfig:
   TrackingURL: {{ .Values.mlflow.trackingURL }}
+  ArtifactServiceType: {{ .Values.mlflow.artifactServiceType | default "nop" }}
 {{- end -}}
 
 
