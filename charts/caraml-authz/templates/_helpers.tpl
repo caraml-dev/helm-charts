@@ -57,7 +57,7 @@ app.kubernetes.io/part-of: caraml
 
 
 {{- define "caraml-authz.postgresql.dsn" -}}
-    {{- printf "postgres://%s:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/%s?sslmode=disable"
+    {{- printf "postgres://%s:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/%s?sslmode=disable&max_conns=0&max_idle_conns=0"
         (include "common.postgres-username" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Values.global ))
         (include "common.postgres-database" (list (index .Values "caraml-authz-postgresql") .Values.caramlAuthzExternalPostgresql .Values.global "authz" "postgresqlDatabase"))
     -}}
