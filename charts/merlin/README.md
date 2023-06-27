@@ -86,7 +86,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.FeatureToggleConfig.MonitoringConfig.MonitoringJobBaseURL | string | `""` |  |
 | config.LoggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | config.MlpAPIConfig.APIHost | string | `"http://mlp:8080"` |  |
-| config.MlpAPIConfig.EncryptionKey | string | `"secret-encryption"` |  |
 | config.NewRelic.AppName | string | `"merlin-api-dev"` |  |
 | config.NewRelic.Enabled | bool | `false` |  |
 | config.NewRelic.IgnoreStatusCodes[0] | int | `400` |  |

@@ -112,8 +112,6 @@ config:
       CacheCleanUpIntervalSeconds: 900
   MlpAPIConfig:
     APIHost: http://mlp:8080
-    # EncryptionKey must be specified using --set flag.
-    EncryptionKey: secret-encryption
   FeatureToggleConfig:
     MonitoringConfig:
       MonitoringEnabled: false
