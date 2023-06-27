@@ -232,6 +232,85 @@ entries:
   caraml:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-06-27T06:19:38.248716551Z"
+    dependencies:
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.5.2
+    - condition: merlin.enabled
+      name: merlin
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.10.21
+    - condition: turing.enabled
+      name: turing
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.32
+    - condition: xp-treatment.enabled
+      name: xp-treatment
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.16
+    - condition: xp-management.enabled
+      name: xp-management
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.3
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: caraml-authz
+      condition: caraml-authz.enabled
+      name: authz
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.11
+    - condition: caraml-routes.enabled
+      name: caraml-routes
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.2
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.9
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.9
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.8.2
+    description: A Helm chart for deploying CaraML components
+    digest: d8865f69e9dc3be7508acbb8f58e4afc982d634100d6e9dd3ef8dddd5d515584
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.6.7/caraml-0.6.7.tgz
+    version: 0.6.7
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-06-27T03:55:36.958773619Z"
     dependencies:
     - condition: mlp.enabled
@@ -10994,6 +11073,28 @@ entries:
   xp-treatment:
   - apiVersion: v2
     appVersion: 0.12.1
+    created: "2023-06-27T06:19:38.419932811Z"
+    dependencies:
+    - alias: xp-management
+      condition: xp-management.enabled
+      name: xp-management
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.3
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.9
+    description: Treatment service - A part of XP system that is used to obtain the
+      treatment configuration from active experiments
+    digest: dd0f1b90d83217a03184f9c0121cb1c9c7014d11c773c100b532f939b13b80dc
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: xp-treatment
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.17/xp-treatment-0.1.17.tgz
+    version: 0.1.17
+  - apiVersion: v2
+    appVersion: 0.12.1
     created: "2023-06-27T03:55:37.791163225Z"
     dependencies:
     - alias: xp-management
@@ -11300,4 +11401,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-06-27T03:55:37.792219205Z"
+generated: "2023-06-27T06:19:38.42079702Z"
