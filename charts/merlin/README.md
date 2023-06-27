@@ -198,7 +198,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.BaseImages."3.7.*".DockerfilePath | string | `"docker/Dockerfile"` |  |
 | imageBuilder.builderConfig.BaseImages."3.7.*".ImageName | string | `"pyfunc-py37:v0.1.0"` |  |
 | imageBuilder.builderConfig.BaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
-| imageBuilder.builderConfig.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/heads/main"` |  |
 | imageBuilder.builderConfig.BuildNamespace | string | `"mlp"` |  |
 | imageBuilder.builderConfig.BuildTimeout | string | `"30m"` |  |
 | imageBuilder.builderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
@@ -210,7 +209,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".DockerfilePath | string | `"docker/app.Dockerfile"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".ImageName | string | `"pyspark-py37:v0.1.0"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
-| imageBuilder.builderConfig.PredictionJobBuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/heads/main"` |  |
 | imageBuilder.builderConfig.Resources.Limits.CPU | string | `"1"` |  |
 | imageBuilder.builderConfig.Resources.Limits.Memory | string | `"1Gi"` |  |
 | imageBuilder.builderConfig.Resources.Requests.CPU | string | `"1"` |  |

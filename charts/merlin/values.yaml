@@ -256,8 +256,6 @@ imageBuilder:
         BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
         MainAppPath: /merlin-spark-app/main.py
     BuildNamespace: "mlp"
-    BuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
-    PredictionJobBuildContextURI: git://github.com/caraml-dev/merlin.git#refs/heads/main
     DockerRegistry: "dockerRegistry"
     BuildTimeout: "30m"
     KanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
