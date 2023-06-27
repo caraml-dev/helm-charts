@@ -143,6 +143,10 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.StandardTransformerConfig.Jaeger.SamplerType | string | `"const"` |  |
 | config.StandardTransformerConfig.Kafka.Brokers | string | `"kafka-brokers"` |  |
 | config.StandardTransformerConfig.Kafka.MaxMessageSizeBytes | string | `"1048588"` |  |
+| config.StandardTransformerConfig.ModelClientKeepAlive.Enabled | bool | `false` |  |
+| config.StandardTransformerConfig.ModelClientKeepAlive.Time | string | `"60s"` |  |
+| config.StandardTransformerConfig.ModelClientKeepAlive.Timeout | string | `"5s"` |  |
+| config.StandardTransformerConfig.ModelServerConnCount | int | `10` |  |
 | config.StandardTransformerConfig.SimulationFeast.FeastBigtableURL | string | `"online-serving-bt.feast.dev"` |  |
 | config.StandardTransformerConfig.SimulationFeast.FeastRedisURL | string | `"online-serving-redis.feast.dev"` |  |
 | deployment.extraArgs | list | `[]` | List of string containing additional Merlin API server arguments. For example, multiple "-config" can be specified to use multiple config files |

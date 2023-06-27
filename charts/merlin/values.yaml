@@ -193,6 +193,11 @@ config:
       Enabled: false
       Time: 60s
       Timeout: 5s
+    ModelClientKeepAlive:
+      Enabled: false
+      Time: 60s
+      Timeout: 5s
+    ModelServerConnCount: 10
     DefaultFeastSource: 2
     FeastCoreURL: core.feast.dev
     FeastCoreAuthAudience: core.feast.dev
