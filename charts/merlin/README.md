@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.11.2](https://img.shields.io/badge/Version-0.11.2-informational?style=flat-square)
+![Version: 0.11.3](https://img.shields.io/badge/Version-0.11.3-informational?style=flat-square)
 ![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -86,7 +86,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.FeatureToggleConfig.MonitoringConfig.MonitoringJobBaseURL | string | `""` |  |
 | config.LoggerDestinationURL | string | `"http://yourDestinationLogger"` |  |
 | config.MlpAPIConfig.APIHost | string | `"http://mlp:8080"` |  |
-| config.MlpAPIConfig.EncryptionKey | string | `"secret-encryption"` |  |
 | config.NewRelic.AppName | string | `"merlin-api-dev"` |  |
 | config.NewRelic.Enabled | bool | `false` |  |
 | config.NewRelic.IgnoreStatusCodes[0] | int | `400` |  |
@@ -143,6 +142,10 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.StandardTransformerConfig.Jaeger.SamplerType | string | `"const"` |  |
 | config.StandardTransformerConfig.Kafka.Brokers | string | `"kafka-brokers"` |  |
 | config.StandardTransformerConfig.Kafka.MaxMessageSizeBytes | string | `"1048588"` |  |
+| config.StandardTransformerConfig.ModelClientKeepAlive.Enabled | bool | `false` |  |
+| config.StandardTransformerConfig.ModelClientKeepAlive.Time | string | `"60s"` |  |
+| config.StandardTransformerConfig.ModelClientKeepAlive.Timeout | string | `"5s"` |  |
+| config.StandardTransformerConfig.ModelServerConnCount | int | `10` |  |
 | config.StandardTransformerConfig.SimulationFeast.FeastBigtableURL | string | `"online-serving-bt.feast.dev"` |  |
 | config.StandardTransformerConfig.SimulationFeast.FeastRedisURL | string | `"online-serving-redis.feast.dev"` |  |
 | deployment.extraArgs | list | `[]` | List of string containing additional Merlin API server arguments. For example, multiple "-config" can be specified to use multiple config files |
@@ -154,7 +157,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.0.0-2de575c41980f5584e099aa31a78653610eb727f"` |  |
+| deployment.image.tag | string | `"0.0.0-271a1277dd8d63acc114ace44310e207b04751dc"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -194,7 +197,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.BaseImages."3.7.*".DockerfilePath | string | `"docker/Dockerfile"` |  |
 | imageBuilder.builderConfig.BaseImages."3.7.*".ImageName | string | `"pyfunc-py37:v0.1.0"` |  |
 | imageBuilder.builderConfig.BaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
-| imageBuilder.builderConfig.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/heads/main"` |  |
 | imageBuilder.builderConfig.BuildNamespace | string | `"mlp"` |  |
 | imageBuilder.builderConfig.BuildTimeout | string | `"30m"` |  |
 | imageBuilder.builderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
@@ -206,7 +208,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".DockerfilePath | string | `"docker/app.Dockerfile"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".ImageName | string | `"pyspark-py37:v0.1.0"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
-| imageBuilder.builderConfig.PredictionJobBuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/heads/main"` |  |
 | imageBuilder.builderConfig.Resources.Limits.CPU | string | `"1"` |  |
 | imageBuilder.builderConfig.Resources.Limits.Memory | string | `"1Gi"` |  |
 | imageBuilder.builderConfig.Resources.Requests.CPU | string | `"1"` |  |
