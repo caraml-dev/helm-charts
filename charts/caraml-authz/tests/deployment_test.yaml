@@ -36,7 +36,7 @@ tests:
           value: my-release-authz-postgresql.my-namespace.svc.cluster.local
       - equal: # check database DSN url
           path: spec.template.spec.containers[0].env[2].value
-          value: postgres://authz:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/authz?sslmode=disable
+          value: postgres://authz:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/authz?sslmode=disable&max_conns=0&max_idle_conns=0
       - equal: # check database secret name
           path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.name
           value: my-release-authz-postgresql
@@ -51,7 +51,7 @@ tests:
           value: my-release-authz-postgresql.my-namespace.svc.cluster.local
       - equal: # check database DSN url
           path: spec.template.spec.initContainers[0].env[2].value
-          value: postgres://authz:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/authz?sslmode=disable
+          value: postgres://authz:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/authz?sslmode=disable&max_conns=0&max_idle_conns=0
 
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, secret name & key are set
     set:
@@ -85,7 +85,7 @@ tests:
           value: caraml-authz-ext-db-address
       - equal: # check database DSN url
           path: spec.template.spec.containers[0].env[2].value
-          value: postgres://caraml-authz-ext:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/caraml-authz-ext?sslmode=disable
+          value: postgres://caraml-authz-ext:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/caraml-authz-ext?sslmode=disable&max_conns=0&max_idle_conns=0
       - equal: # check database secret name
           path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.name
           value: ext-postgres-secret
@@ -100,7 +100,7 @@ tests:
           value: caraml-authz-ext-db-address
       - equal: # check database DSN url
           path: spec.template.spec.initContainers[0].env[2].value
-          value: postgres://caraml-authz-ext:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/caraml-authz-ext?sslmode=disable
+          value: postgres://caraml-authz-ext:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/caraml-authz-ext?sslmode=disable&max_conns=0&max_idle_conns=0
 
   - it: should set database secret key and name from values if chart specific db is disabled, external db is disabled
     set:
@@ -133,7 +133,7 @@ tests:
           value: my-release-postgresql.my-namespace.svc.cluster.local
       - equal: # check database DSN url
           path: spec.template.spec.containers[0].env[2].value
-          value: postgres://caraml-authz-global:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/caraml-authz-global?sslmode=disable
+          value: postgres://caraml-authz-global:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/caraml-authz-global?sslmode=disable&max_conns=0&max_idle_conns=0
       - equal: # check database secret name
           path: spec.template.spec.initContainers[0].env[0].valueFrom.secretKeyRef.name
           value: my-release-postgresql
@@ -148,4 +148,4 @@ tests:
           value: my-release-postgresql.my-namespace.svc.cluster.local
       - equal: # check database DSN url
           path: spec.template.spec.initContainers[0].env[2].value
-          value: postgres://caraml-authz-global:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/caraml-authz-global?sslmode=disable
+          value: postgres://caraml-authz-global:$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/caraml-authz-global?sslmode=disable&max_conns=0&max_idle_conns=0
