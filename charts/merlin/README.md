@@ -1,8 +1,8 @@
 # merlin
 
 ---
-![Version: 0.11.3](https://img.shields.io/badge/Version-0.11.3-informational?style=flat-square)
-![AppVersion: v0.27.0-rc1](https://img.shields.io/badge/AppVersion-v0.27.0--rc1-informational?style=flat-square)
+![Version: 0.11.4](https://img.shields.io/badge/Version-0.11.4-informational?style=flat-square)
+![AppVersion: v0.31.0-rc1](https://img.shields.io/badge/AppVersion-v0.31.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -135,11 +135,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.StandardTransformerConfig.FeastServingURLs[1].Label | string | `"Online Serving with BigTable"` |  |
 | config.StandardTransformerConfig.FeastServingURLs[1].SourceType | string | `"BIGTABLE"` |  |
 | config.StandardTransformerConfig.ImageName | string | `"merlin-transformer:1.0.0"` |  |
-| config.StandardTransformerConfig.Jaeger.AgentHost | string | `"localhost"` |  |
-| config.StandardTransformerConfig.Jaeger.AgentPort | int | `6831` |  |
+| config.StandardTransformerConfig.Jaeger.CollectorURL | string | `"http://jaeger-tracing-collector.infrastructure:14268/api/traces"` |  |
 | config.StandardTransformerConfig.Jaeger.Disabled | bool | `false` |  |
 | config.StandardTransformerConfig.Jaeger.SamplerParam | int | `1` |  |
-| config.StandardTransformerConfig.Jaeger.SamplerType | string | `"const"` |  |
 | config.StandardTransformerConfig.Kafka.Brokers | string | `"kafka-brokers"` |  |
 | config.StandardTransformerConfig.Kafka.MaxMessageSizeBytes | string | `"1048588"` |  |
 | config.StandardTransformerConfig.ModelClientKeepAlive.Enabled | bool | `false` |  |
