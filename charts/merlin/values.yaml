@@ -201,9 +201,7 @@ config:
     FeastCoreAuthAudience: core.feast.dev
     EnableAuth: false
     Jaeger:
-      AgentHost: localhost
-      AgentPort: 6831
-      SamplerType: const
+      CollectorURL: "http://jaeger-tracing-collector.infrastructure:14268/api/traces"
       SamplerParam: 1
       Disabled: false
     Kafka:
