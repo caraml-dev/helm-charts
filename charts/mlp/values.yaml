@@ -257,7 +257,6 @@ config:
 
   authorization:
     enabled: false
-    ketoServerURL: http://mlp-authorization-keto
 
   # -- Streams list
   streams: {}
@@ -297,3 +296,28 @@ config:
 
   mlflow:
     trackingURL: "http://mlflow.mlp"
+
+keto:
+  # -- Enable creating mlp specific keto instance
+  enabled: false
+  service:
+    read:
+      appProtocol: http
+    write:
+      appProtocol: http
+
+  nameOverride: keto
+  keto:
+    config:
+      namespaces:
+        - id: 0
+          name: Subject
+        - id: 1
+          name: Role
+        - id: 2
+          name: Permission
+
+rules:
+  # -- if true, Oathkeeper Rule CRDs will be created for MLP API endpoints
+  enabled: false
+  apiPrefixRegex: ".+"
