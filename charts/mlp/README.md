@@ -22,6 +22,10 @@ MLP API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| bootstrap.enabled | bool | `false` | if true, a Job will be created to bootstrap keto with mlp specific relation tuples |
+| bootstrap.resources | object | `{}` |  |
+| bootstrap.roleMembers.mlpAdministrators | list | `[]` | List of members to be assigned mlp.administrator role |
+| bootstrap.roleMembers.projectReaders | list | `[]` | List of members to be assigned mlp.projects.reader role |
 | caramlEnvironments.enabled | bool | `true` |  |
 | caramlEnvironments.environmentConfigs | object | `{}` |  |
 | caramlEnvironments.imageBuilderConfigs | string | `""` |  |
