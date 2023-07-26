@@ -1,7 +1,7 @@
 # turing
 
 ---
-![Version: 0.2.32](https://img.shields.io/badge/Version-0.2.32-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square)
 ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
@@ -91,6 +91,8 @@ The following table lists the configurable parameters of the Turing chart and th
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | openApiSpecOverrides | object | `{}` | Override OpenAPI spec as long as it follows the OAS3 specifications. A common use for this is to set the enums of the ExperimentEngineType. See api/api/override-sample.yaml for an example. |
+| rules.apiPrefixRegex | string | `".+"` |  |
+| rules.enabled | bool | `false` | Enable this to provision Oathkeeper Rule CRDs for Turing API endpoints |
 | sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` | Turing API Kubernetes service port number |
 | service.internalPort | int | `8080` | Turing API container port number |

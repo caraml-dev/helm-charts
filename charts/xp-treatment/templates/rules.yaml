@@ -1,0 +1,31 @@
+{{- if .Values.rules.enabled }}
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ template "treatment-svc.fullname" . }}-project-sub-resources
+  namespace: {{ .Release.Namespace }}
+spec:
+  match:
+    url: <{{ .Values.rules.apiPrefixRegex }}>/projects/<[0-9]+><(/.+)?>
+    methods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "PATCH"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: remote_json
+    config:
+      payload: |
+        {
+          "namespace": "Permission",
+          "object": {{`"mlp.projects.{{ printIndex .MatchContext.RegexpCaptureGroups 1 }}.{{ (print .MatchContext.Method) | lower }}"`}},
+          "relation": "granted",
+            "subject_set": {
+                "namespace": "Subject",
+                "object": {{`"{{ print .Extra.email }}"`}}
+            }
+        }
+{{- end -}}

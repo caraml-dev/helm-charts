@@ -1,7 +1,7 @@
 # xp-treatment
 
 ---
-![Version: 0.1.18](https://img.shields.io/badge/Version-0.1.18-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square)
 ![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Treatment service - A part of XP system that is used to obtain the treatment configuration from active experiments
@@ -67,6 +67,8 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule, useful when there are multiple ingress controllers installed |
 | ingress.enabled | bool | `false` | Enable ingress to provision Ingress resource for external access to XP Treatment Service |
 | ingress.host | string | `""` | Set host value to enable name based virtual hosting. This allows routing HTTP traffic to multiple host names at the same IP address. If no host is specified, the ingress rule applies to all inbound HTTP traffic through the IP address specified. https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting |
+| rules.apiPrefixRegex | string | `".+"` |  |
+| rules.enabled | bool | `false` | Enable this to provision Oathkeeper Rule CRDs for Treatment service API endpoints |
 | swaggerUi.apiServer | string | `"http://127.0.0.1/v1"` | URL of API server |
 | swaggerUi.enabled | bool | `false` |  |
 | swaggerUi.image | object | `{"tag":"v3.47.1"}` | Docker tag for Swagger UI https://hub.docker.com/r/swaggerapi/swagger-ui |

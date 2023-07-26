@@ -654,3 +654,8 @@ kserve:
         istioIngressGateway:
           helmChart:
             namespace: "istio-system"
+
+rules:
+  # -- Enable this to provision Oathkeeper Rule CRDs for Merlin API endpoints
+  enabled: false
+  apiPrefixRegex: ".+"

@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.11.4](https://img.shields.io/badge/Version-0.11.4-informational?style=flat-square)
+![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square)
 ![AppVersion: v0.31.0-rc1](https://img.shields.io/badge/AppVersion-v0.31.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -329,6 +329,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
+| rules.apiPrefixRegex | string | `".+"` |  |
+| rules.enabled | bool | `false` | Enable this to provision Oathkeeper Rule CRDs for Merlin API endpoints |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |

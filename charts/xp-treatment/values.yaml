@@ -124,3 +124,8 @@ swaggerUi:
     internalPort: 8081
     # -- Swagger UI Kubernetes service port number
     externalPort: 8080
+
+rules:
+  # -- Enable this to provision Oathkeeper Rule CRDs for Treatment service API endpoints
+  enabled: false
+  apiPrefixRegex: ".+"

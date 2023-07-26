@@ -1,7 +1,7 @@
 # xp-management
 
 ---
-![Version: 0.2.4](https://img.shields.io/badge/Version-0.2.4-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square)
 ![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
@@ -69,6 +69,8 @@ The following table lists the configurable parameters of the XP Management Servi
 | global.mlp.useServiceFqdn | bool | `true` |  |
 | global.protocol | string | `"http"` |  |
 | global.sentry.dsn | string | `nil` | Global Sentry DSN value |
+| rules.apiPrefixRegex | string | `".+"` |  |
+| rules.enabled | bool | `false` | Enable this to provision Oathkeeper Rule CRDs for XP management service API endpoints |
 | swaggerUi.apiServer | string | `"http://127.0.0.1/v1"` | URL of API server |
 | swaggerUi.enabled | bool | `true` |  |
 | swaggerUi.image | object | `{"tag":"v3.47.1"}` | Docker tag for Swagger UI https://hub.docker.com/r/swaggerapi/swagger-ui |
