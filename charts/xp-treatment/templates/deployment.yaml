@@ -37,7 +37,7 @@ spec:
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         env:
           {{- with .Values.deployment.extraEnvs }}
-          {{- toYaml . | nindent 12 }}
+          {{- toYaml . | nindent 10 }}
           {{- end }}
         ports:
           - name: http
@@ -62,7 +62,7 @@ spec:
           successThreshold: {{ .Values.deployment.readinessProbe.successThreshold }}
           timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds }}
         resources:
-          {{- toYaml .Values.deployment.resources | nindent 12 }}
+          {{- toYaml .Values.deployment.resources | nindent 10 }}
         # Give time for running pods to terminate existing connection before letting
         # Kubernetes terminate the pods.
         # https://blog.sebastian-daschner.com/entries/zero-downtime-updates-kubernetes
