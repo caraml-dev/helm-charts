@@ -4,7 +4,7 @@ dependencies:
   version: 0.5.2
 - name: merlin
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.10.21
+  version: 0.11.4
 - name: turing
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.32
@@ -44,5 +44,5 @@ dependencies:
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.8.2
-digest: sha256:f34011417d106dada6264981698ac5b1000de48b09bed97a6cfad7473d419eab
-generated: "2023-07-06T06:24:11.044159262Z"
+digest: sha256:ac0dbb5db9620406e486d6f74546d13b3fc91ff87621bcb059cedabdbb51d184
+generated: "2023-07-25T18:10:47.628573+08:00"
