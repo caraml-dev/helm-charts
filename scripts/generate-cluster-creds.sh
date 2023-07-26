@@ -105,9 +105,12 @@ EOF
     # Write to Merlin/ Turing env configs app chart values
     yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\")" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
 
-    # TODO: TO REMOVE AFTER MERLIN CHART HAS BEEN UPDATED
-    # Use JSON creds for Merlin in the overarching CaraML chart values as its chart is not merged yet
-    json_creds="$json_creds" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= strenv(json_creds)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
+    # Write to Merlin/ Turing image builder app in the overarching CaraML chart
+    if [ $APP == "merlin" ]; then
+      yaml_creds="$yaml_creds" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= env(yaml_creds)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
+    else
+      json_creds="$json_creds" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= strenv(json_creds)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
+    fi
   done
 }
 
