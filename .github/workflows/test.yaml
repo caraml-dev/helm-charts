@@ -79,7 +79,10 @@ jobs:
           CHARTS_CHANGED: ${{ steps.list-changed.outputs.charts_changed }}
         run: |
           if [[ $(echo $CHARTS_CHANGED | grep 'charts/\(merlin\|turing\|caraml\)') ]]; then
-            ./scripts/generate-cluster-creds.sh kind chart-testing
+            for CHART in $(echo $CHARTS_CHANGED | tr ' ' '\n' | grep 'charts/\(merlin\|turing\|caraml\)' | sed -r 's/charts\///')
+            do
+              CHART=$CHART ./scripts/generate-cluster-creds.sh kind chart-testing
+            done
           fi
 
       - name: Run chart-testing (install)

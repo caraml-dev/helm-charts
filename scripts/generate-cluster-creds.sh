@@ -89,24 +89,17 @@ EOF
     rm kubeconfig.yaml
   fi
 
-  yaml_creds=$(yq '.k8s_config' /tmp/temp_k8sconfig.yaml)
-  json_creds=$(yq e -o json '.k8s_config' /tmp/temp_k8sconfig.yaml | jq -r -M -c .)
-
+  output=$(yq '.k8s_config' /tmp/temp_k8sconfig.yaml)
   # NOTE: Write to ci/ files as these files will be used in ci tests! Consider looping through all files
   # in ci dir
-  for APP in merlin turing
-  do
-    # TODO: REMOVE ALL CONDITIONAL STATEMENTS AND USE ONLY YAML CREDS ONCE TURING HAS BEEN REFACTORED
-    # Write to Merlin/ Turing image builder and env configs app chart values
-    yaml_creds="$yaml_creds" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= env(yaml_creds)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
-
-    # Write to Merlin/ Turing image builder app in the overarching CaraML chart
-    if [ $APP == "merlin" ]; then
-      yaml_creds="$yaml_creds" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= env(yaml_creds)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
-    else
-      json_creds="$json_creds" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= strenv(json_creds)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
-    fi
-  done
+  if [ $CHART == "caraml" ]; then
+    for APP in merlin turing
+    do
+      output="$output" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= env(output)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
+    done
+  else
+    output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= env(output)" -i "${SCRIPT_DIR}/../charts/${CHART}/ci/ci-values.yaml"
+  fi
 }
 
 main "$@"
