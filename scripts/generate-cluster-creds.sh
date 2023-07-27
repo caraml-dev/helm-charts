@@ -97,14 +97,8 @@ EOF
   for APP in merlin turing
   do
     # TODO: REMOVE ALL CONDITIONAL STATEMENTS AND USE ONLY YAML CREDS ONCE TURING HAS BEEN REFACTORED
-    # Write to Merlin/ Turing image builder app chart values
-    if [ $APP == "merlin" ]; then
-      yaml_creds="$yaml_creds" yq ".imageBuilder.k8sConfig |= env(yaml_creds)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
-    else
-      json_creds="$json_creds" yq ".imageBuilder.k8sConfig |= strenv(json_creds)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
-    fi
-    # Write to Merlin/ Turing env configs app chart values
-    yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\")" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
+    # Write to Merlin/ Turing image builder and env configs app chart values
+    yaml_creds="$yaml_creds" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= env(yaml_creds)" -i "${SCRIPT_DIR}/../charts/${APP}/ci/ci-values.yaml"
 
     # Write to Merlin/ Turing image builder app in the overarching CaraML chart
     if [ $APP == "merlin" ]; then
