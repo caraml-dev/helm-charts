@@ -61,18 +61,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
 {{- end }}
 
-
-{{- define "authorization.server.url" -}}
-    {{- $protocol := (default "http" .Values.global.protocol ) }}
-    {{- $globalAuthzUrl := "" }}
-    {{- if and .Values.global (hasKey .Values.global "authz") }}
-        {{- if .Values.global.authz.serviceName }}
-            {{- $globalAuthzUrl = (printf "%s://%s" $protocol (include "common.get-component-value" (list .Values.global "authz" (list "serviceName")))) }}
-        {{- end }}
-    {{- end }}
-    {{- printf "%s" (include "common.set-value" (list .Values.config.authorization.ketoServerURL $globalAuthzUrl)) -}}
-{{- end -}}
-
 {{- define "mlp.config.applications" -}}
     {{- $globFeastApi := include "common.get-component-value" (list .Values.global "feast" (list "vsPrefix" "apiPrefix")) }}
     {{- $globMerlinApi := include "common.get-component-value" (list .Values.global "merlin" (list "vsPrefix" "apiPrefix")) }}
@@ -102,6 +90,14 @@ app.kubernetes.io/part-of: caraml
     {{ toYaml $applications }}
 {{- end -}}
 
+{{- define "mlp.defaultKetoRemoteRead" -}}
+http://{{ template "keto.fullname" .Subcharts.keto}}-read:80
+{{- end -}}
+
+{{- define "mlp.defaultKetoRemoteWrite" -}}
+http://{{ template "keto.fullname" .Subcharts.keto}}-write:80
+{{- end -}}
+
 {{- define "mlp.defaultConfig" -}}
 {{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
 {{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix")) }}
@@ -113,8 +109,13 @@ applications:
       {{- include "mlp.config.applications" . | nindent 6 }}
 authorization:
     enabled: {{ .Values.config.authorization.enabled }}
-    {{- if .Values.config.authorization.enabled }}
-    ketoServerURL: {{ include "authorization.server.url" . | quote}}
+    {{- if and .Values.config.authorization.enabled .Values.keto.enabled }}
+    {{- if not .Values.config.authorization.ketoRemoteRead }}
+    ketoRemoteRead: {{ include "mlp.defaultKetoRemoteRead" . | quote }}
+    {{- end }}
+    {{- if not .Values.config.authorization.ketoRemoteWrite }}
+    ketoRemoteWrite: {{ include "mlp.defaultKetoRemoteWrite" . | quote }}
+    {{- end }}
     {{- end }}
 database:
     host: {{ include "common.postgres-host" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}

@@ -56,6 +56,7 @@ spec:
           resources: {{- toYaml .Values.deployment.resources | nindent 12 }}
           {{- end }}
           args:
+            - serve
             - --config
             - /etc/caraml/mlp-config.yaml
 {{- if .Values.deployment.args }}

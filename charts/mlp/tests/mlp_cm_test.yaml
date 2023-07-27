@@ -74,14 +74,15 @@ tests:
             .*homepage: \/feast
             .*name: Feast
             .*oauthClientID: test-client-123
-  - it: should set the authorization server url from values when it is enabled and no authz config found in global values
+  - it: should set the authorization server url from Keto subchart default value if keto dependency is enabled but keto remote endpoints are not specified in mlp config
     set:
       global:
         protocol: http
+      keto:
+        enabled: true
       config:
         authorization:
           enabled: true
-          ketoServerURL: "http://authz-url"
     asserts:
       - isKind:
           of: ConfigMap
@@ -93,16 +94,19 @@ tests:
           pattern: |
             (?s).*authorization:
             .*enabled: true
-            .*ketoServerURL: http://authz-url
-  - it: should set the authorization server url from values when it is enabled and no serviceName in authz config in global values
+            .*ketoRemoteRead: http://my-release-keto-read:80
+            .*ketoRemoteWrite: http://my-release-keto-write:80
+  - it: should give higher precedence to the keto remote endpoints specified in mlp config if set
     set:
       global:
         protocol: http
-        authz: {}
+      keto:
+        enabled: true
       config:
         authorization:
           enabled: true
-          ketoServerURL: "http://authz-url"
+          ketoRemoteRead: "http://auth-remote-read:80"
+          ketoRemoteWrite: "http://auth-remote-write:80"
     asserts:
       - isKind:
           of: ConfigMap
@@ -114,29 +118,8 @@ tests:
           pattern: |
             (?s).*authorization:
             .*enabled: true
-            .*ketoServerURL: http://authz-url
-  - it: should set the authorization server url from global when it is enabled and serviceName in authz config in global values
-    set:
-      global:
-        protocol: http
-        authz:
-          serviceName: "caraml-authz"
-      config:
-        authorization:
-          enabled: true
-          ketoServerURL: "http://authz-url"
-    asserts:
-      - isKind:
-          of: ConfigMap
-      - matchRegex:
-          path: metadata.name
-          pattern: mlp-*-config$
-      - matchRegex:
-          path: data.[mlp-config.yaml]
-          pattern: |
-            (?s).*authorization:
-            .*enabled: true
-            .*ketoServerURL: http://caraml-authz
+            .*ketoRemoteRead: http://auth-remote-read:80
+            .*ketoRemoteWrite: http://auth-remote-write:80
   - it: should set streams config when exists
     set:
       config:

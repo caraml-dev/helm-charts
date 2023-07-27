@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.5.2](https://img.shields.io/badge/Version-0.5.2-informational?style=flat-square) ![AppVersion: v1.7.4-build.6-322163a](https://img.shields.io/badge/AppVersion-v1.7.4--build.6--322163a-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![AppVersion: v1.10.0](https://img.shields.io/badge/AppVersion-v1.10.0-informational?style=flat-square)
 
 MLP API
 
@@ -16,18 +16,22 @@ MLP API
 |------------|------|---------|
 | https://caraml-dev.github.io/helm-charts | common | 0.2.9 |
 | https://charts.helm.sh/stable | postgresql | 7.0.2 |
+| https://k8s.ory.sh/helm/charts | keto | 0.33.4 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| bootstrap.config.mlpAdmins | list | `[]` | List of members to be assigned mlp.administrator role |
+| bootstrap.config.projectReaders | list | `[]` | List of members to be assigned mlp.projects.reader role |
+| bootstrap.enabled | bool | `false` | if true, a Job will be created to bootstrap keto with mlp specific relation tuples |
+| bootstrap.resources | object | `{}` |  |
 | caramlEnvironments.enabled | bool | `true` |  |
 | caramlEnvironments.environmentConfigs | object | `{}` |  |
 | caramlEnvironments.imageBuilderConfigs | string | `""` |  |
 | config.apiHost | string | `"http://mlp/v1"` |  |
 | config.applications | list | `[{"configuration":{"api":"/api/merlin/v1","iconName":"machineLearningApp","navigation":[{"destination":"/models","label":"Models"},{"destination":"/transformer-simulator","label":"Transformer Simulator"}]},"description":"Platform for deploying machine learning models","homepage":"/merlin","name":"Merlin"},{"configuration":{"api":"/api/turing/v1","iconName":"graphApp","navigation":[{"destination":"/routers","label":"Routers"},{"destination":"/ensemblers","label":"Ensemblers"},{"destination":"/jobs","label":"Ensembling Jobs"},{"destination":"/experiments","label":"Experiments"}]},"description":"Platform for setting up ML experiments","homepage":"/turing","name":"Turing"},{"configuration":{"api":"/feast/api","iconName":"appSearchApp","navigation":[{"destination":"/entities","label":"Entities"},{"destination":"/featuretables","label":"Feature Tables"},{"destination":"/jobs/batch","label":"Batch Ingestion Jobs"},{"destination":"/jobs/stream","label":"Stream Ingestion Jobs"}]},"description":"Platform for managing and serving ML features","homepage":"/feast","name":"Feast"},{"configuration":{"iconName":"pipelineApp"},"description":"Platform for managing ML pipelines","homepage":"/pipeline","name":"Pipelines"}]` | Enabled CaraML applications |
 | config.authorization.enabled | bool | `false` |  |
-| config.authorization.ketoServerURL | string | `"http://mlp-authorization-keto"` |  |
 | config.defaultSecretStorage | object | `{}` | Default Secret Storage for storing secrets. Supported values: "vault". If not specified, secrets will be stored as "internal" secret |
 | config.docs | list | `[{"href":"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md","label":"Merlin User Guide"},{"href":"https://github.com/gojek/turing","label":"Turing User Guide"},{"href":"https://docs.feast.dev/user-guide/overview","label":"Feast User Guide"}]` | Documentation list for caraml components |
 | config.environment | string | `"production"` |  |
@@ -58,6 +62,17 @@ MLP API
 | externalPostgresql.username | string | `"mlp"` | External postgres database user |
 | global.protocol | string | `"http"` |  |
 | ingress.enabled | bool | `false` |  |
+| keto.enabled | bool | `false` | Enable creating mlp specific keto instance |
+| keto.keto.automigration.enabled | bool | `true` |  |
+| keto.keto.config.namespaces[0].id | int | `0` |  |
+| keto.keto.config.namespaces[0].name | string | `"Subject"` |  |
+| keto.keto.config.namespaces[1].id | int | `1` |  |
+| keto.keto.config.namespaces[1].name | string | `"Role"` |  |
+| keto.keto.config.namespaces[2].id | int | `2` |  |
+| keto.keto.config.namespaces[2].name | string | `"Permission"` |  |
+| keto.nameOverride | string | `"keto"` |  |
+| keto.service.read.appProtocol | string | `"http"` |  |
+| keto.service.write.appProtocol | string | `"http"` |  |
 | postgresql.enabled | bool | `true` | Enable creating mlp specific postgres instance |
 | postgresql.nameOverride | string | `"mlp-postgresql"` | override the name here so that db gets created like <release_name>-mlp-postgresql |
 | postgresql.persistence.size | string | `"10Gi"` |  |

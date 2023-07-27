@@ -257,7 +257,6 @@ config:
 
   authorization:
     enabled: false
-    ketoServerURL: http://mlp-authorization-keto
 
   # -- Streams list
   streams: {}
@@ -297,3 +296,38 @@ config:
 
   mlflow:
     trackingURL: "http://mlflow.mlp"
+
+keto:
+  # -- Enable creating mlp specific keto instance
+  enabled: false
+  service:
+    read:
+      appProtocol: http
+    write:
+      appProtocol: http
+
+  nameOverride: keto
+  keto:
+    automigration:
+      enabled: true
+    config:
+      namespaces:
+        - id: 0
+          name: Subject
+        - id: 1
+          name: Role
+        - id: 2
+          name: Permission
+
+bootstrap:
+  # -- if true, a Job will be created to bootstrap keto with mlp specific relation tuples
+  enabled: false
+  config:
+    # -- List of members to be assigned mlp.administrator role
+    mlpAdmins: []
+    # -- List of members to be assigned mlp.projects.reader role
+    projectReaders: []
+  resources: {}
+  #   requests:
+  #     cpu: 100m
+  #     memory: 128Mi

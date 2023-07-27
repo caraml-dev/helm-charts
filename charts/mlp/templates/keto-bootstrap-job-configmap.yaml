@@ -1,0 +1,18 @@
+{{- if .Values.bootstrap.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "mlp.resource-prefix" . }}-bootstrap
+data:
+  bootstrap-config.yaml: |
+    {{- if .Values.keto.enabled }}
+    ketoRemoteRead: {{ include "mlp.defaultKetoRemoteRead" . | quote }}
+    ketoRemoteWrite: {{ include "mlp.defaultKetoRemoteWrite" . | quote }}
+    {{- else }}
+    ketoRemoteRead: {{ .Values.config.authorization.ketoRemoteRead }}
+    ketoRemoteWrite: {{ .Values.config.authorization.ketoRemoteWrite }}
+    {{- end }}
+    {{- with .Values.bootstrap.config }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{- end -}}

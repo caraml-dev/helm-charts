@@ -1,0 +1,31 @@
+{{- if .Values.bootstrap.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "mlp.resource-prefix" . }}-bootstrap
+  annotations:
+    "helm.sh/hook": post-upgrade,post-install
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      containers:
+      - name: mlp-bootstrap
+        image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        args:
+          - bootstrap
+          - --config
+          - /etc/caraml/bootstrap-config.yaml
+        resources:
+{{- toYaml .Values.bootstrap.resources | nindent 10 }}
+        volumeMounts:
+        - name: bootstrap
+          mountPath: /etc/caraml
+          readOnly: true
+      volumes:
+      - name: bootstrap
+        configMap:
+          name:  {{ template "mlp.resource-prefix" . }}-bootstrap
+      restartPolicy: OnFailure
+{{- end -}}
