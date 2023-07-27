@@ -184,7 +184,7 @@ ClusterConfig:
   InClusterConfig: {{ .Values.clusterConfig.useInClusterConfig }}
   EnvironmentConfigPath: {{ include "turing.environments.absolutePath" . }}
   EnsemblingServiceK8sConfig: 
-{{ .Values.imageBuilder.k8sConfig | fromJson | toYaml | indent 4}}
+{{ .Values.imageBuilder.k8sConfig | toYaml | indent 4}}
 DbConfig:
   Host: {{ include "common.postgres-host" (list (index .Values "turing-postgresql") .Values.turingExternalPostgresql .Release .Chart ) }}
   Port: 5432

@@ -1,7 +1,7 @@
 # turing
 
 ---
-![Version: 0.2.32](https://img.shields.io/badge/Version-0.2.32-informational?style=flat-square)
+![Version: 0.2.33](https://img.shields.io/badge/Version-0.2.33-informational?style=flat-square)
 ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
@@ -80,7 +80,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | experimentEngines | list | `[]` | Turing Experiment Engines configuration |
 | global.protocol | string | `"http"` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
-| imageBuilder.k8sConfig | string | `""` |  |
+| imageBuilder.k8sConfig | object | `{}` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule, useful when there are multiple ingress controllers installed |
 | ingress.enabled | bool | `false` | Enable ingress to provision Ingress resource for external access to Turing API |
