@@ -90,12 +90,11 @@ EOF
   fi
 
   output=$(yq '.k8s_config' /tmp/temp_k8sconfig.yaml)
-  # NOTE: Write to ci/ files as these files will be used in ci tests! Consider looping through all files
-  # in ci dir
+  # NOTE: Write to ci/ files as these files will be used in ci tests!
   for CHART in $(echo $CHARTS_CHANGED | tr ' ' '\n' | grep 'charts/\(merlin\|turing\|caraml\)' | sed -r 's/charts\///')
   do
     if [ $CHART == "caraml" ]; then
-      # Write to Merlin/ Turing image builder app in the overarching CaraML chart
+      # Write to Merlin/ Turing subchart values in the overarching CaraML chart
       for APP in merlin turing
       do
         output="$output" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= env(output)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
