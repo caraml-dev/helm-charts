@@ -74,8 +74,9 @@ merlin:
       limits:
         cpu: "500m"
         memory: 512Mi
-  authorization:
-    enabled: false
+  config:
+    AuthorizationConfig:
+      AuthorizationEnabled: false
   imageBuilder: *imageBuilder
   environmentConfigs: *environmentConfigs
   merlin-postgresql:
