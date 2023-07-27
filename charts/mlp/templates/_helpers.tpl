@@ -90,6 +90,14 @@ app.kubernetes.io/part-of: caraml
     {{ toYaml $applications }}
 {{- end -}}
 
+{{- define "mlp.defaultKetoRemoteRead" -}}
+http://{{ template "keto.fullname" .Subcharts.keto}}-read:80
+{{- end -}}
+
+{{- define "mlp.defaultKetoRemoteWrite" -}}
+http://{{ template "keto.fullname" .Subcharts.keto}}-write:80
+{{- end -}}
+
 {{- define "mlp.defaultConfig" -}}
 {{- $globOauthClientID := include "common.get-oauth-client" .Values.global }}
 {{- $globApiHost := include "common.get-component-value" (list .Values.global "mlp"  (list "vsPrefix")) }}
@@ -103,10 +111,10 @@ authorization:
     enabled: {{ .Values.config.authorization.enabled }}
     {{- if and .Values.config.authorization.enabled .Values.keto.enabled }}
     {{- if not .Values.config.authorization.ketoRemoteRead }}
-    ketoRemoteRead: http://{{ template "keto.fullname" .Subcharts.keto}}-read:80
+    ketoRemoteRead: {{ include "mlp.defaultKetoRemoteRead" . | quote }}
     {{- end }}
     {{- if not .Values.config.authorization.ketoRemoteWrite }}
-    ketoRemoteWrite: http://{{ template "keto.fullname" .Subcharts.keto}}-write:80
+    ketoRemoteWrite: {{ include "mlp.defaultKetoRemoteWrite" . | quote }}
     {{- end }}
     {{- end }}
 database:

@@ -22,10 +22,10 @@ MLP API
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| bootstrap.config.mlpAdmins | list | `[]` | List of members to be assigned mlp.administrator role |
+| bootstrap.config.projectReaders | list | `[]` | List of members to be assigned mlp.projects.reader role |
 | bootstrap.enabled | bool | `false` | if true, a Job will be created to bootstrap keto with mlp specific relation tuples |
 | bootstrap.resources | object | `{}` |  |
-| bootstrap.roleMembers.mlpAdministrators | list | `[]` | List of members to be assigned mlp.administrator role |
-| bootstrap.roleMembers.projectReaders | list | `[]` | List of members to be assigned mlp.projects.reader role |
 | caramlEnvironments.enabled | bool | `true` |  |
 | caramlEnvironments.environmentConfigs | object | `{}` |  |
 | caramlEnvironments.imageBuilderConfigs | string | `""` |  |
@@ -63,6 +63,7 @@ MLP API
 | global.protocol | string | `"http"` |  |
 | ingress.enabled | bool | `false` |  |
 | keto.enabled | bool | `false` | Enable creating mlp specific keto instance |
+| keto.keto.automigration.enabled | bool | `true` |  |
 | keto.keto.config.namespaces[0].id | int | `0` |  |
 | keto.keto.config.namespaces[0].name | string | `"Subject"` |  |
 | keto.keto.config.namespaces[1].id | int | `1` |  |
@@ -78,8 +79,6 @@ MLP API
 | postgresql.postgresqlDatabase | string | `"mlp"` |  |
 | postgresql.postgresqlUsername | string | `"mlp"` |  |
 | postgresql.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| rules.apiPrefixRegex | string | `".+"` |  |
-| rules.enabled | bool | `false` | if true, Oathkeeper Rule CRDs will be created for MLP API endpoints |
 | sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |

@@ -308,6 +308,8 @@ keto:
 
   nameOverride: keto
   keto:
+    automigration:
+      enabled: true
     config:
       namespaces:
         - id: 0
@@ -317,17 +319,12 @@ keto:
         - id: 2
           name: Permission
 
-rules:
-  # -- if true, Oathkeeper Rule CRDs will be created for MLP API endpoints
-  enabled: false
-  apiPrefixRegex: ".+"
-
 bootstrap:
   # -- if true, a Job will be created to bootstrap keto with mlp specific relation tuples
   enabled: false
-  roleMembers:
+  config:
     # -- List of members to be assigned mlp.administrator role
-    mlpAdministrators: []
+    mlpAdmins: []
     # -- List of members to be assigned mlp.projects.reader role
     projectReaders: []
   resources: {}

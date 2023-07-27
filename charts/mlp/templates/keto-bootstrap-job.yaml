@@ -16,9 +16,7 @@ spec:
         args:
           - bootstrap
           - --config
-          - /etc/caraml/mlp-config.yaml
-          - --role-members
-          - /etc/caraml/role-members.json
+          - /etc/caraml/bootstrap-config.yaml
         resources:
 {{- toYaml .Values.bootstrap.resources | nindent 10 }}
         volumeMounts:
