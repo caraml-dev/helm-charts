@@ -74,7 +74,7 @@ spec:
                 name: {{ include "common.postgres-password-secret-name" (list (index .Values "merlin-postgresql") .Values.merlinExternalPostgresql .Release .Chart ) }}
                 key: {{ include "common.postgres-password-secret-key" (list .Values.merlinExternalPostgresql) }}
           {{- with .Values.deployment.extraEnvs }}
-          {{- toYaml . | nindent 8 }}
+          {{- toYaml . | nindent 10 }}
           {{- end }}
         volumeMounts:
         - name: config
