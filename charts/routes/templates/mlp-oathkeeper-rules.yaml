@@ -1,0 +1,68 @@
+{{- if and .Values.oathkeeperRules.enabled .Values.mlp.enabled }}
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-list-applications-rule" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/applications" (include "caraml-routes.oathkeeper.mlp.regexPrefix" .) }}
+    methods:
+      - "GET"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: allow
+---
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-get-and-create-project-rule" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/projects" (include "caraml-routes.oathkeeper.mlp.regexPrefix" .) }}
+    methods:
+      - "GET"
+      - "POST"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: allow
+---
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-project-subresource" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/projects/<[0-9+]><(/.+)?>" (include "caraml-routes.oathkeeper.mlp.regexPrefix" .) }}
+    methods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "PATCH"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: remote_json
+    config:
+      payload: |
+        {
+          "namespace": "Permission",
+          "object": {{`"mlp.projects.{{ printIndex .MatchContext.RegexpCaptureGroups 2 }}.{{ (print .MatchContext.Method) | lower }}"`}},
+          "relation": "granted",
+            "subject_set": {
+                "namespace": "Subject",
+                "object": {{`"{{ print .Extra.email }}"`}}
+            }
+        }
+{{- end }}

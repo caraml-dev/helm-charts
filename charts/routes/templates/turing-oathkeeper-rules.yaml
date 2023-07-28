@@ -1,0 +1,50 @@
+{{- if and .Values.oathkeeperRules.enabled .Values.turing.enabled }}
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "turing-list-experiment-engines-rule" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/experiment-engines<(/.+)?>" (include "caraml-routes.oathkeeper.turing.regexPrefix" .) }}
+    methods:
+      - "GET"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: allow
+---
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "turing-project-subresource" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/projects/<[0-9+]><(/.+)?>" (include "caraml-routes.oathkeeper.turing.regexPrefix" .) }}
+    methods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "PATCH"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: remote_json
+    config:
+      payload: |
+        {
+          "namespace": "Permission",
+          "object": {{`"mlp.projects.{{ printIndex .MatchContext.RegexpCaptureGroups 2 }}.{{ (print .MatchContext.Method) | lower }}"`}},
+          "relation": "granted",
+            "subject_set": {
+                "namespace": "Subject",
+                "object": {{`"{{ print .Extra.email }}"`}}
+            }
+        }
+{{- end }}

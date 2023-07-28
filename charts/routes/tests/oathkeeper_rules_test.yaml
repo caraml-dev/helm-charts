@@ -1,0 +1,55 @@
+suite: Unit tests for oathkeeper rules
+templates:
+  - "mlp-oathkeeper-rules.yaml"
+  - "turing-oathkeeper-rules.yaml"
+  - "xp-oathkeeper-rules.yaml"
+release:
+  name: route
+  namespace: caraml
+  revision: 1
+  isUpgrade: true
+tests:
+  - it: should set mlp match url based on virtual service host and api prefix
+    set:
+      oathkeeperRules:
+        enabled: true
+      global:
+        hosts:
+          mlp: ["console.com", "console.org"]
+        mlp:
+          vsPrefix: "/mlp"
+          apiPrefix: "/v2"
+    documentIndex: 0
+    template: mlp-oathkeeper-rules.yaml
+    asserts:
+      - isKind:
+          of: Rule
+      - matchRegex:
+          path: spec.match.url
+          pattern: ^<https\?://\(console\\\.com\|console\\\.org\)/mlp/v2>/applications$
+  - it: should create mlp rule only if mlp is enabled
+    set:
+      oathkeeperRules:
+        enabled: true
+      mlp:
+        enabled: false
+    template: mlp-oathkeeper-rules.yaml
+    hasDocuments: 0
+  - it: should set turing match url based on virtual service host and api prefix
+    set:
+      oathkeeperRules:
+        enabled: true
+      global:
+        hosts:
+          mlp: ["console.com", "console.org"]
+        turing:
+          vsPrefix: "/turing"
+          apiPrefix: "/v2"
+    documentIndex: 0
+    template: turing-oathkeeper-rules.yaml
+    asserts:
+      - isKind:
+          of: Rule
+      - matchRegex:
+          path: spec.match.url
+          pattern: ^<https\?://\(console\\\.com\|console\\\.org\)/turing/v2>/experiment-engines<\(/\.\+\)\?>$

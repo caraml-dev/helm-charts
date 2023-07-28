@@ -216,3 +216,14 @@ cert-manager:
 
 common:
   enabled: true
+
+############################################################
+# Oathkeeper
+############################################################
+oathkeeper:
+  # Set to false if there is an existing oathkeeper deployment
+  enabled: false
+
+oathkeeperRules:
+  # Set to true if the Oathkeeper Rule CRs should be created
+  enabled: false

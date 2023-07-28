@@ -1,0 +1,50 @@
+{{- if and .Values.oathkeeperRules.enabled .Values.xp.enabled }}
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "xp-public-resources" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/<(treatment-service-config|validate)>" (include "caraml-routes.oathkeeper.xp.regexPrefix" .) }}
+    methods:
+      - "GET"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: allow
+---
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "xp-project-subresource" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/projects/<[0-9+]><(/.+)?>" (include "caraml-routes.oathkeeper.xp.regexPrefix" .) }}
+    methods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "PATCH"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: remote_json
+    config:
+      payload: |
+        {
+          "namespace": "Permission",
+          "object": {{`"mlp.projects.{{ printIndex .MatchContext.RegexpCaptureGroups 2 }}.{{ (print .MatchContext.Method) | lower }}"`}},
+          "relation": "granted",
+            "subject_set": {
+                "namespace": "Subject",
+                "object": {{`"{{ print .Extra.email }}"`}}
+            }
+        }
+{{- end }}
