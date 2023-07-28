@@ -1,12 +1,12 @@
 dependencies:
 - name: keto
   repository: https://k8s.ory.sh/helm/charts
-  version: 0.33.4
+  version: 0.33.5
 - name: postgresql
   repository: https://charts.helm.sh/stable
   version: 7.0.2
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.9
-digest: sha256:84dec86efb3ee6c466b34e99c4f214a494b243b474030d055a68c53cf0451af7
-generated: "2023-07-24T16:07:17.387878+08:00"
+digest: sha256:438c88d6e2aa9c498b7b6a653cc3e86961c9e2f074e7c37050076807f41be69b
+generated: "2023-07-28T06:05:51.312353839Z"
