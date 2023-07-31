@@ -142,10 +142,10 @@ config:
     MaxAllowedReplica: 20
     MerlinURL: /api/merlin/v1
     MlpURL: /api
-    OauthClientID:  # to be set via CICD pipeline
+    OauthClientID: # to be set via CICD pipeline
     UPIDocumentation: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
-    CPUCost:  # Unused
-    MemoryCost:  # Unused
+    CPUCost: # Unused
+    MemoryCost: # Unused
   StandardTransformerConfig:
     ImageName: merlin-transformer:1.0.0
     SimulationFeast:
@@ -265,7 +265,6 @@ imageBuilder:
     Tolerations: []
     NodeSelectors: {}
     MaximumRetry: 3
-    KanikoServiceAccount: "kaniko"
     Retention: "48h"
     SafeToEvict: false
 
