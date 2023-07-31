@@ -265,7 +265,6 @@ imageBuilder:
     Tolerations: []
     NodeSelectors: {}
     MaximumRetry: 3
-    KanikoServiceAccount: "kaniko"
     Retention: "48h"
     SafeToEvict: false
 

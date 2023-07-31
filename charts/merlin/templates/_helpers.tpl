@@ -269,7 +269,7 @@ ImageBuilderConfig:
   K8sConfig:
 {{ .Values.imageBuilder.k8sConfig | toYaml | indent 4 }}
   {{- if .Values.imageBuilder.serviceAccount.name }}
-  KanikoServiceAccount: "{{ template "merlin.kaniko-sa" . }}"
+  KanikoServiceAccount: {{ include "merlin.kaniko-sa" . }}
   {{- end }}
 {{ .Values.imageBuilder.builderConfig | toYaml | indent 2 }}
 AuthorizationConfig:
