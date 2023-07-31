@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.11.6](https://img.shields.io/badge/Version-0.11.6-informational?style=flat-square)
+![Version: 0.11.7](https://img.shields.io/badge/Version-0.11.7-informational?style=flat-square)
 ![AppVersion: v0.31.0-rc1](https://img.shields.io/badge/AppVersion-v0.31.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -199,7 +199,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.BuildTimeout | string | `"30m"` |  |
 | imageBuilder.builderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
 | imageBuilder.builderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
-| imageBuilder.builderConfig.KanikoServiceAccount | string | `"kaniko"` |  |
 | imageBuilder.builderConfig.MaximumRetry | int | `3` |  |
 | imageBuilder.builderConfig.NodeSelectors | object | `{}` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
