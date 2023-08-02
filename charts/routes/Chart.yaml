@@ -16,6 +16,11 @@ dependencies:
   name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.1.0
+- alias: oathkeeper
+  condition: oathkeeper.enabled
+  name: oathkeeper
+  repository: https://k8s.ory.sh/helm/charts
+  version: 0.33.4
 - alias: certManagerBase
   condition: certManagerBase.enabled
   name: cert-manager-base
