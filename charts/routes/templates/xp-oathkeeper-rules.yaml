@@ -2,13 +2,13 @@
 apiVersion: oathkeeper.ory.sh/v1alpha1
 kind: Rule
 metadata:
-  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "xp-public-resources" }}
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "xp-public-readable-resources" }}
   namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
   labels:
     {{- include "caraml-routes.labels" . | nindent 4 }}
 spec:
   match:
-    url: {{ printf "<%s>/<(treatment-service-config|validate)>" (include "caraml-routes.oathkeeper.xp.regexPrefix" .) }}
+    url: {{ printf "<%s>/<(treatment-service-config|validate|projects)>" (include "caraml-routes.oathkeeper.xp.regexPrefix" .) }}
     methods:
       - "GET"
   authenticators:
