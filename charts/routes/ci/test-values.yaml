@@ -279,53 +279,6 @@ istioIngressGateway:
 ############################################################
 oathkeeper:
   enabled: true
-  hook:
-    weight: 0
-  service:
-    proxy:
-      enabled: false
-    metrics:
-      enabled: false
-
-  fullnameOverride: "oathkeeper"
-  oathkeeper:
-    config:
-      authenticators:
-        jwt:
-          enabled: true
-          config:
-            jwks_urls:
-              - https://www.googleapis.com/oauth2/v3/certs
-      authorizers:
-        allow:
-          enabled: true
-        remote_json:
-          enabled: true
-          config:
-            remote: http://localhost:4456/relation-tuples/check
-            payload: "{}"
-      mutators:
-        noop:
-          enabled: true
-
-    managedAccessRules: false
-
-  secret:
-    enabled: true
-
-  deployment:
-    serviceAccount:
-      create: false
-
-  maester:
-    enabled: true
-
-  oathkeeper-maester:
-    singleNamespaceMode: true
-    oathkeeperFullnameOverride: oathkeeper
-    fullnameOverride: "oathkeeper-maester"
-
-  mutatorIdTokenJWKs: ""
 
 oathkeeperRules:
   enabled: true
