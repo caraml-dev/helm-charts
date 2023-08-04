@@ -42,7 +42,7 @@ global:
     uiServiceName: turing
 
   xp:
-    apiPrefix: "/"
+    apiPrefix: "/v1"
     serviceName: xp-management
     externalPort: "8080"
     vsPrefix: "/api/xp"
