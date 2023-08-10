@@ -84,6 +84,11 @@ clusterConfig:
   environmentConfigPath: "environments.yaml"
 
 imageBuilder:
+  serviceAccount:
+    create: true
+    name: "kaniko"
+    annotations: {}
+    labels: {}
   clusterName: "test"
   k8sConfig: {}
   # Example k8sConfig to connect to cluster using gke-gcloud-auth-plugin
