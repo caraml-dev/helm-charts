@@ -186,7 +186,7 @@ API config related
 {{- $globMlpApiHost := include "turing.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
 AuthConfig:
   URL: {{ include "turing.authorization.server.url" . | quote }}
-{{ if and (eq (toString .Values.config.BatchEnsemblingConfig.Enabled) "true") (or .Values.imageBuilder.serviceAccount.create .Values.imageBuilder.serviceAccount.name) }}
+{{ if and (.Values.config.BatchEnsemblingConfig.Enabled) (or .Values.imageBuilder.serviceAccount.create .Values.imageBuilder.serviceAccount.name) }}
 BatchEnsemblingConfig:
   ImageBuildingConfig:
     KanikoConfig:
