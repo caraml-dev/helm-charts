@@ -37,7 +37,9 @@ spec:
         prometheus.io/scrape: 'true'
         prometheus.io/port: "{{ .Values.service.internalPort }}"
     spec:
+      {{- if (or .Values.serviceAccount.create .Values.serviceAccount.name) }}
       serviceAccountName: {{ template "merlin.serviceAccountName" . }}
+      {{- end }}
       {{- with (include "merlin.initContainers" . | fromYaml) }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
