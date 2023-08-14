@@ -11644,6 +11644,32 @@ entries:
   xp-management:
   - apiVersion: v2
     appVersion: 0.12.1
+    created: "2023-08-14T10:08:58.758548993Z"
+    dependencies:
+    - alias: xp-management-postgresql
+      condition: xp-management-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.20
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.9
+    description: Management service - A part of XP system that is used to configure
+      experiments
+    digest: 53d11d9c10cbb5bcb273b56fb686fa8ab5a87ff8acdf4d01ef7bd43e33c8b07d
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: xp-management
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/xp-management-0.2.5/xp-management-0.2.5.tgz
+    version: 0.2.5
+  - apiVersion: v2
+    appVersion: 0.12.1
     created: "2023-07-03T03:31:12.065583091Z"
     dependencies:
     - alias: xp-management-postgresql
@@ -12489,4 +12515,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-08-14T09:19:26.654848693Z"
+generated: "2023-08-14T10:08:58.759360702Z"
