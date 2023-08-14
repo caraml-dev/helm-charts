@@ -1,9 +1,9 @@
 dependencies:
 - name: xp-management
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.4
+  version: 0.2.5
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.9
-digest: sha256:be5bf0498bc34412d129a6fccd399549588d5a6e5bd72b0b6669d3970d920f1b
-generated: "2023-07-03T03:32:04.474031351Z"
+digest: sha256:c67035d8cd4ddfc24dffd8bfec3639d691bc40d3cb457dc312cded12e0927e33
+generated: "2023-08-14T18:15:23.150624+08:00"
