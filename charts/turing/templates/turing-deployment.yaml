@@ -24,7 +24,9 @@ spec:
 {{ toYaml .Values.deployment.labels | indent 8 -}}
 {{- end }}
     spec:
+      {{- if (or .Values.serviceAccount.create .Values.serviceAccount.name) }}
       serviceAccountName: {{ template "turing.serviceAccountName" . }}
+      {{- end }}
       {{- with (include "turing.initContainers" . | fromYaml) }}
       {{- toYaml . | nindent 6 }}
       {{- end }}

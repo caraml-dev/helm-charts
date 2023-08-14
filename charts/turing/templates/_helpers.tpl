@@ -123,6 +123,14 @@ initContainers:
 {{- printf "%s/%s" $base $path -}}
 {{- end -}}
 
+{{- define "turing.kaniko-sa" -}}
+{{- if .Values.imageBuilder.serviceAccount.create }}
+{{- printf  "%s-%s" (default "kaniko" .Values.imageBuilder.serviceAccount.name) (include "turing.fullname" . ) }}
+{{- else }}
+{{- printf "%s" .Values.imageBuilder.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
 {{- define "turing.get-workload-host" }}
 {{- $global := index . 0}}
 {{- $relNs := index . 1}}
@@ -178,8 +186,19 @@ API config related
 {{- $globMlpApiHost := include "turing.get-workload-host" (list .Values.global .Release.Namespace "mlp")}}
 AuthConfig:
   URL: {{ include "turing.authorization.server.url" . | quote }}
+{{ if and (.Values.config.BatchEnsemblingConfig.Enabled) (or .Values.imageBuilder.serviceAccount.create .Values.imageBuilder.serviceAccount.name) }}
+BatchEnsemblingConfig:
+  ImageBuildingConfig:
+    KanikoConfig:
+      ServiceAccount: {{ include "turing.kaniko-sa" . }}
+{{ end }}
 EnsemblerServiceBuilderConfig:
   ClusterName: {{ .Values.imageBuilder.clusterName }}
+{{ if (or .Values.imageBuilder.serviceAccount.create .Values.imageBuilder.serviceAccount.name) }}
+  ImageBuildingConfig:
+    KanikoConfig:
+      ServiceAccount: {{ include "turing.kaniko-sa" . }}
+{{ end }}
 ClusterConfig:
   InClusterConfig: {{ .Values.clusterConfig.useInClusterConfig }}
   EnvironmentConfigPath: {{ include "turing.environments.absolutePath" . }}
