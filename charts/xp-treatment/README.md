@@ -1,7 +1,7 @@
 # xp-treatment
 
 ---
-![Version: 0.1.18](https://img.shields.io/badge/Version-0.1.18-informational?style=flat-square)
+![Version: 0.1.19](https://img.shields.io/badge/Version-0.1.19-informational?style=flat-square)
 ![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Treatment service - A part of XP system that is used to obtain the treatment configuration from active experiments
@@ -63,6 +63,9 @@ The following table lists the configurable parameters of the XP Treatment Servic
 | deployment.service.externalPort | int | `8080` | XP Treatment Service Kubernetes service port number |
 | deployment.service.internalPort | int | `8080` | XP Treatment Service container port number |
 | deployment.service.type | string | `"ClusterIP"` |  |
+| deployment.serviceAccount.annotations | object | `{}` |  |
+| deployment.serviceAccount.create | bool | `true` |  |
+| deployment.serviceAccount.name | string | `""` |  |
 | global.protocol | string | `"http"` |  |
 | ingress.class | string | `""` | Ingress class annotation to add to this Ingress rule, useful when there are multiple ingress controllers installed |
 | ingress.enabled | bool | `false` | Enable ingress to provision Ingress resource for external access to XP Treatment Service |

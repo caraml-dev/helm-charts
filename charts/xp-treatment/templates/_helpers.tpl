@@ -66,6 +66,13 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Create the name of the service account to use
+*/}}
+{{- define "treatment-svc.serviceAccountName" -}}
+{{- default (include "treatment-svc.fullname" .) .Values.deployment.serviceAccount.name }}
+{{- end }}
+
+{{/*
 API config related
 */}}
 
