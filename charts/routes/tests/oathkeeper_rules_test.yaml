@@ -9,7 +9,7 @@ release:
   revision: 1
   isUpgrade: true
 tests:
-  - it: should set mlp match url based on virtual service host and api prefix
+  - it: should set mlp match url based on virtual service host prefix
     set:
       oathkeeperRules:
         enabled: true
@@ -26,7 +26,7 @@ tests:
           of: Rule
       - matchRegex:
           path: spec.match.url
-          pattern: ^<https\?://\(console\\\.com\|console\\\.org\)/mlp/v2>/applications$
+          pattern: ^<https\?://\(console\\\.com\|console\\\.org\)/mlp/v\[0\-9\]\+>/applications$
   - it: should create mlp rule only if mlp is enabled
     set:
       oathkeeperRules:
@@ -52,4 +52,4 @@ tests:
           of: Rule
       - matchRegex:
           path: spec.match.url
-          pattern: ^<https\?://\(console\\\.com\|console\\\.org\)/turing/v2>/experiment-engines<\(/\.\+\)\?>$
+          pattern: ^<https\?://\(console\\\.com\|console\\\.org\)/turing/v\[0\-9\]\+>/experiment-engines<\(/\.\+\)\?>$

@@ -25,7 +25,7 @@ metadata:
     {{- include "caraml-routes.labels" . | nindent 4 }}
 spec:
   match:
-    url: {{ printf "<%s>/projects" (include "caraml-routes.oathkeeper.turing.regexPrefix" .) }}
+    url: {{ printf "<%s>/projects<(\\?.+)?>" (include "caraml-routes.oathkeeper.turing.regexPrefix" .) }}
     methods:
       - "GET"
   authenticators:

@@ -16,16 +16,34 @@ spec:
   authorizer:
     handler: allow
 ---
+# Required because Flyte/Data Aware Pipeline is still calling the MLP API without api prefix
 apiVersion: oathkeeper.ory.sh/v1alpha1
 kind: Rule
 metadata:
-  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-get-and-create-project-rule" }}
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-legacy-list-projects-rule" }}
   namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
   labels:
     {{- include "caraml-routes.labels" . | nindent 4 }}
 spec:
   match:
-    url: {{ printf "<%s>/projects" (include "caraml-routes.oathkeeper.mlp.regexPrefix" .) }}
+    url: {{ printf "<%s>/projects<(\\?.+)?>" (include "caraml-routes.oathkeeper.mlp.legacyRegexPrefix" .) }}
+    methods:
+      - "GET"
+  authenticators:
+    - handler: jwt
+  authorizer:
+    handler: allow
+---
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-list-and-create-project-rule" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/projects<(\\?.+)?>" (include "caraml-routes.oathkeeper.mlp.regexPrefix" .) }}
     methods:
       - "GET"
       - "POST"

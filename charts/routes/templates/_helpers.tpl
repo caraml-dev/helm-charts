@@ -124,13 +124,17 @@ https?://({{ (join "|" .Values.global.hosts.mlp) | replace "." "\\." }})
 {{- end }}
 
 {{- define "caraml-routes.oathkeeper.mlp.regexPrefix" -}}
-{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.mlp.vsPrefix }}{{ .Values.global.mlp.apiPrefix }}
+{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.mlp.vsPrefix }}/v[0-9]+
+{{- end }}
+
+{{- define "caraml-routes.oathkeeper.mlp.legacyRegexPrefix" -}}
+{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}/v[0-9]+
 {{- end }}
 
 {{- define "caraml-routes.oathkeeper.turing.regexPrefix" -}}
-{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.turing.vsPrefix }}{{ .Values.global.turing.apiPrefix }}
+{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.turing.vsPrefix }}/v[0-9]+
 {{- end }}
 
 {{- define "caraml-routes.oathkeeper.xp.regexPrefix" -}}
-{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.xp.vsPrefix }}{{ .Values.global.xp.apiPrefix }}
+{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.xp.vsPrefix }}/v[0-9]+
 {{- end }}

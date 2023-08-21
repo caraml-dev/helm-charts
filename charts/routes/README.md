@@ -94,7 +94,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.turing.uiServiceName | string | `"turing"` |  |
 | global.turing.useServiceFqdn | bool | `true` |  |
 | global.turing.vsPrefix | string | `"/api/turing"` |  |
-| global.xp.apiPrefix | string | `"/"` |  |
+| global.xp.apiPrefix | string | `"/v1"` |  |
 | global.xp.externalPort | string | `"8080"` |  |
 | global.xp.serviceName | string | `"xp-management"` |  |
 | global.xp.uiPrefix | string | `"/xp"` |  |
