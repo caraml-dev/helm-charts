@@ -1,7 +1,7 @@
 # caraml-routes
 
 ---
-![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square)
+![Version: 0.2.3](https://img.shields.io/badge/Version-0.2.3-informational?style=flat-square)
 ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML networking resources
@@ -133,7 +133,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | turing.docs.destHost | string | `"turing"` |  |
 | turing.docs.destPort | int | `8080` |  |
 | turing.docs.redirectMatch | string | `"/turing/rest-api"` |  |
-| turing.docs.rewriteUri | string | `"/api-docs"` |  |
+| turing.docs.rewriteUri | string | `"/api-docs/"` |  |
 | turing.enabled | bool | `true` |  |
 | xp.api.appName | string | `"xp"` |  |
 | xp.api.authHeader | bool | `false` |  |
