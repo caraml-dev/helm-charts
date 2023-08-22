@@ -1,4 +1,4 @@
-{{- $globServiceName := include "common.get-component-value" (list .Values.global "xp" (list "serviceName")) }}
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "xp-treatment" (list "serviceName")) }}
 {{- if .Values.swaggerUi.enabled }}
 apiVersion: v1
 kind: Service

@@ -1,4 +1,4 @@
-{{- $globServiceName := include "common.get-component-value" (list .Values.global "xp" (list "serviceName")) }}
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "xp-treatment" (list "serviceName")) }}
 apiVersion: v1
 kind: Service
 metadata:
