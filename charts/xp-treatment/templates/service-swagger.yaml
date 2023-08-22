@@ -1,8 +1,9 @@
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "xp-treatment" (list "serviceName")) }}
 {{- if .Values.swaggerUi.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "treatment-svc.fullname" . }}-swagger
+  name: {{ include "common.set-value" (list (include "treatment-svc.fullname" .) $globServiceName) }}-swagger
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "treatment-svc.labels" . | nindent 4 }}

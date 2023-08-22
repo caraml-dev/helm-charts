@@ -8,6 +8,8 @@ global:
     useServiceFqdn: true
     uiPrefix: "/xp"
     uiServiceName: xp-management
+  xp-treatment:
+    serviceName: xp-treatment
 deployment:
   replicaCount: "1"
   resources:

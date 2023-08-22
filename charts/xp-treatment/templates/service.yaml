@@ -1,7 +1,8 @@
+{{- $globServiceName := include "common.get-component-value" (list .Values.global "xp-treatment" (list "serviceName")) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "treatment-svc.fullname" . }}
+  name: {{ include "common.set-value" (list (include "treatment-svc.fullname" .) $globServiceName) }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "treatment-svc.labels" . | nindent 4 }}
