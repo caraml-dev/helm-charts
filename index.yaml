@@ -5281,6 +5281,48 @@ entries:
   caraml-routes:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-08-22T02:19:48.077278311Z"
+    dependencies:
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.1
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.4
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.8.1
+    - condition: common.enabled
+      name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.5
+    description: A Helm chart for deploying CaraML networking resources
+    digest: e91e938bf379ab4c2fb79f3e4bc6acb9241154a28e2573b4be6bf50fc4387485
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml-routes
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-routes-0.2.3/caraml-routes-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-02-07T04:51:22.466664519Z"
     dependencies:
     - alias: istiod
@@ -11753,6 +11795,32 @@ entries:
   xp-management:
   - apiVersion: v2
     appVersion: 0.12.1
+    created: "2023-08-22T02:19:48.252417948Z"
+    dependencies:
+    - alias: xp-management-postgresql
+      condition: xp-management-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.20
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.9
+    description: Management service - A part of XP system that is used to configure
+      experiments
+    digest: d1487f3eb5707200319c4cc0cf97b2a1c4c9eb347709df84465e39262697c283
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: xp-management
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/xp-management-0.2.6/xp-management-0.2.6.tgz
+    version: 0.2.6
+  - apiVersion: v2
+    appVersion: 0.12.1
     created: "2023-08-14T10:08:58.758548993Z"
     dependencies:
     - alias: xp-management-postgresql
@@ -12646,4 +12714,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-08-17T07:30:05.274780178Z"
+generated: "2023-08-22T02:19:48.253324829Z"
