@@ -17,4 +17,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: mlp
-version: 0.6.1
+version: 0.6.2

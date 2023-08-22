@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) ![AppVersion: v1.10.0](https://img.shields.io/badge/AppVersion-v1.10.0-informational?style=flat-square)
+![Version: 0.6.2](https://img.shields.io/badge/Version-0.6.2-informational?style=flat-square) ![AppVersion: v1.10.0](https://img.shields.io/badge/AppVersion-v1.10.0-informational?style=flat-square)
 
 MLP API
 
@@ -41,7 +41,7 @@ MLP API
 | config.ui.clockworkUIHomepage | string | `"http://clockwork.dev"` |  |
 | config.ui.kubeflowUIHomepage | string | `"http://kubeflow.org"` |  |
 | deployment.extraLabels | object | `{}` | Additional labels to apply on the deployment |
-| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"caraml-dev/mlp","tag":"v1.7.7-build.63-8309142"}` | mlp image related configs |
+| deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"caraml-dev/mlp","tag":"v1.10.1"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |
 | deployment.podLabels | object | `{}` | Additional labels to apply on the pod level |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` |  |
