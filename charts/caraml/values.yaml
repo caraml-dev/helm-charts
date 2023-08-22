@@ -15,9 +15,6 @@ global:
     mlp: ["console"]
     mlpdocs: ["docs"]
     mlflow: ["mlflow"]
-  authz:
-    postgresqlDatabase: authz
-    serviceName: caraml-authz
   mlp:
     postgresqlDatabase: mlp
     apiPrefix: ""  # path prefix to where mlp endpoints lie if running on localhost
@@ -55,6 +52,7 @@ global:
 
 
 mlp:
+  fullnameOverride: mlp
   # -- To enable/disable MLP chart installation.
   enabled: true
   postgresql:
@@ -63,6 +61,16 @@ mlp:
   deployment:
     authorization:
       enabled: true
+  keto:
+    enabled: true
+    fullnameOverride: mlp-keto
+    deployment:
+      resources:
+        requests:
+          cpu: "250m"
+          memory: 256Mi
+        limits:
+          memory: 256Mi
 merlin:
   # -- To enable/disable merlin chart installation.
   enabled: true
@@ -155,59 +163,7 @@ merlin:
       cert-manager:
         enabled: true
 caraml-authz:
-  enabled: true
-  caraml-authz-postgresql:
-    enabled: false
-  bootstrap:
-    # -- You can add keto roles that can give access to CaraML components.
-    roles:
-      - id: "roles:admin"
-        members:
-          - "users:caram.user@caraml.dev"
-    # -- Following are the keto policies that are used in CaraML components.
-    policies:
-      - id: "policies:admin"
-        description: Administrator policy to gain access to all resources
-        subjects: ["roles:admin"]
-        resources: ["resources:**"]
-        actions: ["actions:**"]
-        effect: allow
-      - id: "policies:allow-read-all-projects"
-        description: Allow reading of all mlp projects
-        subjects: ["roles:project-reader"]
-        resources: ["resources:mlp:projects:**"]
-        actions: ["actions:read"]
-        effect: allow
-      - id: "policies:allow-all-list-environments"
-        description: Allow all users to list merlin environment
-        subjects: ["roles:**", "users:**"]
-        resources: ["resources:mlp:environments"]
-        actions: ["actions:read"]
-        effect: allow
-      - id: "policies:allow-all-list-create-projects"
-        description: Allow all users to list and create mlp project
-        subjects: ["roles:**", "users:**"]
-        resources: ["resources:mlp:projects"]
-        actions: ["actions:read", "actions:create"]
-        effect: allow
-      - id: "policies:allow-all-list-applications"
-        description: Allow all users to list applications
-        subjects: ["roles:**", "users:**"]
-        resources: ["resources:mlp:applications"]
-        actions: ["actions:read"]
-        effect: allow
-      - id: "policies:allow-access-users-resources"
-        description: Allow all users to access API related to the user
-        subjects: ["roles:**", "users:**"]
-        resources: ["resources:mlp:users", "resources:mlp:users:**"]
-        actions: ["actions:read"]
-        effect: allow
-      - id: "policies:allow-all-standard-transformer-simulate"
-        description: Allow all users to simulate standard transformer
-        subjects: ["roles:**", "users:**"]
-        resources: ["resources:mlp:standard_transformer:simulate"]
-        actions: ["actions:create"]
-        effect: allow
+  enabled: false
 caraml-routes:
   enabled: true
   certManagerBase:
@@ -433,7 +389,9 @@ turing:
       limits:
         cpu: "500m"
         memory: 512Mi
-  config: {}
+  config:
+    AuthConfig:
+      Enabled: false
 
 ###################################################################
 # xp dependency

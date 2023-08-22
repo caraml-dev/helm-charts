@@ -1,29 +1,3 @@
-caraml-authz:
-  enabled: true
-  deployment:
-    replicaCount: "1"
-    resources: &resources
-      requests:
-        cpu: 25m
-        memory: 256Mi
-      limits:
-        cpu: "50m"
-        memory: 512Mi
-    initResources:
-      requests:
-        cpu: 25m
-        memory: 256Mi
-      limits:
-        cpu: "50m"
-        memory: 512Mi
-  bootstrap:
-    resources:
-      requests:
-        cpu: 25m
-        memory: 256Mi
-      limits:
-        cpu: "50m"
-        memory: 512Mi
 mlp:
   deployment:
     replicaCount: "1"
@@ -193,3 +167,9 @@ xp-management:
       limits:
         cpu: "50m"
         memory: 512Mi
+
+caraml-routes:
+  oathkeeper:
+    enabled: true
+  oathkeeperRules:
+    enabled: true

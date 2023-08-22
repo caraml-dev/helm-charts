@@ -1,6 +1,6 @@
 # caraml
 
-![Version: 0.6.24](https://img.shields.io/badge/Version-0.6.24-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML components
 
@@ -15,14 +15,14 @@ A Helm chart for deploying CaraML components
 | Repository | Name | Version |
 |------------|------|---------|
 | https://caraml-dev.github.io/helm-charts | caraml-authz(authz) | 0.1.12 |
-| https://caraml-dev.github.io/helm-charts | caraml-routes | 0.2.3 |
+| https://caraml-dev.github.io/helm-charts | caraml-routes | 0.3.0 |
 | https://caraml-dev.github.io/helm-charts | certManagerBase(cert-manager-base) | 1.8.1 |
 | https://caraml-dev.github.io/helm-charts | common | 0.2.9 |
 | https://caraml-dev.github.io/helm-charts | clusterLocalGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istioIngressGateway(generic-dep-installer) | 0.2.1 |
 | https://caraml-dev.github.io/helm-charts | istiod(generic-dep-installer) | 0.2.1 |
-| https://caraml-dev.github.io/helm-charts | merlin | 0.11.7 |
-| https://caraml-dev.github.io/helm-charts | mlp | 0.5.2 |
+| https://caraml-dev.github.io/helm-charts | merlin | 0.12.0 |
+| https://caraml-dev.github.io/helm-charts | mlp | 0.6.2 |
 | https://caraml-dev.github.io/helm-charts | turing | 0.2.35 |
 | https://caraml-dev.github.io/helm-charts | xp-management | 0.2.6 |
 | https://caraml-dev.github.io/helm-charts | xp-treatment | 0.1.20 |
@@ -37,10 +37,7 @@ A Helm chart for deploying CaraML components
 | base.enabled | bool | `true` | Set to false if there is an existing istio deployment |
 | base.global.istioNamespace | string | `"istio-system"` |  |
 | base.validationURL | string | `""` |  |
-| caraml-authz.bootstrap.policies | list | `[{"actions":["actions:**"],"description":"Administrator policy to gain access to all resources","effect":"allow","id":"policies:admin","resources":["resources:**"],"subjects":["roles:admin"]},{"actions":["actions:read"],"description":"Allow reading of all mlp projects","effect":"allow","id":"policies:allow-read-all-projects","resources":["resources:mlp:projects:**"],"subjects":["roles:project-reader"]},{"actions":["actions:read"],"description":"Allow all users to list merlin environment","effect":"allow","id":"policies:allow-all-list-environments","resources":["resources:mlp:environments"],"subjects":["roles:**","users:**"]},{"actions":["actions:read","actions:create"],"description":"Allow all users to list and create mlp project","effect":"allow","id":"policies:allow-all-list-create-projects","resources":["resources:mlp:projects"],"subjects":["roles:**","users:**"]},{"actions":["actions:read"],"description":"Allow all users to list applications","effect":"allow","id":"policies:allow-all-list-applications","resources":["resources:mlp:applications"],"subjects":["roles:**","users:**"]},{"actions":["actions:read"],"description":"Allow all users to access API related to the user","effect":"allow","id":"policies:allow-access-users-resources","resources":["resources:mlp:users","resources:mlp:users:**"],"subjects":["roles:**","users:**"]},{"actions":["actions:create"],"description":"Allow all users to simulate standard transformer","effect":"allow","id":"policies:allow-all-standard-transformer-simulate","resources":["resources:mlp:standard_transformer:simulate"],"subjects":["roles:**","users:**"]}]` | Following are the keto policies that are used in CaraML components. |
-| caraml-authz.bootstrap.roles | list | `[{"id":"roles:admin","members":["users:caram.user@caraml.dev"]}]` | You can add keto roles that can give access to CaraML components. |
-| caraml-authz.caraml-authz-postgresql.enabled | bool | `false` |  |
-| caraml-authz.enabled | bool | `true` |  |
+| caraml-authz.enabled | bool | `false` |  |
 | caraml-routes.cert-manager.enabled | bool | `false` |  |
 | caraml-routes.certManagerBase.enabled | bool | `false` |  |
 | caraml-routes.enabled | bool | `true` |  |
@@ -73,8 +70,6 @@ A Helm chart for deploying CaraML components
 | clusterLocalGateway.helmChart.repository | string | `"https://istio-release.storage.googleapis.com/charts"` |  |
 | clusterLocalGateway.helmChart.version | string | `"1.13.9"` |  |
 | clusterLocalGateway.hook.weight | int | `1` |  |
-| global.authz.postgresqlDatabase | string | `"authz"` |  |
-| global.authz.serviceName | string | `"caraml-authz"` |  |
 | global.dbSecretKey | string | `"postgresql-password"` |  |
 | global.hosts.mlflow[0] | string | `"mlflow"` |  |
 | global.hosts.mlp[0] | string | `"console"` |  |
@@ -188,6 +183,12 @@ A Helm chart for deploying CaraML components
 | merlin.mlp.enabled | bool | `false` |  |
 | mlp.deployment.authorization.enabled | bool | `true` |  |
 | mlp.enabled | bool | `true` | To enable/disable MLP chart installation. |
+| mlp.fullnameOverride | string | `"mlp"` |  |
+| mlp.keto.deployment.resources.limits.memory | string | `"256Mi"` |  |
+| mlp.keto.deployment.resources.requests.cpu | string | `"250m"` |  |
+| mlp.keto.deployment.resources.requests.memory | string | `"256Mi"` |  |
+| mlp.keto.enabled | bool | `true` |  |
+| mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
 | mlp.postgresql.enabled | bool | `false` | To enable/disable MLP specific postgres |
 | postgresql.enabled | bool | `true` | To enable/disable CaraML specific postgres |
 | postgresql.initdbScripts."init.sql" | string | `"CREATE DATABASE mlp;\nCREATE DATABASE merlin;\nCREATE DATABASE mlflow;\nCREATE DATABASE authz;\nCREATE DATABASE turing;\nCREATE DATABASE xp;\n"` |  |
@@ -195,7 +196,7 @@ A Helm chart for deploying CaraML components
 | postgresql.postgresqlDatabase | string | `"caraml"` | To set the database schema name created in postgres |
 | postgresql.postgresqlUsername | string | `"caraml"` | To set the user name for the database instance |
 | postgresql.resources | object | `{}` | Configure resource requests and limits, Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| turing.config | object | `{}` |  |
+| turing.config.AuthConfig.Enabled | bool | `false` |  |
 | turing.deployment.resources.limits.cpu | string | `"500m"` |  |
 | turing.deployment.resources.limits.memory | string | `"512Mi"` |  |
 | turing.deployment.resources.requests.cpu | string | `"250m"` |  |
