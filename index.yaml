@@ -5281,6 +5281,53 @@ entries:
   caraml-routes:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-08-22T04:33:32.712022675Z"
+    dependencies:
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.1
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.4
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.0
+    - alias: oathkeeper
+      condition: oathkeeper.enabled
+      name: oathkeeper
+      repository: https://k8s.ory.sh/helm/charts
+      version: 0.33.4
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.8.1
+    - condition: common.enabled
+      name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.5
+    description: A Helm chart for deploying CaraML networking resources
+    digest: 86c9fa9bd4674186779a2d3b1bb59365f6ba972c77303065ff7d2faffccbfca4
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml-routes
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-routes-0.3.0/caraml-routes-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-08-22T02:19:48.077278311Z"
     dependencies:
     - alias: istiod
@@ -12714,4 +12761,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-08-22T02:19:48.253324829Z"
+generated: "2023-08-22T04:33:32.712822481Z"
