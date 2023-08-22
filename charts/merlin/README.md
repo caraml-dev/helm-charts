@@ -1,8 +1,8 @@
 # merlin
 
 ---
-![Version: 0.11.7](https://img.shields.io/badge/Version-0.11.7-informational?style=flat-square)
-![AppVersion: v0.31.0-rc1](https://img.shields.io/badge/AppVersion-v0.31.0--rc1-informational?style=flat-square)
+![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square)
+![AppVersion: v0.32.0](https://img.shields.io/badge/AppVersion-v0.32.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -63,10 +63,11 @@ The following table lists the configurable parameters of the Merlin chart and th
 | clusterConfig.environmentConfigPath | string | `"environments.yaml"` | environmentConfigPath is a path to a file that contains environmentConfigs. See api/environments-dev.yaml for example contents |
 | clusterConfig.useInClusterConfig | bool | `false` | Configuration to tell Merlin API how it should authenticate with deployment k8s cluster By default, Merlin API expects to use a remote k8s cluster for deployment and to do so, it requires cluster access configurations to be configured as part of values.yaml |
 | config.AuthorizationConfig.AuthorizationEnabled | bool | `true` |  |
-| config.AuthorizationConfig.AuthorizationServerURL | string | `"http://mlp-authorization-keto"` |  |
 | config.AuthorizationConfig.Caching.CacheCleanUpIntervalSeconds | int | `900` | Cache clean up interval, after which expired keys are removed |
 | config.AuthorizationConfig.Caching.Enabled | bool | `false` | Whether local in-memory caching of authorization responses should be enabled |
 | config.AuthorizationConfig.Caching.KeyExpirySeconds | int | `600` | Cache key expiry duration |
+| config.AuthorizationConfig.KetoRemoteRead | string | `"http://mlp-keto-read:80"` |  |
+| config.AuthorizationConfig.KetoRemoteWrite | string | `"http://mlp-keto-write:80"` |  |
 | config.DbConfig.Database | string | `"merlin"` |  |
 | config.DbConfig.Host | string | `"localhost"` |  |
 | config.DbConfig.Password | string | `"merlin"` |  |
@@ -155,7 +156,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.0.0-271a1277dd8d63acc114ace44310e207b04751dc"` |  |
+| deployment.image.tag | string | `"0.32.0"` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -328,6 +329,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
+| mlp.fullnameOverride | string | `"mlp"` |  |
+| mlp.keto.enabled | bool | `true` |  |
+| mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |

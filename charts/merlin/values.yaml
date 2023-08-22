@@ -5,7 +5,7 @@ deployment:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: caraml-dev/merlin
-    tag: 0.0.0-271a1277dd8d63acc114ace44310e207b04751dc
+    tag: 0.32.0
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -102,7 +102,8 @@ config:
     Password: merlin
   AuthorizationConfig:
     AuthorizationEnabled: true
-    AuthorizationServerURL: http://mlp-authorization-keto
+    KetoRemoteRead: "http://mlp-keto-read:80"
+    KetoRemoteWrite: "http://mlp-keto-write:80"
     Caching:
       # -- Whether local in-memory caching of authorization responses should be enabled
       Enabled: false
@@ -426,8 +427,12 @@ merlin-postgresql:
     size: 10Gi
 mlp:
   enabled: true
+  fullnameOverride: mlp
   environmentConfigSecret:
     name: ""
+  keto:
+    enabled: true
+    fullnameOverride: mlp-keto
 mlflow:
   # This should be the actual DNS registered
   trackingURL: "http://www.example.com"
