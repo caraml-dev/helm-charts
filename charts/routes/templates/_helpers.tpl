@@ -118,3 +118,19 @@ Function to add generate Uri Match and redirect match for routess
 {{- define "caraml-routes.tls-cert-name" }}
 {{- printf "%s-%s" (include "caraml-routes.fullname" .) (.Values.https.tls.credentialName)}}
 {{- end }}
+
+{{- define "caraml-routes.oathkeeper.mlp.hostRegex" -}}
+https?://({{ (join "|" .Values.global.hosts.mlp) | replace "." "\\." }})
+{{- end }}
+
+{{- define "caraml-routes.oathkeeper.mlp.regexPrefix" -}}
+{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.mlp.vsPrefix }}/v[0-9]+
+{{- end }}
+
+{{- define "caraml-routes.oathkeeper.turing.regexPrefix" -}}
+{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.turing.vsPrefix }}/v[0-9]+
+{{- end }}
+
+{{- define "caraml-routes.oathkeeper.xp.regexPrefix" -}}
+{{ include "caraml-routes.oathkeeper.mlp.hostRegex" . }}{{ .Values.global.xp.vsPrefix }}/v[0-9]+
+{{- end }}

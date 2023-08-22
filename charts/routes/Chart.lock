@@ -8,6 +8,9 @@ dependencies:
 - name: generic-dep-installer
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.1.0
+- name: oathkeeper
+  repository: https://k8s.ory.sh/helm/charts
+  version: 0.33.4
 - name: cert-manager-base
   repository: https://caraml-dev.github.io/helm-charts
   version: 1.8.1
@@ -17,5 +20,5 @@ dependencies:
 - name: common
   repository: https://caraml-dev.github.io/helm-charts
   version: 0.2.5
-digest: sha256:dca88f74ce8433841eeac553e7ae6b8a6d98120a784d5bd3930c3ff2f6fb94d2
-generated: "2022-11-17T12:59:23.484808+05:30"
+digest: sha256:a7cbcdd76866549240db3c113a6654aa472871b4bdb690b277d3022712fe6fa1
+generated: "2023-08-02T09:16:14.703545+08:00"

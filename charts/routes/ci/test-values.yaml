@@ -273,3 +273,12 @@ istioIngressGateway:
       # The name of the service account to use.
       # If not set, the release name is used
       name: "istio-ingressgateway"
+
+############################################################
+# Oathkeeper
+############################################################
+oathkeeper:
+  enabled: true
+
+oathkeeperRules:
+  enabled: true

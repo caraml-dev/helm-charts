@@ -1,7 +1,7 @@
 # caraml-routes
 
 ---
-![Version: 0.2.3](https://img.shields.io/badge/Version-0.2.3-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square)
 ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML networking resources
@@ -94,7 +94,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.turing.uiServiceName | string | `"turing"` |  |
 | global.turing.useServiceFqdn | bool | `true` |  |
 | global.turing.vsPrefix | string | `"/api/turing"` |  |
-| global.xp.apiPrefix | string | `"/"` |  |
+| global.xp.apiPrefix | string | `"/v1"` |  |
 | global.xp.externalPort | string | `"8080"` |  |
 | global.xp.serviceName | string | `"xp-management"` |  |
 | global.xp.uiPrefix | string | `"/xp"` |  |
@@ -125,6 +125,27 @@ The following table lists the configurable parameters of the Routes chart and th
 | mlp.enabled | bool | `true` |  |
 | mlpGateway.name | string | `"mlp-gateway"` |  |
 | mlpGateway.selector.istio | string | `"ingressgateway"` |  |
+| oathkeeper.deployment.serviceAccount.create | bool | `false` |  |
+| oathkeeper.enabled | bool | `false` |  |
+| oathkeeper.fullnameOverride | string | `"oathkeeper"` |  |
+| oathkeeper.hook.weight | int | `0` |  |
+| oathkeeper.maester.enabled | bool | `true` |  |
+| oathkeeper.mutatorIdTokenJWKs | string | `""` |  |
+| oathkeeper.oathkeeper-maester.fullnameOverride | string | `"oathkeeper-maester"` |  |
+| oathkeeper.oathkeeper-maester.oathkeeperFullnameOverride | string | `"oathkeeper"` |  |
+| oathkeeper.oathkeeper-maester.singleNamespaceMode | bool | `true` |  |
+| oathkeeper.oathkeeper.config.authenticators.jwt.config.jwks_urls[0] | string | `"https://www.googleapis.com/oauth2/v3/certs"` |  |
+| oathkeeper.oathkeeper.config.authenticators.jwt.enabled | bool | `true` |  |
+| oathkeeper.oathkeeper.config.authorizers.allow.enabled | bool | `true` |  |
+| oathkeeper.oathkeeper.config.authorizers.remote_json.config.payload | string | `"{}"` |  |
+| oathkeeper.oathkeeper.config.authorizers.remote_json.config.remote | string | `"http://localhost:4456/relation-tuples/check"` |  |
+| oathkeeper.oathkeeper.config.authorizers.remote_json.enabled | bool | `true` |  |
+| oathkeeper.oathkeeper.config.mutators.noop.enabled | bool | `true` |  |
+| oathkeeper.oathkeeper.managedAccessRules | bool | `false` |  |
+| oathkeeper.secret.enabled | bool | `true` |  |
+| oathkeeper.service.metrics.enabled | bool | `false` |  |
+| oathkeeper.service.proxy.enabled | bool | `false` |  |
+| oathkeeperRules.enabled | bool | `false` |  |
 | pipeline.enabled | bool | `true` |  |
 | turing.api.appName | string | `"turing"` |  |
 | turing.api.authHeader | bool | `false` |  |
