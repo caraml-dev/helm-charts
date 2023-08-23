@@ -148,7 +148,7 @@ config:
     CPUCost:  # Unused
     MemoryCost:  # Unused
   StandardTransformerConfig:
-    ImageName: merlin-transformer:1.0.0
+    ImageName: ghcr.io/caraml-dev/merlin-transformer:1.0.0
     SimulationFeast:
       FeastRedisURL: online-serving-redis.feast.dev
       FeastBigtableURL: online-serving-bt.feast.dev

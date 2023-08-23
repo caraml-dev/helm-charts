@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square)
+![Version: 0.12.1](https://img.shields.io/badge/Version-0.12.1-informational?style=flat-square)
 ![AppVersion: v0.32.0](https://img.shields.io/badge/AppVersion-v0.32.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -135,7 +135,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.StandardTransformerConfig.FeastServingURLs[1].Icon | string | `"bigtable"` |  |
 | config.StandardTransformerConfig.FeastServingURLs[1].Label | string | `"Online Serving with BigTable"` |  |
 | config.StandardTransformerConfig.FeastServingURLs[1].SourceType | string | `"BIGTABLE"` |  |
-| config.StandardTransformerConfig.ImageName | string | `"merlin-transformer:1.0.0"` |  |
+| config.StandardTransformerConfig.ImageName | string | `"ghcr.io/caraml-dev/merlin-transformer:1.0.0"` |  |
 | config.StandardTransformerConfig.Jaeger.CollectorURL | string | `"http://jaeger-tracing-collector.infrastructure:14268/api/traces"` |  |
 | config.StandardTransformerConfig.Jaeger.Disabled | bool | `false` |  |
 | config.StandardTransformerConfig.Jaeger.SamplerParam | int | `1` |  |

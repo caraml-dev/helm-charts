@@ -268,7 +268,7 @@ ImageBuilderConfig:
   ClusterName: {{ .Values.imageBuilder.clusterName }}
   K8sConfig:
 {{ .Values.imageBuilder.k8sConfig | toYaml | indent 4 }}
-  {{- if .Values.imageBuilder.serviceAccount.name }}
+  {{- if (or .Values.imageBuilder.serviceAccount.create .Values.imageBuilder.serviceAccount.name) }}
   KanikoServiceAccount: {{ include "merlin.kaniko-sa" . }}
   {{- end }}
 {{ .Values.imageBuilder.builderConfig | toYaml | indent 2 }}
