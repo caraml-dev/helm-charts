@@ -14,8 +14,9 @@ tests:
       oathkeeperRules:
         enabled: true
       global:
+        domain: "caraml.com"
         hosts:
-          mlp: ["console.com", "console.org"]
+          mlp: ["console"]
         mlp:
           vsPrefix: "/mlp"
           apiPrefix: "/v2"
@@ -26,7 +27,7 @@ tests:
           of: Rule
       - matchRegex:
           path: spec.match.url
-          pattern: ^<https\?://\(console\\\.com\|console\\\.org\)/mlp/v\[0\-9\]\+>/applications$
+          pattern: ^<https\?://\(console\\\.caraml\\\.com\)/mlp/v\[0\-9\]\+>/applications$
   - it: should create mlp rule only if mlp is enabled
     set:
       oathkeeperRules:
@@ -40,8 +41,9 @@ tests:
       oathkeeperRules:
         enabled: true
       global:
+        domain: "caraml.com"
         hosts:
-          mlp: ["console.com", "console.org"]
+          mlp: ["console"]
         turing:
           vsPrefix: "/turing"
           apiPrefix: "/v2"
@@ -52,4 +54,4 @@ tests:
           of: Rule
       - matchRegex:
           path: spec.match.url
-          pattern: ^<https\?://\(console\\\.com\|console\\\.org\)/turing/v\[0\-9\]\+>/experiment-engines<\(/\.\+\)\?>$
+          pattern: ^<https\?://\(console\\\.caraml\\\.com\)/turing/v\[0\-9\]\+>/experiment-engines<\(/\.\+\)\?>$

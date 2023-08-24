@@ -120,7 +120,11 @@ Function to add generate Uri Match and redirect match for routess
 {{- end }}
 
 {{- define "caraml-routes.oathkeeper.mlp.hostRegex" -}}
-https?://({{ (join "|" .Values.global.hosts.mlp) | replace "." "\\." }})
+{{- $hosts := list -}}
+{{- range .Values.global.hosts.mlp -}}
+{{- $hosts = print (include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global))) | append $hosts -}}
+https?://({{ (join "|" $hosts) | replace "." "\\." }})
+{{- end -}}
 {{- end }}
 
 {{- define "caraml-routes.oathkeeper.mlp.regexPrefix" -}}
