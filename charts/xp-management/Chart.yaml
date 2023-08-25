@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.12.2
+appVersion: 0.12.1
 dependencies:
 - alias: xp-management-postgresql
   condition: xp-management-postgresql.enabled
@@ -18,4 +18,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: xp-management
-version: 0.2.6
+version: 0.2.7
