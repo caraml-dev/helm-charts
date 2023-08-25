@@ -23,6 +23,14 @@ spec:
         - name: bootstrap
           mountPath: /etc/caraml
           readOnly: true
+      {{- with .Values.bootstrap.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.bootstrap.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
       - name: bootstrap
         configMap:
