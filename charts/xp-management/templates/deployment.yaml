@@ -46,7 +46,7 @@ spec:
                 name: {{ include "common.postgres-password-secret-name" (list (index .Values "xp-management-postgresql") .Values.xpManagementExternalPostgresql .Release .Chart ) }}
                 key: {{ include "common.postgres-password-secret-key" (list .Values.xpManagementExternalPostgresql) }}
           {{- with .Values.deployment.extraEnvs }}
-          {{- toYaml . | nindent 12 }}
+          {{- toYaml . | nindent 10 }}
           {{- end }}
         ports:
           - name: http
