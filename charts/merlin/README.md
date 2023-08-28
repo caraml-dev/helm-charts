@@ -135,7 +135,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.StandardTransformerConfig.FeastServingURLs[1].Icon | string | `"bigtable"` |  |
 | config.StandardTransformerConfig.FeastServingURLs[1].Label | string | `"Online Serving with BigTable"` |  |
 | config.StandardTransformerConfig.FeastServingURLs[1].SourceType | string | `"BIGTABLE"` |  |
-| config.StandardTransformerConfig.ImageName | string | `"ghcr.io/caraml-dev/merlin-transformer:1.0.0"` |  |
 | config.StandardTransformerConfig.Jaeger.CollectorURL | string | `"http://jaeger-tracing-collector.infrastructure:14268/api/traces"` |  |
 | config.StandardTransformerConfig.Jaeger.Disabled | bool | `false` |  |
 | config.StandardTransformerConfig.Jaeger.SamplerParam | int | `1` |  |
@@ -156,7 +155,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.32.0"` |  |
+| deployment.image.tag | string | `""` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -192,20 +191,14 @@ The following table lists the configurable parameters of the Merlin chart and th
 | environmentConfigs[0].queue_resource_percentage | string | `"20"` |  |
 | environmentConfigs[0].region | string | `"id"` |  |
 | global.protocol | string | `"http"` |  |
-| imageBuilder.builderConfig.BaseImages."3.7.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.builderConfig.BaseImages."3.7.*".DockerfilePath | string | `"docker/Dockerfile"` |  |
-| imageBuilder.builderConfig.BaseImages."3.7.*".ImageName | string | `"pyfunc-py37:v0.1.0"` |  |
-| imageBuilder.builderConfig.BaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| imageBuilder.builderConfig.BaseImages | object | `{}` |  |
 | imageBuilder.builderConfig.BuildNamespace | string | `"mlp"` |  |
 | imageBuilder.builderConfig.BuildTimeout | string | `"30m"` |  |
 | imageBuilder.builderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
 | imageBuilder.builderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
 | imageBuilder.builderConfig.MaximumRetry | int | `3` |  |
 | imageBuilder.builderConfig.NodeSelectors | object | `{}` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".DockerfilePath | string | `"docker/app.Dockerfile"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".ImageName | string | `"pyspark-py37:v0.1.0"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages | object | `{}` |  |
 | imageBuilder.builderConfig.Resources.Limits.CPU | string | `"1"` |  |
 | imageBuilder.builderConfig.Resources.Limits.Memory | string | `"1Gi"` |  |
 | imageBuilder.builderConfig.Resources.Requests.CPU | string | `"1"` |  |
@@ -332,6 +325,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlp.fullnameOverride | string | `"mlp"` |  |
 | mlp.keto.enabled | bool | `true` |  |
 | mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
+| releasedVersion | string | `"0.32.0"` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |

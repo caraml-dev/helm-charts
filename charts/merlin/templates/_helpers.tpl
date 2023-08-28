@@ -299,5 +299,12 @@ MlflowConfig:
 
 {{- define "merlin.config" -}}
 {{- $defaultConfig := include "merlin.defaultConfig" . | fromYaml -}}
-{{ .Values.config | merge $defaultConfig | toYaml }}
+{{- $renderedConfig := include "merlin.renderedConfig" (list .Values.releasedVersion ) | fromYaml -}}
+{{  .Values.config | merge ( $renderedConfig | merge $defaultConfig) | toYaml }}
+{{- end -}}
+
+
+{{- define "merlin.deploymentTag" -}}
+{{- $tag :=  ternary .Values.deployment.image.tag .Values.releasedVersion (ne .Values.deployment.image.tag "") -}}
+{{- printf "%s%s:%s" (ternary (printf "%s/" .Values.deployment.image.registry) "" (ne .Values.deployment.image.registry "")) .Values.deployment.image.repository $tag -}}
 {{- end -}}
