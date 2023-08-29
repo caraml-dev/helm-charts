@@ -1,8 +1,9 @@
 global:
   protocol: http
 
-releasedVersion: 1.11.0
-ensemblerTag: v0.0.0-build.321-78ca7b3
+rendered:
+  releasedVersion: 1.11.0
+  ensemblerTag: v0.0.0-build.321-78ca7b3
 deployment:
   image:
     # -- Docker registry for Turing image

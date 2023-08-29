@@ -76,7 +76,6 @@ The following table lists the configurable parameters of the Turing chart and th
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` | HTTP path for readiness check |
 | deployment.resources | object | `{}` | Resources requests and limits for Turing API. This should be set according to your cluster capacity and service level objectives. Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
-| ensemblerTag | string | `"v0.0.0-build.321-78ca7b3"` |  |
 | environmentConfigs | list | `[{"k8s_config":{"cluster":{},"name":"dev-cluster","user":{}},"name":"dev"}]` | Set this field to configure environment configs. See api/environments-dev.yaml for sample structure |
 | experimentEngines | list | `[]` | Turing Experiment Engines configuration |
 | global.protocol | string | `"http"` |  |
@@ -96,7 +95,8 @@ The following table lists the configurable parameters of the Turing chart and th
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | openApiSpecOverrides | object | `{}` | Override OpenAPI spec as long as it follows the OAS3 specifications. A common use for this is to set the enums of the ExperimentEngineType. See api/api/override-sample.yaml for an example. |
-| releasedVersion | string | `"1.11.0"` |  |
+| rendered.ensemblerTag | string | `"v0.0.0-build.321-78ca7b3"` |  |
+| rendered.releasedVersion | string | `"1.11.0"` |  |
 | sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` | Turing API Kubernetes service port number |
 | service.internalPort | int | `8080` | Turing API container port number |

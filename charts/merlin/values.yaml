@@ -1,6 +1,7 @@
 global:
   protocol: http
-releasedVersion: 0.32.0
+rendered:
+  releasedVersion: 0.32.0
 deployment:
   image:
     pullPolicy: IfNotPresent

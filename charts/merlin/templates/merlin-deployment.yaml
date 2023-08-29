@@ -45,7 +45,7 @@ spec:
       {{- end }}
       containers:
       - name: merlin
-        image: {{ template "merlin.deploymentTag" . }}
+        image: {{ include "merlin.deploymentTag" (list $ . .Values.rendered) }}
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         ports:
           - containerPort: {{ .Values.service.internalPort }}

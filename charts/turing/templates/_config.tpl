@@ -1,6 +1,8 @@
 {{- define "turing.renderedConfig" -}}
-{{- $tag := index . 0 }}
-{{- $ensemblerTag := index . 1 }}
+{{- $ := index . 0 }}
+{{- $rendered := index . 2}}
+{{- $tag := $rendered.releasedVersion}}
+{{- $ensemblerTag := $rendered.ensemblerTag }}
 {{- $imagePrefix := "ghcr.io/caraml-dev/turing/pyfunc-ensembler-job-py" -}}
 {{- $imagePrefix2 := "ghcr.io/caraml-dev/turing/pyfunc-ensembler-service-py" -}}
 BatchEnsemblingConfig:
