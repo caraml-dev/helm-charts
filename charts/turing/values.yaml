@@ -1,6 +1,8 @@
 global:
   protocol: http
 
+releasedVersion: 1.11.0
+ensemblerTag: v0.0.0-build.321-78ca7b3
 deployment:
   image:
     # -- Docker registry for Turing image
@@ -180,10 +182,10 @@ config:
       BuildNamespace: default
       BuildTimeoutDuration: 20m
       DestinationRegistry: ghcr.io
-      BaseImageRef:
-        3.7.*: ghcr.io/caraml-dev/turing/pyfunc-ensembler-service:latest
+      BaseImageRef: {}
+        # 3.7.*: ghcr.io/caraml-dev/turing/pyfunc-ensembler-service:latest
       KanikoConfig:
-        BuildContextURI: git://github.com/caraml-dev/turing.git#refs/heads/main
+        # BuildContextURI: git://github.com/caraml-dev/turing.git#refs/heads/main
         DockerfileFilePath: engines/pyfunc-ensembler-service/app.Dockerfile
         Image: gcr.io/kaniko-project/executor
         ImageVersion: v1.6.0
