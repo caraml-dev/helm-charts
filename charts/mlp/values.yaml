@@ -234,21 +234,6 @@ config:
             destination: /jobs
           - label: Experiments
             destination: /experiments
-    - name: Feast
-      description: Platform for managing and serving ML features
-      homepage: /feast
-      configuration:
-        api: /feast/api
-        iconName: appSearchApp
-        navigation:
-          - label: Entities
-            destination: /entities
-          - label: Feature Tables
-            destination: /featuretables
-          - label: Batch Ingestion Jobs
-            destination: /jobs/batch
-          - label: Stream Ingestion Jobs
-            destination: /jobs/stream
     - name: Pipelines
       description: Platform for managing ML pipelines
       homepage: /pipeline
