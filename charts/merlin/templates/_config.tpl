@@ -1,6 +1,7 @@
 {{- define "merlin.renderedConfig" -}}
 {{- $ := index . 0 }}
 {{- $rendered := index . 2}}
+{{- if $rendered }}
 {{- $tag := $rendered.releasedVersion}}
 {{ with index . 1 }}
 # Now we have access to the "real" root and current contexts
@@ -46,5 +47,6 @@ ImageBuilderConfig:
       MainAppPath: "/home/spark/merlin-spark-app/main.py"
 StandardTransformerConfig:
   ImageName: ghcr.io/caraml-dev/merlin-transformer:{{ printf "%s" $tag }}
+{{- end -}}
 {{- end -}}
 {{- end -}}

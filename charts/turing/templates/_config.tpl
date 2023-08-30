@@ -1,6 +1,7 @@
 {{- define "turing.renderedConfig" -}}
 {{- $ := index . 0 }}
 {{- $rendered := index . 2}}
+{{- if $rendered }}
 {{- $tag := $rendered.releasedVersion}}
 {{- $ensemblerTag := $rendered.ensemblerTag }}
 {{- $imagePrefix := "ghcr.io/caraml-dev/turing/pyfunc-ensembler-job-py" -}}
@@ -27,4 +28,5 @@ EnsemblerServiceBuilderConfig:
       <<: *kanikoConfig
 RouterDefaults:
   Image: ghcr.io/caraml-dev/turing/turing-router:v{{ printf "%s" $tag }}
+{{- end -}}
 {{- end -}}
