@@ -29,9 +29,6 @@ tests:
             .*api: \/api\/turing\/v1
             .*homepage: \/turing
             .*name: Turing
-            .*api: \/feast\/api
-            .*homepage: \/feast
-            .*name: Feast
             .*oauthClientID: oauthId
   - it: should set the configs from global if global values found
     set:
@@ -70,9 +67,6 @@ tests:
             .*api: \/api\/turing\/v1
             .*homepage: \/turing
             .*name: Turing
-            .*api: \/feast\/api
-            .*homepage: \/feast
-            .*name: Feast
             .*oauthClientID: test-client-123
   - it: should set the authorization server url from Keto subchart default value if keto dependency is enabled but keto remote endpoints are not specified in mlp config
     set:
