@@ -6,16 +6,21 @@
 {{- $ensemblerTag := $rendered.ensemblerTag }}
 {{- $imagePrefix := "ghcr.io/caraml-dev/turing/pyfunc-ensembler-job-py" -}}
 {{- $imagePrefix2 := "ghcr.io/caraml-dev/turing/pyfunc-ensembler-service-py" -}}
+# Now we have access to the "real" root and current contexts
+# just as if we were outside of include/define:
+{{ with index . 1 }}
+{{- if $.Values.config.BatchEnsemblingConfig.Enabled }}
 BatchEnsemblingConfig:
-  ImageBuildingConfig: &imageBuildingConfig
+  ImageBuildingConfig:
     DestinationRegistry: asia.gcr.io/gods-production/turing/ensemblers
     BaseImageRef:
       3.7.*: {{ printf "%s%s:%s" $imagePrefix "3.7" $ensemblerTag }}
       3.8.*: {{ printf "%s%s:%s" $imagePrefix "3.8" $ensemblerTag }}
       3.9.*: {{printf "%s%s:%s" $imagePrefix "3.9" $ensemblerTag }}
       3.10.*: {{ printf "%s%s:%s" $imagePrefix "3.10" $ensemblerTag }}
-  KanikoConfig: &kanikoConfig
-    BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags/v" $tag }}
+    KanikoConfig:
+      BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags/v" $tag }}
+{{- end -}}
 EnsemblerServiceBuilderConfig:
   ClusterName: products-production
   ImageBuildingConfig:
@@ -24,9 +29,10 @@ EnsemblerServiceBuilderConfig:
         3.8.*: {{ printf "%s%s:%s" $imagePrefix2 "3.8" $ensemblerTag }}
         3.9.*: {{printf "%s%s:%s" $imagePrefix2 "3.9" $ensemblerTag }}
         3.10.*: {{ printf "%s%s:%s" $imagePrefix2 "3.10" $ensemblerTag }}
-    KanikoConfig:
-      <<: *kanikoConfig
+    KanikoConfig: &kanikoConfig
+      BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags/v" $tag }}
 RouterDefaults:
   Image: ghcr.io/caraml-dev/turing/turing-router:v{{ printf "%s" $tag }}
+{{- end -}}
 {{- end -}}
 {{- end -}}
