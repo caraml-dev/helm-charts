@@ -213,6 +213,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
 | imageBuilder.builderConfig.Tolerations | list | `[]` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
+| imageBuilder.contextRef | string | `""` |  |
 | imageBuilder.k8sConfig | object | `{}` |  |
 | imageBuilder.serviceAccount.annotations | object | `{}` |  |
 | imageBuilder.serviceAccount.create | bool | `true` |  |

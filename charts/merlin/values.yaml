@@ -222,6 +222,7 @@ clusterConfig:
   environmentConfigPath: "environments.yaml"
 
 imageBuilder:
+  contextRef: ""
   serviceAccount:
     create: true
     name: "kaniko"
