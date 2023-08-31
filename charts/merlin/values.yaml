@@ -1,5 +1,8 @@
 global:
   protocol: http
+
+# rendered takes precedence over fields defined in config
+# set to empty dictionary to use values in config
 rendered:
   releasedVersion: 0.32.0
 deployment:
@@ -82,6 +85,7 @@ deployment:
   # - name: varlog
   #   mountPath: /var/log
 
+# if rendered is set, rendered template will overwrite config
 config:
   DeploymentLabelPrefix: "gojek.com/"
   Environment: dev
@@ -150,7 +154,7 @@ config:
     CPUCost:  # Unused
     MemoryCost:  # Unused
   StandardTransformerConfig:
-    # ImageName: ghcr.io/caraml-dev/merlin-transformer:1.0.0
+    ImageName: ghcr.io/caraml-dev/merlin-transformer:1.0.0
     SimulationFeast:
       FeastRedisURL: online-serving-redis.feast.dev
       FeastBigtableURL: online-serving-bt.feast.dev
@@ -243,18 +247,18 @@ imageBuilder:
   #     interactiveMode: IfAvailable
   #     provideClusterInfo: true
   builderConfig:
-    BaseImages: {}
-    #   3.7.*:
-    #     ImageName: pyfunc-py37:v0.1.0
-    #     DockerfilePath: "docker/Dockerfile"
-    #     BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-    #     MainAppPath: /merlin-spark-app/main.py
-    PredictionJobBaseImages: {}
-      # 3.7.*:
-      #   ImageName: pyspark-py37:v0.1.0
-      #   DockerfilePath: "docker/app.Dockerfile"
-      #   BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-      #   MainAppPath: /merlin-spark-app/main.py
+    BaseImages:
+      3.7.*:
+        ImageName: pyfunc-py37:v0.1.0
+        DockerfilePath: "docker/Dockerfile"
+        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
+        MainAppPath: /merlin-spark-app/main.py
+    PredictionJobBaseImages:
+      3.7.*:
+        ImageName: pyspark-py37:v0.1.0
+        DockerfilePath: "docker/app.Dockerfile"
+        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
+        MainAppPath: /merlin-spark-app/main.py
     BuildNamespace: "mlp"
     DockerRegistry: "dockerRegistry"
     BuildTimeout: "30m"
