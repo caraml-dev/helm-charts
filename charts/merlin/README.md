@@ -54,11 +54,11 @@ $ helm uninstall merlin
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 This includes the dependencies that were installed by the chart. Note that, any PVCs created by the chart will have to be deleted manually.
 
-### ReleasedVersion
-* The purpose of `.Values.releasedVersion` is to update all configs that share this tag using this 1 value in values.yaml
-`.Values.releasedVersion` is used in rendering `merlin.config` partial template and `merlin.deploymentTag` partial template
+### Rendered field
+* The purpose of `.Values.rendered.releasedVersion` is to update all configs that share this tag using this 1 value in values.yaml
+`.Values.rendered.releasedVersion` is used in rendering `merlin.config` partial template and `merlin.deploymentTag` partial template
 If .Values.deployment.image.tag is specified, it will overwrite the value in .Values.releasedVersion
-Values .Values.config will overwrite the generated that _config.tpl creates
+Values.  Rendered values will overwrite values in `.Values.config`
 Default value for .Value.deployment.image.tag and .Values.config is set to empty string respectively
 
 ## Configuration
