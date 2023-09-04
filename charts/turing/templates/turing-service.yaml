@@ -20,5 +20,5 @@ spec:
       targetPort: {{ .Values.service.internalPort }}
       protocol: TCP
   selector:
-    app: {{ template "turing.fullname" . }}
+    app: {{ template "turing.name" . }}
     release: {{ .Release.Name }}
