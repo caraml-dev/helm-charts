@@ -9,7 +9,7 @@
 {{- end -}}
 
 {{- define "turing.labels" -}}
-app: {{ include "turing.fullname" . }}
+app: {{ include "turing.name" . }}
 chart: {{ include "turing.chart" . }}
 release: {{ .Release.Name }}
 heritage: {{ .Release.Service }}
