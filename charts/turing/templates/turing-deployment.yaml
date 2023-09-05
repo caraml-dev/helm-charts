@@ -9,7 +9,7 @@ spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "turing.fullname" . }}
+      app: {{ template "turing.name" . }}
       release: {{ .Release.Name }}
   strategy:
     type: RollingUpdate
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "turing.fullname" . }}
+        app: {{ template "turing.name" . }}
         release: {{ .Release.Name }}
 {{- if .Values.deployment.labels }}
 {{ toYaml .Values.deployment.labels | indent 8 -}}

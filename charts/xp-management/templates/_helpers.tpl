@@ -43,6 +43,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "management-svc.labels" -}}
+app: {{ template "management-svc.name" .}}
 release: {{ .Release.Name }}
 app.kubernetes.io/name: {{ template "management-svc.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
@@ -52,7 +53,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
-{{ if .Values.extraLabels -}}
+{{- if .Values.extraLabels -}}
     {{ toYaml .Values.extraLabels -}}
 {{- end }}
 {{- end }}
