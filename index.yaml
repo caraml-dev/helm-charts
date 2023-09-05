@@ -11971,6 +11971,36 @@ entries:
   turing:
   - apiVersion: v2
     appVersion: 1.11.0
+    created: "2023-09-05T03:13:46.871901163Z"
+    dependencies:
+    - alias: turing-postgresql
+      condition: turing-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.20
+    - condition: merlin.enabled
+      name: merlin
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.11.7
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.9
+    description: Kubernetes-friendly multi-model orchestration and experimentation
+      system.
+    digest: 7dec63a808a204206312df036b710464968a068e99ed0f04902d19543847fbaa
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: turing
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/turing-0.2.36/turing-0.2.36.tgz
+    version: 0.2.36
+  - apiVersion: v2
+    appVersion: 1.11.0
     created: "2023-08-17T07:30:05.273918742Z"
     dependencies:
     - alias: turing-postgresql
@@ -12450,6 +12480,32 @@ entries:
     - https://github.com/caraml-dev/helm-charts/releases/download/turing-0.2.18/turing-0.2.18.tgz
     version: 0.2.18
   xp-management:
+  - apiVersion: v2
+    appVersion: 0.12.1
+    created: "2023-09-05T03:13:47.005838249Z"
+    dependencies:
+    - alias: xp-management-postgresql
+      condition: xp-management-postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.4.20
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.9
+    description: Management service - A part of XP system that is used to configure
+      experiments
+    digest: a7f87a15fb13d1b65405c159c0a78207d6df7b474210bdb70f6dea1a879337d6
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: xp-management
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/xp-management-0.2.8/xp-management-0.2.8.tgz
+    version: 0.2.8
   - apiVersion: v2
     appVersion: 0.12.1
     created: "2023-08-28T03:07:40.412324772Z"
@@ -13441,4 +13497,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-08-28T03:42:02.008039244Z"
+generated: "2023-09-05T03:13:47.007003764Z"
