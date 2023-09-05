@@ -15,6 +15,6 @@ spec:
       targetPort: {{ .Values.swaggerUi.service.internalPort }}
       protocol: TCP
   selector:
-    app: {{ template "management-svc.fullname" .}}
+    app: {{ template "management-svc.name" .}}
     release: {{ .Release.Name }}
 {{- end }}

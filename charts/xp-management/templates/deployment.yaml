@@ -22,7 +22,9 @@ spec:
       labels:
         app: {{ template "management-svc.name" .}}
         release: {{ .Release.Name }}
-        {{- include "management-svc.labels" . | nindent 8 }}
+        {{- if .Values.deployment.labels }}
+          {{- toYaml .Values.deployment.labels | nindent 8 -}}
+        {{- end }}
       {{- with .Values.deployment.annotations }}
       annotations:
       {{- toYaml . | nindent 8 }}
