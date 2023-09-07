@@ -1,10 +1,14 @@
 global:
   protocol: http
 
-# rendered takes precedence over fields defined in config
-# set to empty dictionary to use values in config
+# .rendered takes precedence over fields defined in .config
+# set .rendered to an empty dictionary to use the values specified in
+# .config when generating templates
 rendered:
   releasedVersion: 0.32.0
+
+# set deployment.image.tag to non-nil to overwrite
+# .rendered.releasedVersion
 deployment:
   image:
     pullPolicy: IfNotPresent

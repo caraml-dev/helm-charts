@@ -55,11 +55,10 @@ The command removes all the Kubernetes components associated with the chart and 
 This includes the dependencies that were installed by the chart. Note that, any PVCs created by the chart will have to be deleted manually.
 
 ### Rendered field
-* The purpose of `.Values.rendered.releasedVersion` is to update all configs that share this tag using this 1 value in values.yaml
-`.Values.rendered.releasedVersion` is used in rendering `merlin.config` partial template and `merlin.deploymentTag` partial template
-If .Values.deployment.image.tag is specified, it will overwrite the value in .Values.releasedVersion
-Values.  Rendered values will overwrite values in `.Values.config`
-Default value for .Value.deployment.image.tag and .Values.config is set to empty string respectively
+* The purpose of `.Values.rendered.*` is to configure parts of the helm chart that use the field * from 1 place
+* For example, `.Values.rendered.releasedVersion` is used in rendering `merlin.config` partial template and `merlin.deploymentTag` partial template
+* If `.Values.deployment.image.tag` is specified, it will overwrite the value in `.Values.releasedVersion`
+* The values in `.Values.rendered` will overwrite values in `.Values.config`
 
 ## Configuration
 The following table lists the configurable parameters of the Merlin chart and their default values.
