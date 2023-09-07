@@ -3,7 +3,7 @@ global:
 
 rendered:
   # -- releasedVersion refers to the git release or tag
-  releasedVersion: v1.11.0
+  releasedVersion: v1.14.2
   # -- ensemblerTag refers to the docker image tag
   ensemblerTag: v0.0.0-build.321-78ca7b3
 
