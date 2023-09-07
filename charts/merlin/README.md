@@ -57,6 +57,7 @@ This includes the dependencies that were installed by the chart. Note that, any 
 ### Rendered field
 * The purpose of `.Values.rendered.*` is to configure parts of the helm chart that use the field * from 1 place
 * For example, `.Values.rendered.releasedVersion` is used in rendering `merlin.config` partial template and `merlin.deploymentTag` partial template
+* `.Values.rendered.releasedVersion` should be a git release or tag. If the git release is `v1.0.4` then the `.Values.rendered.releasedVersion` should be `v1.0.4` (keep the v prefix)
 * If `.Values.deployment.image.tag` is specified, it will overwrite the value in `.Values.releasedVersion`
 * The values in `.Values.rendered` will overwrite values in `.Values.config`
 
@@ -338,7 +339,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlp.fullnameOverride | string | `"mlp"` |  |
 | mlp.keto.enabled | bool | `true` |  |
 | mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
-| rendered.releasedVersion | string | `"0.32.0"` |  |
+| rendered.releasedVersion | string | `"v0.32.0"` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |

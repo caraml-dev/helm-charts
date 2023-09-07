@@ -5,7 +5,8 @@ global:
 # set .rendered to an empty dictionary to use the values specified in
 # .config when generating templates
 rendered:
-  releasedVersion: 0.32.0
+  # releasedVersion refers to the git release or tag
+  releasedVersion: v0.32.0
 
 # set deployment.image.tag to non-nil to overwrite
 # .rendered.releasedVersion

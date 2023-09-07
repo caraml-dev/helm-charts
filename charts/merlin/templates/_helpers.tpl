@@ -308,7 +308,7 @@ MlflowConfig:
 {{- $ := index . 0 }}
 {{- $rendered := index . 2 }}
 {{- with index . 1}}
-{{- $tag :=  ternary $.Values.deployment.image.tag $rendered.releasedVersion (ne $.Values.deployment.image.tag "") -}}
+{{- $tag :=  ternary $.Values.deployment.image.tag (substr 1 (len $rendered.releasedVersion) $rendered.releasedVersion) (ne $.Values.deployment.image.tag "") -}}
 {{- printf "%s%s:%s" (ternary (printf "%s/" $.Values.deployment.image.registry) "" (ne $.Values.deployment.image.registry "")) $.Values.deployment.image.repository $tag -}}
 {{- end -}}
 {{- end -}}

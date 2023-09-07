@@ -129,7 +129,7 @@ tests:
         image:
           tag: ""
       rendered:
-        releasedVersion: 1.0.0-test-released-version
+        releasedVersion: v1.0.0-test-released-version
     asserts:
       - isKind:
           of: Deployment

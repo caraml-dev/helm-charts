@@ -57,6 +57,7 @@ This includes the dependencies that were installed by the chart. Note that, any 
 ### Rendered field
 * The purpose of `.Values.rendered.*` is to configure parts of the helm chart that use the field * from 1 place
 * For example, `.Values.rendered.releasedVersion` is used in rendering `turing.config` partial template and `turing.image` partial template
+* `.Values.rendered.releasedVersion` should be a git release or tag. If the git release is `v1.0.4` then the `.Values.rendered.releasedVersion` should be `v1.0.4` (keep the v prefix)
 * If `.Values.deployment.image.tag` is specified, it will overwrite the value in `.Values.releasedVersion`
 * The values in `.Values.rendered` will overwrite values in `.Values.config`
 
@@ -101,8 +102,8 @@ The following table lists the configurable parameters of the Turing chart and th
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | openApiSpecOverrides | object | `{}` | Override OpenAPI spec as long as it follows the OAS3 specifications. A common use for this is to set the enums of the ExperimentEngineType. See api/api/override-sample.yaml for an example. |
-| rendered.ensemblerTag | string | `"v0.0.0-build.321-78ca7b3"` |  |
-| rendered.releasedVersion | string | `"1.11.0"` |  |
+| rendered.ensemblerTag | string | `"v0.0.0-build.321-78ca7b3"` | ensemblerTag refers to the docker image tag |
+| rendered.releasedVersion | string | `"v1.11.0"` | releasedVersion refers to the git release or tag |
 | sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` | Turing API Kubernetes service port number |
 | service.internalPort | int | `8080` | Turing API container port number |

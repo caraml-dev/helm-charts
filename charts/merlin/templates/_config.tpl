@@ -1,15 +1,17 @@
 {{- define "merlin.contextRef" -}}
 {{- $ := index . 0 }}
 {{- $reference := index . 1 }}
-{{ $.Values.imageBuilder.contextRef | default (printf "refs/tags/v%s" $reference) }}
+{{ $.Values.imageBuilder.contextRef | default (printf "refs/tags/%s" $reference) }}
 {{- end -}}
 
 {{- define "merlin.renderedConfig" -}}
 {{- $ := index . 0 }}
 {{- $rendered := index . 2}}
 {{- if $rendered }}
-{{- $tag := $rendered.releasedVersion}}
-{{- $reference := include "merlin.contextRef" (list $ $tag) | trim }}
+# this is because merlin artifact versions have no v prefix
+# NOTE: Remove the substr once merlin artifacts are released with v prefix
+{{- $tag := $rendered.releasedVersion | substr 1 (len $rendered.releasedVersion) }}
+{{- $reference := include "merlin.contextRef" (list $ $rendered.releasedVersion) | trim }}
 {{ with index . 1 }}
 # Now we have access to the "real" root and current contexts
 # just as if we were outside of include/define:
