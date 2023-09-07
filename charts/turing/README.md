@@ -1,8 +1,8 @@
 # turing
 
 ---
-![Version: 0.2.36](https://img.shields.io/badge/Version-0.2.36-informational?style=flat-square)
-![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square)
+![AppVersion: 1.14.2](https://img.shields.io/badge/AppVersion-1.14.2-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
 
@@ -54,6 +54,13 @@ $ helm uninstall turing
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 This includes the dependencies that were installed by the chart. Note that, any PVCs created by the chart will have to be deleted manually.
 
+### Rendered field
+* The purpose of `.Values.rendered.*` is to configure parts of the helm chart that use the field * from 1 place
+* For example, `.Values.rendered.releasedVersion` is used in rendering `turing.config` partial template and `turing.image` partial template
+* `.Values.rendered.releasedVersion` should be a git release or tag. If the git release is `v1.0.4` then the `.Values.rendered.releasedVersion` should be `v1.0.4` (keep the v prefix)
+* If `.Values.deployment.image.tag` is specified, it will overwrite the value in `.Values.releasedVersion`
+* The values in `.Values.rendered` will overwrite values in `.Values.config`
+
 ## Configuration
 
 The following table lists the configurable parameters of the Turing chart and their default values.
@@ -71,7 +78,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | deployment.extraVolumes | list | `[]` | Extra volumes to attach to the Pod. For example, you can mount additional secrets to these volumes |
 | deployment.image.registry | string | `"ghcr.io"` | Docker registry for Turing image |
 | deployment.image.repository | string | `"caraml-dev/turing"` | Docker image repository for Turing image |
-| deployment.image.tag | string | `"v1.11.0-build.6-5695fb3"` | Docker image tag for Turing image |
+| deployment.image.tag | string | `""` | Docker image tag for Turing image |
 | deployment.labels | object | `{}` |  |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` | HTTP path for liveness check |
 | deployment.readinessProbe.path | string | `"/v1/internal/ready"` | HTTP path for readiness check |
@@ -95,6 +102,8 @@ The following table lists the configurable parameters of the Turing chart and th
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | openApiSpecOverrides | object | `{}` | Override OpenAPI spec as long as it follows the OAS3 specifications. A common use for this is to set the enums of the ExperimentEngineType. See api/api/override-sample.yaml for an example. |
+| rendered.ensemblerTag | string | `"v0.0.0-build.321-78ca7b3"` | ensemblerTag refers to the docker image tag |
+| rendered.releasedVersion | string | `"v1.14.2"` | releasedVersion refers to the git release or tag |
 | sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` | Turing API Kubernetes service port number |
 | service.internalPort | int | `8080` | Turing API container port number |

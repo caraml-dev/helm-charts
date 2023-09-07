@@ -38,7 +38,7 @@ heritage: {{ .Release.Service }}
 {{- define "turing.image" -}}
 {{- $registryName := .Values.deployment.image.registry -}}
 {{- $repositoryName := .Values.deployment.image.repository -}}
-{{- $tag := .Values.deployment.image.tag | toString -}}
+{{- $tag :=  (ternary .Values.deployment.image.tag .Values.rendered.releasedVersion (ne .Values.deployment.image.tag "")) | toString -}}
 {{- if $registryName }}
     {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
 {{- else -}}
@@ -202,7 +202,7 @@ EnsemblerServiceBuilderConfig:
 ClusterConfig:
   InClusterConfig: {{ .Values.clusterConfig.useInClusterConfig }}
   EnvironmentConfigPath: {{ include "turing.environments.absolutePath" . }}
-  EnsemblingServiceK8sConfig: 
+  EnsemblingServiceK8sConfig:
 {{ .Values.imageBuilder.k8sConfig | toYaml | indent 4}}
 DbConfig:
   Host: {{ include "common.postgres-host" (list (index .Values "turing-postgresql") .Values.turingExternalPostgresql .Release .Chart ) }}
@@ -254,5 +254,6 @@ OpenapiConfig:
 
 {{- define "turing.config" -}}
 {{- $defaultConfig := include "turing.defaultConfig" . | fromYaml -}}
-{{ .Values.config | merge $defaultConfig | toYaml }}
+{{- $renderedConfig := include "turing.renderedConfig" (list $ . .Values.rendered ) | fromYaml -}}
+{{-  merge $renderedConfig $defaultConfig .Values.config | toYaml }}
 {{- end -}}

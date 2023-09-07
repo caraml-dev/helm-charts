@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.12.2](https://img.shields.io/badge/Version-0.12.2-informational?style=flat-square)
+![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square)
 ![AppVersion: v0.32.0](https://img.shields.io/badge/AppVersion-v0.32.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -54,8 +54,14 @@ $ helm uninstall merlin
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 This includes the dependencies that were installed by the chart. Note that, any PVCs created by the chart will have to be deleted manually.
 
-## Configuration
+### Rendered field
+* The purpose of `.Values.rendered.*` is to configure parts of the helm chart that use the field * from 1 place
+* For example, `.Values.rendered.releasedVersion` is used in rendering `merlin.config` partial template and `merlin.deploymentTag` partial template
+* `.Values.rendered.releasedVersion` should be a git release or tag. If the git release is `v1.0.4` then the `.Values.rendered.releasedVersion` should be `v1.0.4` (keep the v prefix)
+* If `.Values.deployment.image.tag` is specified, it will overwrite the value in `.Values.releasedVersion`
+* The values in `.Values.rendered` will overwrite values in `.Values.config`
 
+## Configuration
 The following table lists the configurable parameters of the Merlin chart and their default values.
 
 | Key | Type | Default | Description |
@@ -156,7 +162,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.registry | string | `"ghcr.io"` |  |
 | deployment.image.repository | string | `"caraml-dev/merlin"` |  |
-| deployment.image.tag | string | `"0.32.0"` |  |
+| deployment.image.tag | string | `""` |  |
 | deployment.labels | object | `{}` |  |
 | deployment.podLabels | object | `{}` |  |
 | deployment.replicaCount | string | `"2"` |  |
@@ -214,6 +220,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
 | imageBuilder.builderConfig.Tolerations | list | `[]` |  |
 | imageBuilder.clusterName | string | `"test"` |  |
+| imageBuilder.contextRef | string | `""` |  |
 | imageBuilder.k8sConfig | object | `{}` |  |
 | imageBuilder.serviceAccount.annotations | object | `{}` |  |
 | imageBuilder.serviceAccount.create | bool | `true` |  |
@@ -332,6 +339,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlp.fullnameOverride | string | `"mlp"` |  |
 | mlp.keto.enabled | bool | `true` |  |
 | mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
+| rendered.releasedVersion | string | `"v0.32.0"` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |

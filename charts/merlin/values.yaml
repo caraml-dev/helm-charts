@@ -1,11 +1,21 @@
 global:
   protocol: http
+
+# .rendered takes precedence over fields defined in .config
+# set .rendered to an empty dictionary to use the values specified in
+# .config when generating templates
+rendered:
+  # releasedVersion refers to the git release or tag
+  releasedVersion: v0.32.0
+
+# set deployment.image.tag to non-nil to overwrite
+# .rendered.releasedVersion
 deployment:
   image:
     pullPolicy: IfNotPresent
     registry: ghcr.io
     repository: caraml-dev/merlin
-    tag: 0.32.0
+    tag: ""
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
@@ -80,6 +90,7 @@ deployment:
   # - name: varlog
   #   mountPath: /var/log
 
+# if rendered is set, rendered template will overwrite config
 config:
   DeploymentLabelPrefix: "gojek.com/"
   Environment: dev
@@ -220,6 +231,7 @@ clusterConfig:
   environmentConfigPath: "environments.yaml"
 
 imageBuilder:
+  contextRef: ""
   serviceAccount:
     create: true
     name: "kaniko"

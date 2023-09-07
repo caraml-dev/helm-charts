@@ -55,6 +55,13 @@ $ helm uninstall turing
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 This includes the dependencies that were installed by the chart. Note that, any PVCs created by the chart will have to be deleted manually.
 
+### Rendered field
+* The purpose of `.Values.rendered.*` is to configure parts of the helm chart that use the field * from 1 place
+* For example, `.Values.rendered.releasedVersion` is used in rendering `turing.config` partial template and `turing.image` partial template
+* `.Values.rendered.releasedVersion` should be a git release or tag. If the git release is `v1.0.4` then the `.Values.rendered.releasedVersion` should be `v1.0.4` (keep the v prefix)
+* If `.Values.deployment.image.tag` is specified, it will overwrite the value in `.Values.releasedVersion`
+* The values in `.Values.rendered` will overwrite values in `.Values.config`
+
 ## Configuration
 
 The following table lists the configurable parameters of the Turing chart and their default values.

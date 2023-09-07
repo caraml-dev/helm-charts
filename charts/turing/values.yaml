@@ -1,6 +1,12 @@
 global:
   protocol: http
 
+rendered:
+  # -- releasedVersion refers to the git release or tag
+  releasedVersion: v1.14.2
+  # -- ensemblerTag refers to the docker image tag
+  ensemblerTag: v0.0.0-build.321-78ca7b3
+
 deployment:
   image:
     # -- Docker registry for Turing image
@@ -8,7 +14,7 @@ deployment:
     # -- Docker image repository for Turing image
     repository: caraml-dev/turing
     # -- Docker image tag for Turing image
-    tag: v1.11.0-build.6-5695fb3
+    tag: ""
   labels: {}
   # -- Resources requests and limits for Turing API. This should be set
   # according to your cluster capacity and service level objectives.

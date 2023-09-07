@@ -28,7 +28,7 @@ tests:
       - equal: # check database secret key
           path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
           value: postgresql-password
-  
+
   - it: should set database secret key and name from values if chart specific db is disabled, external db is enabled, createSecret is set
     set:
       global: {}
@@ -78,3 +78,19 @@ tests:
       - equal: # check database secret key
           path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
           value: secret-key
+  - it: should set releasedVersion as deployment image tag if deployment image tag is unset
+    set:
+      deployment:
+        image:
+          tag: ""
+      rendered:
+        releasedVersion: 1.11.0-test-released-version
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-turing$
+      - equal: # check database secret name
+          path: spec.template.spec.containers[0].image
+          value: ghcr.io/caraml-dev/turing:1.11.0-test-released-version
