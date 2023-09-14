@@ -10,6 +10,8 @@ global:
     uiPrefix: "/"
     uiServiceName: mlp
 
+extraLabels:
+  test: 123
 deployment:
   replicaCount: "1"
   resources:

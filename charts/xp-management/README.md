@@ -62,6 +62,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.serviceAccount.annotations | object | `{}` |  |
 | deployment.serviceAccount.create | bool | `true` |  |
 | deployment.serviceAccount.name | string | `""` |  |
+| extraLabels | object | `{}` |  |
 | global.environment | string | `"dev"` | Environment of Management Service deployment |
 | global.mlp.apiPrefix | string | `""` |  |
 | global.mlp.externalPort | string | `"8080"` |  |

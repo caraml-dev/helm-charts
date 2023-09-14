@@ -10,6 +10,8 @@ global:
     uiServiceName: xp-management
   xp-treatment:
     serviceName: xp-treatment
+extraLabels:
+  test: 123
 deployment:
   replicaCount: "1"
   resources:
