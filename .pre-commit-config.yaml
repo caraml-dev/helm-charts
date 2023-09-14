@@ -6,7 +6,7 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.11.2
+    rev: v1.11.0
     hooks:
       - id: helm-docs
   - repo: https://github.com/gruntwork-io/pre-commit
