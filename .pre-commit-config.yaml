@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v4.4.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
@@ -10,6 +10,6 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.17
+    rev: v0.1.22
     hooks:
       - id: helmlint

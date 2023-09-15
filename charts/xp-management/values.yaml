@@ -11,6 +11,7 @@ global:
     externalPort: "8080"
     useServiceFqdn: true
 
+extraLabels: {}
 
 deployment:
   image:

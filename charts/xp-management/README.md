@@ -1,7 +1,7 @@
 # xp-management
 
 ---
-![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square)
+![Version: 0.2.9](https://img.shields.io/badge/Version-0.2.9-informational?style=flat-square)
 ![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
@@ -62,6 +62,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | deployment.serviceAccount.annotations | object | `{}` |  |
 | deployment.serviceAccount.create | bool | `true` |  |
 | deployment.serviceAccount.name | string | `""` |  |
+| extraLabels | object | `{}` |  |
 | global.environment | string | `"dev"` | Environment of Management Service deployment |
 | global.mlp.apiPrefix | string | `""` |  |
 | global.mlp.externalPort | string | `"8080"` |  |
