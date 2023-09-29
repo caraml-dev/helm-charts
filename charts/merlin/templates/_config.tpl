@@ -19,39 +19,39 @@ ImageBuilderConfig:
   BaseImages:
     3.7.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base-py37:{{ printf "%s" $tag }}
-      DockerfilePath: "docker/Dockerfile"
+      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
     3.8.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base-py38:{{ printf "%s" $tag }}
-      DockerfilePath: "docker/Dockerfile"
+      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
     3.9.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base-py39:{{ printf "%s" $tag }}
-      DockerfilePath: "docker/Dockerfile"
+      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
     3.10.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base-py310:{{ printf "%s" $tag }}
-      DockerfilePath: "docker/Dockerfile"
+      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
   PredictionJobBaseImages:
     3.7.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base-py37:{{ printf "%s" $tag }}
-      DockerfilePath: "docker/app.Dockerfile"
+      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
       MainAppPath: "/home/spark/merlin-spark-app/main.py"
     3.8.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base-py38:{{ printf "%s" $tag }}
-      DockerfilePath: "docker/app.Dockerfile"
+      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
       MainAppPath: "/home/spark/merlin-spark-app/main.py"
     3.9.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base-py39:{{ printf "%s" $tag }}
-      DockerfilePath: "docker/app.Dockerfile"
+      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
       MainAppPath: "/home/spark/merlin-spark-app/main.py"
     3.10.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base-py310:{{ printf "%s" $tag }}
-      DockerfilePath: "docker/app.Dockerfile"
+      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
       MainAppPath: "/home/spark/merlin-spark-app/main.py"
 StandardTransformerConfig:
