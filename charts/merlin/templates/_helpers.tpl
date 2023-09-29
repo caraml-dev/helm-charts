@@ -300,7 +300,7 @@ MlflowConfig:
 {{- define "merlin.config" -}}
 {{- $defaultConfig := include "merlin.defaultConfig" . | fromYaml -}}
 {{- $renderedConfig := include "merlin.renderedConfig" (list $ . .Values.rendered ) | fromYaml -}}
-{{-  merge $renderedConfig $defaultConfig .Values.config | toYaml }}
+{{-  merge $defaultConfig $renderedConfig  .Values.config | toYaml }}
 {{- end -}}
 
 
