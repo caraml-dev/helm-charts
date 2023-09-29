@@ -255,5 +255,5 @@ OpenapiConfig:
 {{- define "turing.config" -}}
 {{- $defaultConfig := include "turing.defaultConfig" . | fromYaml -}}
 {{- $renderedConfig := include "turing.renderedConfig" (list $ . .Values.rendered ) | fromYaml -}}
-{{-  merge $renderedConfig $defaultConfig .Values.config | toYaml }}
+{{- merge $defaultConfig $renderedConfig .Values.config  | toYaml }}
 {{- end -}}
