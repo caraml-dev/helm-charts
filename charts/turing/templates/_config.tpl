@@ -20,19 +20,19 @@ BatchEnsemblingConfig:
       3.10.*: {{ printf "%s%s:%s" $ensmblerJobPrefix "3.10" $ensemblerTag }}
     KanikoConfig:
       BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags" $tag }}
-{{- end -}}
+{{- end }}
 EnsemblerServiceBuilderConfig:
   ClusterName: products-production
   ImageBuildingConfig:
     BaseImageRef:
-        3.7.*: {{ printf "%s%s:%s" $servicePrefix "3.7" $ensemblerTag }}
-        3.8.*: {{ printf "%s%s:%s" $servicePrefix "3.8" $ensemblerTag }}
-        3.9.*: {{printf "%s%s:%s" $servicePrefix "3.9" $ensemblerTag }}
-        3.10.*: {{ printf "%s%s:%s" $servicePrefix "3.10" $ensemblerTag }}
+      3.7.*: {{ printf "%s%s:%s" $servicePrefix "3.7" $ensemblerTag }}
+      3.8.*: {{ printf "%s%s:%s" $servicePrefix "3.8" $ensemblerTag }}
+      3.9.*: {{printf "%s%s:%s" $servicePrefix "3.9" $ensemblerTag }}
+      3.10.*: {{ printf "%s%s:%s" $servicePrefix "3.10" $ensemblerTag }}
     KanikoConfig: &kanikoConfig
       BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags" $tag }}
 RouterDefaults:
   Image: ghcr.io/caraml-dev/turing/turing-router:{{ printf "%s" $tag }}
-{{- end -}}
-{{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}
+{{- end }}
