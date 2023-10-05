@@ -299,18 +299,31 @@ MlflowConfig:
 
 {{- define "merlin.config" -}}
 {{- $defaultConfig := include "merlin.defaultConfig" . | fromYaml -}}
+{{/* get original configuration first */}}
+{{- $original := merge $defaultConfig .Values.config }}
+{{/* Generate rendered template if set */}}
+{{- if ne ( len .Values.rendered ) 0 }}
 {{- $renderedConfig := include "merlin.renderedConfig" (list $ . .Values.rendered ) | fromYaml -}}
-{{ $original := merge $defaultConfig .Values.config }}
-{{- $config := mergeOverwrite $renderedConfig .Values.rendered.overwrites}}
+{{/* Use overwrites in rendered to overwrite rendered config */}}
+{{- $config := mergeOverwrite $renderedConfig .Values.rendered.overwrites }}
+{{/* Overwrite original with config */}}
 {{- mergeOverwrite $original $config | toYaml }}
+{{- else }}
+{{- $original | toYaml }}
+{{- end -}}
 {{- end -}}
 
 
 {{- define "merlin.deploymentTag" -}}
-{{- $ := index . 0 }}
-{{- $rendered := index . 2 }}
-{{- with index . 1}}
+{{- $ := index . 0 -}}
+{{- $rendered := index . 2 -}}
+{{/* If deployment tag is set, use it */}}
+{{- if ne $.Values.deployment.image.tag "" -}}
+{{ printf "%s%s:%s" (ternary (printf "%s/" $.Values.deployment.image.registry) "" (ne $.Values.deployment.image.registry "")) $.Values.deployment.image.repository $.Values.deployment.image.tag }}
+{{- else -}}
+{{- with index . 1 }}
 {{- $tag :=  ternary $.Values.deployment.image.tag (substr 1 (len $rendered.releasedVersion) $rendered.releasedVersion) (ne $.Values.deployment.image.tag "") -}}
-{{- printf "%s%s:%s" (ternary (printf "%s/" $.Values.deployment.image.registry) "" (ne $.Values.deployment.image.registry "")) $.Values.deployment.image.repository $tag -}}
+{{ printf "%s%s:%s" (ternary (printf "%s/" $.Values.deployment.image.registry) "" (ne $.Values.deployment.image.registry "")) $.Values.deployment.image.repository $tag }}
+{{- end -}}
 {{- end -}}
 {{- end -}}
