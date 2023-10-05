@@ -38,7 +38,7 @@ heritage: {{ .Release.Service }}
 {{- define "turing.image" -}}
 {{- $registryName := .Values.deployment.image.registry -}}
 {{- $repositoryName := .Values.deployment.image.repository -}}
-{{- $tag :=  (ternary .Values.deployment.image.tag .Values.rendered.releasedVersion (ne .Values.deployment.image.tag "")) | toString -}}
+{{- $tag :=  (ternary .Values.deployment.image.tag (default "" .Values.rendered.releasedVersion ) (ne .Values.deployment.image.tag "")) | toString -}}
 {{- if $registryName }}
     {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
 {{- else -}}
@@ -253,7 +253,16 @@ OpenapiConfig:
 {{- end -}}
 
 {{- define "turing.config" -}}
+{{/* get original configuration first */}}
 {{- $defaultConfig := include "turing.defaultConfig" . | fromYaml -}}
+{{- $original := merge $defaultConfig .Values.config }}
+{{/* Generate rendered template if set */}}
+{{- if ne ( len .Values.rendered ) 0 }}
 {{- $renderedConfig := include "turing.renderedConfig" (list $ . .Values.rendered ) | fromYaml -}}
-{{- merge $renderedConfig $defaultConfig  .Values.config  | toYaml }}
+{{- $config := mergeOverwrite $renderedConfig .Values.rendered.overwrites }}
+{{/* Overwrite original with config */}}
+{{- mergeOverwrite $original $config | toYaml }}
+{{- else }}
+{{- $original | toYaml }}
+{{- end -}}
 {{- end -}}
