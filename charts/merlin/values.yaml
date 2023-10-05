@@ -7,7 +7,7 @@ global:
 rendered:
   # releasedVersion refers to the git release or tag
   releasedVersion: v0.32.0
-  overwrites: {}
+  overrides: {}
 
 # set deployment.image.tag to non-nil to overwrite
 # .rendered.releasedVersion

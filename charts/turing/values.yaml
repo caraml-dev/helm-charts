@@ -6,7 +6,7 @@ rendered:
   releasedVersion: v1.14.2
   # -- ensemblerTag refers to the docker image tag
   ensemblerTag: v0.0.0-build.321-78ca7b3
-  overwrites: {}
+  overrides: {}
 
 deployment:
   image:

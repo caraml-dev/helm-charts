@@ -304,8 +304,8 @@ MlflowConfig:
 {{/* Generate rendered template if set */}}
 {{- if ne ( len .Values.rendered ) 0 }}
 {{- $renderedConfig := include "merlin.renderedConfig" (list $ . .Values.rendered ) | fromYaml -}}
-{{/* Use overwrites in rendered to overwrite rendered config */}}
-{{- $config := mergeOverwrite $renderedConfig .Values.rendered.overwrites }}
+{{/* Use overrides in rendered to overwrite rendered config */}}
+{{- $config := mergeOverwrite $renderedConfig .Values.rendered.overrides }}
 {{/* Overwrite original with config */}}
 {{- mergeOverwrite $original $config | toYaml }}
 {{- else }}

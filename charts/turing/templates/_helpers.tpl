@@ -259,7 +259,7 @@ OpenapiConfig:
 {{/* Generate rendered template if set */}}
 {{- if ne ( len .Values.rendered ) 0 }}
 {{- $renderedConfig := include "turing.renderedConfig" (list $ . .Values.rendered ) | fromYaml -}}
-{{- $config := mergeOverwrite $renderedConfig .Values.rendered.overwrites }}
+{{- $config := mergeOverwrite $renderedConfig .Values.rendered.overrides }}
 {{/* Overwrite original with config */}}
 {{- mergeOverwrite $original $config | toYaml }}
 {{- else }}
