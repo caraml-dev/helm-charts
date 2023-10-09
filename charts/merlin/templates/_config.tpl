@@ -7,7 +7,7 @@
 {{- define "merlin.renderedConfig" -}}
 {{- $ := index . 0 }}
 {{- $rendered := index . 2}}
-{{- if $rendered }}
+{{- if len $rendered | ne 0 }}
 # this is because merlin artifact versions have no v prefix
 # NOTE: Remove the substr once merlin artifacts are released with v prefix
 {{- $tag := $rendered.releasedVersion | substr 1 (len $rendered.releasedVersion) }}
