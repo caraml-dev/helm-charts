@@ -19,6 +19,10 @@ spec:
         {{- range $hosts }}
         - {{ include "common.localiseDomain" (list . (include "common.get-external-hostname" $.Values.global) ) }}
         {{- end }}
+      {{- if and $.Values.https.enabled $.Values.https.enableRedirect }}
+      tls:
+        httpsRedirect: true # sends 301 redirect for http requests
+      {{- end }}
 {{- end }}
     {{- if .Values.https.enabled }}
     - port:

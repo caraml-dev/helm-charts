@@ -15,11 +15,11 @@ global:
     mlflow: ["mlflow"]
 
   mlp:
-    apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
+    apiPrefix: "/v1" # path prefix to where mlp endpoints lie if running on localhost
     serviceName: mlp
     externalPort: "8080"
     vsPrefix: "/api"
-    useServiceFqdn: false  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: false # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/"
     uiServiceName: mlp
 
@@ -28,7 +28,7 @@ global:
     serviceName: merlin
     externalPort: "8080"
     vsPrefix: "/api/merlin"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/merlin"
     uiServiceName: merlin
 
@@ -37,7 +37,7 @@ global:
     serviceName: turing
     externalPort: "8080"
     vsPrefix: "/api/turing"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/turing"
     uiServiceName: turing
 
@@ -46,7 +46,7 @@ global:
     serviceName: xp-management
     externalPort: "8080"
     vsPrefix: "/api/xp"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/xp"
     uiServiceName: xp-management
 
@@ -60,7 +60,7 @@ global:
     serviceName: feast-ui
     externalPort: "8080"
     vsPrefix: "/feast"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiServiceName: feast-ui
 
   mlflow:
@@ -70,7 +70,6 @@ global:
   authz:
     serviceName: caraml-authz
     externalPort: "80"
-
 
 #################################################################################################
 # Routes chart specific configuration
@@ -156,6 +155,7 @@ mlp:
 https:
   # NOTE: Set https to true by default to allow google oauth login, disable from parent chart
   enabled: true
+  enableRedirect: true
   certificateIssuer:
     create: true
     external:
@@ -165,7 +165,6 @@ https:
     mode: SIMPLE
     credentialName: mlp-tls-cert
 
-
 # Configuration for mlp
 mlpGateway:
   name: mlp-gateway
@@ -173,7 +172,8 @@ mlpGateway:
     istio: ingressgateway
 
 # configuration for extra mappings in VS (e.g. authentication proxies)
-extraMappings: []
+extraMappings:
+  []
   # - name: auth-proxy
   #   match:
   #     - uri:
@@ -212,7 +212,6 @@ certManagerBase:
 
 cert-manager:
   enabled: true
-
 
 common:
   enabled: true
