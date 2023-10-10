@@ -1,7 +1,7 @@
 # caraml-routes
 
 ---
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square)
+![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square)
 ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML networking resources
@@ -104,6 +104,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | https.certificateIssuer.create | bool | `true` |  |
 | https.certificateIssuer.external.kind | string | `"ClusterIssuer"` |  |
 | https.certificateIssuer.external.name | string | `"default"` |  |
+| https.enableRedirect | bool | `true` |  |
 | https.enabled | bool | `true` |  |
 | https.tls.credentialName | string | `"mlp-tls-cert"` |  |
 | https.tls.mode | string | `"SIMPLE"` |  |

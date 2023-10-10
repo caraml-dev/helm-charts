@@ -1,43 +1,43 @@
 apiVersion: v2
 appVersion: 1.0.0
 dependencies:
-- alias: istiod
-  condition: istiod.enabled
-  name: generic-dep-installer
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.1
-- alias: base
-  condition: base.enabled
-  name: base
-  repository: https://istio-release.storage.googleapis.com/charts
-  version: 1.13.4
-- alias: istioIngressGateway
-  condition: istioIngressGateway.global.enabled
-  name: generic-dep-installer
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.1.0
-- alias: oathkeeper
-  condition: oathkeeper.enabled
-  name: oathkeeper
-  repository: https://k8s.ory.sh/helm/charts
-  version: 0.33.4
-- alias: certManagerBase
-  condition: certManagerBase.enabled
-  name: cert-manager-base
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 1.8.1
-- condition: cert-manager.enabled
-  name: cert-manager
-  repository: https://charts.jetstack.io
-  version: 1.8.1
-- condition: common.enabled
-  name: common
-  repository: https://caraml-dev.github.io/helm-charts
-  version: 0.2.5
+  - alias: istiod
+    condition: istiod.enabled
+    name: generic-dep-installer
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.1.1
+  - alias: base
+    condition: base.enabled
+    name: base
+    repository: https://istio-release.storage.googleapis.com/charts
+    version: 1.13.4
+  - alias: istioIngressGateway
+    condition: istioIngressGateway.global.enabled
+    name: generic-dep-installer
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.1.0
+  - alias: oathkeeper
+    condition: oathkeeper.enabled
+    name: oathkeeper
+    repository: https://k8s.ory.sh/helm/charts
+    version: 0.33.4
+  - alias: certManagerBase
+    condition: certManagerBase.enabled
+    name: cert-manager-base
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 1.8.1
+  - condition: cert-manager.enabled
+    name: cert-manager
+    repository: https://charts.jetstack.io
+    version: 1.8.1
+  - condition: common.enabled
+    name: common
+    repository: https://caraml-dev.github.io/helm-charts
+    version: 0.2.5
 description: A Helm chart for deploying CaraML networking resources
 maintainers:
-- email: caraml-dev@caraml.dev
-  name: caraml-dev
+  - email: caraml-dev@caraml.dev
+    name: caraml-dev
 name: caraml-routes
 type: application
-version: 0.3.1
+version: 0.3.2

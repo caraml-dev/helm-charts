@@ -71,7 +71,6 @@ global:
     serviceName: caraml-authz
     externalPort: "80"
 
-
 #################################################################################################
 # Routes chart specific configuration
 # ###############################################################################################
@@ -154,8 +153,9 @@ mlp:
     authHeader: false
 
 https:
-  # NOTE: Set https to true by default to allow google oauth login, disable from parent chart
+  #  NOTE: Set https to true by default to allow google oauth login, disable from parent chart
   enabled: true
+  enableRedirect: true
   certificateIssuer:
     create: true
     external:
@@ -165,7 +165,6 @@ https:
     mode: SIMPLE
     credentialName: mlp-tls-cert
 
-
 # Configuration for mlp
 mlpGateway:
   name: mlp-gateway
@@ -173,7 +172,8 @@ mlpGateway:
     istio: ingressgateway
 
 # configuration for extra mappings in VS (e.g. authentication proxies)
-extraMappings: []
+extraMappings:
+  []
   # - name: auth-proxy
   #   match:
   #     - uri:
@@ -212,7 +212,6 @@ certManagerBase:
 
 cert-manager:
   enabled: true
-
 
 common:
   enabled: true
