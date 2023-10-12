@@ -12,7 +12,6 @@
 {{- if $.Values.config.BatchEnsemblingConfig.Enabled }}
 BatchEnsemblingConfig:
   ImageBuildingConfig:
-    DestinationRegistry: asia.gcr.io/gods-production/turing/ensemblers
     BaseImageRef:
       3.7.*: {{ printf "%s%s:%s" $ensmblerJobPrefix "3.7" $ensemblerTag }}
       3.8.*: {{ printf "%s%s:%s" $ensmblerJobPrefix "3.8" $ensemblerTag }}
@@ -22,7 +21,6 @@ BatchEnsemblingConfig:
       BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags" $tag }}
 {{- end }}
 EnsemblerServiceBuilderConfig:
-  ClusterName: products-production
   ImageBuildingConfig:
     BaseImageRef:
       3.7.*: {{ printf "%s%s:%s" $servicePrefix "3.7" $ensemblerTag }}
