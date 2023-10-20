@@ -1,4 +1,4 @@
-{{- if and .Values.oathkeeperRules.enabled .Values.mlp.enable}}
+{{- if and .Values.oathkeeperRules.enabled .Values.mlp.enabled }}
 apiVersion: oathkeeper.ory.sh/v1alpha1
 kind: Rule
 metadata:
