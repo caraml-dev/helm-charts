@@ -15,20 +15,21 @@ global:
     mlflow: ["mlflow"]
 
   mlp:
-    apiPrefix: "/v1"  # path prefix to where mlp endpoints lie if running on localhost
+    apiPrefix: "/v1" # path prefix to where mlp endpoints lie if running on localhost
     serviceName: mlp
     externalPort: "8080"
     vsPrefix: "/api"
-    useServiceFqdn: false  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: false # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/"
     uiServiceName: mlp
+    createProjectAdminOnly: false # if true, only project admins can create projects
 
   merlin:
     apiPrefix: "/v1"
     serviceName: merlin
     externalPort: "8080"
     vsPrefix: "/api/merlin"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/merlin"
     uiServiceName: merlin
 
@@ -37,7 +38,7 @@ global:
     serviceName: turing
     externalPort: "8080"
     vsPrefix: "/api/turing"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/turing"
     uiServiceName: turing
 
@@ -46,7 +47,7 @@ global:
     serviceName: xp-management
     externalPort: "8080"
     vsPrefix: "/api/xp"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/xp"
     uiServiceName: xp-management
 
@@ -60,7 +61,7 @@ global:
     serviceName: feast-ui
     externalPort: "8080"
     vsPrefix: "/feast"
-    useServiceFqdn: true  # url generated will use k8s service fqdn/path instead of vs hosts/path
+    useServiceFqdn: true # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiServiceName: feast-ui
 
   mlflow:
