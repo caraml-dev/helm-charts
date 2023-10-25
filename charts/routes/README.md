@@ -76,6 +76,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.mlflow.externalPort | string | `"80"` |  |
 | global.mlflow.serviceName | string | `"merlin-mlflow"` |  |
 | global.mlp.apiPrefix | string | `"/v1"` |  |
+| global.mlp.createProjectAdminOnly | bool | `false` |  |
 | global.mlp.externalPort | string | `"8080"` |  |
 | global.mlp.serviceName | string | `"mlp"` |  |
 | global.mlp.uiPrefix | string | `"/"` |  |
