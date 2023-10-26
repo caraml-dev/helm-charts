@@ -37,7 +37,7 @@ spec:
       payload: |
         {
           "namespace": "Permission",
-          "object": {{`"mlp.projects.post"`}},
+          "object": "mlp.projects.post",
           "relation": "granted",
             "subject_set": {
                 "namespace": "Subject",
