@@ -1,6 +1,6 @@
 # caraml-store
 
-![Version: 0.1.16](https://img.shields.io/badge/Version-0.1.15-informational?style=flat-square) ![AppVersion: 0.1.3](https://img.shields.io/badge/AppVersion-0.1.3-informational?style=flat-square)
+![Version: 0.1.16](https://img.shields.io/badge/Version-0.1.16-informational?style=flat-square) ![AppVersion: 0.1.3](https://img.shields.io/badge/AppVersion-0.1.3-informational?style=flat-square)
 
 CaraML store registry: Feature registry for CaraML store.
 
