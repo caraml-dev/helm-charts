@@ -42,7 +42,8 @@ spec:
             "subject_set": {
                 "namespace": "Subject",
                 "object": {{`"{{ print .Extra.email }}"`}}
-            }
+              }
+        }
     {{- else }}
     handler: allow
     {{- end }}
