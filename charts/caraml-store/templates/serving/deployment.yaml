@@ -8,6 +8,13 @@ metadata:
     {{- include "caraml-store.serving.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.serving.replicaCount }}
+{{- if .Values.serving.strategy }}
+  strategy:
+{{ toYaml .Values.serving.strategy | indent 4 }}
+{{- end }}
+{{- if .Values.serving.minReadySeconds }}
+  minReadySeconds: {{ .Values.serving.minReadySeconds }}
+{{- end }}
   selector:
     matchLabels:
       {{- include "caraml-store.serving.selectorLabels" . | nindent 6 }}

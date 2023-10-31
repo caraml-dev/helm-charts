@@ -1,6 +1,6 @@
 # caraml-store
 
-![Version: 0.1.15](https://img.shields.io/badge/Version-0.1.15-informational?style=flat-square) ![AppVersion: 0.1.3](https://img.shields.io/badge/AppVersion-0.1.3-informational?style=flat-square)
+![Version: 0.1.16](https://img.shields.io/badge/Version-0.1.16-informational?style=flat-square) ![AppVersion: 0.1.3](https://img.shields.io/badge/AppVersion-0.1.3-informational?style=flat-square)
 
 CaraML store registry: Feature registry for CaraML store.
 
@@ -85,10 +85,12 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.image.tag | string | `""` |  |
 | serving.imagePullSecrets | list | `[]` |  |
 | serving.javaOpts | string | `nil` |  |
+| serving.minReadySeconds | int | `0` | The minimum number of seconds for which a newly created Pod should be ready without any of its containers crashing, for it to be considered available. |
 | serving.name | string | `"serving"` |  |
 | serving.nameOverride | string | `""` |  |
 | serving.nodeSelector | object | `{}` |  |
 | serving.podAnnotations | object | `{}` |  |
+| serving.podDisruptionBudget | object | `{}` | This value is used to configure a Kubernetes PodDisruptionBudget for Serving deployment |
 | serving.podLabels | object | `{}` |  |
 | serving.prometheus.monitor.enabled | bool | `false` | Create a ServiceMonitor resource to expose Prometheus metrics |
 | serving.readinessProbe.enabled | bool | `true` | Flag to enable the probe |
@@ -104,6 +106,7 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.service.grpc.port | int | `6566` | Service port for GRPC requests |
 | serving.service.grpc.targetPort | int | `6566` | Container port serving GRPC requests |
 | serving.service.type | string | `"ClusterIP"` | Kubernetes service type |
+| serving.strategy | object | `{}` | Strategy used to replace old Pods by new ones. .spec.strategy.type can be "Recreate" or "RollingUpdate". "RollingUpdate" is the default value. |
 | serving.tolerations | list | `[]` |  |
 
 ----------------------------------------------

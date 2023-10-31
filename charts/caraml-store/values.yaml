@@ -124,8 +124,18 @@ serving:
 
   secrets: []
 
+  # serving.strategy -- Strategy used to replace old Pods by new ones. .spec.strategy.type can be "Recreate" or "RollingUpdate". "RollingUpdate" is the default value.
+  strategy: {}
+
+  # serving.minReadySeconds -- The minimum number of seconds for which a newly created Pod should be ready without any of its containers crashing, for it to be considered available.
+  minReadySeconds: 0
+
   podLabels: {}
   podAnnotations: {}
+
+  # serving.podDisruptionBudget -- This value is used to configure a Kubernetes PodDisruptionBudget for Serving deployment
+  podDisruptionBudget: {}
+
   service:
     # serving.service.type -- Kubernetes service type
     type: ClusterIP
