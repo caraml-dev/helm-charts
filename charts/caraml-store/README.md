@@ -90,6 +90,7 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.nameOverride | string | `""` |  |
 | serving.nodeSelector | object | `{}` |  |
 | serving.podAnnotations | object | `{}` |  |
+| serving.podDisruptionBudget | object | `{}` | This value is used to configure a Kubernetes PodDisruptionBudget for Serving deployment |
 | serving.podLabels | object | `{}` |  |
 | serving.prometheus.monitor.enabled | bool | `false` | Create a ServiceMonitor resource to expose Prometheus metrics |
 | serving.readinessProbe.enabled | bool | `true` | Flag to enable the probe |

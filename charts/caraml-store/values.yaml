@@ -132,6 +132,10 @@ serving:
 
   podLabels: {}
   podAnnotations: {}
+
+  # serving.podDisruptionBudget -- This value is used to configure a Kubernetes PodDisruptionBudget for Serving deployment
+  podDisruptionBudget: {}
+
   service:
     # serving.service.type -- Kubernetes service type
     type: ClusterIP
