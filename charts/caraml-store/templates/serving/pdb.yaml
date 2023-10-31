@@ -1,0 +1,19 @@
+{{- if index .Values "serving" "enabled" }}
+{{- $fullname := include "caraml-store.serving.fullname" . }}
+{{- if .Values.serving.podDisruptionBudget }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name:  {{ include "caraml-store.serving.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "caraml-store.serving.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+  {{- include "caraml-store.serving.selectorLabels" . | nindent 6 }}
+  {{- with .Values.serving.podDisruptionBudget }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}
+{{- end }}
