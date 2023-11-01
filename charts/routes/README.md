@@ -1,7 +1,7 @@
 # caraml-routes
 
 ---
-![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square)
+![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square)
 ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying CaraML networking resources
@@ -76,6 +76,7 @@ The following table lists the configurable parameters of the Routes chart and th
 | global.mlflow.externalPort | string | `"80"` |  |
 | global.mlflow.serviceName | string | `"merlin-mlflow"` |  |
 | global.mlp.apiPrefix | string | `"/v1"` |  |
+| global.mlp.createProjectAdminOnly | bool | `false` |  |
 | global.mlp.externalPort | string | `"8080"` |  |
 | global.mlp.serviceName | string | `"mlp"` |  |
 | global.mlp.uiPrefix | string | `"/"` |  |
