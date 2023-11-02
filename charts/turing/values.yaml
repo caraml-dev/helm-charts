@@ -3,9 +3,9 @@ global:
 
 rendered:
   # -- releasedVersion refers to the git release or tag
-  releasedVersion: v1.14.2
+  releasedVersion: v1.16.0
   # -- ensemblerTag refers to the docker image tag
-  ensemblerTag: v0.0.0-build.321-78ca7b3
+  ensemblerTag: v0.0.0-build.327-ca712a6
   overrides: {}
 
 deployment:
@@ -188,7 +188,7 @@ config:
       BuildTimeoutDuration: 20m
       DestinationRegistry: ghcr.io
       BaseImageRef:
-        3.7.*: ghcr.io/caraml-dev/turing/pyfunc-ensembler-service:latest
+        3.8.*: ghcr.io/caraml-dev/turing/pyfunc-ensembler-service:latest
       KanikoConfig:
         BuildContextURI: git://github.com/caraml-dev/turing.git#refs/heads/main
         DockerfileFilePath: engines/pyfunc-ensembler-service/app.Dockerfile
