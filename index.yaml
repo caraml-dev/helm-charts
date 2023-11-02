@@ -253,6 +253,85 @@ entries:
   caraml:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2023-11-02T03:25:23.750260681Z"
+    dependencies:
+    - condition: mlp.enabled
+      name: mlp
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.6.3
+    - condition: merlin.enabled
+      name: merlin
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.13.2
+    - condition: turing.enabled
+      name: turing
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.3.3
+    - condition: xp-treatment.enabled
+      name: xp-treatment
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.24
+    - condition: xp-management.enabled
+      name: xp-management
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.9
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 7.0.2
+    - alias: caraml-authz
+      condition: caraml-authz.enabled
+      name: authz
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.1.12
+    - condition: caraml-routes.enabled
+      name: caraml-routes
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.3.3
+    - name: common
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.9
+    - alias: base
+      condition: base.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.13.9
+    - alias: istiod
+      condition: istiod.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: istioIngressGateway
+      condition: istioIngressGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: clusterLocalGateway
+      condition: clusterLocalGateway.global.enabled
+      name: generic-dep-installer
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 0.2.1
+    - alias: certManagerBase
+      condition: certManagerBase.enabled
+      name: cert-manager-base
+      repository: https://caraml-dev.github.io/helm-charts
+      version: 1.8.1
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: v1.8.2
+    description: A Helm chart for deploying CaraML components
+    digest: 073f3084a2398d9b70eb9801ec3581d840c697cb1d1e820f485035feb7e4d024
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: caraml
+    type: application
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/caraml-0.8.10/caraml-0.8.10.tgz
+    version: 0.8.10
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2023-10-13T08:02:28.624663207Z"
     dependencies:
     - condition: mlp.enabled
@@ -14424,4 +14503,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2023-11-01T01:11:38.561380805Z"
+generated: "2023-11-02T03:25:23.751014101Z"
