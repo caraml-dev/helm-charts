@@ -1,7 +1,7 @@
 # turing
 
 ---
-![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square)
+![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square)
 ![AppVersion: 1.14.2](https://img.shields.io/badge/AppVersion-1.14.2-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
@@ -102,9 +102,9 @@ The following table lists the configurable parameters of the Turing chart and th
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | openApiSpecOverrides | object | `{}` | Override OpenAPI spec as long as it follows the OAS3 specifications. A common use for this is to set the enums of the ExperimentEngineType. See api/api/override-sample.yaml for an example. |
-| rendered.ensemblerTag | string | `"v0.0.0-build.321-78ca7b3"` | ensemblerTag refers to the docker image tag |
+| rendered.ensemblerTag | string | `"v0.0.0-build.327-ca712a6"` | ensemblerTag refers to the docker image tag |
 | rendered.overrides | object | `{}` |  |
-| rendered.releasedVersion | string | `"v1.14.2"` | releasedVersion refers to the git release or tag |
+| rendered.releasedVersion | string | `"v1.16.0"` | releasedVersion refers to the git release or tag |
 | sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` | Turing API Kubernetes service port number |
 | service.internalPort | int | `8080` | Turing API container port number |

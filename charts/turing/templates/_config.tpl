@@ -14,7 +14,6 @@
 BatchEnsemblingConfig:
   ImageBuildingConfig:
     BaseImageRef:
-      3.7.*: {{ printf "%s%s:%s" $ensemblerJobPrefix "3.7" $ensemblerTag }}
       3.8.*: {{ printf "%s%s:%s" $ensemblerJobPrefix "3.8" $ensemblerTag }}
       3.9.*: {{printf "%s%s:%s" $ensemblerJobPrefix "3.9" $ensemblerTag }}
       3.10.*: {{ printf "%s%s:%s" $ensemblerJobPrefix "3.10" $ensemblerTag }}
@@ -24,7 +23,6 @@ BatchEnsemblingConfig:
 EnsemblerServiceBuilderConfig:
   ImageBuildingConfig:
     BaseImageRef:
-      3.7.*: {{ printf "%s%s:%s" $servicePrefix "3.7" $ensemblerServiceTag }}
       3.8.*: {{ printf "%s%s:%s" $servicePrefix "3.8" $ensemblerServiceTag }}
       3.9.*: {{printf "%s%s:%s" $servicePrefix "3.9" $ensemblerServiceTag }}
       3.10.*: {{ printf "%s%s:%s" $servicePrefix "3.10" $ensemblerServiceTag }}
