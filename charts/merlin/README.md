@@ -340,7 +340,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlp.keto.enabled | bool | `true` |  |
 | mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
 | rendered.overrides | object | `{}` |  |
-| rendered.releasedVersion | string | `"v0.32.0"` |  |
+| rendered.releasedVersion | string | `"v0.35.0"` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |
