@@ -8,11 +8,11 @@ dependencies:
 - condition: merlin.enabled
   name: merlin
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.13.2
+  version: 0.13.3
 - condition: turing.enabled
   name: turing
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.3.3
+  version: 0.3.4
 - condition: xp-treatment.enabled
   name: xp-treatment
   repository: https://caraml-dev.github.io/helm-charts
@@ -72,4 +72,4 @@ maintainers:
   name: caraml-dev
 name: caraml
 type: application
-version: 0.8.10
+version: 0.8.12
