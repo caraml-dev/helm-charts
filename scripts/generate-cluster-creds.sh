@@ -91,16 +91,16 @@ EOF
 
   output=$(yq '.k8s_config' /tmp/temp_k8sconfig.yaml)
   # NOTE: Write to ci/ files as these files will be used in ci tests!
-  for CHART in $(echo $CHARTS_CHANGED | tr ' ' '\n' | grep 'charts/\(merlin\|turing\|caraml\)' | sed -r 's/charts\///')
+  for CHART in $(echo $CHARTS_CHANGED | tr ' ' '\n' | grep 'charts/\(merlin\|turing\|caraml\)')
   do
-    if [ $CHART == "caraml" ]; then
+    if [ $CHART == "charts/caraml" ]; then
       # Write to Merlin/ Turing subchart values in the overarching CaraML chart
       for APP in merlin turing
       do
         output="$output" yq ".${APP}.environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .${APP}.imageBuilder.k8sConfig |= env(output)" -i "${SCRIPT_DIR}/../charts/caraml/ci/ci-values.yaml"
       done
-    else
-      output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= env(output)" -i "${SCRIPT_DIR}/../charts/${CHART}/ci/ci-values.yaml"
+    elif [ $CHART == "charts/merlin" ] || [ $CHART == "charts/turing" ]; then
+      output="$output" yq ".environmentConfigs[0] *= load(\"/tmp/temp_k8sconfig.yaml\") | .imageBuilder.k8sConfig |= env(output)" -i "${SCRIPT_DIR}/../${CHART}/ci/ci-values.yaml"
     fi
   done
 }
