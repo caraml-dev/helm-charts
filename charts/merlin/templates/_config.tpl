@@ -17,10 +17,6 @@
 # just as if we were outside of include/define:
 ImageBuilderConfig:
   BaseImages:
-    3.7.*:
-      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base-py37:{{ printf "%s" $tag }}
-      DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
-      BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
     3.8.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base-py38:{{ printf "%s" $tag }}
       DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
@@ -34,11 +30,6 @@ ImageBuilderConfig:
       DockerfilePath: "python/pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
   PredictionJobBaseImages:
-    3.7.*:
-      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base-py37:{{ printf "%s" $tag }}
-      DockerfilePath: "python/batch-predictor/docker/app.Dockerfile"
-      BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
-      MainAppPath: "/home/spark/merlin-spark-app/main.py"
     3.8.*:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base-py38:{{ printf "%s" $tag }}
       DockerfilePath: "python/batch-predictor/docker/app.Dockerfile"

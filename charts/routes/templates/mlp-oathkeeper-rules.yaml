@@ -19,7 +19,39 @@ spec:
 apiVersion: oathkeeper.ory.sh/v1alpha1
 kind: Rule
 metadata:
-  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-list-and-create-project-rule" }}
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-create-project-rule" }}
+  namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
+  labels:
+    {{- include "caraml-routes.labels" . | nindent 4 }}
+spec:
+  match:
+    url: {{ printf "<%s>/projects<(\\?.+)?>" (include "caraml-routes.oathkeeper.mlp.regexPrefix" .) }}
+    methods:
+      - "POST"
+  authenticators:
+    - handler: jwt
+  authorizer: # if create project admin only then change to remote_json else allow
+    {{- if .Values.mlp.createProjectAdminOnly }}
+    handler: remote_json
+    config:
+      payload: |
+        {
+          "namespace": "Permission",
+          "object": "mlp.projects.post",
+          "relation": "granted",
+            "subject_set": {
+                "namespace": "Subject",
+                "object": {{`"{{ print .Extra.email }}"`}}
+              }
+        }
+    {{- else }}
+    handler: allow
+    {{- end }}
+---
+apiVersion: oathkeeper.ory.sh/v1alpha1
+kind: Rule
+metadata:
+  name: {{ printf "%s-%s" (include "caraml-routes.fullname" . ) "mlp-list-project-rule" }}
   namespace: {{ ternary .Release.Namespace .Values.namespace (ne .Values.namespace "") }}
   labels:
     {{- include "caraml-routes.labels" . | nindent 4 }}
@@ -28,7 +60,6 @@ spec:
     url: {{ printf "<%s>/projects<(\\?.+)?>" (include "caraml-routes.oathkeeper.mlp.regexPrefix" .) }}
     methods:
       - "GET"
-      - "POST"
   authenticators:
     - handler: jwt
   authorizer:

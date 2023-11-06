@@ -1,8 +1,8 @@
 # merlin
 
 ---
-![Version: 0.13.2](https://img.shields.io/badge/Version-0.13.2-informational?style=flat-square)
-![AppVersion: v0.32.0](https://img.shields.io/badge/AppVersion-v0.32.0-informational?style=flat-square)
+![Version: 0.13.3](https://img.shields.io/badge/Version-0.13.3-informational?style=flat-square)
+![AppVersion: v0.35.0](https://img.shields.io/badge/AppVersion-v0.35.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -198,20 +198,20 @@ The following table lists the configurable parameters of the Merlin chart and th
 | environmentConfigs[0].queue_resource_percentage | string | `"20"` |  |
 | environmentConfigs[0].region | string | `"id"` |  |
 | global.protocol | string | `"http"` |  |
-| imageBuilder.builderConfig.BaseImages."3.7.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.builderConfig.BaseImages."3.7.*".DockerfilePath | string | `"docker/Dockerfile"` |  |
-| imageBuilder.builderConfig.BaseImages."3.7.*".ImageName | string | `"pyfunc-py37:v0.1.0"` |  |
-| imageBuilder.builderConfig.BaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| imageBuilder.builderConfig.BaseImages."3.8.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
+| imageBuilder.builderConfig.BaseImages."3.8.*".DockerfilePath | string | `"docker/Dockerfile"` |  |
+| imageBuilder.builderConfig.BaseImages."3.8.*".ImageName | string | `"pyfunc-py38:v0.1.0"` |  |
+| imageBuilder.builderConfig.BaseImages."3.8.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.builderConfig.BuildNamespace | string | `"mlp"` |  |
 | imageBuilder.builderConfig.BuildTimeout | string | `"30m"` |  |
 | imageBuilder.builderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
 | imageBuilder.builderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
 | imageBuilder.builderConfig.MaximumRetry | int | `3` |  |
 | imageBuilder.builderConfig.NodeSelectors | object | `{}` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".DockerfilePath | string | `"docker/app.Dockerfile"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".ImageName | string | `"pyspark-py37:v0.1.0"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.7.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages."3.8.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages."3.8.*".DockerfilePath | string | `"docker/app.Dockerfile"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages."3.8.*".ImageName | string | `"pyspark-py38:v0.1.0"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages."3.8.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
 | imageBuilder.builderConfig.Resources.Limits.CPU | string | `"1"` |  |
 | imageBuilder.builderConfig.Resources.Limits.Memory | string | `"1Gi"` |  |
 | imageBuilder.builderConfig.Resources.Requests.CPU | string | `"1"` |  |
@@ -340,7 +340,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlp.keto.enabled | bool | `true` |  |
 | mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
 | rendered.overrides | object | `{}` |  |
-| rendered.releasedVersion | string | `"v0.32.0"` |  |
+| rendered.releasedVersion | string | `"v0.35.0"` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |

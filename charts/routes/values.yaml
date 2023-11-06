@@ -22,6 +22,7 @@ global:
     useServiceFqdn: false  # url generated will use k8s service fqdn/path instead of vs hosts/path
     uiPrefix: "/"
     uiServiceName: mlp
+    createProjectAdminOnly: false  # if true, only project admins can create projects
 
   merlin:
     apiPrefix: "/v1"
