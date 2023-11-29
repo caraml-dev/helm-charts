@@ -220,7 +220,20 @@ config:
     Kafka:
       Brokers: "kafka-brokers"
       MaxMessageSizeBytes: "1048588"
+      Acks: 0
+      LingerMS: 100
+      AdditionalConfig: "{}"
   PyfuncGRPCOptions: "{}"
+  PyFuncPublisherConfig:
+    SamplingRatioRate: 0.01
+    Kafka:
+      Brokers: "kafka-brokers"
+      MaxMessageSizeBytes: "1048588"
+      Acks: 0
+      LingerMS: 100
+      AdditionalConfig: "{}"
+
+
 
 clusterConfig:
   # -- (bool) Configuration to tell Merlin API how it should authenticate with deployment k8s cluster
