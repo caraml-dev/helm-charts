@@ -1,8 +1,8 @@
 # merlin
 
 ---
-![Version: 0.13.3](https://img.shields.io/badge/Version-0.13.3-informational?style=flat-square)
-![AppVersion: v0.35.0](https://img.shields.io/badge/AppVersion-v0.35.0-informational?style=flat-square)
+![Version: 0.13.4](https://img.shields.io/badge/Version-0.13.4-informational?style=flat-square)
+![AppVersion: v0.36.0](https://img.shields.io/badge/AppVersion-v0.36.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -104,6 +104,12 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.NewRelic.License | string | `"newrelic-license-secret"` |  |
 | config.NumOfQueueWorkers | int | `2` |  |
 | config.Port | int | `8080` |  |
+| config.PyFuncPublisherConfig.Kafka.Acks | int | `0` |  |
+| config.PyFuncPublisherConfig.Kafka.AdditionalConfig | string | `"{}"` |  |
+| config.PyFuncPublisherConfig.Kafka.Brokers | string | `"kafka-brokers"` |  |
+| config.PyFuncPublisherConfig.Kafka.LingerMS | int | `100` |  |
+| config.PyFuncPublisherConfig.Kafka.MaxMessageSizeBytes | string | `"1048588"` |  |
+| config.PyFuncPublisherConfig.SamplingRatioRate | float | `0.01` |  |
 | config.PyfuncGRPCOptions | string | `"{}"` |  |
 | config.ReactAppConfig.CPUCost | string | `nil` |  |
 | config.ReactAppConfig.DocURL[0].Href | string | `"https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md"` |  |
@@ -145,7 +151,10 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.StandardTransformerConfig.Jaeger.CollectorURL | string | `"http://jaeger-tracing-collector.infrastructure:14268/api/traces"` |  |
 | config.StandardTransformerConfig.Jaeger.Disabled | bool | `false` |  |
 | config.StandardTransformerConfig.Jaeger.SamplerParam | int | `1` |  |
+| config.StandardTransformerConfig.Kafka.Acks | int | `0` |  |
+| config.StandardTransformerConfig.Kafka.AdditionalConfig | string | `"{}"` |  |
 | config.StandardTransformerConfig.Kafka.Brokers | string | `"kafka-brokers"` |  |
+| config.StandardTransformerConfig.Kafka.LingerMS | int | `100` |  |
 | config.StandardTransformerConfig.Kafka.MaxMessageSizeBytes | string | `"1048588"` |  |
 | config.StandardTransformerConfig.ModelClientKeepAlive.Enabled | bool | `false` |  |
 | config.StandardTransformerConfig.ModelClientKeepAlive.Time | string | `"60s"` |  |
