@@ -641,7 +641,7 @@ minio:
     weight: "-2"
   helmChart:
     chart: minio
-    repository: "https://helm.min.io/"
+    repository: "https://charts.min.io/"
     version: 7.0.4
     release: minio
     namespace: minio

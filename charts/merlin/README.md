@@ -283,7 +283,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | minio.helmChart.createNamespace | bool | `true` |  |
 | minio.helmChart.namespace | string | `"minio"` |  |
 | minio.helmChart.release | string | `"minio"` |  |
-| minio.helmChart.repository | string | `"https://helm.min.io/"` |  |
+| minio.helmChart.repository | string | `"https://charts.min.io/"` |  |
 | minio.helmChart.version | string | `"7.0.4"` |  |
 | minio.hook.weight | string | `"-2"` |  |
 | mlflow-postgresql.enabled | bool | `true` |  |
