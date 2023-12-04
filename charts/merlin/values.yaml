@@ -642,7 +642,7 @@ minio:
   helmChart:
     chart: minio
     repository: "https://charts.min.io/"
-    version: 7.0.4
+    version: 5.0.14
     release: minio
     namespace: minio
     createNamespace: true
