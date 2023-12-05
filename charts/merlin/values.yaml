@@ -641,6 +641,7 @@ minio:
     weight: "-2"
   helmChart:
     chart: minio
+    # -- "https://helm.min.io/" is no longer valid. TODO: Check if the chart coming from below is correct for this usecase, version also changed to latest in the below charts url.
     repository: "https://charts.min.io/"
     version: 5.0.14
     release: minio
