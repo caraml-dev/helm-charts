@@ -21,3 +21,5 @@ deployment:
     limits:
       cpu: "500m"
       memory: 512Mi
+  annotations:
+    test: 123

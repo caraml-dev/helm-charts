@@ -13,6 +13,8 @@ global:
 extraLabels:
   test: "123"
 deployment:
+  annotations:
+    test: "123"
   replicaCount: "1"
   resources:
     requests:

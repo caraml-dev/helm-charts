@@ -17,6 +17,7 @@ deployment:
     # -- Docker image tag for Turing image
     tag: ""
   labels: {}
+  annotations: {}
   # -- Resources requests and limits for Turing API. This should be set
   # according to your cluster capacity and service level objectives.
   # Reference: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/

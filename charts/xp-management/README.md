@@ -1,7 +1,7 @@
 # xp-management
 
 ---
-![Version: 0.2.9](https://img.shields.io/badge/Version-0.2.9-informational?style=flat-square)
+![Version: 0.2.10](https://img.shields.io/badge/Version-0.2.10-informational?style=flat-square)
 ![AppVersion: 0.12.1](https://img.shields.io/badge/AppVersion-0.12.1-informational?style=flat-square)
 
 Management service - A part of XP system that is used to configure experiments
@@ -33,6 +33,7 @@ The following table lists the configurable parameters of the XP Management Servi
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | deployment.annotations | object | `{}` | Annotations to add to Management Service pod |
+| deployment.annotations | object | `{}` | Annotations to attach to the deployment. |
 | deployment.apiConfig | object | `{"AllowedOrigins":"*","AuthorizationConfig":{"Enabled":false},"DbConfig":{"ConnMaxIdleTime":"0s","ConnMaxLifetime":"0s","MaxIdleConns":0,"MaxOpenConns":0},"DeploymentConfig":{"EnvironmentType":"dev"},"MlpConfig":{"URL":"http://mlp:8080"},"NewRelicConfig":{"AppName":"xp-management-service","Enabled":false,"License":""},"Port":8080,"SegmenterConfig":{"S2_IDs":{"MaxS2CellLevel":14,"MinS2CellLevel":10}},"SentryConfig":{"DSN":"","Enabled":false,"Labels":{"App":"xp-management-service"}},"XpUIConfig":{"appDirectory":"/app/xp-ui"}}` | XP Management Service server configuration. Please refer to https://github.com/caraml-dev/xp/blob/main/management-service/config/example.yaml for the detailed explanation on XP Management API config options |
 | deployment.extraArgs | list | `[]` | List of string containing additional XP Management Service server arguments. For example, multiple "-config" can be specified to use multiple config files |
 | deployment.extraEnvs | list | `[]` | List of extra environment variables to add to XP Management Service server container |

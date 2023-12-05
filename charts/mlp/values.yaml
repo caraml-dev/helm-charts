@@ -36,6 +36,9 @@ deployment:
   # -- Additional labels to apply on the deployment
   extraLabels: {}
 
+  # -- Annotations
+  annotations: {}
+
 service:
   externalPort: 8080
   internalPort: 8080
