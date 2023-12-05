@@ -120,8 +120,6 @@ deployment:
   # Example
   # sidecar.custom.inject: "true"
 
-  # -- Annotations to attach to the deployment.
-  annotations: {}
   # Example
   # sidecar.custom.inject: "true"
   # -- Extra volumes to attach to the Pod. For example, you can mount
