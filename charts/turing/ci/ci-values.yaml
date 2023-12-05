@@ -103,6 +103,7 @@ merlin:
     persistence:
       enabled: false
   minio:
+    enabled: false
     resources:
       requests:
         cpu: 25m
