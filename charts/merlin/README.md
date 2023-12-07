@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.13.5](https://img.shields.io/badge/Version-0.13.5-informational?style=flat-square)
+![Version: 0.13.6](https://img.shields.io/badge/Version-0.13.6-informational?style=flat-square)
 ![AppVersion: v0.36.0](https://img.shields.io/badge/AppVersion-v0.36.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -162,6 +162,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.StandardTransformerConfig.ModelServerConnCount | int | `10` |  |
 | config.StandardTransformerConfig.SimulationFeast.FeastBigtableURL | string | `"online-serving-bt.feast.dev"` |  |
 | config.StandardTransformerConfig.SimulationFeast.FeastRedisURL | string | `"online-serving-redis.feast.dev"` |  |
+| deployment.annotations | object | `{}` |  |
 | deployment.extraArgs | list | `[]` | List of string containing additional Merlin API server arguments. For example, multiple "-config" can be specified to use multiple config files |
 | deployment.extraContainers | list | `[]` | List of sidecar containers to attach to the Pod. For example, you can attach sidecar container that forward logs or dynamically update some configuration files. |
 | deployment.extraEnvs | list | `[]` | List of extra environment variables to add to Merlin API server container |

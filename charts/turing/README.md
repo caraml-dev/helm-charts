@@ -1,7 +1,7 @@
 # turing
 
 ---
-![Version: 0.3.6](https://img.shields.io/badge/Version-0.3.6-informational?style=flat-square)
+![Version: 0.3.7](https://img.shields.io/badge/Version-0.3.7-informational?style=flat-square)
 ![AppVersion: v1.16.0](https://img.shields.io/badge/AppVersion-v1.16.0-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
@@ -70,6 +70,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | clusterConfig.environmentConfigPath | string | `"environments.yaml"` | environmentConfigPath is a path to a file that contains environmentConfigs. See api/environments-dev.yaml for example contents |
 | clusterConfig.useInClusterConfig | bool | `false` | Configuration to tell Turing API how it should authenticate with deployment k8s cluster By default, Turing API expects to use a remote k8s cluster for deployment and to do so, it requires cluster access configurations to be configured as part of values.yaml |
 | config | object | computed value | Turing API server configuration. Please refer to https://github.com/caraml-dev/turing/blob/main/api/turing/config/example.yaml for the detailed explanation on Turing API config options |
+| deployment.annotations | object | `{}` |  |
 | deployment.extraArgs | list | `[]` | List of string containing additional Turing API server arguments. For example, multiple "-config" can be specified to use multiple config files |
 | deployment.extraContainers | list | `[]` | List of sidecar containers to attach to the Pod. For example, you can attach sidecar container that forward logs or dynamically update some configuration files. |
 | deployment.extraEnvs | list | `[]` | List of extra environment variables to add to Turing API server container |

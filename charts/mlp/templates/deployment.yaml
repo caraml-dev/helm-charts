@@ -8,6 +8,10 @@ metadata:
     {{- with .Values.deployment.extraLabels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
+  {{- if .Values.deployment.annotations }}
+  annotations:
+  {{ toYaml .Values.deployment.annotations | indent 2 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:

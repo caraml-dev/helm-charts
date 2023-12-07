@@ -4,6 +4,10 @@ metadata:
   name: {{ include "treatment-svc.fullname" . }}
   labels:
     {{- include "treatment-svc.labels" . | nindent 4 }}
+  {{- if .Values.deployment.annotations }}
+  annotations:
+  {{ toYaml .Values.deployment.annotations | indent 2 }}
+  {{- end }}
 spec:
   {{- if not .Values.deployment.autoscaling.enabled }}
   replicas: {{ .Values.deployment.replicaCount }}

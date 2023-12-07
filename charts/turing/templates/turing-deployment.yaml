@@ -5,6 +5,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "turing.labels" . | nindent 4 }}
+  {{- if .Values.deployment.annotations }}
+  annotations:
+  {{ toYaml .Values.deployment.annotations | indent 2 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:

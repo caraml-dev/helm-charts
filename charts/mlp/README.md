@@ -1,6 +1,6 @@
 # mlp
 
-![Version: 0.6.3](https://img.shields.io/badge/Version-0.6.3-informational?style=flat-square) ![AppVersion: v1.10.0](https://img.shields.io/badge/AppVersion-v1.10.0-informational?style=flat-square)
+![Version: 0.6.4](https://img.shields.io/badge/Version-0.6.4-informational?style=flat-square) ![AppVersion: v1.10.0](https://img.shields.io/badge/AppVersion-v1.10.0-informational?style=flat-square)
 
 MLP API
 
@@ -40,6 +40,7 @@ MLP API
 | config.streams | object | `{}` | Streams list |
 | config.ui.clockworkUIHomepage | string | `"http://clockwork.dev"` |  |
 | config.ui.kubeflowUIHomepage | string | `"http://kubeflow.org"` |  |
+| deployment.annotations | object | `{}` | Annotations |
 | deployment.extraLabels | object | `{}` | Additional labels to apply on the deployment |
 | deployment.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"caraml-dev/mlp","tag":"v1.10.1"}` | mlp image related configs |
 | deployment.livenessProbe.path | string | `"/v1/internal/live"` |  |

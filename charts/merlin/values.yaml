@@ -20,6 +20,9 @@ deployment:
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
+
+  # Additional annotations to apply
+  annotations: {}
   # Additional labels to apply to the merlin pods
   podLabels: {}
   resources:
