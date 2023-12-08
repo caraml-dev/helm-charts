@@ -1,8 +1,8 @@
 # merlin
 
 ---
-![Version: 0.13.6](https://img.shields.io/badge/Version-0.13.6-informational?style=flat-square)
-![AppVersion: v0.36.0](https://img.shields.io/badge/AppVersion-v0.36.0-informational?style=flat-square)
+![Version: 0.13.7](https://img.shields.io/badge/Version-0.13.7-informational?style=flat-square)
+![AppVersion: v0.37.0](https://img.shields.io/badge/AppVersion-v0.37.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -208,24 +208,30 @@ The following table lists the configurable parameters of the Merlin chart and th
 | environmentConfigs[0].queue_resource_percentage | string | `"20"` |  |
 | environmentConfigs[0].region | string | `"id"` |  |
 | global.protocol | string | `"http"` |  |
-| imageBuilder.builderConfig.BaseImages."3.8.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.builderConfig.BaseImages."3.8.*".DockerfilePath | string | `"docker/Dockerfile"` |  |
-| imageBuilder.builderConfig.BaseImages."3.8.*".ImageName | string | `"pyfunc-py38:v0.1.0"` |  |
-| imageBuilder.builderConfig.BaseImages."3.8.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
+| imageBuilder.builderConfig.BaseImage.BuildContextSubPath | string | `"python"` |  |
+| imageBuilder.builderConfig.BaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.37.0"` |  |
+| imageBuilder.builderConfig.BaseImage.DockerfilePath | string | `"pyfunc-server/docker/Dockerfile"` |  |
+| imageBuilder.builderConfig.BaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.37.0"` |  |
 | imageBuilder.builderConfig.BuildNamespace | string | `"mlp"` |  |
 | imageBuilder.builderConfig.BuildTimeout | string | `"30m"` |  |
+| imageBuilder.builderConfig.DefaultResources.Limits.CPU | string | `"1"` |  |
+| imageBuilder.builderConfig.DefaultResources.Limits.Memory | string | `"1Gi"` |  |
+| imageBuilder.builderConfig.DefaultResources.Requests.CPU | string | `"1"` |  |
+| imageBuilder.builderConfig.DefaultResources.Requests.Memory | string | `"512Mi"` |  |
 | imageBuilder.builderConfig.DockerRegistry | string | `"dockerRegistry"` |  |
-| imageBuilder.builderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.6.0"` |  |
+| imageBuilder.builderConfig.KanikoAdditionalArgs[0] | string | `"--cache=true"` |  |
+| imageBuilder.builderConfig.KanikoAdditionalArgs[1] | string | `"--compressed-caching=false"` |  |
+| imageBuilder.builderConfig.KanikoAdditionalArgs[2] | string | `"--snapshot-mode=redo"` |  |
+| imageBuilder.builderConfig.KanikoAdditionalArgs[3] | string | `"--use-new-run"` |  |
+| imageBuilder.builderConfig.KanikoAdditionalArgs[4] | string | `"--log-timestamp"` |  |
+| imageBuilder.builderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.18.0"` |  |
 | imageBuilder.builderConfig.MaximumRetry | int | `3` |  |
 | imageBuilder.builderConfig.NodeSelectors | object | `{}` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.8.*".BuildContextURI | string | `"git://github.com/gojek/merlin.git#refs/tags/v0.1"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.8.*".DockerfilePath | string | `"docker/app.Dockerfile"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.8.*".ImageName | string | `"pyspark-py38:v0.1.0"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages."3.8.*".MainAppPath | string | `"/merlin-spark-app/main.py"` |  |
-| imageBuilder.builderConfig.Resources.Limits.CPU | string | `"1"` |  |
-| imageBuilder.builderConfig.Resources.Limits.Memory | string | `"1Gi"` |  |
-| imageBuilder.builderConfig.Resources.Requests.CPU | string | `"1"` |  |
-| imageBuilder.builderConfig.Resources.Requests.Memory | string | `"512Mi"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages.BuildContextSubPath | string | `"python"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.37.0"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages.DockerfilePath | string | `"batch-predictor/docker/app.Dockerfile"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.37.0"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImages.MainAppPath | string | `"/home/spark/merlin-spark-app/main.py"` |  |
 | imageBuilder.builderConfig.Retention | string | `"48h"` |  |
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
 | imageBuilder.builderConfig.Tolerations | list | `[]` |  |

@@ -158,10 +158,10 @@ config:
     MaxAllowedReplica: 20
     MerlinURL: /api/merlin/v1
     MlpURL: /api
-    OauthClientID:  # to be set via CICD pipeline
+    OauthClientID: # to be set via CICD pipeline
     UPIDocumentation: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
-    CPUCost:  # Unused
-    MemoryCost:  # Unused
+    CPUCost: # Unused
+    MemoryCost: # Unused
   StandardTransformerConfig:
     ImageName: ghcr.io/caraml-dev/merlin-transformer:1.0.0
     SimulationFeast:
@@ -266,23 +266,28 @@ imageBuilder:
   #     interactiveMode: IfAvailable
   #     provideClusterInfo: true
   builderConfig:
-    BaseImages:
-      3.8.*:
-        ImageName: pyfunc-py38:v0.1.0
-        DockerfilePath: "docker/Dockerfile"
-        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-        MainAppPath: /merlin-spark-app/main.py
+    BaseImage:
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.37.0
+      DockerfilePath: "pyfunc-server/docker/Dockerfile"
+      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.37.0"
+      BuildContextSubPath: "python"
     PredictionJobBaseImages:
-      3.8.*:
-        ImageName: pyspark-py38:v0.1.0
-        DockerfilePath: "docker/app.Dockerfile"
-        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-        MainAppPath: /merlin-spark-app/main.py
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.37.0
+      DockerfilePath: "batch-predictor/docker/app.Dockerfile"
+      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.37.0"
+      BuildContextSubPath: "python"
+      MainAppPath: "/home/spark/merlin-spark-app/main.py"
     BuildNamespace: "mlp"
     DockerRegistry: "dockerRegistry"
     BuildTimeout: "30m"
-    KanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
-    Resources:
+    KanikoImage: "gcr.io/kaniko-project/executor:v1.18.0"
+    KanikoAdditionalArgs:
+      - "--cache=true"
+      - "--compressed-caching=false"
+      - "--snapshot-mode=redo"
+      - "--use-new-run"
+      - "--log-timestamp"
+    DefaultResources:
       Requests:
         CPU: "1"
         Memory: 512Mi
