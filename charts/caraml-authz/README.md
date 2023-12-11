@@ -1,6 +1,6 @@
 # authz
 
-![Version: 0.1.12](https://img.shields.io/badge/Version-0.1.12-informational?style=flat-square) ![AppVersion: 0.4.3](https://img.shields.io/badge/AppVersion-0.4.3-informational?style=flat-square)
+![Version: 0.1.13](https://img.shields.io/badge/Version-0.1.13-informational?style=flat-square) ![AppVersion: 0.4.3](https://img.shields.io/badge/AppVersion-0.4.3-informational?style=flat-square)
 
 Helm chart for deploying Ory Keto
 
@@ -47,6 +47,7 @@ Helm chart for deploying Ory Keto
 | caramlAuthzExternalPostgresql.secretKey | string | `""` | If a secret is created by external systems (eg. Vault)., mention the key under which password is stored in secret (eg. postgresql-password) |
 | caramlAuthzExternalPostgresql.secretName | string | `""` | If a secret is created by external systems (eg. Vault)., mention the secret name here |
 | caramlAuthzExternalPostgresql.username | string | `"oryketo"` | External postgres database user |
+| deployment.annotations | object | `{}` |  |
 | deployment.extraLabels | object | `{}` |  |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` |  |
 | deployment.image.repository | string | `"oryd/keto"` |  |

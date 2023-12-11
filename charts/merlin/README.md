@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.13.6](https://img.shields.io/badge/Version-0.13.6-informational?style=flat-square)
+![Version: 0.13.7](https://img.shields.io/badge/Version-0.13.7-informational?style=flat-square)
 ![AppVersion: v0.36.0](https://img.shields.io/badge/AppVersion-v0.36.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -295,6 +295,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlflow-postgresql.replicaCount | int | `1` |  |
 | mlflow-postgresql.resources.requests.cpu | string | `"500m"` |  |
 | mlflow-postgresql.resources.requests.memory | string | `"512Mi"` |  |
+| mlflow.annotations | object | `{}` |  |
 | mlflow.artifactRoot | string | `"/data/artifacts"` |  |
 | mlflow.artifactServiceType | string | `"nop"` |  |
 | mlflow.deploymentLabels | object | `{}` |  |

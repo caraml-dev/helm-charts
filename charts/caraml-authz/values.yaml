@@ -16,6 +16,7 @@ deployment:
     port: 80
 
   extraLabels: {}
+  annotations: {}
 
   resources:
     requests:

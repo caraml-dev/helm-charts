@@ -8,6 +8,10 @@ metadata:
     {{- if .Values.mlflow.deploymentLabels}}
       {{- toYaml .Values.mlflow.deploymentLabels | nindent 4 }}
     {{- end}}
+  {{- if .Values.mlflow.annotations }}
+  annotations:
+  {{- toYaml .Values.mlflow.annotations | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.mlflow.replicaCount }}
   selector:

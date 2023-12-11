@@ -469,6 +469,8 @@ mlflow:
   name: mlflow
   # Additional labels to apply to the mlflow deployment
   deploymentLabels: {}
+  # Annotations to apply to mlflow deployment
+  annotations: {}
   # Additional labels to apply to the mlflow pods
   podLabels: {}
   image:
