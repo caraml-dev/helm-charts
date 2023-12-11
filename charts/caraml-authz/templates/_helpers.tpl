@@ -41,6 +41,10 @@ Generated names
     {{- printf "%s-bootstrap-config" (include "caraml-authz.resource-prefix-with-release-name" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "caraml-authz.version" -}}
+{{ .Values.deployment.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
 {{/*
 Common labels
 */}}
@@ -48,7 +52,7 @@ Common labels
 app.kubernetes.io/name: {{ template "caraml-authz.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/version: {{ template "caraml-authz.version" . }}
 {{- end }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}

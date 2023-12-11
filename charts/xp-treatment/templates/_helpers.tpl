@@ -1,3 +1,5 @@
+{{/* vim: set filetype=mustache: */}}
+
 {{/*
 Expand the name of the chart.
 */}}
@@ -40,14 +42,23 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Application version
+*/}}
+{{- define "treatment-svc.version" -}}
+{{ .Values.deployment.image.tag | default .Chart.AppVersion }}
+{{- end }}
+
+{{/*
 Common labels
 */}}
 {{- define "treatment-svc.labels" -}}
+app: {{ template "treatment-svc.name" . }}
+version: {{ template "treatment-svc.version" . }}
 release: {{ .Release.Name }}
 app.kubernetes.io/name: {{ template "treatment-svc.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
 {{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/version: {{ template "treatment-svc.version" . }}
 {{- end }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}

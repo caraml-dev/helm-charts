@@ -8,8 +8,13 @@
 {{- printf "%s-%s" .Chart.Name .Chart.Version -}}
 {{- end -}}
 
+{{- define "turing.version" -}}
+{{ (ternary .Values.deployment.image.tag (default "" .Values.rendered.releasedVersion ) (ne .Values.deployment.image.tag "")) | toString -}}
+{{- end -}}
+
 {{- define "turing.labels" -}}
 app: {{ include "turing.name" . }}
+version: {{ include "turing.version" . }}
 chart: {{ include "turing.chart" . }}
 release: {{ .Release.Name }}
 heritage: {{ .Release.Service }}
@@ -38,7 +43,7 @@ heritage: {{ .Release.Service }}
 {{- define "turing.image" -}}
 {{- $registryName := .Values.deployment.image.registry -}}
 {{- $repositoryName := .Values.deployment.image.repository -}}
-{{- $tag :=  (ternary .Values.deployment.image.tag (default "" .Values.rendered.releasedVersion ) (ne .Values.deployment.image.tag "")) | toString -}}
+{{- $tag :=  (include "turing.version" .) -}}
 {{- if $registryName }}
     {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
 {{- else -}}
