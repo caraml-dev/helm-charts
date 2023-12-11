@@ -80,8 +80,16 @@ Generated names
 Application version
 */}}
 {{- define "merlin.version" -}}
-{{- ternary .Values.deployment.image.tag (substr 1 (len .Values.rendered.releasedVersion) .Values.rendered.releasedVersion) (ne .Values.deployment.image.tag "") -}}
+{{- if (ne .Values.deployment.image.tag "") -}}
+{{- .Values.deployment.image.tag -}}
+{{- else -}}
+{{- if (ne (len .Values.rendered) 0) -}}
+{{- substr 1 (len .Values.rendered.releasedVersion) .Values.rendered.releasedVersion -}}
+{{- else -}}
+{{- .Chart.AppVersion -}}
 {{- end -}}
+{{- end -}}
+{{- end }}
 
 {{/*
 Common labels
