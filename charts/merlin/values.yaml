@@ -6,7 +6,7 @@ global:
 # .config when generating templates
 rendered:
   # releasedVersion refers to the git release or tag
-  releasedVersion: v0.35.0
+  releasedVersion: v0.38.0-rc1
   overrides: {}
 
 # set deployment.image.tag to non-nil to overwrite
@@ -158,10 +158,10 @@ config:
     MaxAllowedReplica: 20
     MerlinURL: /api/merlin/v1
     MlpURL: /api
-    OauthClientID:  # to be set via CICD pipeline
+    OauthClientID: # to be set via CICD pipeline
     UPIDocumentation: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
-    CPUCost:  # Unused
-    MemoryCost:  # Unused
+    CPUCost: # Unused
+    MemoryCost: # Unused
   StandardTransformerConfig:
     ImageName: ghcr.io/caraml-dev/merlin-transformer:1.0.0
     SimulationFeast:
@@ -267,14 +267,14 @@ imageBuilder:
   #     provideClusterInfo: true
   builderConfig:
     BaseImage:
-      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.37.0
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.38.0-rc1
       DockerfilePath: "pyfunc-server/docker/Dockerfile"
-      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.37.0"
+      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
       BuildContextSubPath: "python"
     PredictionJobBaseImages:
-      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.37.0
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1
       DockerfilePath: "batch-predictor/docker/app.Dockerfile"
-      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.37.0"
+      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
       BuildContextSubPath: "python"
       MainAppPath: "/home/spark/merlin-spark-app/main.py"
     BuildNamespace: "mlp"
