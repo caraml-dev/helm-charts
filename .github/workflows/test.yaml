@@ -20,7 +20,7 @@ jobs:
       # yamllint (https://github.com/adrienverge/yamllint) which require Python and
       # generate-creds step below which uses python to parse yaml file.
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.7
 
