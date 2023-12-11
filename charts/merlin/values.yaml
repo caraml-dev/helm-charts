@@ -6,7 +6,7 @@ global:
 # .config when generating templates
 rendered:
   # releasedVersion refers to the git release or tag
-  releasedVersion: v0.35.0
+  releasedVersion: v0.38.0-rc1
   overrides: {}
 
 # set deployment.image.tag to non-nil to overwrite
@@ -266,23 +266,29 @@ imageBuilder:
   #     interactiveMode: IfAvailable
   #     provideClusterInfo: true
   builderConfig:
-    BaseImages:
-      3.8.*:
-        ImageName: pyfunc-py38:v0.1.0
-        DockerfilePath: "docker/Dockerfile"
-        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-        MainAppPath: /merlin-spark-app/main.py
+    ArtifactServiceType: nop
+    BaseImage:
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.38.0-rc1
+      DockerfilePath: "pyfunc-server/docker/Dockerfile"
+      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
+      BuildContextSubPath: "python"
     PredictionJobBaseImages:
-      3.8.*:
-        ImageName: pyspark-py38:v0.1.0
-        DockerfilePath: "docker/app.Dockerfile"
-        BuildContextURI: "git://github.com/gojek/merlin.git#refs/tags/v0.1"
-        MainAppPath: /merlin-spark-app/main.py
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1
+      DockerfilePath: "batch-predictor/docker/app.Dockerfile"
+      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
+      BuildContextSubPath: "python"
+      MainAppPath: "/home/spark/merlin-spark-app/main.py"
     BuildNamespace: "mlp"
     DockerRegistry: "dockerRegistry"
     BuildTimeout: "30m"
-    KanikoImage: "gcr.io/kaniko-project/executor:v1.6.0"
-    Resources:
+    KanikoImage: "gcr.io/kaniko-project/executor:v1.18.0"
+    KanikoAdditionalArgs:
+      - "--cache=true"
+      - "--compressed-caching=false"
+      - "--snapshot-mode=redo"
+      - "--use-new-run"
+      - "--log-timestamp"
+    DefaultResources:
       Requests:
         CPU: "1"
         Memory: 512Mi
