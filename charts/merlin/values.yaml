@@ -266,6 +266,7 @@ imageBuilder:
   #     interactiveMode: IfAvailable
   #     provideClusterInfo: true
   builderConfig:
+    ArtifactServiceType: nop
     BaseImage:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.38.0-rc1
       DockerfilePath: "pyfunc-server/docker/Dockerfile"

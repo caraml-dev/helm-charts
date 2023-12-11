@@ -208,6 +208,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | environmentConfigs[0].queue_resource_percentage | string | `"20"` |  |
 | environmentConfigs[0].region | string | `"id"` |  |
 | global.protocol | string | `"http"` |  |
+| imageBuilder.builderConfig.ArtifactServiceType | string | `"nop"` |  |
 | imageBuilder.builderConfig.BaseImage.BuildContextSubPath | string | `"python"` |  |
 | imageBuilder.builderConfig.BaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
 | imageBuilder.builderConfig.BaseImage.DockerfilePath | string | `"pyfunc-server/docker/Dockerfile"` |  |
