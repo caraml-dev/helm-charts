@@ -80,15 +80,15 @@ Generated names
 Application version
 */}}
 {{- define "merlin.version" -}}
-{{- if (ne .Values.deployment.image.tag "") -}}
-{{- .Values.deployment.image.tag -}}
-{{- else -}}
-{{- if (ne (len .Values.rendered) 0) -}}
-{{- substr 1 (len .Values.rendered.releasedVersion) .Values.rendered.releasedVersion -}}
-{{- else -}}
-{{- .Chart.AppVersion -}}
-{{- end -}}
-{{- end -}}
+    {{- if (ne .Values.deployment.image.tag "") -}}
+        {{- .Values.deployment.image.tag -}}
+    {{- else -}}
+        {{- if (ne (len .Values.rendered) 0) -}}
+            {{- substr 1 (len .Values.rendered.releasedVersion) .Values.rendered.releasedVersion -}}
+        {{- else -}}
+            {{- substr 1 (len .Chart.AppVersion) .Chart.AppVersion -}}
+        {{- end -}}
+    {{- end -}}
 {{- end }}
 
 {{/*
@@ -100,9 +100,7 @@ version: {{ template "merlin.version" . }}
 release: {{ .Release.Name }}
 app.kubernetes.io/name: {{ template "merlin.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
-{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ template "merlin.version" . }}
-{{- end }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
