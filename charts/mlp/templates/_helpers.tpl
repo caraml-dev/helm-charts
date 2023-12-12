@@ -57,9 +57,7 @@ Common labels
 {{- define "mlp.labels" -}}
 app.kubernetes.io/name: {{ template "mlp.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
-{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ template "mlp.version" . }}
-{{- end }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml

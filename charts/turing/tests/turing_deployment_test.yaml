@@ -78,6 +78,7 @@ tests:
       - equal: # check database secret key
           path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
           value: secret-key
+
   - it: should set releasedVersion as deployment image tag if deployment image tag is unset
     set:
       deployment:
@@ -91,6 +92,29 @@ tests:
       - matchRegex:
           path: metadata.name
           pattern: my-release-turing$
-      - equal: # check database secret name
+      - equal: # check image version
           path: spec.template.spec.containers[0].image
           value: ghcr.io/caraml-dev/turing:1.11.0-test-released-version
+      - equal: # check version label
+          path: spec.template.metadata.labels.version
+          value: 1.11.0-test-released-version
+
+  - it: image tag must have precedence over releasedVersion
+    set:
+      deployment:
+        image:
+          tag: 1.11.0-test-image-tag
+      rendered:
+        releasedVersion: 1.11.0-test-released-version
+    asserts:
+      - isKind:
+          of: Deployment
+      - matchRegex:
+          path: metadata.name
+          pattern: my-release-turing$
+      - equal: # check image version
+          path: spec.template.spec.containers[0].image
+          value: ghcr.io/caraml-dev/turing:1.11.0-test-image-tag
+      - equal: # check version label
+          path: spec.template.metadata.labels.version
+          value: 1.11.0-test-image-tag

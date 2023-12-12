@@ -57,9 +57,7 @@ version: {{ template "treatment-svc.version" . }}
 release: {{ .Release.Name }}
 app.kubernetes.io/name: {{ template "treatment-svc.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
-{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ template "treatment-svc.version" . }}
-{{- end }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml

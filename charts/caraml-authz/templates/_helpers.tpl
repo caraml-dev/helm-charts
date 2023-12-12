@@ -51,9 +51,7 @@ Common labels
 {{- define "caraml-authz.labels" -}}
 app.kubernetes.io/name: {{ template "caraml-authz.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
-{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ template "caraml-authz.version" . }}
-{{- end }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
