@@ -23,6 +23,7 @@ spec:
     metadata:
       labels:
         app: {{ template "turing.name" . }}
+        version: {{ template "turing.version" . }}
         release: {{ .Release.Name }}
 {{- if .Values.deployment.labels }}
 {{ toYaml .Values.deployment.labels | indent 8 -}}

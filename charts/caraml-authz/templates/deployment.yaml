@@ -17,6 +17,7 @@ spec:
     metadata:
       labels:
         app: {{ template "caraml-authz.name" . }}
+        version: {{ template "caraml-authz.version" . }}
         release: {{ .Release.Name }}
     spec:
       initContainers:

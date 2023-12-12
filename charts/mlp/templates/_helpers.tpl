@@ -17,6 +17,10 @@ Expand the name of the chart.
 {{- printf "%s-%s" .Chart.Name .Chart.Version -}}
 {{- end -}}
 
+{{- define "mlp.version" -}}
+{{ .Values.deployment.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
@@ -53,9 +57,7 @@ Common labels
 {{- define "mlp.labels" -}}
 app.kubernetes.io/name: {{ template "mlp.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ template "mlp.version" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml

@@ -32,7 +32,8 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "merlin.name" .}}
+        app: {{ template "merlin.name" . }}
+        version: {{ template "merlin.version" . }}
         release: {{ .Release.Name }}
         {{- if .Values.deployment.podLabels }}
           {{- toYaml .Values.deployment.podLabels | nindent 8 }}

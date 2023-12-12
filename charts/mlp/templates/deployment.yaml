@@ -27,6 +27,7 @@ spec:
     metadata:
       labels:
         app: {{ template "mlp.name" .}}
+        version: {{ template "mlp.version" . }}
         release: {{ .Release.Name }}
         {{- if .Values.deployment.podLabels }}
         {{- toYaml .Values.deployment.podLabels | nindent 8 }}
@@ -34,7 +35,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+          image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ template "mlp.version" . }}"
           imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}

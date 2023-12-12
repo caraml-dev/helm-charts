@@ -76,18 +76,31 @@ Generated names
     {{- end -}}
 {{- end -}}
 
+{{/*
+Application version
+*/}}
+{{- define "merlin.version" -}}
+    {{- if (ne .Values.deployment.image.tag "") -}}
+        {{- .Values.deployment.image.tag -}}
+    {{- else -}}
+        {{- if (ne (len .Values.rendered) 0) -}}
+            {{- substr 1 (len .Values.rendered.releasedVersion) .Values.rendered.releasedVersion -}}
+        {{- else -}}
+            {{- substr 1 (len .Chart.AppVersion) .Chart.AppVersion -}}
+        {{- end -}}
+    {{- end -}}
+{{- end }}
 
 {{/*
 Common labels
 */}}
 {{- define "merlin.labels" -}}
-app: {{ template "merlin.name" .}}
+app: {{ template "merlin.name" . }}
+version: {{ template "merlin.version" . }}
 release: {{ .Release.Name }}
 app.kubernetes.io/name: {{ template "merlin.name" . }}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote}}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ template "merlin.version" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: caraml
@@ -322,7 +335,7 @@ MlflowConfig:
 {{ printf "%s%s:%s" (ternary (printf "%s/" $.Values.deployment.image.registry) "" (ne $.Values.deployment.image.registry "")) $.Values.deployment.image.repository $.Values.deployment.image.tag }}
 {{- else -}}
 {{- with index . 1 }}
-{{- $tag :=  ternary $.Values.deployment.image.tag (substr 1 (len $rendered.releasedVersion) $rendered.releasedVersion) (ne $.Values.deployment.image.tag "") -}}
+{{- $tag :=  include "merlin.version" . -}}
 {{ printf "%s%s:%s" (ternary (printf "%s/" $.Values.deployment.image.registry) "" (ne $.Values.deployment.image.registry "")) $.Values.deployment.image.repository $tag }}
 {{- end -}}
 {{- end -}}
