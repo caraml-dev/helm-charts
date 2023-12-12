@@ -272,7 +272,7 @@ imageBuilder:
       DockerfilePath: "pyfunc-server/docker/Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
       BuildContextSubPath: "python"
-    PredictionJobBaseImages:
+    PredictionJobBaseImage:
       ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1
       DockerfilePath: "batch-predictor/docker/app.Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"

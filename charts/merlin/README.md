@@ -228,11 +228,11 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.18.0"` |  |
 | imageBuilder.builderConfig.MaximumRetry | int | `3` |  |
 | imageBuilder.builderConfig.NodeSelectors | object | `{}` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages.BuildContextSubPath | string | `"python"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages.DockerfilePath | string | `"batch-predictor/docker/app.Dockerfile"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImages.MainAppPath | string | `"/home/spark/merlin-spark-app/main.py"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextSubPath | string | `"python"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.DockerfilePath | string | `"batch-predictor/docker/app.Dockerfile"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.MainAppPath | string | `"/home/spark/merlin-spark-app/main.py"` |  |
 | imageBuilder.builderConfig.Retention | string | `"48h"` |  |
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
 | imageBuilder.builderConfig.Tolerations | list | `[]` |  |
