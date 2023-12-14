@@ -29,7 +29,7 @@ EnsemblerServiceBuilderConfig:
     KanikoConfig: &kanikoConfig
       BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags" $tag }}
 RouterDefaults:
-  Image: ghcr.io/caraml-dev/turing/turing-router:{{ printf "%s" $tag }}
+  Image: {{ .Values.deployment.image.registry }}/caraml-dev/turing/turing-router:{{ printf "%s" $tag }}
 {{- end }}
 {{- end }}
 {{- end }}
