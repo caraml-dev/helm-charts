@@ -17,18 +17,18 @@
 # just as if we were outside of include/define:
 ImageBuilderConfig:
   BaseImage:
-    ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:{{ printf "%s" $tag }}
+    ImageName: {{ .Values.deployment.image.registry }}/caraml-dev/merlin/merlin-pyfunc-base:{{ printf "%s" $tag }}
     DockerfilePath: "pyfunc-server/docker/Dockerfile"
     BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
     BuildContextSubPath: "python"
   PredictionJobBaseImage:
-    ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:{{ printf "%s" $tag }}
+    ImageName: {{ .Values.deployment.image.registry }}/caraml-dev/merlin/merlin-pyspark-base:{{ printf "%s" $tag }}
     DockerfilePath: "batch-predictor/docker/app.Dockerfile"
     BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
     BuildContextSubPath: "python"
     MainAppPath: "/home/spark/merlin-spark-app/main.py"
 StandardTransformerConfig:
-  ImageName: ghcr.io/caraml-dev/merlin-transformer:{{ printf "%s" $tag }}
+  ImageName: {{ .Values.deployment.image.registry }}/caraml-dev/merlin-transformer:{{ printf "%s" $tag }}
 {{- end -}}
 {{- end -}}
 {{- end -}}

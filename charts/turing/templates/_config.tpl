@@ -5,8 +5,8 @@
 {{- $tag := $rendered.releasedVersion}}
 {{- $ensemblerTag := default $tag $rendered.ensemblerTag }}
 {{- $ensemblerServiceTag := default $ensemblerTag $rendered.ensemblerServiceTag }}
-{{- $ensemblerJobPrefix := "ghcr.io/caraml-dev/turing/pyfunc-ensembler-job-py" -}}
-{{- $servicePrefix := "ghcr.io/caraml-dev/turing/pyfunc-ensembler-service-py" -}}
+{{- $ensemblerJobPrefix := printf "%s/caraml-dev/turing/pyfunc-ensembler-job-py" $.Values.deployment.image.registry -}}
+{{- $servicePrefix := printf "%s/caraml-dev/turing/pyfunc-ensembler-service-py" $.Values.deployment.image.registry -}}
 # Now we have access to the "real" root and current contexts
 # just as if we were outside of include/define:
 {{ with index . 1 }}
