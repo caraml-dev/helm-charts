@@ -1,0 +1,11 @@
+{{- if .Values.mlobs.bootstrap.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "merlin.resource-prefix" . }}-mlobs-bootstrap
+data:
+  config.yaml: |
+    {{- with .Values.mlobs.bootstrap.flyte.config }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{- end -}}

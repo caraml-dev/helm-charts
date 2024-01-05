@@ -691,3 +691,25 @@ kserve:
         istioIngressGateway:
           helmChart:
             namespace: "istio-system"
+mlobs:
+  bootstrap:
+    # -- Enable this to run bootstrap job for mlobs workflow registration
+    enabled: false
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    flyte:
+      # -- Flyte workflow project
+      project: merlin
+      # -- Flyte workflow domain
+      domain: development
+      # -- Image to be used for both the bootstrap job pod and the Flyte workflow.
+      workflowImageName: caraml-dev/merlin/merlin-batch-observation-publisher
+      # -- Flyte workflow image tag override. If not defined, the deployment tag will be used.
+      workflowImageTagOverride: ""
+      # -- Flyte cluster configuration, which we will register the workflow on
+      config:
+        admin:
+          endpoint: flyte.example.com:80
+          insecure: true

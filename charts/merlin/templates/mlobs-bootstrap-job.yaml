@@ -1,0 +1,38 @@
+{{- if .Values.mlobs.bootstrap.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "merlin.resource-prefix" . }}-mlobs-bootstrap
+  annotations:
+    "helm.sh/hook": post-upgrade,post-install
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    spec:
+      containers:
+      - name: mlobs-bootstrap
+        image: "{{ .Values.deployment.image.registry }}/{{ .Values.mlobs.bootstrap.flyte.workflowImageName }}:{{ .Values.mlobs.bootstrap.flyte.workflowImageTagOverride | default .Values.deployment.image.tag }}"
+        command:
+          - make
+          - register
+        env:
+        - name: FLYTE_PROJECT
+          value: {{ .Values.mlobs.bootstrap.flyte.project }}
+        - name: FLYTE_DOMAIN
+          value: {{ .Values.mlobs.bootstrap.flyte.domain }}
+        - name: WORKFLOW_IMAGE
+          value: "{{ .Values.deployment.image.registry }}/{{ .Values.mlobs.bootstrap.flyte.workflowImageName }}:{{ .Values.mlobs.bootstrap.flyte.workflowImageTagOverride | default .Values.deployment.image.tag }}"
+        - name: WORKFLOW_VERSION
+          value: {{ .Values.mlobs.bootstrap.flyte.workflowImageTagOverride | default .Values.deployment.image.tag }}
+        resources:
+{{- toYaml .Values.mlobs.bootstrap.resources | nindent 10 }}
+        volumeMounts:
+        - name: flyte-config
+          mountPath: /root/.flyte/
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: flyte-config
+        configMap:
+          name:  {{ template "merlin.resource-prefix" . }}-mlobs-bootstrap
+{{- end -}}

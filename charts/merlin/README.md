@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.13.12](https://img.shields.io/badge/Version-0.13.12-informational?style=flat-square)
+![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square)
 ![AppVersion: v0.38.0-rc1](https://img.shields.io/badge/AppVersion-v0.38.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -351,6 +351,14 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy | object | `{"dbConnectionName":"asia-east-1:mlflow-db","dbPort":5432,"image":{"tag":"1.33.2"},"resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"spec":[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]}` | container spec for the Google CloudSQL auth proxy sidecar, ref: https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine |
 | mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.spec | list | `[{"command":["/cloud_sql_proxy","-ip_address_types=PRIVATE","-log_debug_stdout","-instances={{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbConnectionName }}=tcp:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.dbPort }}"],"image":"gcr.io/cloudsql-docker/gce-proxy:{{ .Values.mlflowExternalPostgresql.sidecarSpec.cloudSqlProxy.image.tag }}","name":"cloud-sql-proxy","resources":{"limits":{"cpu":"1000m","memory":"1G"},"requests":{"cpu":"200m","memory":"512Mi"}},"securityContext":{"runAsNonRoot":true}}]` | Container spec for the sidecar |
 | mlflowExternalPostgresql.username | string | `"mlflow"` | External postgres database user |
+| mlobs.bootstrap.enabled | bool | `false` | Enable this to run bootstrap job for mlobs workflow registration |
+| mlobs.bootstrap.flyte.config | object | `{"admin":{"endpoint":"flyte.example.com:80","insecure":true}}` | Flyte cluster configuration, which we will register the workflow on |
+| mlobs.bootstrap.flyte.domain | string | `"development"` | Flyte workflow domain |
+| mlobs.bootstrap.flyte.project | string | `"merlin"` | Flyte workflow project |
+| mlobs.bootstrap.flyte.workflowImageName | string | `"caraml-dev/merlin/merlin-batch-observation-publisher"` | Image to be used for both the bootstrap job pod and the Flyte workflow. |
+| mlobs.bootstrap.flyte.workflowImageTagOverride | string | `""` | Flyte workflow image tag override. If not defined, the deployment tag will be used. |
+| mlobs.bootstrap.resources.requests.cpu | string | `"100m"` |  |
+| mlobs.bootstrap.resources.requests.memory | string | `"100Mi"` |  |
 | mlp.enabled | bool | `true` |  |
 | mlp.environmentConfigSecret.name | string | `""` |  |
 | mlp.fullnameOverride | string | `"mlp"` |  |

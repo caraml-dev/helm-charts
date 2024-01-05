@@ -33,4 +33,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: merlin
-version: 0.13.12
+version: 0.14.0
