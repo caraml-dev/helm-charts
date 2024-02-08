@@ -1,6 +1,5 @@
 global:
   protocol: http
-
 # .rendered takes precedence over fields defined in .config
 # set .rendered to an empty dictionary to use the values specified in
 # .config when generating templates
@@ -8,7 +7,6 @@ rendered:
   # releasedVersion refers to the git release or tag
   releasedVersion: v0.38.0-rc1
   overrides: {}
-
 # set deployment.image.tag to non-nil to overwrite
 # .rendered.releasedVersion
 deployment:
@@ -20,7 +18,6 @@ deployment:
   replicaCount: "2"
   # Additional labels to apply to the deployment
   labels: {}
-
   # Additional annotations to apply
   annotations: {}
   # Additional labels to apply to the merlin pods
@@ -40,7 +37,6 @@ deployment:
   #     value: master
   #     effect: NoSchedule
   tolerations: []
-
   # -- List of string containing additional Merlin API server arguments. For
   # example, multiple "-config" can be specified to use multiple config files
   extraArgs: []
@@ -93,7 +89,6 @@ deployment:
   # Example:
   # - name: varlog
   #   mountPath: /var/log
-
 # if rendered is set, rendered template will overwrite config
 config:
   DeploymentLabelPrefix: "gojek.com/"
@@ -158,10 +153,10 @@ config:
     MaxAllowedReplica: 20
     MerlinURL: /api/merlin/v1
     MlpURL: /api
-    OauthClientID:  # to be set via CICD pipeline
+    OauthClientID: # to be set via CICD pipeline
     UPIDocumentation: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
-    CPUCost:  # Unused
-    MemoryCost:  # Unused
+    CPUCost: # Unused
+    MemoryCost: # Unused
   StandardTransformerConfig:
     ImageName: ghcr.io/caraml-dev/merlin-transformer:1.0.0
     SimulationFeast:
@@ -243,7 +238,6 @@ clusterConfig:
   # -- environmentConfigPath is a path to a file that contains environmentConfigs.
   # See api/environments-dev.yaml for example contents
   environmentConfigPath: "environments.yaml"
-
 imageBuilder:
   contextRef: ""
   serviceAccount:
@@ -300,7 +294,6 @@ imageBuilder:
     MaximumRetry: 3
     Retention: "48h"
     SafeToEvict: false
-
 environmentConfigs:
   - name: "id-dev"
     is_default: true
@@ -343,7 +336,6 @@ environmentConfigs:
     #     command: gke-gcloud-auth-plugin
     #     interactiveMode: IfAvailable
     #     provideClusterInfo: true
-
 ui:
   oauthClientID: ""
   homepage: /merlin
@@ -351,13 +343,7 @@ ui:
   upiDocURL: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
   mlp:
     apiHost: /api
-  docsURL:
-    [
-      {
-        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
-        "label": "Getting Started with Merlin",
-      },
-    ]
+  docsURL: [{"href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md", "label": "Getting Started with Merlin"}]
   # -- Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
   maxAllowedReplica: 20
@@ -652,7 +638,7 @@ minio:
     chart: minio
     # -- "https://helm.min.io/" is no longer valid. TODO: Check if the chart coming from below is correct for this usecase, version also changed to latest in the below charts url.
     repository: "https://charts.min.io/"
-    version: 5.0.14
+    version: 5.0.15
     release: minio
     namespace: minio
     createNamespace: true
