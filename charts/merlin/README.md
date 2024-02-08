@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.13.12](https://img.shields.io/badge/Version-0.13.12-informational?style=flat-square)
+![Version: 0.13.13](https://img.shields.io/badge/Version-0.13.13-informational?style=flat-square)
 ![AppVersion: v0.38.0-rc1](https://img.shields.io/badge/AppVersion-v0.38.0--rc1-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -292,7 +292,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | minio.helmChart.namespace | string | `"minio"` |  |
 | minio.helmChart.release | string | `"minio"` |  |
 | minio.helmChart.repository | string | `"https://charts.min.io/"` | "https://helm.min.io/" is no longer valid. TODO: Check if the chart coming from below is correct for this usecase, version also changed to latest in the below charts url. |
-| minio.helmChart.version | string | `"5.0.14"` |  |
+| minio.helmChart.version | string | `"5.0.15"` |  |
 | minio.hook.weight | string | `"-2"` |  |
 | mlflow-postgresql.enabled | bool | `true` |  |
 | mlflow-postgresql.persistence.enabled | bool | `true` |  |
