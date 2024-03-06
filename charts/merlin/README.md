@@ -2,7 +2,7 @@
 
 ---
 ![Version: 0.13.14](https://img.shields.io/badge/Version-0.13.14-informational?style=flat-square)
-![AppVersion: v0.39.1](https://img.shields.io/badge/AppVersion-v0.39.1-informational?style=flat-square)
+![AppVersion: v0.40.0](https://img.shields.io/badge/AppVersion-v0.40.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
