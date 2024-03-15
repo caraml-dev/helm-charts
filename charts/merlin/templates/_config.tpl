@@ -29,6 +29,8 @@ ImageBuilderConfig:
     MainAppPath: "/home/spark/merlin-spark-app/main.py"
 StandardTransformerConfig:
   ImageName: {{ .Values.deployment.image.registry }}/caraml-dev/merlin-transformer:{{ printf "%s" $tag }}
+ObservabilityPublisher:
+  ImageName: {{ .Values.deployment.image.registry }}/caraml-dev/merlin/merlin-observation-publisher:{{ printf "%s" $tag }}
 {{- end -}}
 {{- end -}}
 {{- end -}}
