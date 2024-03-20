@@ -163,8 +163,6 @@ config:
         Key: batch-job
         Operator: Equal
         Value: "true"
-    NodeSelectors:
-      node-workload-type: "batch"
   StandardTransformerConfig:
     ImageName: ghcr.io/caraml-dev/merlin-transformer:1.0.0
     SimulationFeast:
@@ -279,7 +277,7 @@ imageBuilder:
       DockerfilePath: "batch-predictor/docker/app.Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
       BuildContextSubPath: "python"
-      MainAppPath: "/home/spark/merlin-spark-app/main.py"
+      MainAppPath: "/home/spark/main.py"
     BuildNamespace: "mlp"
     DockerRegistry: "dockerRegistry"
     BuildTimeout: "30m"

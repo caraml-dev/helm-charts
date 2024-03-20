@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.13.15](https://img.shields.io/badge/Version-0.13.15-informational?style=flat-square)
+![Version: 0.13.16](https://img.shields.io/badge/Version-0.13.16-informational?style=flat-square)
 ![AppVersion: v0.41.0](https://img.shields.io/badge/AppVersion-v0.41.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -74,7 +74,6 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.AuthorizationConfig.Caching.KeyExpirySeconds | int | `600` | Cache key expiry duration |
 | config.AuthorizationConfig.KetoRemoteRead | string | `"http://mlp-keto-read:80"` |  |
 | config.AuthorizationConfig.KetoRemoteWrite | string | `"http://mlp-keto-write:80"` |  |
-| config.BatchConfig.NodeSelectors.node-workload-type | string | `"batch"` |  |
 | config.BatchConfig.Tolerations[0].Effect | string | `"NoSchedule"` |  |
 | config.BatchConfig.Tolerations[0].Key | string | `"batch-job"` |  |
 | config.BatchConfig.Tolerations[0].Operator | string | `"Equal"` |  |
@@ -237,7 +236,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.DockerfilePath | string | `"batch-predictor/docker/app.Dockerfile"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImage.MainAppPath | string | `"/home/spark/merlin-spark-app/main.py"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.MainAppPath | string | `"/home/spark/main.py"` |  |
 | imageBuilder.builderConfig.Retention | string | `"48h"` |  |
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
 | imageBuilder.builderConfig.Tolerations | list | `[]` |  |
