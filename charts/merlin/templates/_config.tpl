@@ -26,7 +26,7 @@ ImageBuilderConfig:
     DockerfilePath: "batch-predictor/docker/app.Dockerfile"
     BuildContextURI: "git://github.com/caraml-dev/merlin.git#{{ printf "%s" $reference }}"
     BuildContextSubPath: "python"
-    MainAppPath: "/home/spark/merlin-spark-app/main.py"
+    MainAppPath: "/home/spark/main.py"
 StandardTransformerConfig:
   ImageName: {{ .Values.deployment.image.registry }}/caraml-dev/merlin-transformer:{{ printf "%s" $tag }}
 ObservabilityPublisher:
