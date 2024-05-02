@@ -1,8 +1,8 @@
 # merlin
 
 ---
-![Version: 0.13.17](https://img.shields.io/badge/Version-0.13.17-informational?style=flat-square)
-![AppVersion: v0.41.0](https://img.shields.io/badge/AppVersion-v0.41.0-informational?style=flat-square)
+![Version: 0.13.18](https://img.shields.io/badge/Version-0.13.18-informational?style=flat-square)
+![AppVersion: v0.42.0](https://img.shields.io/badge/AppVersion-v0.42.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
 
@@ -236,7 +236,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.DockerfilePath | string | `"batch-predictor/docker/app.Dockerfile"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImage.MainAppPath | string | `"/home/spark/main.py"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.MainAppPath | string | `"/home/spark/merlin-spark-app/main.py"` |  |
 | imageBuilder.builderConfig.Retention | string | `"48h"` |  |
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
 | imageBuilder.builderConfig.Tolerations | list | `[]` |  |

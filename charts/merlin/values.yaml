@@ -153,10 +153,10 @@ config:
     MaxAllowedReplica: 20
     MerlinURL: /api/merlin/v1
     MlpURL: /api
-    OauthClientID:  # to be set via CICD pipeline
+    OauthClientID: # to be set via CICD pipeline
     UPIDocumentation: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
-    CPUCost:  # Unused
-    MemoryCost:  # Unused
+    CPUCost: # Unused
+    MemoryCost: # Unused
   BatchConfig:
     Tolerations:
       - Effect: NoSchedule
@@ -277,7 +277,7 @@ imageBuilder:
       DockerfilePath: "batch-predictor/docker/app.Dockerfile"
       BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
       BuildContextSubPath: "python"
-      MainAppPath: "/home/spark/main.py"
+      MainAppPath: "/home/spark/merlin-spark-app/main.py"
     BuildNamespace: "mlp"
     DockerRegistry: "dockerRegistry"
     BuildTimeout: "30m"
@@ -349,7 +349,13 @@ ui:
   upiDocURL: "https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md"
   mlp:
     apiHost: /api
-  docsURL: [{"href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md", "label": "Getting Started with Merlin"}]
+  docsURL:
+    [
+      {
+        "href": "https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md",
+        "label": "Getting Started with Merlin",
+      },
+    ]
   # -- Comma-separated value of Docker registries that can be chosen in deployment page
   dockerRegistries: ghcr.io/gojek,ghcr.io/your-company
   maxAllowedReplica: 20
