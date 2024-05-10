@@ -7,7 +7,9 @@ metadata:
   labels:
     {{- include "caraml-store.serving.labels" . | nindent 4 }}
 spec:
+{{- if not .Values.serving.autoscaling.enabled }}
   replicas: {{ .Values.serving.replicaCount }}
+{{- end }}
 {{- if .Values.serving.strategy }}
   strategy:
 {{ toYaml .Values.serving.strategy | indent 4 }}
