@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "feast_ui.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "feast_ui.fullname" . }}
+    chart: {{ template "feast_ui.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- if .Values.feast_ui.labels }}
+{{ toYaml .Values.feast_ui.labels | indent 4 -}}
+{{- end }}
+spec:
+  replicas: {{ .Values.feast_ui.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "feast_ui.fullname" . }}
+      release: {{ .Release.Name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 4
+      maxUnavailable: 0    
+  template:
+    metadata:
+      labels:
+        app: {{ template "feast_ui.fullname" . }}
+        release: {{ .Release.Name }}
+{{- if .Values.feast_ui.labels }}
+{{ toYaml .Values.feast_ui.labels | indent 8 -}}
+{{- end }}
+    spec:
+      containers:
+      - name: feast-ui
+        image: "{{ .Values.feast_ui.image.registry }}{{ .Values.feast_ui.image.repository }}:{{ .Values.feast_ui.image.tag }}"
+        imagePullPolicy: {{ .Values.feast_ui.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.feast_ui.service.internalPort }}
+        resources:
+        {{- toYaml .Values.feast_ui.resources | nindent 10 }}
+        env:
+        - name: REACT_APP_OAUTH_CLIENT_ID
+          value: "{{ .Values.feast_ui.oauthClientID }}"
+        - name: JOBSERVICE_ENDPOINTS
+          value: "{{ .Values.feast_ui.jobserviceEndpoints }}"
+        - name: JOBSERVICE_LABELS
+          value: "{{ .Values.feast_ui.jobserviceLabels }}"
+        - name: JOB_LOG_URL_TEMPLATE
+          value: "{{ .Values.feast_ui.jobLogUrlTemplate }}"
+        - name: FEAST_CORE_ENDPOINT
+          value: "{{ .Values.feast_ui.coreEndpoint }}"
+  {{- with .Values.feast_ui.extraEnvs }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        volumeMounts:
+        {{- with .Values.feast_ui.extraVolumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      volumes:
+      {{- with .Values.feast_ui.extraVolumes }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+
+{{- if .Values.feast_ui.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.feast_ui.nodeSelector | nindent 8 }}
+{{ end -}}
