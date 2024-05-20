@@ -1,6 +1,6 @@
 # See https://github.com/helm/chart-testing#configuration
 remote: origin
-target-branch: main
+target-branch: add-feast-ui-chart
 chart-dirs:
   - charts
 chart-repos:
@@ -12,4 +12,5 @@ excluded-charts:
   - common
   - hashicorp=https://helm.releases.hashicorp.com
   - bitnami=https://charts.bitnami.com/bitnami
+  - feast-ui
 helm-extra-args: --timeout 900s

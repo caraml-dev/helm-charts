@@ -1,0 +1,32 @@
+feast_ui:
+  image:
+    pullPolicy: IfNotPresent
+    registry: ""
+    repository: feast-ui
+    # Value will be set at install time using helm --set command
+    tag:
+
+  service:
+    type: ClusterIP
+    externalPort: 8080
+    internalPort: 8080
+
+
+  extraVolumes: {}
+
+  extraVolumeMounts: {}
+
+  livenessProbe:
+    path: "/api/live"
+
+  readinessProbe:
+    path: "/api/ready"
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+  replicaCount: "1"
