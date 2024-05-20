@@ -1,6 +1,6 @@
 # feast-ui
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square)
+![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square)
 
 Feast: ML Feature Store
 
@@ -14,8 +14,8 @@ Feast: ML Feature Store
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| feast_ui.extraVolumeMounts | object | `{}` |  |
-| feast_ui.extraVolumes | object | `{}` |  |
+| feast_ui.extraVolumeMounts | list | `[]` |  |
+| feast_ui.extraVolumes | list | `[]` |  |
 | feast_ui.image.pullPolicy | string | `"IfNotPresent"` |  |
 | feast_ui.image.registry | string | `""` |  |
 | feast_ui.image.repository | string | `"feast-ui"` |  |

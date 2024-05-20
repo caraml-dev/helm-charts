@@ -12,9 +12,9 @@ feast_ui:
     internalPort: 8080
 
 
-  extraVolumes: {}
+  extraVolumes: []
 
-  extraVolumeMounts: {}
+  extraVolumeMounts: []
 
   livenessProbe:
     path: "/api/live"
