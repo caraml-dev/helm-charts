@@ -8879,6 +8879,18 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/dap-secret-webhook-0.1.0/dap-secret-webhook-0.1.0.tgz
     version: 0.1.0
+  feast-ui:
+  - apiVersion: v1
+    created: "2024-05-20T06:09:30.656777392Z"
+    description: 'Feast: ML Feature Store'
+    digest: 73cef7418a3a70b31ee6e3ed30bc83b2a39c0f0aa5c28a0baf78141fc5d615b5
+    maintainers:
+    - email: caraml-dev@caraml.dev
+      name: caraml-dev
+    name: feast-ui
+    urls:
+    - https://github.com/caraml-dev/helm-charts/releases/download/feast-ui-0.5.0/feast-ui-0.5.0.tgz
+    version: 0.5.0
   fluentd:
   - apiVersion: v2
     appVersion: 0.1.0
@@ -17363,4 +17375,4 @@ entries:
     urls:
     - https://github.com/caraml-dev/helm-charts/releases/download/xp-treatment-0.1.3/xp-treatment-0.1.3.tgz
     version: 0.1.3
-generated: "2024-05-10T03:30:22.459731059Z"
+generated: "2024-05-20T06:09:30.657494127Z"
