@@ -11,6 +11,7 @@ spec:
     url: {{ printf "<%s>/<(treatment-service-config|validate|projects)>" (include "caraml-routes.oathkeeper.xp.regexPrefix" .) }}
     methods:
       - "GET"
+      - "POST"
   authenticators:
     - handler: jwt
   authorizer:
