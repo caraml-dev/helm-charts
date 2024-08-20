@@ -31,3 +31,5 @@ override.tf.json
 
 # Ignore inner charts dir
 charts/**/charts/*.tgz
+
+.idea/

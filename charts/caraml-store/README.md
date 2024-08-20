@@ -1,6 +1,6 @@
 # caraml-store
 
-![Version: 0.1.17](https://img.shields.io/badge/Version-0.1.17-informational?style=flat-square) ![AppVersion: 0.1.3](https://img.shields.io/badge/AppVersion-0.1.3-informational?style=flat-square)
+![Version: 0.1.18](https://img.shields.io/badge/Version-0.1.18-informational?style=flat-square) ![AppVersion: 0.1.3](https://img.shields.io/badge/AppVersion-0.1.3-informational?style=flat-square)
 
 CaraML store registry: Feature registry for CaraML store.
 
@@ -85,6 +85,11 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.image.tag | string | `""` |  |
 | serving.imagePullSecrets | list | `[]` |  |
 | serving.javaOpts | string | `nil` |  |
+| serving.livenessProbe.enabled | bool | `true` | Flag to enable the liveness probe |
+| serving.livenessProbe.failureThreshold | int | `5` | Min consecutive failures for the liveness probe to be considered failed |
+| serving.livenessProbe.initialDelaySeconds | int | `0` | Delay before the liveness probe is initiated |
+| serving.livenessProbe.periodSeconds | int | `10` | How often to perform the liveness probe |
+| serving.livenessProbe.timeoutSeconds | int | `2` | When the liveness probe times out |
 | serving.minReadySeconds | int | `0` | The minimum number of seconds for which a newly created Pod should be ready without any of its containers crashing, for it to be considered available. |
 | serving.name | string | `"serving"` |  |
 | serving.nameOverride | string | `""` |  |
@@ -93,12 +98,12 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.podDisruptionBudget | object | `{}` | This value is used to configure a Kubernetes PodDisruptionBudget for Serving deployment |
 | serving.podLabels | object | `{}` |  |
 | serving.prometheus.monitor.enabled | bool | `false` | Create a ServiceMonitor resource to expose Prometheus metrics |
-| serving.readinessProbe.enabled | bool | `true` | Flag to enable the probe |
-| serving.readinessProbe.failureThreshold | int | `5` | Min consecutive failures for the probe to be considered failed |
-| serving.readinessProbe.initialDelaySeconds | int | `20` | Delay before the probe is initiated |
-| serving.readinessProbe.periodSeconds | int | `10` | How often to perform the probe |
-| serving.readinessProbe.successThreshold | int | `1` | Min consecutive success for the probe to be considered successful |
-| serving.readinessProbe.timeoutSeconds | int | `10` | When the probe times out |
+| serving.readinessProbe.enabled | bool | `true` | Flag to enable the readiness probe |
+| serving.readinessProbe.failureThreshold | int | `2` | Min consecutive failures for the readiness probe to be considered failed |
+| serving.readinessProbe.initialDelaySeconds | int | `0` | Delay before the readiness probe is initiated |
+| serving.readinessProbe.periodSeconds | int | `5` | How often to perform the readiness probe |
+| serving.readinessProbe.successThreshold | int | `2` | Min consecutive success for the readiness probe to be considered successful |
+| serving.readinessProbe.timeoutSeconds | int | `2` | When the readiness probe times out |
 | serving.replicaCount | int | `1` |  |
 | serving.resources | object | `{}` |  |
 | serving.secrets | list | `[]` |  |
@@ -106,6 +111,10 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.service.grpc.port | int | `6566` | Service port for GRPC requests |
 | serving.service.grpc.targetPort | int | `6566` | Container port serving GRPC requests |
 | serving.service.type | string | `"ClusterIP"` | Kubernetes service type |
+| serving.startupProbe.enabled | bool | `true` | Flag to enable the startup probe |
+| serving.startupProbe.failureThreshold | int | `10` | Min consecutive failures for the startup probe to be considered failed |
+| serving.startupProbe.periodSeconds | int | `5` | How often to perform the startup probe |
+| serving.startupProbe.timeoutSeconds | int | `1` | When the startup probe times out |
 | serving.strategy | object | `{}` | Strategy used to replace old Pods by new ones. .spec.strategy.type can be "Recreate" or "RollingUpdate". "RollingUpdate" is the default value. |
 | serving.tolerations | list | `[]` |  |
 
