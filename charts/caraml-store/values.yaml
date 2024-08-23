@@ -161,8 +161,6 @@ serving:
   javaOpts:
 
   startupProbe:
-    # serving.startupProbe.enabled -- Flag to enable the startup probe
-    enabled: true
     # serving.startupProbe.periodSeconds -- How often to perform the startup probe
     periodSeconds: 5
     # serving.startupProbe.timeoutSeconds -- When the startup probe times out
@@ -171,8 +169,6 @@ serving:
     failureThreshold: 10
 
   readinessProbe:
-    # serving.readinessProbe.enabled -- Flag to enable the readiness probe
-    enabled: true
     # serving.readinessProbe.initialDelaySeconds -- Delay before the readiness probe is initiated
     initialDelaySeconds: 0
     # serving.readinessProbe.periodSeconds -- How often to perform the readiness probe
@@ -185,8 +181,6 @@ serving:
     failureThreshold: 2
 
   livenessProbe:
-    # serving.livenessProbe.enabled -- Flag to enable the liveness probe
-    enabled: true
     # serving.livenessProbe.initialDelaySeconds -- Delay before the liveness probe is initiated
     initialDelaySeconds: 0
     # serving.livenessProbe.periodSeconds -- How often to perform the liveness probe

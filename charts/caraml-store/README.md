@@ -85,7 +85,6 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.image.tag | string | `""` |  |
 | serving.imagePullSecrets | list | `[]` |  |
 | serving.javaOpts | string | `nil` |  |
-| serving.livenessProbe.enabled | bool | `true` | Flag to enable the liveness probe |
 | serving.livenessProbe.failureThreshold | int | `5` | Min consecutive failures for the liveness probe to be considered failed |
 | serving.livenessProbe.initialDelaySeconds | int | `0` | Delay before the liveness probe is initiated |
 | serving.livenessProbe.periodSeconds | int | `10` | How often to perform the liveness probe |
@@ -98,7 +97,6 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.podDisruptionBudget | object | `{}` | This value is used to configure a Kubernetes PodDisruptionBudget for Serving deployment |
 | serving.podLabels | object | `{}` |  |
 | serving.prometheus.monitor.enabled | bool | `false` | Create a ServiceMonitor resource to expose Prometheus metrics |
-| serving.readinessProbe.enabled | bool | `true` | Flag to enable the readiness probe |
 | serving.readinessProbe.failureThreshold | int | `2` | Min consecutive failures for the readiness probe to be considered failed |
 | serving.readinessProbe.initialDelaySeconds | int | `0` | Delay before the readiness probe is initiated |
 | serving.readinessProbe.periodSeconds | int | `5` | How often to perform the readiness probe |
@@ -111,7 +109,6 @@ CaraML store registry: Feature registry for CaraML store.
 | serving.service.grpc.port | int | `6566` | Service port for GRPC requests |
 | serving.service.grpc.targetPort | int | `6566` | Container port serving GRPC requests |
 | serving.service.type | string | `"ClusterIP"` | Kubernetes service type |
-| serving.startupProbe.enabled | bool | `true` | Flag to enable the startup probe |
 | serving.startupProbe.failureThreshold | int | `10` | Min consecutive failures for the startup probe to be considered failed |
 | serving.startupProbe.periodSeconds | int | `5` | How often to perform the startup probe |
 | serving.startupProbe.timeoutSeconds | int | `1` | When the startup probe times out |
