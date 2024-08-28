@@ -160,18 +160,34 @@ serving:
 
   javaOpts:
 
+  startupProbe:
+    # serving.startupProbe.periodSeconds -- How often to perform the startup probe
+    periodSeconds: 5
+    # serving.startupProbe.timeoutSeconds -- When the startup probe times out
+    timeoutSeconds: 1
+    # serving.startupProbe.failureThreshold -- Min consecutive failures for the startup probe to be considered failed
+    failureThreshold: 10
+
   readinessProbe:
-    # serving.readinessProbe.enabled -- Flag to enable the probe
-    enabled: true
-    # serving.readinessProbe.initialDelaySeconds -- Delay before the probe is initiated
-    initialDelaySeconds: 20
-    # serving.readinessProbe.periodSeconds -- How often to perform the probe
+    # serving.readinessProbe.initialDelaySeconds -- Delay before the readiness probe is initiated
+    initialDelaySeconds: 0
+    # serving.readinessProbe.periodSeconds -- How often to perform the readiness probe
+    periodSeconds: 5
+    # serving.readinessProbe.timeoutSeconds -- When the readiness probe times out
+    timeoutSeconds: 2
+    # serving.readinessProbe.successThreshold -- Min consecutive success for the readiness probe to be considered successful
+    successThreshold: 2
+    # serving.readinessProbe.failureThreshold -- Min consecutive failures for the readiness probe to be considered failed
+    failureThreshold: 2
+
+  livenessProbe:
+    # serving.livenessProbe.initialDelaySeconds -- Delay before the liveness probe is initiated
+    initialDelaySeconds: 0
+    # serving.livenessProbe.periodSeconds -- How often to perform the liveness probe
     periodSeconds: 10
-    # serving.readinessProbe.timeoutSeconds -- When the probe times out
-    timeoutSeconds: 10
-    # serving.readinessProbe.successThreshold -- Min consecutive success for the probe to be considered successful
-    successThreshold: 1
-    # serving.readinessProbe.failureThreshold -- Min consecutive failures for the probe to be considered failed
+    # serving.livenessProbe.timeoutSeconds -- When the liveness probe times out
+    timeoutSeconds: 2
+    # serving.livenessProbe.failureThreshold -- Min consecutive failures for the liveness probe to be considered failed
     failureThreshold: 5
 
   resources: {}

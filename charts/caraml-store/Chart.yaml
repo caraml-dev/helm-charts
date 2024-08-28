@@ -20,4 +20,4 @@ maintainers:
 - email: caraml-dev@caraml.dev
   name: caraml-dev
 name: caraml-store
-version: 0.1.17
+version: 0.1.18

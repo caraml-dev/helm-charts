@@ -106,7 +106,13 @@ spec:
             - name: http
               containerPort: {{ .Values.serving.actuator.port }}
               protocol: TCP
-          {{- if .Values.serving.readinessProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.serving.actuator.port }}
+            periodSeconds: {{ .Values.serving.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.serving.startupProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.serving.startupProbe.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -116,7 +122,14 @@ spec:
             successThreshold: {{ .Values.serving.readinessProbe.successThreshold }}
             timeoutSeconds: {{ .Values.serving.readinessProbe.timeoutSeconds }}
             failureThreshold: {{ .Values.serving.readinessProbe.failureThreshold }}
-          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.serving.actuator.port }}
+            initialDelaySeconds: {{ .Values.serving.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.serving.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.serving.livenessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.serving.livenessProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.serving.resources | nindent 12 }}
       {{- with .Values.serving.nodeSelector }}
