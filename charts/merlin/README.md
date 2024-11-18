@@ -230,6 +230,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.KanikoAdditionalArgs[3] | string | `"--use-new-run"` |  |
 | imageBuilder.builderConfig.KanikoAdditionalArgs[4] | string | `"--log-timestamp"` |  |
 | imageBuilder.builderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.18.0"` |  |
+| imageBuilder.builderConfig.KanikoPushRegistryType | string | `"gcr"` |  |
 | imageBuilder.builderConfig.MaximumRetry | int | `3` |  |
 | imageBuilder.builderConfig.NodeSelectors | object | `{}` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextSubPath | string | `"python"` |  |
@@ -313,8 +314,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlflow.host | string | `"0.0.0.0"` |  |
 | mlflow.image.pullPolicy | string | `"Always"` |  |
 | mlflow.image.registry | string | `"ghcr.io"` |  |
-| mlflow.image.repository | string | `"gojek/mlflow"` |  |
-| mlflow.image.tag | string | `"1.3.0"` |  |
+| mlflow.image.repository | string | `"caraml-dev/mlflow"` |  |
+| mlflow.image.tag | string | `"1.26.1"` |  |
 | mlflow.ingress.class | string | `"nginx"` |  |
 | mlflow.ingress.enabled | bool | `false` |  |
 | mlflow.livenessProbe.initialDelaySeconds | int | `30` |  |
@@ -361,7 +362,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlp.keto.enabled | bool | `true` |  |
 | mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
 | rendered.overrides | object | `{}` |  |
-| rendered.releasedVersion | string | `"v0.38.0-rc1"` |  |
+| rendered.releasedVersion | string | `"v0.45.3"` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |
