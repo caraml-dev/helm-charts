@@ -268,14 +268,14 @@ imageBuilder:
   builderConfig:
     ArtifactServiceType: nop
     BaseImage:
-      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.38.0-rc1
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.45.3
       DockerfilePath: "pyfunc-server/docker/Dockerfile"
-      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
+      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.45.3"
       BuildContextSubPath: "python"
     PredictionJobBaseImage:
-      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.45.3
       DockerfilePath: "batch-predictor/docker/app.Dockerfile"
-      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"
+      BuildContextURI: "git://github.com/caraml-dev/merlin.git#refs/tags/v0.45.3"
       BuildContextSubPath: "python"
       MainAppPath: "/home/spark/merlin-spark-app/main.py"
     BuildNamespace: "mlp"

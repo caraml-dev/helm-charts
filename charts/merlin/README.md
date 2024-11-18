@@ -214,9 +214,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | global.protocol | string | `"http"` |  |
 | imageBuilder.builderConfig.ArtifactServiceType | string | `"nop"` |  |
 | imageBuilder.builderConfig.BaseImage.BuildContextSubPath | string | `"python"` |  |
-| imageBuilder.builderConfig.BaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.BaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.45.3"` |  |
 | imageBuilder.builderConfig.BaseImage.DockerfilePath | string | `"pyfunc-server/docker/Dockerfile"` |  |
-| imageBuilder.builderConfig.BaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.BaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.45.3"` |  |
 | imageBuilder.builderConfig.BuildNamespace | string | `"mlp"` |  |
 | imageBuilder.builderConfig.BuildTimeout | string | `"30m"` |  |
 | imageBuilder.builderConfig.DefaultResources.Limits.CPU | string | `"1"` |  |
@@ -234,9 +234,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.MaximumRetry | int | `3` |  |
 | imageBuilder.builderConfig.NodeSelectors | object | `{}` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextSubPath | string | `"python"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.45.3"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.DockerfilePath | string | `"batch-predictor/docker/app.Dockerfile"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.45.3"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.MainAppPath | string | `"/home/spark/merlin-spark-app/main.py"` |  |
 | imageBuilder.builderConfig.Retention | string | `"48h"` |  |
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
