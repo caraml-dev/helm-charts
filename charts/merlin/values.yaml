@@ -246,6 +246,7 @@ config:
       Limits:
         CPU: "2"
         Memory: "1Gi"
+    EnvironmentName: id-dev
 clusterConfig:
   # -- (bool) Configuration to tell Merlin API how it should authenticate with deployment k8s cluster
   # By default, Merlin API expects to use a remote k8s cluster for deployment and to do so, it requires

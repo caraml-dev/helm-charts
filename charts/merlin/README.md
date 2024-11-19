@@ -111,6 +111,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.ObservabilityPublisher.DefaultResources.Limits.Memory | string | `"1Gi"` |  |
 | config.ObservabilityPublisher.DefaultResources.Requests.CPU | string | `"1"` |  |
 | config.ObservabilityPublisher.DefaultResources.Requests.Memory | string | `"1Gi"` |  |
+| config.ObservabilityPublisher.EnvironmentName | string | `"id-dev"` |  |
 | config.ObservabilityPublisher.KafkaConsumer.Brokers | string | `"kafka-brokers"` |  |
 | config.Port | int | `8080` |  |
 | config.PyFuncPublisherConfig.Kafka.Acks | int | `0` |  |
