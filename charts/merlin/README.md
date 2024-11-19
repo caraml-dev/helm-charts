@@ -107,6 +107,11 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.NewRelic.IgnoreStatusCodes[5] | int | `412` |  |
 | config.NewRelic.License | string | `"newrelic-license-secret"` |  |
 | config.NumOfQueueWorkers | int | `2` |  |
+| config.ObservabilityPublisher.DefaultResources.Limits.CPU | string | `"2"` |  |
+| config.ObservabilityPublisher.DefaultResources.Limits.Memory | string | `"1Gi"` |  |
+| config.ObservabilityPublisher.DefaultResources.Requests.CPU | string | `"1"` |  |
+| config.ObservabilityPublisher.DefaultResources.Requests.Memory | string | `"1Gi"` |  |
+| config.ObservabilityPublisher.KafkaConsumer.Brokers | string | `"kafka-brokers"` |  |
 | config.Port | int | `8080` |  |
 | config.PyFuncPublisherConfig.Kafka.Acks | int | `0` |  |
 | config.PyFuncPublisherConfig.Kafka.AdditionalConfig | string | `"{}"` |  |
