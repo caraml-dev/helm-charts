@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.13.18](https://img.shields.io/badge/Version-0.13.18-informational?style=flat-square)
+![Version: 0.13.19](https://img.shields.io/badge/Version-0.13.19-informational?style=flat-square)
 ![AppVersion: v0.42.0](https://img.shields.io/badge/AppVersion-v0.42.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -107,6 +107,12 @@ The following table lists the configurable parameters of the Merlin chart and th
 | config.NewRelic.IgnoreStatusCodes[5] | int | `412` |  |
 | config.NewRelic.License | string | `"newrelic-license-secret"` |  |
 | config.NumOfQueueWorkers | int | `2` |  |
+| config.ObservabilityPublisher.DefaultResources.Limits.CPU | string | `"2"` |  |
+| config.ObservabilityPublisher.DefaultResources.Limits.Memory | string | `"1Gi"` |  |
+| config.ObservabilityPublisher.DefaultResources.Requests.CPU | string | `"1"` |  |
+| config.ObservabilityPublisher.DefaultResources.Requests.Memory | string | `"1Gi"` |  |
+| config.ObservabilityPublisher.EnvironmentName | string | `"id-dev"` |  |
+| config.ObservabilityPublisher.KafkaConsumer.Brokers | string | `"kafka-brokers"` |  |
 | config.Port | int | `8080` |  |
 | config.PyFuncPublisherConfig.Kafka.Acks | int | `0` |  |
 | config.PyFuncPublisherConfig.Kafka.AdditionalConfig | string | `"{}"` |  |
@@ -214,9 +220,9 @@ The following table lists the configurable parameters of the Merlin chart and th
 | global.protocol | string | `"http"` |  |
 | imageBuilder.builderConfig.ArtifactServiceType | string | `"nop"` |  |
 | imageBuilder.builderConfig.BaseImage.BuildContextSubPath | string | `"python"` |  |
-| imageBuilder.builderConfig.BaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.BaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.45.3"` |  |
 | imageBuilder.builderConfig.BaseImage.DockerfilePath | string | `"pyfunc-server/docker/Dockerfile"` |  |
-| imageBuilder.builderConfig.BaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.BaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.45.3"` |  |
 | imageBuilder.builderConfig.BuildNamespace | string | `"mlp"` |  |
 | imageBuilder.builderConfig.BuildTimeout | string | `"30m"` |  |
 | imageBuilder.builderConfig.DefaultResources.Limits.CPU | string | `"1"` |  |
@@ -230,12 +236,13 @@ The following table lists the configurable parameters of the Merlin chart and th
 | imageBuilder.builderConfig.KanikoAdditionalArgs[3] | string | `"--use-new-run"` |  |
 | imageBuilder.builderConfig.KanikoAdditionalArgs[4] | string | `"--log-timestamp"` |  |
 | imageBuilder.builderConfig.KanikoImage | string | `"gcr.io/kaniko-project/executor:v1.18.0"` |  |
+| imageBuilder.builderConfig.KanikoPushRegistryType | string | `"gcr"` |  |
 | imageBuilder.builderConfig.MaximumRetry | int | `3` |  |
 | imageBuilder.builderConfig.NodeSelectors | object | `{}` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextSubPath | string | `"python"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.BuildContextURI | string | `"git://github.com/caraml-dev/merlin.git#refs/tags/v0.45.3"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.DockerfilePath | string | `"batch-predictor/docker/app.Dockerfile"` |  |
-| imageBuilder.builderConfig.PredictionJobBaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.38.0-rc1"` |  |
+| imageBuilder.builderConfig.PredictionJobBaseImage.ImageName | string | `"ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.45.3"` |  |
 | imageBuilder.builderConfig.PredictionJobBaseImage.MainAppPath | string | `"/home/spark/merlin-spark-app/main.py"` |  |
 | imageBuilder.builderConfig.Retention | string | `"48h"` |  |
 | imageBuilder.builderConfig.SafeToEvict | bool | `false` |  |
@@ -313,8 +320,8 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlflow.host | string | `"0.0.0.0"` |  |
 | mlflow.image.pullPolicy | string | `"Always"` |  |
 | mlflow.image.registry | string | `"ghcr.io"` |  |
-| mlflow.image.repository | string | `"gojek/mlflow"` |  |
-| mlflow.image.tag | string | `"1.3.0"` |  |
+| mlflow.image.repository | string | `"caraml-dev/mlflow"` |  |
+| mlflow.image.tag | string | `"1.26.1"` |  |
 | mlflow.ingress.class | string | `"nginx"` |  |
 | mlflow.ingress.enabled | bool | `false` |  |
 | mlflow.livenessProbe.initialDelaySeconds | int | `30` |  |
@@ -361,7 +368,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | mlp.keto.enabled | bool | `true` |  |
 | mlp.keto.fullnameOverride | string | `"mlp-keto"` |  |
 | rendered.overrides | object | `{}` |  |
-| rendered.releasedVersion | string | `"v0.38.0-rc1"` |  |
+| rendered.releasedVersion | string | `"v0.45.3"` |  |
 | service.externalPort | int | `8080` |  |
 | service.internalPort | int | `8080` |  |
 | serviceAccount.annotations | object | `{}` |  |

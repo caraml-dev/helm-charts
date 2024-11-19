@@ -177,7 +177,7 @@ tests:
           pattern: my-release-merlin$
       - equal: # check image version
           path: spec.template.spec.containers[0].image
-          value: ghcr.io/caraml-dev/merlin:0.38.0-rc1
+          value: ghcr.io/caraml-dev/merlin:0.45.3
       - equal: # check version label
           path: spec.template.metadata.labels.version
-          value: 0.38.0-rc1
+          value: 0.45.3
