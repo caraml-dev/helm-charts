@@ -64,8 +64,8 @@ spec:
             - serve
             - --config
             - /etc/caraml/mlp-config.yaml
-{{- if .Values.deployment.args }}
-{{ toYaml .Values.deployment.args | indent 12 -}}
+{{- if .Values.deployment.extraArgs }}
+{{ toYaml .Values.deployment.extraArgs | indent 12 -}}
 {{ end }}
 {{- if .Values.deployment.command }}
           command:
@@ -77,11 +77,20 @@ spec:
                 secretKeyRef:
                   name: {{ include "common.postgres-password-secret-name" (list .Values.postgresql .Values.externalPostgresql .Release .Chart ) }}
                   key: {{ include "common.postgres-password-secret-key" (list .Values.externalPostgresql) }}
+{{- with .Values.deployment.extraEnvs }}
+{{- toYaml . | nindent 12 }}
+{{- end }}
           volumeMounts:
             - mountPath: /etc/caraml
               name: config
+{{- with .Values.deployment.extraVolumeMounts }}
+{{- toYaml . | nindent 12 }}
+{{- end }}
 {{- if .Values.externalPostgresql.enableProxySidecar }}
 {{- tpl (toYaml (index .Values.externalPostgresql.sidecarSpec .Values.externalPostgresql.proxyType "spec")) . | nindent 8 }}
+{{- end }}
+{{- with .Values.deployment.extraContainers }}
+{{- toYaml . | nindent 8 }}
 {{- end }}
       {{- if and .Values.serviceAccount.create }}
       serviceAccountName: {{ default "mlp" .Values.serviceAccount.name }}
@@ -99,6 +108,9 @@ spec:
         - name: config
           configMap:
             name: {{ template "mlp.config-cm-name" . }}
+{{- with .Values.deployment.extraVolumes }}
+{{- toYaml . | nindent 8 }}
+{{- end }}
 {{- with .Values.deployment.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}

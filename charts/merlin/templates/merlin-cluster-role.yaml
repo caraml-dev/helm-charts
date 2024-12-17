@@ -42,15 +42,18 @@ rules:
   resources:
   - inferenceservices
   - predictors
-  verbs: ["get", "create", "delete", "update"]
+  verbs:
+  - "*"
 - apiGroups:
   - networking.istio.io
   resources:
   - virtualservices
-  verbs: ["get", "create", "delete", "update"]
+  verbs:
+  - "*"
 - apiGroups:
   - sparkoperator.k8s.io
   resources:
   - sparkapplications
-  verbs: ["get", "create", "delete", "update"]
+  verbs:
+  - "*"
 {{- end }}
