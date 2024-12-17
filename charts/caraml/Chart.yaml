@@ -4,15 +4,15 @@ dependencies:
 - condition: mlp.enabled
   name: mlp
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.6.5
+  version: 0.6.6
 - condition: merlin.enabled
   name: merlin
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.13.19
+  version: 0.13.20
 - condition: turing.enabled
   name: turing
   repository: https://caraml-dev.github.io/helm-charts
-  version: 0.3.21
+  version: 0.3.23
 - condition: xp-treatment.enabled
   name: xp-treatment
   repository: https://caraml-dev.github.io/helm-charts
@@ -72,4 +72,4 @@ maintainers:
   name: caraml-dev
 name: caraml
 type: application
-version: 0.8.50
+version: 0.8.53
