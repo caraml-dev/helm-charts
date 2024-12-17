@@ -81,15 +81,26 @@ spec:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /etc/gcp_service_account/service-account.json
         {{- end }}
+        {{- with .Values.mlflow.extraEnvs }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
 
-        {{- if .Values.gcpServiceAccount }}
+        {{- if or .Values.gcpServiceAccount .Values.mlflow.extraVolumeMounts }}
         volumeMounts:
+        {{- end }}
+        {{- if .Values.gcpServiceAccount }}
         - name: gcp-service-account
           mountPath: "/etc/gcp_service_account"
           readOnly: true
         {{- end }}
+        {{- with .Values.mlflow.extraVolumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- if .Values.mlflowExternalPostgresql.enableProxySidecar }}
       {{- tpl (toYaml (index .Values.mlflowExternalPostgresql.sidecarSpec .Values.mlflowExternalPostgresql.proxyType "spec")) . | nindent 6 }}
+      {{- end }}
+      {{- with .Values.mlflow.extraContainers }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
 {{- if .Values.mlflow.imagePullSecrets }}
       imagePullSecrets:
@@ -103,14 +114,19 @@ spec:
 {{- if and .Values.mlflow.serviceAccount.create }}
       serviceAccountName: {{ default "mlflow" .Values.mlflow.serviceAccount.name }}
 {{- end }}
-{{- if .Values.gcpServiceAccount }}
+{{- if or .Values.gcpServiceAccount .Values.mlflow.extraVolumes }}
       volumes:
+{{- end }}
+{{- if .Values.gcpServiceAccount }}
       - name: gcp-service-account
         secret:
           secretName: {{ .Values.gcpServiceAccount.secretName }}
           items:
             - key: {{ .Values.gcpServiceAccount.secretKey }}
               path: service-account.json
+{{- end }}
+{{- with .Values.mlflow.extraVolumes }}
+{{- toYaml . | nindent 6 }}
 {{- end }}
 {{- with .Values.mlflow.tolerations }}
       tolerations:
