@@ -148,7 +148,8 @@ serviceAccount:
   name: turing
   annotations: {}
     # example.io/example: example
-
+  rbac:
+    create: false
 ingress:
   # -- Enable ingress to provision Ingress resource for external access to Turing API
   enabled: false
