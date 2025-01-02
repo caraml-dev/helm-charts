@@ -1,7 +1,7 @@
 # merlin
 
 ---
-![Version: 0.13.21](https://img.shields.io/badge/Version-0.13.21-informational?style=flat-square)
+![Version: 0.13.22](https://img.shields.io/badge/Version-0.13.22-informational?style=flat-square)
 ![AppVersion: v0.42.0](https://img.shields.io/badge/AppVersion-v0.42.0-informational?style=flat-square)
 
 Kubernetes-friendly ML model management, deployment, and serving.
@@ -374,6 +374,7 @@ The following table lists the configurable parameters of the Merlin chart and th
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"merlin"` |  |
+| serviceAccount.rbac.create | bool | `false` |  |
 | swagger.apiHost | string | `"merlin.dev"` |  |
 | swagger.basePath | string | `"/api/merlin/v1"` |  |
 | swagger.enabled | bool | `true` |  |

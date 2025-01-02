@@ -1,7 +1,7 @@
 # turing
 
 ---
-![Version: 0.3.24](https://img.shields.io/badge/Version-0.3.24-informational?style=flat-square)
+![Version: 0.3.25](https://img.shields.io/badge/Version-0.3.25-informational?style=flat-square)
 ![AppVersion: v1.17.2](https://img.shields.io/badge/AppVersion-v1.17.2-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
@@ -112,6 +112,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"turing"` |  |
+| serviceAccount.rbac.create | bool | `false` |  |
 | turing-postgresql.enabled | bool | `true` |  |
 | turing-postgresql.persistence.size | string | `"10Gi"` |  |
 | turing-postgresql.postgresqlDatabase | string | `"turing"` |  |

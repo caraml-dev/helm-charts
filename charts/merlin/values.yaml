@@ -382,6 +382,8 @@ serviceAccount:
   name: merlin
   annotations: {}
   # example.io/example: example
+  rbac:
+    create: false
 ingress:
   enabled: false
 # If you would like to use an external postgres database for Merlin, you can connect using these credentials
