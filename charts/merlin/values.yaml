@@ -577,7 +577,7 @@ mlflow:
   #   orchestrator: unknown
 
   # Add the following configs when you wish to point to an actual S3 for mlflow to store its artifacts
-  extraEnvs: {}
+  extraEnvs: []
   #   AWS_ACCESS_KEY_ID: YOURACCESSKEY
   #   AWS_SECRET_ACCESS_KEY: YOURSECRETKEY
   #   AWS_DEFAULT_REGION: ap-southeast-2
