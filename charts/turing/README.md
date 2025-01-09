@@ -1,7 +1,7 @@
 # turing
 
 ---
-![Version: 0.3.27](https://img.shields.io/badge/Version-0.3.27-informational?style=flat-square)
+![Version: 0.3.28](https://img.shields.io/badge/Version-0.3.28-informational?style=flat-square)
 ![AppVersion: v1.17.2](https://img.shields.io/badge/AppVersion-v1.17.2-informational?style=flat-square)
 
 Kubernetes-friendly multi-model orchestration and experimentation system.
