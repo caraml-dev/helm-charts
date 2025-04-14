@@ -189,8 +189,7 @@ config:
       BuildNamespace: default
       BuildTimeoutDuration: 20m
       DestinationRegistry: ghcr.io
-      BaseImageRef:
-        3.8.*: ghcr.io/caraml-dev/turing/pyfunc-ensembler-service:latest
+      BaseImage: ghcr.io/caraml-dev/turing/pyfunc-ensembler-service:latest
       KanikoConfig:
         BuildContextURI: git://github.com/caraml-dev/turing.git#refs/heads/main
         DockerfileFilePath: engines/pyfunc-ensembler-service/app.Dockerfile
