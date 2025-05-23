@@ -3,6 +3,8 @@
 {{- $rendered := index . 2}}
 {{- if $rendered }}
 {{- $tag := $rendered.releasedVersion}}
+{{- $ensemblerTag := default $tag $rendered.ensemblerTag }}
+{{- $ensemblerServiceTag := default $ensemblerTag $rendered.ensemblerServiceTag }}
 {{- $ensemblerJobPrefix := printf "%s/caraml-dev/turing/pyfunc-ensembler-job-py" $.Values.deployment.image.registry -}}
 {{- $servicePrefix := printf "%s/caraml-dev/turing/pyfunc-ensembler-service-py" $.Values.deployment.image.registry -}}
 # Now we have access to the "real" root and current contexts
@@ -13,11 +15,13 @@ BatchEnsemblingConfig:
   ImageBuildingConfig:
     KanikoConfig:
       BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags" $tag }}
+    BaseImage: {{ printf "%s:%s" $ensemblerJobPrefix $ensemblerTag }}
 {{- end }}
 EnsemblerServiceBuilderConfig:
   ImageBuildingConfig:
     KanikoConfig: &kanikoConfig
       BuildContextURI: {{ printf "%s/%s" "git://github.com/caraml-dev/turing.git#refs/tags" $tag }}
+    BaseImage: {{ printf "%s:%s" $servicePrefix $ensemblerServiceTag }}
 RouterDefaults:
   Image: {{ .Values.deployment.image.registry }}/caraml-dev/turing/turing-router:{{ printf "%s" $tag }}
 {{- end }}
