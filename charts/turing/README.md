@@ -105,7 +105,7 @@ The following table lists the configurable parameters of the Turing chart and th
 | openApiSpecOverrides | object | `{}` | Override OpenAPI spec as long as it follows the OAS3 specifications. A common use for this is to set the enums of the ExperimentEngineType. See api/api/override-sample.yaml for an example. |
 | rendered.ensemblerTag | string | `"v0.0.0-build.327-ca712a6"` | ensemblerTag refers to the docker image tag |
 | rendered.overrides | object | `{}` |  |
-| rendered.releasedVersion | string | `"v1.16.0"` | releasedVersion refers to the git release or tag |
+| rendered.releasedVersion | string | `"v1.23.0"` | releasedVersion refers to the git release or tag |
 | sentry.dsn | string | `""` | Sentry DSN value used by both Turing API and Turing UI |
 | service.externalPort | int | `8080` | Turing API Kubernetes service port number |
 | service.internalPort | int | `8080` | Turing API container port number |
