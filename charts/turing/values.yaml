@@ -194,6 +194,7 @@ config:
         DockerfileFilePath: engines/pyfunc-ensembler-service/app.Dockerfile
         Image: gcr.io/kaniko-project/executor
         ImageVersion: v1.6.0
+        PushRegistryType: docker
         ResourceRequestsLimits:
           Requests:
             CPU: "1"
