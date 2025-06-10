@@ -1,0 +1,2210 @@
+---
+# Source: turing/charts/merlin/templates/kaniko-service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kaniko-turing-merlin
+  namespace: sample
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+---
+# Source: turing/charts/merlin/templates/merlin-service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: merlin
+  namespace: sample
+  annotations:
+    {}
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+---
+# Source: turing/charts/merlin/templates/mlflow-service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: mlflow
+    namespace: sample
+    labels:
+      app: merlin
+      version: 0.45.3
+      release: turing
+      app.kubernetes.io/name: merlin
+      helm.sh/chart: "merlin-0.13.24"
+      app.kubernetes.io/version: 0.45.3
+      app.kubernetes.io/instance: turing
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/part-of: caraml
+---
+# Source: turing/charts/mlp/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: mlp
+    namespace: sample
+    annotations:
+      {}
+    labels:
+      app.kubernetes.io/name: mlp
+      helm.sh/chart: "mlp-0.4.20"
+      app.kubernetes.io/version: "v1.7.4-build.6-322163a"
+      app.kubernetes.io/instance: turing
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/part-of: caraml
+---
+# Source: turing/templates/kaniko-service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kaniko-turing
+  namespace: sample
+  labels:
+    app: turing
+    version: v1.16.0
+    chart: turing-0.3.29
+    release: turing
+    heritage: Helm
+---
+# Source: turing/templates/turing-service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: turing
+  namespace: sample
+  annotations:
+    {}
+  labels:
+    app: turing
+    version: v1.16.0
+    chart: turing-0.3.29
+    release: turing
+    heritage: Helm
+---
+# Source: turing/charts/merlin/charts/merlin-postgresql/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: turing-merlin-postgresql
+  labels:
+    app: merlin-postgresql
+    chart: merlin-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+type: Opaque
+data:
+  postgresql-password: "d0VxZ0I1SW5nUA=="
+---
+# Source: turing/charts/merlin/charts/mlflow-postgresql/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: turing-mlflow-postgresql
+  labels:
+    app: mlflow-postgresql
+    chart: mlflow-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+type: Opaque
+data:
+  postgresql-password: "Vjc4UDBIVUh6ag=="
+---
+# Source: turing/charts/merlin/templates/merlin-config-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: sample
+  name: turing-merlin-config
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+stringData:
+  config.yaml: |
+    
+    
+    AuthorizationConfig:
+      AuthorizationEnabled: true
+      AuthorizationServerURL: '%!s(<nil>)'
+      Caching:
+        CacheCleanUpIntervalSeconds: 900
+        Enabled: false
+        KeyExpirySeconds: 600
+      KetoRemoteRead: http://mlp-keto-read:80
+      KetoRemoteWrite: http://mlp-keto-write:80
+    BatchConfig:
+      Tolerations:
+      - Effect: NoSchedule
+        Key: batch-job
+        Operator: Equal
+        Value: "true"
+    ClusterConfig:
+      EnvironmentConfigPath: /app/cluster-env/environments.yaml
+      InClusterConfig: false
+    DbConfig:
+      Database: merlin
+      Host: turing-merlin-postgresql.sample.svc.cluster.local
+      Password: merlin
+      Port: 5432
+      User: merlin
+    DeploymentLabelPrefix: gojek.com/
+    Environment: dev
+    FeatureToggleConfig:
+      AlertConfig:
+        AlertEnabled: false
+        GitlabConfig:
+          AlertBranch: master
+          AlertRepository: lens/artillery/datascience
+          BaseURL: https://gitlab.com/
+          DashboardBranch: master
+          DashboardRepository: data-science/slo-specs
+        WardenConfig:
+          APIHost: ""
+      MonitoringConfig:
+        MonitoringBaseURL: ""
+        MonitoringEnabled: false
+        MonitoringJobBaseURL: ""
+    ImageBuilderConfig:
+      ArtifactServiceType: nop
+      BaseImage:
+        BuildContextSubPath: python
+        BuildContextURI: git://github.com/caraml-dev/merlin.git#refs/tags/v0.45.3
+        DockerfilePath: pyfunc-server/docker/Dockerfile
+        ImageName: ghcr.io/caraml-dev/merlin/merlin-pyfunc-base:0.45.3
+      BuildNamespace: mlp
+      BuildTimeout: 30m
+      ClusterName: test
+      DefaultResources:
+        Limits:
+          CPU: "1"
+          Memory: 1Gi
+        Requests:
+          CPU: "1"
+          Memory: 512Mi
+      DockerRegistry: dockerRegistry
+      K8sConfig: {}
+      KanikoAdditionalArgs:
+      - --cache=true
+      - --compressed-caching=false
+      - --snapshot-mode=redo
+      - --use-new-run
+      - --log-timestamp
+      KanikoImage: gcr.io/kaniko-project/executor:v1.18.0
+      KanikoPushRegistryType: gcr
+      KanikoServiceAccount: kaniko-turing-merlin
+      MaximumRetry: 3
+      NodeSelectors: {}
+      PredictionJobBaseImage:
+        BuildContextSubPath: python
+        BuildContextURI: git://github.com/caraml-dev/merlin.git#refs/tags/v0.45.3
+        DockerfilePath: batch-predictor/docker/app.Dockerfile
+        ImageName: ghcr.io/caraml-dev/merlin/merlin-pyspark-base:0.45.3
+        MainAppPath: /home/spark/merlin-spark-app/main.py
+      Retention: 48h
+      SafeToEvict: false
+      Tolerations: []
+    LoggerDestinationURL: http://yourDestinationLogger
+    MlflowConfig:
+      ArtifactServiceType: nop
+      TrackingURL: http://www.example.com
+    MlpAPIConfig:
+      APIHost: http://mlp:8080
+    NewRelic:
+      AppName: merlin-api-dev
+      Enabled: false
+      IgnoreStatusCodes:
+      - 400
+      - 401
+      - 403
+      - 404
+      - 405
+      - 412
+      License: newrelic-license-secret
+    NumOfQueueWorkers: 2
+    ObservabilityPublisher:
+      DefaultResources:
+        Limits:
+          CPU: "2"
+          Memory: 1Gi
+        Requests:
+          CPU: "1"
+          Memory: 1Gi
+      EnvironmentName: id-dev
+      ImageName: ghcr.io/caraml-dev/merlin/merlin-observation-publisher:0.45.3
+      KafkaConsumer:
+        Brokers: kafka-brokers
+    Port: 8080
+    PyFuncPublisherConfig:
+      Kafka:
+        Acks: 0
+        AdditionalConfig: '{}'
+        Brokers: kafka-brokers
+        LingerMS: 100
+        MaxMessageSizeBytes: "1048588"
+      SamplingRatioRate: 0.01
+    PyfuncGRPCOptions: '{}'
+    ReactAppConfig:
+      DocURL:
+      - Href: https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md
+        Label: Getting Started with Merlin
+      DockerRegistries: ghcr.io/gojek,ghcr.io/your-company
+      Environment: dev
+      FeastCoreURL: http://feast-core.mlp:8080/v1
+      HomePage: /merlin
+      MaxAllowedReplica: 20
+      MerlinURL: /api/merlin/v1
+      MlpURL: /api
+      Test: false
+      UPIDocumentation: https://github.com/caraml-dev/universal-prediction-interface/blob/main/docs/api_markdown/caraml/upi/v1/index.md
+    Sentry:
+      DSN: ""
+      Enabled: false
+    StandardTransformerConfig:
+      DefaultFeastSource: 2
+      DefaultServingURL: online-serving-redis.feast.dev
+      EnableAuth: false
+      FeastBigtableConfig:
+        Instance: instance
+        PoolSize: 5
+        Project: gcp-project
+        ServingURL: online-serving-bigtable.feast.dev
+      FeastCoreAuthAudience: core.feast.dev
+      FeastCoreURL: core.feast.dev
+      FeastServingKeepAlive:
+        Enabled: false
+        Time: 60s
+        Timeout: 5s
+      FeastServingURLs:
+      - Host: online-serving-redis.feast.dev
+        Icon: redis
+        Label: Online Serving with Redis
+        SourceType: REDIS
+      - Host: online-serving-bigtable.feast.dev
+        Icon: bigtable
+        Label: Online Serving with BigTable
+        SourceType: BIGTABLE
+      ImageName: ghcr.io/caraml-dev/merlin-transformer:0.45.3
+      Jaeger:
+        CollectorURL: http://jaeger-tracing-collector.infrastructure:14268/api/traces
+        Disabled: false
+        SamplerParam: 1
+      Kafka:
+        Acks: 0
+        AdditionalConfig: '{}'
+        Brokers: kafka-brokers
+        LingerMS: 100
+        MaxMessageSizeBytes: "1048588"
+      ModelClientKeepAlive:
+        Enabled: false
+        Time: 60s
+        Timeout: 5s
+      ModelServerConnCount: 10
+      SimulationFeast:
+        FeastBigtableURL: online-serving-bt.feast.dev
+        FeastRedisURL: online-serving-redis.feast.dev
+---
+# Source: turing/charts/merlin/templates/merlin-environments.yaml
+# Secret is created only if mlp envconfig secret not set
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: sample
+  name: turing-merlin-environments
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+stringData:
+  environments.yaml: |
+    - cluster: test
+      default_deployment_config:
+        cpu_request: 500m
+        max_replica: 1
+        memory_request: 500Mi
+        min_replica: 0
+      default_prediction_job_config:
+        driver_cpu_request: "2"
+        driver_memory_request: 2Gi
+        executor_cpu_request: "2"
+        executor_memory_request: 2Gi
+        executor_replica: 3
+      default_transformer_config:
+        cpu_request: 500m
+        max_replica: 1
+        memory_request: 500Mi
+        min_replica: 0
+      deployment_timeout: 10m
+      gcp_project: gcp-project
+      is_default: true
+      is_default_prediction_job: true
+      is_prediction_job_enabled: true
+      k8s_config: {}
+      max_cpu: "8"
+      max_memory: 8Gi
+      name: id-dev
+      namespace_timeout: 2m
+      queue_resource_percentage: "20"
+      region: id
+---
+# Source: turing/charts/mlp/charts/postgresql/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: turing-mlp-postgresql
+  labels:
+    app: mlp-postgresql
+    chart: postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+type: Opaque
+data:
+  postgresql-password: "VHNHVU1NZURucw=="
+---
+# Source: turing/charts/mlp/templates/environments-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: turing-mlp-environments
+  namespace: sample
+  labels:
+    app.kubernetes.io/name: mlp
+    helm.sh/chart: "mlp-0.4.20"
+    app.kubernetes.io/version: "v1.7.4-build.6-322163a"
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+type: Opaque
+stringData:
+  environment.yaml: |-
+  imageBuilderK8sConfig: |-
+---
+# Source: turing/charts/turing-postgresql/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: turing-turing-postgresql
+  labels:
+    app: turing-postgresql
+    chart: turing-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+type: Opaque
+data:
+  postgresql-password: "Z2x3eVZEZU80Yw=="
+---
+# Source: turing/templates/turing-config-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: sample
+  name: turing-config
+  labels:
+    app: turing
+    version: v1.16.0
+    chart: turing-0.3.29
+    release: turing
+    heritage: Helm
+stringData:
+  config.yaml: |
+    
+    
+    AlertConfig:
+      Enabled: false
+    AuthConfig:
+      Enabled: false
+      URL: http://mlp-authorization-keto
+    BatchEnsemblingConfig:
+      Enabled: false
+    ClusterConfig:
+      EnsemblingServiceK8sConfig: {}
+      EnvironmentConfigPath: /app/cluster-env/environments.yaml
+      InClusterConfig: false
+    DbConfig:
+      ConnMaxIdleTime: 0s
+      ConnMaxLifetime: 0s
+      Database: turing
+      Host: turing-turing-postgresql.sample.svc.cluster.local
+      MaxIdleConns: 0
+      MaxOpenConns: 0
+      Port: 5432
+      User: turing
+    DeployConfig:
+      EnvironmentType: dev
+    EnsemblerServiceBuilderConfig:
+      ClusterName: test
+      ImageBuildingConfig:
+        BaseImage: ghcr.io/caraml-dev/turing/pyfunc-ensembler-service-py:v0.0.0-build.327-ca712a6
+        BuildNamespace: default
+        BuildTimeoutDuration: 20m
+        DestinationRegistry: ghcr.io
+        KanikoConfig:
+          BuildContextURI: git://github.com/caraml-dev/turing.git#refs/tags/v1.16.0
+          DockerfileFilePath: engines/pyfunc-ensembler-service/app.Dockerfile
+          Image: gcr.io/kaniko-project/executor
+          ImageVersion: v1.6.0
+          ResourceRequestsLimits:
+            Limits:
+              CPU: "1"
+              Memory: 1Gi
+            Requests:
+              CPU: "1"
+              Memory: 1Gi
+          ServiceAccount: kaniko-turing
+    KubernetesLabelConfigs:
+      Environment: dev
+    MLPConfig:
+      MLPURL: http://mlp:8080
+      MerlinURL: http://merlin:8080/v1
+    RouterDefaults:
+      FluentdConfig:
+        Image: ghcr.io/caraml-dev/turing/fluentd:v1.8.0
+      Image: ghcr.io/caraml-dev/turing/turing-router:v1.16.0
+    Sentry:
+      DSN: ""
+      Enabled: false
+    SparkAppConfig:
+      CPURequestToCPULimit: 1.25
+      CorePerCPURequest: 1.5
+      FailureRetries: 3
+      FailureRetryInterval: 10
+      PythonVersion: "3"
+      SparkVersion: 2.4.5
+      SubmissionFailureRetries: 3
+      SubmissionFailureRetryInterval: 10
+      TTLSecond: 86400
+      TolerationName: batch-job
+    TuringEncryptionKey: QhAzSXuOFcTi
+  ui.config.json: |
+    {
+      "alertConfig": {
+        "enabled": false,
+        "environment": ""
+      },
+      "apiConfig": {
+        "merlinApiUrl": "/api/merlin/v1",
+        "mlpApiUrl": "/api/v1",
+        "turingApiUrl": "/api/turing/v1"
+      },
+      "appConfig": {
+        "batchEnsemblingEnabled": false,
+        "docsUrl": [
+          {
+            "href": "https://github.com/caraml-dev/turing/tree/main/docs",
+            "label": "Turing User Guide"
+          }
+        ],
+        "environment": "dev",
+        "scaling": {
+          "maxAllowedReplica": 20
+        }
+      },
+      "authConfig": {
+        "oauthClientId": ""
+      },
+      "sentryConfig": {
+        "dsn": "",
+        "environment": "dev"
+      }
+    }
+---
+# Source: turing/templates/turing-envs-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: sample
+  name: turing-environments
+  labels:
+    app: turing
+    version: v1.16.0
+    chart: turing-0.3.29
+    release: turing
+    heritage: Helm
+stringData:
+  environments.yaml: |
+    - k8s_config:
+        cluster: {}
+        name: dev-cluster
+        user: {}
+      name: dev
+---
+# Source: turing/charts/mlp/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: sample
+  name: turing-mlp-config
+  labels:
+    app.kubernetes.io/name: mlp
+    helm.sh/chart: "mlp-0.4.20"
+    app.kubernetes.io/version: "v1.7.4-build.6-322163a"
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+data:
+  mlp-config.yaml: |
+    apiHost: "http://mlp/v1"
+    environment: production
+    port: 8080
+    sentryDSN: 
+    oauthClientID: ""
+    applications:
+      - configuration:
+          api: /api/merlin/v1
+          iconName: machineLearningApp
+          navigation:
+          - destination: /models
+            label: Models
+          - destination: /transformer-simulator
+            label: Transformer Simulator
+        description: Platform for deploying machine learning models
+        homepage: /merlin
+        name: Merlin
+      - configuration:
+          api: /api/turing/v1
+          iconName: graphApp
+          navigation:
+          - destination: /routers
+            label: Routers
+          - destination: /ensemblers
+            label: Ensemblers
+          - destination: /jobs
+            label: Ensembling Jobs
+          - destination: /experiments
+            label: Experiments
+        description: Platform for setting up ML experiments
+        homepage: /turing
+        name: Turing
+      - configuration:
+          api: /feast/api
+          iconName: appSearchApp
+          navigation:
+          - destination: /entities
+            label: Entities
+          - destination: /featuretables
+            label: Feature Tables
+          - destination: /jobs/batch
+            label: Batch Ingestion Jobs
+          - destination: /jobs/stream
+            label: Stream Ingestion Jobs
+        description: Platform for managing and serving ML features
+        homepage: /feast
+        name: Feast
+      - configuration:
+          api: null
+          iconName: pipelineApp
+        description: Platform for managing ML pipelines
+        homepage: /pipeline
+        name: Pipelines
+    authorization:
+      enabled: false
+    database:
+      host: turing-mlp-postgresql.sample.svc.cluster.local
+      user: mlp
+      database: mlp
+    docs:
+      - href: https://github.com/gojek/merlin/blob/main/docs/getting-started/README.md
+        label: Merlin User Guide
+      - href: https://github.com/gojek/turing
+        label: Turing User Guide
+      - href: https://docs.feast.dev/user-guide/overview
+        label: Feast User Guide
+    mlflow:
+      trackingURL: http://mlflow.mlp
+    ui:
+      clockworkUIHomepage: "http://clockwork.dev"
+      kubeflowUIHomepage: "http://kubeflow.org"
+    defaultSecretStorage:
+      {}
+---
+# Source: turing/charts/merlin/charts/merlin-postgresql/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-merlin-postgresql-headless
+  labels:
+    app: merlin-postgresql
+    chart: merlin-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: merlin-postgresql
+    release: "turing"
+---
+# Source: turing/charts/merlin/charts/merlin-postgresql/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-merlin-postgresql
+  labels:
+    app: merlin-postgresql
+    chart: merlin-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: merlin-postgresql
+    release: "turing"
+    role: master
+---
+# Source: turing/charts/merlin/charts/mlflow-postgresql/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-mlflow-postgresql-headless
+  labels:
+    app: mlflow-postgresql
+    chart: mlflow-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: mlflow-postgresql
+    release: "turing"
+---
+# Source: turing/charts/merlin/charts/mlflow-postgresql/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-mlflow-postgresql
+  labels:
+    app: mlflow-postgresql
+    chart: mlflow-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: mlflow-postgresql
+    release: "turing"
+    role: master
+---
+# Source: turing/charts/merlin/templates/merlin-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-merlin
+  namespace: sample
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: merlin
+    release: turing
+---
+# Source: turing/charts/merlin/templates/mlflow-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-merlin-mlflow
+  namespace: sample
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
+    name: http
+  selector:
+    app: merlin-mlflow
+    release: turing
+---
+# Source: turing/charts/merlin/templates/swagger-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: merlin-swagger
+  namespace: sample
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8081
+      protocol: TCP
+      name: http
+  selector:
+    app: merlin
+    release: turing
+---
+# Source: turing/charts/mlp/charts/postgresql/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-mlp-postgresql-headless
+  labels:
+    app: mlp-postgresql
+    chart: postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: mlp-postgresql
+    release: "turing"
+---
+# Source: turing/charts/mlp/charts/postgresql/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-mlp-postgresql
+  labels:
+    app: mlp-postgresql
+    chart: postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: mlp-postgresql
+    release: "turing"
+    role: master
+---
+# Source: turing/charts/mlp/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-mlp
+  namespace: sample
+  labels:
+    app.kubernetes.io/name: mlp
+    helm.sh/chart: "mlp-0.4.20"
+    app.kubernetes.io/version: "v1.7.4-build.6-322163a"
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+      protocol: TCP
+  selector:
+    app: mlp
+    release: turing
+---
+# Source: turing/charts/turing-postgresql/templates/svc-headless.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-turing-postgresql-headless
+  labels:
+    app: turing-postgresql
+    chart: turing-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: turing-postgresql
+    release: "turing"
+---
+# Source: turing/charts/turing-postgresql/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing-turing-postgresql
+  labels:
+    app: turing-postgresql
+    chart: turing-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+  selector:
+    app: turing-postgresql
+    release: "turing"
+    role: master
+---
+# Source: turing/templates/turing-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: turing
+  namespace: sample
+  labels:
+    app: turing
+    version: v1.16.0
+    chart: turing-0.3.29
+    release: turing
+    heritage: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: turing
+    release: turing
+---
+# Source: turing/charts/merlin/templates/merlin-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turing-merlin
+  namespace: sample
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: merlin
+      release: turing
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 4
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: merlin
+        version: 0.45.3
+        release: turing
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: "8080"
+    spec:
+      serviceAccountName: merlin
+      initContainers: null
+      containers:
+      - name: merlin
+        image: ghcr.io/caraml-dev/merlin:0.45.3
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /v1/internal/live
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /v1/internal/ready
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        env:
+          - name: DBCONFIG_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: turing-merlin-postgresql
+                key: postgresql-password
+        volumeMounts:
+        - name: config
+          mountPath: /etc/merlin
+        - name: environments
+          mountPath: /app/cluster-env
+        args:
+        - -config
+        - /etc/merlin/config.yaml
+      - name: swagger-ui
+        image: "swaggerapi/swagger-ui:v3.23.5"
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8081
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        env:
+          - name: LAYOUT
+            value: "BaseLayout"
+          - name: SWAGGER_JSON
+            value: "/app/swagger.yaml"
+          - name: PORT
+            value: "8081"
+          - name: API_HOST
+            value: "merlin.dev"
+          - name: BASE_PATH
+            value: "/api/merlin/v1"
+        command: ['sh', '-c']
+        args:
+          - |
+            mkdir /app
+            echo "Fetching swagger configuration from http://127.0.0.1:8080/swagger.yaml..."
+            until $$(wget -O $${SWAGGER_JSON} --tries 1 --timeout 1 http://127.0.0.1:8080/swagger.yaml); do
+              printf '.'
+              sleep 10
+            done
+            echo "Update Swagger config..."
+            sed -r -i 's/^(\s*)(host\s*:.*$$)/\host: "'$${API_HOST}'"/' $${SWAGGER_JSON}
+            sed -r -i 's#^(\s*)(basePath\s*:.*$$)#\basePath: "'$${BASE_PATH}'"#' $${SWAGGER_JSON}
+            echo "Running Swagger UI..."
+            /usr/share/nginx/run.sh
+      volumes:
+      - name: config
+        secret:
+          secretName: turing-merlin-config
+      - name: environments
+        secret:
+          secretName: turing-merlin-environments
+---
+# Source: turing/charts/merlin/templates/mlflow-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turing-merlin-mlflow
+  namespace: sample
+  labels:
+    app: merlin
+    version: 0.45.3
+    release: turing
+    app.kubernetes.io/name: merlin
+    helm.sh/chart: "merlin-0.13.24"
+    app.kubernetes.io/version: 0.45.3
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: merlin-mlflow
+      release: turing
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: merlin-mlflow
+        release: turing
+    spec:
+      containers:
+      - name: turing-merlin-mlflow
+        image: "ghcr.io/caraml-dev/mlflow:1.26.1"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          name: "http"
+        livenessProbe:
+          httpGet:
+            path: /api/2.0/mlflow/experiments/list
+            port: 5000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/2.0/mlflow/experiments/list
+            port: 5000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 30
+        resources:
+          limits:
+            memory: 2048Mi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "turing-mlflow-postgresql"
+              key: "postgresql-password"
+        - name: BACKEND_STORE_URI
+          value: "postgresql://mlflow:$(DATABASE_PASSWORD)@turing-mlflow-postgresql.sample.svc.cluster.local:5432/mlflow"
+        - name: ARTIFACT_ROOT
+          value: "/data/artifacts"
+        - name: HOST
+          value: "0.0.0.0"
+        - name: PORT
+          value: "5000"
+        - name: MLFLOW_S3_ENDPOINT_URL
+          value: http://minio.minio.svc.cluster.local:9000
+      serviceAccountName: mlflow
+---
+# Source: turing/charts/mlp/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turing-mlp
+  namespace: sample
+  labels:
+    app.kubernetes.io/name: mlp
+    helm.sh/chart: "mlp-0.4.20"
+    app.kubernetes.io/version: "v1.7.4-build.6-322163a"
+    app.kubernetes.io/instance: turing
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: caraml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlp
+      release: turing
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: mlp
+        release: turing
+    spec:
+      containers:
+        - name: api
+          image: "ghcr.io/caraml-dev/mlp:v1.7.7-build.63-8309142"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /v1/internal/live
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /v1/internal/ready
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          args:
+            - --config
+            - /etc/caraml/mlp-config.yaml
+          env:
+            - name: DATABASE__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: turing-mlp-postgresql
+                  key: postgresql-password
+          volumeMounts:
+            - mountPath: /etc/caraml
+              name: config
+      serviceAccountName: mlp
+      volumes:
+        - name: config
+          configMap:
+            name: turing-mlp-config
+---
+# Source: turing/templates/turing-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turing
+  namespace: sample
+  labels:
+    app: turing
+    version: v1.16.0
+    chart: turing-0.3.29
+    release: turing
+    heritage: Helm
+spec:
+  replicas: 
+  selector:
+    matchLabels:
+      app: turing
+      release: turing
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: turing
+        version: v1.16.0
+        release: turing
+    spec:
+      serviceAccountName: turing
+      initContainers: null
+      containers:
+      - name: api
+        image: ghcr.io/caraml-dev/turing:v1.16.0
+        imagePullPolicy: 
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /v1/internal/live
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /v1/internal/ready
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+            {}
+        args:
+        - -config
+        - /etc/turing/config.yaml
+        - -ui-config
+        - /etc/turing/ui.config.json
+        env:
+        - name: DBCONFIG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: turing-turing-postgresql
+              key: postgresql-password
+        volumeMounts:
+        - name: config
+          mountPath: /etc/turing
+        - name: plugins-volume
+          mountPath: /app/plugins
+        - name: environments
+          mountPath: /app/cluster-env
+      volumes:
+      - name: config
+        secret:
+          secretName: turing-config
+      - name: environments
+        secret:
+          secretName: turing-environments
+      - name: plugins-volume
+        emptyDir: {}
+---
+# Source: turing/charts/merlin/charts/merlin-postgresql/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: turing-merlin-postgresql
+  labels:
+    app: merlin-postgresql
+    chart: merlin-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  serviceName: turing-merlin-postgresql-headless
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: merlin-postgresql
+      release: "turing"
+      role: master
+  template:
+    metadata:
+      name: turing-merlin-postgresql
+      labels:
+        app: merlin-postgresql
+        chart: merlin-postgresql-7.0.2
+        release: "turing"
+        heritage: "Helm"
+        role: master
+    spec:      
+      securityContext:
+        fsGroup: 1001
+      initContainers:
+        - name: init-chmod-data
+          image: docker.io/bitnami/minideb:stretch
+          imagePullPolicy: "Always"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /bitnami/postgresql/data
+              chmod 700 /bitnami/postgresql/data
+              find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+                xargs chown -R 1001:1001
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+      containers:
+        - name: turing-merlin-postgresql
+          image: docker.io/bitnami/postgresql:11.5.0-debian-9-r84
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          securityContext:
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+            - name: POSTGRES_USER
+              value: "merlin"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: turing-merlin-postgresql
+                  key: postgresql-password
+            - name: POSTGRES_DB
+              value: "merlin"
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "merlin" -d "merlin" -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  pg_isready -U "merlin" -d "merlin" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+      volumes:
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "10Gi"
+---
+# Source: turing/charts/merlin/charts/mlflow-postgresql/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: turing-mlflow-postgresql
+  labels:
+    app: mlflow-postgresql
+    chart: mlflow-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  serviceName: turing-mlflow-postgresql-headless
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: mlflow-postgresql
+      release: "turing"
+      role: master
+  template:
+    metadata:
+      name: turing-mlflow-postgresql
+      labels:
+        app: mlflow-postgresql
+        chart: mlflow-postgresql-7.0.2
+        release: "turing"
+        heritage: "Helm"
+        role: master
+    spec:      
+      securityContext:
+        fsGroup: 1001
+      initContainers:
+        - name: init-chmod-data
+          image: docker.io/bitnami/minideb:stretch
+          imagePullPolicy: "Always"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /bitnami/postgresql/data
+              chmod 700 /bitnami/postgresql/data
+              find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+                xargs chown -R 1001:1001
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+      containers:
+        - name: turing-mlflow-postgresql
+          image: docker.io/bitnami/postgresql:11.5.0-debian-9-r84
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+            - name: POSTGRES_USER
+              value: "mlflow"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: turing-mlflow-postgresql
+                  key: postgresql-password
+            - name: POSTGRES_DB
+              value: "mlflow"
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "mlflow" -d "mlflow" -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  pg_isready -U "mlflow" -d "mlflow" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+      volumes:
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "10Gi"
+---
+# Source: turing/charts/mlp/charts/postgresql/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: turing-mlp-postgresql
+  labels:
+    app: mlp-postgresql
+    chart: postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  serviceName: turing-mlp-postgresql-headless
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: mlp-postgresql
+      release: "turing"
+      role: master
+  template:
+    metadata:
+      name: turing-mlp-postgresql
+      labels:
+        app: mlp-postgresql
+        chart: postgresql-7.0.2
+        release: "turing"
+        heritage: "Helm"
+        role: master
+    spec:      
+      securityContext:
+        fsGroup: 1001
+      initContainers:
+        - name: init-chmod-data
+          image: docker.io/bitnami/minideb:stretch
+          imagePullPolicy: "Always"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /bitnami/postgresql/data
+              chmod 700 /bitnami/postgresql/data
+              find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+                xargs chown -R 1001:1001
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+      containers:
+        - name: turing-mlp-postgresql
+          image: docker.io/bitnami/postgresql:11.5.0-debian-9-r84
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          securityContext:
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+            - name: POSTGRES_USER
+              value: "mlp"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: turing-mlp-postgresql
+                  key: postgresql-password
+            - name: POSTGRES_DB
+              value: "mlp"
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "mlp" -d "mlp" -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  pg_isready -U "mlp" -d "mlp" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+      volumes:
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "10Gi"
+---
+# Source: turing/charts/turing-postgresql/templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: turing-turing-postgresql
+  labels:
+    app: turing-postgresql
+    chart: turing-postgresql-7.0.2
+    release: "turing"
+    heritage: "Helm"
+spec:
+  serviceName: turing-turing-postgresql-headless
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: turing-postgresql
+      release: "turing"
+      role: master
+  template:
+    metadata:
+      name: turing-turing-postgresql
+      labels:
+        app: turing-postgresql
+        chart: turing-postgresql-7.0.2
+        release: "turing"
+        heritage: "Helm"
+        role: master
+    spec:      
+      securityContext:
+        fsGroup: 1001
+      initContainers:
+        - name: init-chmod-data
+          image: docker.io/bitnami/minideb:stretch
+          imagePullPolicy: "Always"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /bitnami/postgresql/data
+              chmod 700 /bitnami/postgresql/data
+              find /bitnami/postgresql -mindepth 0 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | \
+                xargs chown -R 1001:1001
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+      containers:
+        - name: turing-turing-postgresql
+          image: docker.io/bitnami/postgresql:11.5.0-debian-9-r84
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          securityContext:
+            runAsUser: 1001
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: POSTGRESQL_PORT_NUMBER
+              value: "5432"
+            - name: POSTGRESQL_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+            - name: POSTGRES_USER
+              value: "turing"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: turing-turing-postgresql
+                  key: postgresql-password
+            - name: POSTGRES_DB
+              value: "turing"
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "turing" -d "turing" -h 127.0.0.1 -p 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                - |
+                  pg_isready -U "turing" -d "turing" -h 127.0.0.1 -p 5432
+                  [ -f /opt/bitnami/postgresql/tmp/.initialized ]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
+              subPath: 
+      volumes:
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "10Gi"
+---
+# Source: turing/charts/merlin/charts/kserve/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gdi-kserve-0-8-22-kserve-sa
+  namespace: sample
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade,post-delete"
+    "helm.sh/hook-weight": "-3"
+---
+# Source: turing/charts/merlin/charts/minio/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gdi-minio-5-0-15-minio-sa
+  namespace: sample
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade,post-delete"
+    "helm.sh/hook-weight": "-3"
+---
+# Source: turing/charts/merlin/charts/kserve/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gdi-kserve-0-8-22-kserve-cm
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade,post-delete"
+    "helm.sh/hook-weight": "-2"
+data:
+  run.sh: |
+    #! /bin/sh
+    
+    # This file is used to populate configmap templates/configmap.yaml
+    
+    set -ex
+    
+    which helm > /dev/null 2>&1|| { echo "Helm not installed"; exit 1; }
+    which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
+    
+    show_help() {
+      cat <<EOF
+    Usage: $(basename "$0") <repository> <chart name> <version> <release name> <namespace> <action>
+        -h, --help               Display help
+        action                   upgrade-install | delete
+    EOF
+    }
+    
+    validate_parameters() {
+      if [[ "$1" == '-h' || "$1" == '--help' ]]; then
+        show_help
+        exit 0
+      fi
+      if [[ "$#" -ne 6 ]]; then
+        echo "Insufficient number of positional arguments"
+        show_help
+        exit 1
+      fi
+      if [[ $6 != "upgrade-install" ]] && [[ $6 != "delete" ]]; then
+        echo "Action must be 'install' or 'delete', received $6"
+        show_help
+        exit 1
+      fi
+    }
+    
+    main() {
+      VALUES_FILE_PATH=/tmp/chart_values_tmp.yaml
+      validate_parameters "$@"
+      REPO="$1"
+      CHART_NAME="$2"
+      VERSION="$3"
+      RELEASE_NAME="$4"
+      NAMESPACE="$5"
+      ACTION="$6"
+      REPO_NAME=local_repo
+      # read extra values from  env file, decode it
+      echo $CHART_VALUES | base64 -d > $VALUES_FILE_PATH
+      helm repo add $REPO_NAME $REPO
+      helm template $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --create-namespace --version $VERSION --values $VALUES_FILE_PATH > /tmp/manifests.yaml
+      if [[ $ACTION == "upgrade-install" ]]; then
+        helm upgrade --install $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --create-namespace --version $VERSION --atomic --debug --values $VALUES_FILE_PATH
+        # kubectl apply -f /tmp/manifests.yaml
+        # kubectl wait pods --all -n $NAMESPACE --for=condition=Ready --timeout=180s
+      elif [[ $ACTION == "delete" ]]; then
+        release_found=$(helm list --namespace $NAMESPACE 2> /dev/null | tail +2 | grep $RELEASE_NAME | wc -l )
+        if [ $release_found -gt 0 ]; then
+          helm uninstall $RELEASE_NAME --namespace $NAMESPACE --debug --wait --timeout=180s
+        else
+          echo "Release not found, Skipping uninstall for release: $RELEASE_NAME in namespace: $NAMESPACE"
+        fi
+        # kubectl delete -f /tmp/manifests.yaml --ignore-not-found
+        # kubectl wait -f /tmp/manifests.yaml --for=delete --timeout=180s
+        # kubectl delete ns $NAMESPACE --ignore-not-found
+      fi
+    }
+    
+    main "$@"
+---
+# Source: turing/charts/merlin/charts/minio/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gdi-minio-5-0-15-minio-cm
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade,post-delete"
+    "helm.sh/hook-weight": "-2"
+data:
+  run.sh: |
+    #! /bin/sh
+    
+    # This file is used to populate configmap templates/configmap.yaml
+    
+    set -ex
+    
+    which helm > /dev/null 2>&1|| { echo "Helm not installed"; exit 1; }
+    which kubectl > /dev/null 2>&1|| { echo "Kubectl not installed"; exit 1; }
+    
+    show_help() {
+      cat <<EOF
+    Usage: $(basename "$0") <repository> <chart name> <version> <release name> <namespace> <action>
+        -h, --help               Display help
+        action                   upgrade-install | delete
+    EOF
+    }
+    
+    validate_parameters() {
+      if [[ "$1" == '-h' || "$1" == '--help' ]]; then
+        show_help
+        exit 0
+      fi
+      if [[ "$#" -ne 6 ]]; then
+        echo "Insufficient number of positional arguments"
+        show_help
+        exit 1
+      fi
+      if [[ $6 != "upgrade-install" ]] && [[ $6 != "delete" ]]; then
+        echo "Action must be 'install' or 'delete', received $6"
+        show_help
+        exit 1
+      fi
+    }
+    
+    main() {
+      VALUES_FILE_PATH=/tmp/chart_values_tmp.yaml
+      validate_parameters "$@"
+      REPO="$1"
+      CHART_NAME="$2"
+      VERSION="$3"
+      RELEASE_NAME="$4"
+      NAMESPACE="$5"
+      ACTION="$6"
+      REPO_NAME=local_repo
+      # read extra values from  env file, decode it
+      echo $CHART_VALUES | base64 -d > $VALUES_FILE_PATH
+      helm repo add $REPO_NAME $REPO
+      helm template $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --create-namespace --version $VERSION --values $VALUES_FILE_PATH > /tmp/manifests.yaml
+      if [[ $ACTION == "upgrade-install" ]]; then
+        helm upgrade --install $RELEASE_NAME $REPO_NAME/$CHART_NAME --namespace $NAMESPACE --create-namespace --version $VERSION --atomic --debug --values $VALUES_FILE_PATH
+        # kubectl apply -f /tmp/manifests.yaml
+        # kubectl wait pods --all -n $NAMESPACE --for=condition=Ready --timeout=180s
+      elif [[ $ACTION == "delete" ]]; then
+        release_found=$(helm list --namespace $NAMESPACE 2> /dev/null | tail +2 | grep $RELEASE_NAME | wc -l )
+        if [ $release_found -gt 0 ]; then
+          helm uninstall $RELEASE_NAME --namespace $NAMESPACE --debug --wait --timeout=180s
+        else
+          echo "Release not found, Skipping uninstall for release: $RELEASE_NAME in namespace: $NAMESPACE"
+        fi
+        # kubectl delete -f /tmp/manifests.yaml --ignore-not-found
+        # kubectl wait -f /tmp/manifests.yaml --for=delete --timeout=180s
+        # kubectl delete ns $NAMESPACE --ignore-not-found
+      fi
+    }
+    
+    main "$@"
+---
+# Source: turing/charts/merlin/charts/kserve/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade,post-delete"
+    "helm.sh/hook-weight": "-3"
+  name: gdi-kserve-0-8-22-kserve-sample-crb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  # NOTE: cluster-admin is used here as job needs to install/uninstall helm charts
+  # for all types of resources
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: gdi-kserve-0-8-22-kserve-sa
+    namespace: sample
+---
+# Source: turing/charts/merlin/charts/minio/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,hook-failed,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade,post-delete"
+    "helm.sh/hook-weight": "-3"
+  name: gdi-minio-5-0-15-minio-sample-crb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  # NOTE: cluster-admin is used here as job needs to install/uninstall helm charts
+  # for all types of resources
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: gdi-minio-5-0-15-minio-sa
+    namespace: sample
+---
+# Source: turing/charts/merlin/charts/kserve/templates/job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gdi-kserve-0-8-22-kserve-job-installer
+  labels:
+    helm.sh/chart: kserve-0.2.1
+    app.kubernetes.io/version: "v0.1.0"
+    serving.knative.dev/release: v0.1.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: turing
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-weight": "-2"
+spec:
+  template:
+    metadata:
+      name: gdi-kserve-0-8-22-kserve-job-installer
+    spec:
+      volumes:
+        - name: run-script
+          configMap:
+            name: gdi-kserve-0-8-22-kserve-cm
+            defaultMode: 0744  # set execute bit so script can be called as command
+      serviceAccountName: gdi-kserve-0-8-22-kserve-sa
+      containers:
+        - name: runner
+          image: ghcr.io/dtzar/helm-kubectl:3.9.4
+          volumeMounts:
+            - name: run-script
+              mountPath: /scripts
+          command: ["/scripts/run.sh"]
+          args:
+            - https://caraml-dev.github.io/helm-charts
+            - kserve
+            - 0.8.22
+            - kserve
+            - kserve
+            - upgrade-install
+          env:
+            - name: CHART_VALUES
+              value: "a25hdGl2ZVNlcnZpbmdJc3RpbzoKICBjaGFydFZhbHVlczoKICAgIGlzdGlvSW5ncmVzc0dhdGV3YXk6CiAgICAgIGhlbG1DaGFydDoKICAgICAgICBuYW1lc3BhY2U6IGlzdGlvLXN5c3RlbQ=="
+      restartPolicy: Never
+  backoffLimit: 2
+---
+# Source: turing/charts/merlin/charts/kserve/templates/job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gdi-kserve-0-8-22-kserve-job-uninstall
+  labels:
+    helm.sh/chart: kserve-0.2.1
+    app.kubernetes.io/version: "v0.1.0"
+    serving.knative.dev/release: v0.1.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: turing
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "post-delete"
+    "helm.sh/hook-weight": "-2"
+spec:
+  template:
+    metadata:
+      name: gdi-kserve-0-8-22-kserve-job-uninstall
+    spec:
+      volumes:
+        - name: run-script
+          configMap:
+            name: gdi-kserve-0-8-22-kserve-cm
+            defaultMode: 0744  # set execute bit so script can be called as command
+      serviceAccountName: gdi-kserve-0-8-22-kserve-sa
+      containers:
+        - name: runner
+          volumeMounts:
+            - name: run-script
+              mountPath: /scripts
+          image: ghcr.io/dtzar/helm-kubectl:3.9.4
+          command: ["/scripts/run.sh"]
+          args:
+            - https://caraml-dev.github.io/helm-charts
+            - kserve
+            - 0.8.22
+            - kserve
+            - kserve
+            - delete
+          env:
+            - name: CHART_VALUES
+              value: "a25hdGl2ZVNlcnZpbmdJc3RpbzoKICBjaGFydFZhbHVlczoKICAgIGlzdGlvSW5ncmVzc0dhdGV3YXk6CiAgICAgIGhlbG1DaGFydDoKICAgICAgICBuYW1lc3BhY2U6IGlzdGlvLXN5c3RlbQ=="
+      restartPolicy: Never
+  backoffLimit: 2
+---
+# Source: turing/charts/merlin/charts/minio/templates/job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gdi-minio-5-0-15-minio-job-installer
+  labels:
+    helm.sh/chart: minio-0.2.1
+    app.kubernetes.io/version: "v0.1.0"
+    serving.knative.dev/release: v0.1.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: turing
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-weight": "-2"
+spec:
+  template:
+    metadata:
+      name: gdi-minio-5-0-15-minio-job-installer
+    spec:
+      volumes:
+        - name: run-script
+          configMap:
+            name: gdi-minio-5-0-15-minio-cm
+            defaultMode: 0744  # set execute bit so script can be called as command
+      serviceAccountName: gdi-minio-5-0-15-minio-sa
+      containers:
+        - name: runner
+          image: ghcr.io/dtzar/helm-kubectl:3.9.4
+          volumeMounts:
+            - name: run-script
+              mountPath: /scripts
+          command: ["/scripts/run.sh"]
+          args:
+            - https://charts.min.io/
+            - minio
+            - 5.0.15
+            - minio
+            - minio
+            - upgrade-install
+          env:
+            - name: CHART_VALUES
+              value: "ZGVmYXVsdEJ1Y2tldDoKICBlbmFibGVkOiB0cnVlCiAgbmFtZTogbWxmbG93CmluZ3Jlc3M6CiAgYW5ub3RhdGlvbnM6CiAgICBrdWJlcm5ldGVzLmlvL2luZ3Jlc3MuY2xhc3M6IGlzdGlvCiAgZW5hYmxlZDogZmFsc2UKICBwYXRoOiAvKgpsaXZlbmVzc1Byb2JlOgogIGluaXRpYWxEZWxheVNlY29uZHM6IDMwCnBlcnNpc3RlbmNlOgogIGVuYWJsZWQ6IGZhbHNlCnJlcGxpY2FzOiAxCnJlc291cmNlczoKICByZXF1ZXN0czoKICAgIGNwdTogMjVtCiAgICBtZW1vcnk6IDY0TWk="
+      restartPolicy: Never
+  backoffLimit: 2
+---
+# Source: turing/charts/merlin/charts/minio/templates/job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gdi-minio-5-0-15-minio-job-uninstall
+  labels:
+    helm.sh/chart: minio-0.2.1
+    app.kubernetes.io/version: "v0.1.0"
+    serving.knative.dev/release: v0.1.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: turing
+  annotations:
+    "helm.sh/hook-delete-policy": "hook-succeeded,before-hook-creation"
+    "helm.sh/hook": "post-delete"
+    "helm.sh/hook-weight": "-2"
+spec:
+  template:
+    metadata:
+      name: gdi-minio-5-0-15-minio-job-uninstall
+    spec:
+      volumes:
+        - name: run-script
+          configMap:
+            name: gdi-minio-5-0-15-minio-cm
+            defaultMode: 0744  # set execute bit so script can be called as command
+      serviceAccountName: gdi-minio-5-0-15-minio-sa
+      containers:
+        - name: runner
+          volumeMounts:
+            - name: run-script
+              mountPath: /scripts
+          image: ghcr.io/dtzar/helm-kubectl:3.9.4
+          command: ["/scripts/run.sh"]
+          args:
+            - https://charts.min.io/
+            - minio
+            - 5.0.15
+            - minio
+            - minio
+            - delete
+          env:
+            - name: CHART_VALUES
+              value: "ZGVmYXVsdEJ1Y2tldDoKICBlbmFibGVkOiB0cnVlCiAgbmFtZTogbWxmbG93CmluZ3Jlc3M6CiAgYW5ub3RhdGlvbnM6CiAgICBrdWJlcm5ldGVzLmlvL2luZ3Jlc3MuY2xhc3M6IGlzdGlvCiAgZW5hYmxlZDogZmFsc2UKICBwYXRoOiAvKgpsaXZlbmVzc1Byb2JlOgogIGluaXRpYWxEZWxheVNlY29uZHM6IDMwCnBlcnNpc3RlbmNlOgogIGVuYWJsZWQ6IGZhbHNlCnJlcGxpY2FzOiAxCnJlc291cmNlczoKICByZXF1ZXN0czoKICAgIGNwdTogMjVtCiAgICBtZW1vcnk6IDY0TWk="
+      restartPolicy: Never
+  backoffLimit: 2
