@@ -6,6 +6,12 @@ metadata:
   labels:
     {{- include "merlin.labels" . | nindent 4 }}
 rules:
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - "*"
 - apiGroups: [""]
   resources:
   - services
