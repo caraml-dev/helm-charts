@@ -202,6 +202,8 @@ serving:
 
   tolerations: []
 
+  topologySpreadConstraints: []
+
   affinity: {}
 
 postgresql:
